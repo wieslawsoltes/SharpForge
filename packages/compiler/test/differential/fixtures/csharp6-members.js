@@ -109,6 +109,34 @@ const interpolation = feature('interpolation-binding', [
       }
     `,
   ),
+  diag(
+    'cs0029-formattable-string-and-iformattable-targets',
+    cs`
+      using System;
+      class Program
+      {
+          static void Take(FormattableString f) { Console.WriteLine(f.Format + f.ArgumentCount + f.GetArgument(0) + f.GetArguments().Length); }
+          static void Both(string s) { Console.WriteLine("string"); }
+          static void Both(FormattableString f) { Console.WriteLine("formattable"); }
+          static void Fmt(IFormattable f) { Console.WriteLine(f.ToString(null, null)); }
+          static void Main()
+          {
+              int x = 1;
+              FormattableString f = $"a{x}b{x,3:D2}";
+              IFormattable g = $"a{x}";
+              Take($"v{x}"); Both($"v{x}"); Fmt($"v{x}");
+              var v = $"v{x}"; Both(v);
+              object o = $"a{x}"; IComparable c = $"a{x}";
+              var cast = (FormattableString)$"a{x}";
+              string invariant = FormattableString.Invariant($"a{x}") + f.ToString() + g + o + c + cast;
+              FormattableString plain = "plain";
+              FormattableString concatenated = $"a" + $"b";
+              FormattableString coalesced = $"{x}" ?? null;
+              FormattableString fromString = v;
+          }
+      }
+    `,
+  ),
 ]);
 
 const memberBodies = feature('member-bodies', [

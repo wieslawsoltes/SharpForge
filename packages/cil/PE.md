@@ -45,6 +45,23 @@ Canonical source loading replays recorded platform options and compares every
 executable byte, including import thunks and relocations. Append-only debug payloads
 are supported on the final section; changing a thunk or import still rejects the image.
 
-T03 scope remains open for managed/Win32 resource construction, cryptographic content
-identifiers/checksum, public signing, input assembly identities and netmodules. This
-batch establishes their layout/directory foundations without claiming those features.
+Managed resources are documented in [RESOURCES.md](./RESOURCES.md). T03 scope remains open
+for Win32 resource integration, public signing, input assembly identities and netmodules;
+these are separate batches from the layout and deterministic identity APIs.
+
+## Deterministic identities
+
+High-level emission defaults to `deterministic: true`. It hashes the complete base PE with MVID, COFF timestamp and
+checksum zeroed, derives a UUID and high-bit timestamp from SHA-256 using the SRM content-ID layout, then computes the
+PE one's-complement checksum. No clock, random source or host-specific cryptography participates. `buildId(bytes)` now
+uses the same SHA-256 UUID derivation. `deterministicContentId(bytes)` also returns its timestamp.
+
+`finalizeDeterministicPE(bytes)` finalizes a managed image copy, leaving input bytes unchanged. `peChecksum(bytes)`
+returns the checksum for any bounded PE32/PE32+ image, ignoring its existing checksum field and including overlay bytes.
+Adding Portable PDB debug data recomputes an existing nonzero checksum without changing the base image content identity.
+The checksum detects accidental corruption; it is not authentication. Signing remains a separate operation.
+
+Low-level `writePE` retains its historical default headers unless `deterministic: true` is requested. The deterministic
+mode rejects explicit timestamp/checksum values. High-level `deterministic: false` keeps zero timestamp/checksum; MVID
+still uses SHA-256 over the emitter's method/resource content. The new full-content identity intentionally changes emitted
+MVIDs from the previous FNV scheme. Full browser/native matrix qualification is tracked separately from focused Node gates.

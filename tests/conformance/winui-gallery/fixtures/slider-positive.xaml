@@ -1,0 +1,1 @@
+<Slider xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="fixture" Minimum="0" Maximum="100" Value="50" Width="120" />

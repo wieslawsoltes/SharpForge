@@ -1,4 +1,11 @@
+import {validateCilStackSnapshot} from './execution/frame-stack.js';
+import {validateSourceStackSnapshot} from './execution/source-stack-admission.js';
+import {clearFramePool} from './execution/frame-pool.js';
+import {clearStackBudget} from './execution/stack-budget.js';
 import {ManagedFault} from './heap.js';
+import {invalidateExecutionCode} from './execution/code-version.js';
+import {restoreFloatFrames} from './execution/typed-float-frame.js';
+import {isTypedFloatArray} from './execution/typed-stack.js';
 
 /** Clone execution graphs, preserving aliases, immutable handles and fault identity. */
 export function copyExecution(value, memo = new Map()) {
@@ -25,7 +32,7 @@ export function copyExecution(value, memo = new Map()) {
       : new value.constructor(buffer, value.byteOffset, value.length);
     memo.set(value, copy); return copy;
   }
-  if (Object.isFrozen(value)) return value;
+  if (Object.isFrozen(value) && !isTypedFloatArray(value)) return value;
   if (value instanceof ManagedFault) {
     const copy = new ManagedFault(value.name, value.message, value.reference); memo.set(value, copy);
     for (const key of Object.keys(value)) copy[key] = copyExecution(value[key], memo);
@@ -130,7 +137,10 @@ export function restoreVM(vm, snapshot, engine) {
       throw new TypeError(`Snapshot is missing '${item.name}'`);
   }
   if (!Array.isArray(snapshot.frames) || !Array.isArray(snapshot.output)) throw new TypeError('Invalid snapshot execution state');
+  if (engine === 'cil') validateCilStackSnapshot(vm, snapshot);
+  else validateSourceStackSnapshot(vm, snapshot);
   vm.platform.hostOperations.checkRestore(snapshot.hostRevision);
+  vm.profiler?.boundary();
   // Copy before changing the VM; the same memo preserves frame/fault aliases.
   const memo = new Map(), values = new Map();
   for (const item of selected.fields) {
@@ -146,4 +156,8 @@ export function restoreVM(vm, snapshot, engine) {
   if (engine === 'source') { vm.state = 'paused'; vm.currentPoint = vm.top?.point ?? null; }
   vm.scheduler.restore(snapshot.scheduler);
   vm.platform.restore(snapshot.platform);
+  if (engine === 'cil') invalidateExecutionCode(vm, 'snapshot-restore');
+  clearFramePool(vm);
+  clearStackBudget(vm);
+  restoreFloatFrames(vm);
 }

@@ -7,6 +7,7 @@
  */
 import { SymbolKind } from '../symbols/types.js';
 import { MethodKind } from '../symbols/members.js';
+import { indexerNameOf } from './members/indexer-names.js';
 
 const accessorPrefixes = [
   ['get_', SymbolKind.Property, property => property.getMethod],
@@ -31,8 +32,10 @@ export function accessorNamed(type, name, membersNamed) {
   for (const [prefix, kind, accessorOf] of accessorPrefixes) {
     if (!name.startsWith(prefix) || name.length === prefix.length) continue;
     const memberName = name.slice(prefix.length),
-      isIndexerName = memberName === 'Item' && kind === SymbolKind.Property;
-    const owner = membersNamed(type, isIndexerName ? 'this[]' : memberName).find(m => m.kind === kind && accessorOf(m));
+      named = m => m.kind === kind && accessorOf(m),
+      // An indexer is found by its metadata name: `Item`, or the one `[IndexerName]` gives.
+      indexer = kind === SymbolKind.Property ? membersNamed(type, 'this[]').find(m => named(m) && indexerNameOf(m) === memberName) : null;
+    const owner = indexer ?? membersNamed(type, memberName).find(named);
     if (!owner) continue;
     const accessor = accessorOf(owner);
     return accessor.kind === SymbolKind.Method ? accessor.toDisplayString() : owner.toDisplayString() + '.' + accessorSuffix[prefix];

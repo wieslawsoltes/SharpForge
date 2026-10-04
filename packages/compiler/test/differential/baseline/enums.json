@@ -3,5 +3,8 @@
   "enums/cs0117-missing-enum-member": ["diagnostics", "warnings"],
   "enums/cs0266-enum-to-int": ["diagnostics", "warnings"],
   "enums/cs0266-int-to-enum": ["diagnostics"],
-  "enums/cs0543-enum-overflow": ["diagnostics", "warnings"]
+  "enums/cs0543-enum-overflow": ["diagnostics", "warnings"],
+  "enums/explicit-values-and-switch": ["directCil"],
+  "enums/flags": ["directCil"],
+  "enums/values-and-names": ["directCil"]
 }

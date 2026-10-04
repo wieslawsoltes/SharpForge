@@ -1,5 +1,10 @@
-import {float, floatBinary, floatCompare, int64Binary, int64Compare, int64Unary, uint32Binary, uint32Compare} from '@sharpforge/bytecode';
-export {float} from '@sharpforge/bytecode';
+import {decimalZero, isDecimal, decimal} from './decimal.js';
+import {
+  float, floatBinary, floatCompare, int64Binary, int64Compare, int64Unary,
+  uint32Binary, uint32Compare, smallInteger, smallIntegerIndirect, convert, number, isNumber
+} from '@sharpforge/bytecode';
+import {isNativeInteger, nativeInteger, nativeIntegerBits, nativeBinary, nativeOperandBits, isNativeStorageType} from './native-int.js';
+export {float, convert, number, isNumber} from '@sharpforge/bytecode';
 
 /** Pure operations on CIL evaluation-stack values.
  *
@@ -11,13 +16,14 @@ export {float} from '@sharpforge/bytecode';
 const fault = (type, message) => Object.assign(new Error(message), {name: type});
 const error = message => Object.assign(new Error(message), {name: 'CilError'});
 const reference = value => value !== null && typeof value === 'object' && Number.isInteger(value.h) && Number.isInteger(value.g);
+const smallStorageTypes = new Set(['sbyte', 'byte', 'short', 'ushort', 'char', 'bool']);
+const smallIndirectSuffixes = new Set(['i1', 'u1', 'i2', 'u2']);
 
-export const number = value => value?.float ? value.value : value;
-export const isNumber = value => typeof value === 'number' || typeof value === 'bigint' || !!value?.float;
-const numericAliases = {'System.SByte': 'sbyte', 'System.Byte': 'byte', 'System.Int16': 'short', 'System.UInt16': 'ushort', 'System.Char': 'char', 'System.Boolean': 'bool', 'System.Int32': 'int', 'System.UInt32': 'uint', 'System.Int64': 'long', 'System.UInt64': 'ulong', 'System.Single': 'float', 'System.Double': 'double', 'System.IntPtr':'nint', 'System.UIntPtr':'nuint'};
-export const defaults = input => { const type=numericAliases[input]??input; return type === 'long' || type === 'ulong' ? 0n : type === 'double' ? float(0) : type === 'float' ? float(0, 'r4') : ['int', 'uint', 'short', 'ushort', 'byte', 'sbyte', 'char', 'bool', 'nint', 'nuint'].includes(type) ? 0 : null; };
+const numericAliases = {'System.SByte': 'sbyte', 'System.Byte': 'byte', 'System.Int16': 'short', 'System.UInt16': 'ushort', 'System.Char': 'char', 'System.Boolean': 'bool', 'System.Int32': 'int', 'System.UInt32': 'uint', 'System.Int64': 'long', 'System.UInt64': 'ulong', 'System.Single': 'float', 'System.Double': 'double', 'System.IntPtr':'nint', 'System.UIntPtr':'nuint', 'System.Decimal':'decimal'};
+export const defaults = (input, context) => { const type=numericAliases[input]??input; return type === 'decimal' ? decimalZero : type === 'nint' || type === 'nuint' ? nativeInteger(0, nativeIntegerBits(context)) : type === 'long' || type === 'ulong' ? 0n : type === 'double' ? float(0) : type === 'float' ? float(0, 'r4') : ['int', 'uint', 'short', 'ushort', 'byte', 'sbyte', 'char', 'bool', 'nint', 'nuint'].includes(type) ? 0 : null; };
 
-export function compare(a, b, op, unsigned = false, {fault: createFault = fault, isReference = reference} = {}) {
+export function compare(a, b, op, unsigned = false, context = {}, branch = false) {
+  const {fault: createFault = fault, isReference = reference} = context;
   if (isReference(a) || isReference(b) || a === null || b === null) {
     const equal = a === b || isReference(a) && isReference(b) && a.h === b.h && a.g === b.g;
     if (op === 'eq') return equal;
@@ -26,6 +32,14 @@ export function compare(a, b, op, unsigned = false, {fault: createFault = fault,
     throw createFault('InvalidProgramException', 'Invalid reference comparison');
   }
   if (!isNumber(a) || !isNumber(b)) throw createFault('InvalidProgramException', 'Numeric comparison expected');
+  if (isNativeInteger(a) || isNativeInteger(b)) {
+    const bits = nativeOperandBits(a, b, context);
+    // CoreCLR branches use unsigned widening; ceq/cgt/clt widen signed first.
+    const unsignedWiden = branch && unsigned && bits === 64;
+    a = unsignedWiden && !isNativeInteger(a) ? a >>> 0 : number(a);
+    b = unsignedWiden && !isNativeInteger(b) ? b >>> 0 : number(b);
+    if (bits === 64) { a = BigInt(a); b = BigInt(b); }
+  }
   const floating = !!(a?.float || b?.float);
   if (floating) return floatCompare(a, b, op, unsigned);
   a = number(a); b = number(b);
@@ -49,6 +63,16 @@ export function binary(name, a, b, context = {}) {
   const {fault: createFault = fault, error: createError = error} = context;
   if (!isNumber(a) || !isNumber(b)) throw createFault('InvalidProgramException', 'Arithmetic requires numeric operands');
   const floating = !!(a?.float || b?.float), checked = name.includes('.ovf'), unsigned = name.endsWith('.un'), op = name.split('.')[0];
+  const shift = op === 'shl' || op === 'shr';
+  if (shift && isNativeInteger(b) && !isNativeInteger(a)) {
+    nativeOperandBits(b, 0, context);
+    b = Number(BigInt(number(b)) & 63n);
+  } else if (isNativeInteger(a) || isNativeInteger(b)) {
+    const bits = nativeOperandBits(a, b, context, shift);
+    const left = unsigned && bits === 64 && !isNativeInteger(a) ? a >>> 0 : number(a);
+    const right = unsigned && bits === 64 && !isNativeInteger(b) ? b >>> 0 : number(b);
+    return nativeBinary(name, left, right, context.nativeIntBits === bits ? context : {...context, nativeIntBits: bits});
+  }
   if (floating) {
     if (!['add', 'sub', 'mul', 'div', 'rem'].includes(op) || checked || unsigned) throw createFault('InvalidProgramException', 'Invalid floating-point operation');
     return floatBinary(op, a, b, {fault: createFault});
@@ -63,14 +87,18 @@ export function binary(name, a, b, context = {}) {
   if (checked) {
     let x = BigInt(a), y = BigInt(b), bits = 32;
     if (['div', 'rem'].includes(op) && y === 0n) throw createFault('DivideByZeroException', 'Attempted to divide by zero');
-    if (op === 'div' && !unsigned && x === -(1n << BigInt(bits - 1)) && y === -1n) throw createFault('OverflowException', 'Integer division overflow');
+    if ((op === 'div' || op === 'rem') && !unsigned && x === -(1n << BigInt(bits - 1)) && y === -1n) {
+      throw createFault('OverflowException', 'Integer division overflow');
+    }
     const shift = y & BigInt(bits - 1);
     const value = {add: () => x + y, sub: () => x - y, mul: () => x * y, div: () => x / y, rem: () => x % y, and: () => x & y, or: () => x | y, xor: () => x ^ y, shl: () => x << shift, shr: () => x >> shift}[op]();
     if (checked && (value < (unsigned ? 0n : -(1n << BigInt(bits - 1))) || value > (unsigned ? (1n << BigInt(bits)) - 1n : (1n << BigInt(bits - 1)) - 1n))) throw createFault('OverflowException', 'Checked arithmetic overflow');
     return Number(BigInt.asIntN(32, value));
   }
   if (['div', 'rem'].includes(op) && b === 0) throw createFault('DivideByZeroException', 'Attempted to divide by zero');
-  if (op === 'div' && !unsigned && a === -2147483648 && b === -1) throw createFault('OverflowException', 'Integer division overflow');
+  if ((op === 'div' || op === 'rem') && !unsigned && a === -2147483648 && b === -1) {
+    throw createFault('OverflowException', 'Integer division overflow');
+  }
   switch (op) {
     case 'div': return (a / b) | 0;
     case 'rem': return (a % b) | 0;
@@ -91,56 +119,34 @@ export function unary(name, value, context = {}) {
     if (name === 'neg') return float(-raw, value.float);
     throw createError('not requires integer');
   }
+  if (isNativeInteger(value)) {
+    nativeOperandBits(value, 0, context);
+    return nativeInteger(name === 'neg' ? -BigInt(raw) : ~BigInt(raw), value.nativeInt);
+  }
   if (typeof raw === 'bigint') return int64Unary(name, raw, context);
   return name === 'neg' ? (-raw) | 0 : ~raw;
-}
-
-export function convert(name, value, {fault: createFault = fault, error: createError = error} = {}) {
-  if (!isNumber(value)) throw createFault('InvalidProgramException', 'Numeric conversion required');
-  const checked = name.includes('.ovf.'), unsignedSource = name.endsWith('.un'), target = name.replace(/^conv\.(ovf\.)?/, '').replace(/\.un$/, ''), raw = number(value);
-  if (['r', 'r4', 'r8'].includes(target)) {
-    const n = unsignedSource && !value?.float ? (typeof raw === 'bigint' ? BigInt.asUintN(64, raw) : raw >>> 0) : raw;
-    return float(Number(n), target === 'r4' ? 'r4' : 'r8');
-  }
-  const bits = {i1: 8, u1: 8, i2: 16, u2: 16, i4: 32, u4: 32, i8: 64, u8: 64, i: 32, u: 32}[target], signed = target.startsWith('i');
-  if (!bits) throw createError('Invalid conversion');
-  // CIL F values are tagged. Direct callers can also supply bare host Numbers;
-  // only values outside the signed/unsigned Int32 domain are treated as floats.
-  // In particular, -1 and 0xffffffff remain integer bit patterns, never F values.
-  const floating = !!value?.float || typeof raw === 'number' && (!Number.isInteger(raw) || raw < -2147483648 || raw > 4294967295);
-  let n;
-  if (floating) {
-    if (checked) {
-      if (!Number.isFinite(raw)) throw createFault('OverflowException', 'Non-finite integer conversion');
-      n = BigInt(Math.trunc(raw));
-    } else {
-      // Pin unspecified ECMA overflow/NaN results to .NET 10: saturate 32/64-bit
-      // targets; small targets first saturate to Int32 and then narrow below.
-      // See docs/cil-numeric-conversions.md for the complete compatibility table.
-      const saturationBits = Math.max(bits, 32), saturationSigned = bits < 32 || signed;
-      const min = saturationSigned ? -(1n << BigInt(saturationBits - 1)) : 0n;
-      const max = (1n << BigInt(saturationSigned ? saturationBits - 1 : saturationBits)) - 1n;
-      n = Number.isNaN(raw) ? 0n : raw <= Number(min) ? min : raw >= Number(max) ? max : BigInt(Math.trunc(raw));
-    }
-  } else if (typeof raw === 'bigint') n = unsignedSource ? BigInt.asUintN(64, raw) : raw;
-  else {
-    // conv.u8 zero-extends an Int32 source. Checked conversions use the signed
-    // source unless .un is explicit; an Int64 source already supplies 64 bits.
-    n = BigInt(unsignedSource || !checked && target === 'u8' ? raw >>> 0 : raw);
-  }
-  if (checked && (n < (signed ? -(1n << BigInt(bits - 1)) : 0n) || n > (signed ? (1n << BigInt(bits - 1)) - 1n : (1n << BigInt(bits)) - 1n))) throw createFault('OverflowException', 'Checked conversion overflow');
-  n = signed ? BigInt.asIntN(bits, n) : BigInt.asUintN(bits, n);
-  return bits === 64 ? BigInt.asIntN(64, n) : Number(n) | 0;
 }
 
 /** CLI storage locations narrow integers and round single precision on write/load. */
 export function storage(value, type, context) {
   type = numericAliases[type] ?? type;
-  const conversion = {sbyte: 'i1', byte: 'u1', short: 'i2', ushort: 'u2', char: 'u2', bool: 'u1', int: 'i4', uint: 'u4', long: 'i8', ulong: 'u8', float: 'r4', double: 'r8'}[type];
+  if (type === 'decimal') {
+    if (!isDecimal(value)) throw (context?.fault ?? fault)('InvalidProgramException', 'Decimal storage requires a Decimal value');
+    return Object.isFrozen(value) ? value : decimal(value.coefficient, value.scale, value.negative, context);
+  }
+  if (value?.methodPointer && isNativeStorageType(type)) return value;
+  if (context === undefined && isNativeInteger(value)) context = {nativeIntBits: value.nativeInt};
+  if (type === 'bool' && typeof value === 'boolean') return value ? 1 : 0;
+  if (smallStorageTypes.has(type) &&
+      (typeof value === 'bigint' || Number.isInteger(value))) return smallInteger(value, type, context);
+  const conversion = {sbyte: 'i1', byte: 'u1', short: 'i2', ushort: 'u2', char: 'u2', bool: 'u1', int: 'i4', uint: 'u4', long: 'i8', ulong: 'u8', float: 'r4', double: 'r8', nint: 'i', nuint: 'u'}[type];
   return conversion ? convert('conv.' + conversion, value, context) : value;
 }
 
 export function indirect(value, name, context) {
   const suffix = name.split('.').at(-1);
+  if (suffix === 'i' && value?.methodPointer) return value;
+  if (smallIndirectSuffixes.has(suffix) &&
+      (typeof value === 'bigint' || Number.isInteger(value))) return smallIntegerIndirect(value, suffix, context);
   return ['i1', 'u1', 'i2', 'u2', 'i4', 'u4', 'i8', 'r4', 'r8', 'i'].includes(suffix) ? convert('conv.' + suffix, value, context) : value;
 }

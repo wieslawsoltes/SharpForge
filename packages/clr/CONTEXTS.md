@@ -13,6 +13,42 @@ This API is metadata identity only. Graph loading uses the separate explicit
 context service below; no reference assembly is loaded and no method body is
 decoded by identity lookup. Layout and dispatch remain later batches.
 
+`typeDefinition.genericParameters` and `module.genericParameters(typeToken)`
+return the same frozen, position-ordered list of TypeDef-owned GenericParam
+descriptors. `module.genericParameter(parameterToken)` returns that canonical
+identity directly. Descriptors expose the name, namespace, null full name,
+owner/declaring type, position, raw `genericParameterAttributes`, and a frozen
+`genericParameterConstraintTokens` list. `String(parameter)` returns its name.
+Nested types keep their own metadata parameter owners, including redeclared
+enclosing parameters. No base graph or executable method body is loaded.
+
+Generic metadata indexing is linear, limited to 100,000 parameter/constraint
+rows, 1,024 parameters per owner and 4,096 name characters. Duplicate positions,
+gaps, invalid owners and invalid/duplicate constraint references fail explicitly.
+Constraints remain unresolved tokens: their semantic resolution/enforcement and
+generic instantiation remain separate batches. [Method-owned parameters](METHODS.md)
+reuse the same metadata index and expose a canonical declaring method.
+Metadata generic parameters report `isLoaded: false`; constructing
+arrays/pointers/function pointers from them reports a TypeLoad diagnostic until
+generic type services are available.
+The independent SDK 10.0.201 / CoreCLR 10.0.5 fixture compares six definitions
+and nine parameters against reflection and SRM constraint tokens. Regenerate
+with `node packages/clr/tools/capture-generic-parameters.mjs
+tests/fixtures/clr-generic-parameters`. All 16 focused type tests passed; the
+seven directly affected tests also passed after moving unsupported-construction
+checks to cache misses. The authored `#-` fixture exercises actual unsorted
+physical rows, bypassing the fixture builder's canonical sorting.
+
+`node packages/clr/tools/benchmark-generic-parameters.mjs` measured all fixture
+parameter identities at cold median 33.583 µs / p95 88.125 µs, and cached token
+lookup at median 0.0333 µs / p95 0.0530 µs. Node 24.21.0 on Apple M3 Pro,
+darwin-arm64; shared machine, allocations unmeasured, no prior generic-parameter
+implementation. The existing vector benchmark measured parent/head warm lookup
+medians 0.0866/0.0847 µs and p95 0.0988/0.0914 µs; cold medians 12.417/12.250 µs
+and p95 33.000/24.667 µs. These are regression controls, not speedup claims.
+Evidence qualifies metadata identities on JavaScript; executable generic
+behavior on source VM, direct CIL and Rust/Wasm remains outside this batch.
+
 `context.types.load(module, token, {signal})` explicitly completes a TypeDef or
 TypeRef's inheritance graph on that same canonical descriptor. `find(module,
 fullName)` adds indexed exact-name lookup. Loaded descriptors expose `kind`,
@@ -85,6 +121,33 @@ median 0.0926 µs / p95 0.1092 µs on Apple M3 Pro, darwin-arm64, Node 24.21.0.
 The machine is shared, allocations were not measured, and no equivalent previous
 implementation exists. Construction materializes its interface and method
 signatures once; cached identities avoid rebuilding them.
+
+`context.types.isAssignableFrom(target, source, {signal})` compares loaded
+TypeDesc identities without loading assemblies or executing an instance cast.
+It handles non-generic class inheritance, interface closure, value-type boxing
+to their declared bases, and array covariance/rank rules. Array elements use
+unboxed conversion rules, including matching CLI signed/unsigned integral
+categories and enum underlying types. Vectors also support the five registered
+generic collection contracts with the CLR's array-specific element conversion.
+This is separate from general generic variance.
+
+Results are cached with weak type keys. An uncached decision walks the bounded
+base/interface graph; GenericParam owners are indexed once per module to reject
+unimplemented generic definitions explicitly. `maxDepth` and `maxMetadataRows`
+apply, and cancellation is checked before cached results and during traversal.
+Unloaded descriptors, general generic variance/Nullable rules and pointer/byref/
+function-pointer casts report TypeLoad diagnostics. COM/type-equivalence and
+dynamic interface behavior are outside this metadata-only service. Full
+500-pair and executable cast qualification remains separate work under T03.7.
+The independent SDK 10.0.201 / CoreCLR 10.0.5 capture checks 33 targeted pairs;
+all 16 focused type tests passed on Node 24.21.0. Regenerate with
+`node packages/clr/tools/capture-assignability.mjs tests/fixtures/clr-assignability`.
+`node packages/clr/tools/benchmark-assignability.mjs` measured cold pair decisions
+with loaded descriptors at median 0.7222 µs / p95 2.8043 µs, and cached interface
+decisions at median 0.0746 µs / p95 0.0915 µs on Apple M3 Pro/darwin-arm64.
+The machine is shared, allocations are unmeasured, and no previous equivalent
+implementation exists. This evidence covers the JavaScript metadata service;
+source VM, direct CIL and Rust/Wasm executable casts remain unqualified here.
 
 `AssemblyLoadSession` owns a Default context and a registry of custom contexts.
 No process-global assembly registry is used. `createContext` accepts a name,

@@ -23,3 +23,69 @@ This package participates in Portable PDB symbols, cooperative async/logical-thr
 ## 0.13 managed collections and playback
 
 Both engines dispatch the closed BCL collection/text contracts through managed heap state. Interpolated formatting is invariant and bounded. ManagedPlatform owns a shared data-only animation clock; headless applications advance it explicitly, while Studio supplies a timer that freezes at debugger stops. Automatic clocks are not an implicit timer inside a synchronous `run()`. Compatible snapshots retain collection and timeline state; native CLR behavior is not implied.
+
+## Program arguments and application environment
+
+Both JavaScript interpreters accept `programArguments`, a flat array of strings for
+`Main(string[])` or top-level `args`. A parameterless entry point receives no method
+parameters even when the application has program arguments. The compiler's startup
+wrapper forwards the array after module initializers and preserves async Main's
+await and integer exit-code behavior.
+
+```js
+const options = {
+  programArguments: ['input.txt', '--verbose'],
+  environment: { MODE: 'preview', EMPTY: '' }
+};
+const vm = new VirtualMachine(compiled.image, options);
+const result = await vm.runAsync();
+```
+
+`CilVirtualMachine` keeps its separate `arguments` option for the raw parameter
+vector of a selected `methodToken`, for example `{ methodToken: 'Add', arguments:
+[19, 23] }`. Supplying nonempty `programArguments` with an explicit method token or
+raw argument vector fails with `PROGRAM_ARGUMENTS_METHOD`; neither interpretation
+silently replaces the other. Existing raw string-array parameters retain their
+nested shape, such as `{ arguments: [['one', 'two']] }`.
+
+`System.Environment.GetEnvironmentVariable(string)` reads the current runtime's
+copied environment and returns a string or `null` for a missing name. Empty values
+remain empty strings. Names are case-sensitive, and a null name throws a managed
+`ArgumentNullException`. Values are read-only launch configuration; no process,
+operating-system, user or machine environment is inherited or changed. Mutation
+and OS-target overloads have no registered contract and fail source/CIL validation.
+The BCL module uses the existing A07 extension reservation; all released contract
+and runtime builtin IDs keep their meaning.
+
+The exported `runtimeLaunchCapabilities` reports `{ arguments: true, environment:
+true, environmentMutation: false }` for these two interpreters. It makes no claim
+about native/Wasm hosts. Studio's worker returns this record after a successful
+launch. Hosts targeting another engine must supply its actual capability record.
+
+The exported validators `validateProgramArguments` and
+`validateLaunchEnvironment` copy/freeze their results. `normalizeRuntimeLaunchOptions`
+applies them to runtime options without rewriting raw method arguments. Invalid
+input throws `RuntimeLaunchError` with a stable `code`: `PROGRAM_ARGUMENTS`,
+`LAUNCH_ENVIRONMENT`, `METHOD_ARGUMENTS`, `PROGRAM_ARGUMENTS_METHOD`, or
+`PROGRAM_ENTRY_SIGNATURE`. Limits are exported as `runtimeLaunchLimits`:
+
+| Input | Bound |
+| --- | --- |
+| Program argument count | 1,024 strings |
+| Individual program argument | 65,536 UTF-16 code units |
+| Total program argument content | 1,048,576 UTF-16 code units |
+| Environment variables | 256 own name/value pairs |
+| Environment name | 256 code units, `[A-Za-z_][A-Za-z0-9_]*` |
+| Environment value | 65,536 UTF-16 code units |
+| Total environment names and values | 1,048,576 UTF-16 code units |
+
+Null characters are rejected. Environment input must be a plain or null-prototype
+record; normalized storage has a null prototype. Construction does not retain
+mutable host arrays/records. Managed arguments remain rooted through allocation,
+GC, async entry frames, and debugger snapshots. Runtime environment values are
+host configuration and are not copied into snapshot or exported profile payloads.
+
+The behavior follows the single-string process lookup contract documented by
+[Microsoft](https://learn.microsoft.com/en-us/dotnet/api/system.environment.getenvironmentvariable?view=net-10.0).
+The focused source, emitted CIL, independent CIL and production-worker tests are
+`tests/a19-runtime-*.test.js`; they do not claim native CLR execution parity.

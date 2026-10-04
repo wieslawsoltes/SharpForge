@@ -1,0 +1,1097 @@
+{
+  "schemaVersion": 1,
+  "reference": "Visual Studio General / Text Editor",
+  "retrieved": "2026-10-03",
+  "sourceUpdated": "2026-06-26",
+  "sources": [
+    "https://learn.microsoft.com/en-us/visualstudio/ide/default-keyboard-shortcuts-in-visual-studio?view=visualstudio",
+    "https://code.visualstudio.com/docs/reference/default-keybindings"
+  ],
+  "engine": "SharpForge native EditorModel and virtual view",
+  "bindings": [
+    {
+      "keys": "ArrowLeft",
+      "command": "Edit.CharLeft",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "ArrowRight",
+      "command": "Edit.CharRight",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "ArrowUp",
+      "command": "Edit.LineUp",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "ArrowDown",
+      "command": "Edit.LineDown",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Shift+ArrowLeft",
+      "command": "Edit.CharLeftExtend",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Shift+ArrowRight",
+      "command": "Edit.CharRightExtend",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Shift+ArrowUp",
+      "command": "Edit.LineUpExtend",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Shift+ArrowDown",
+      "command": "Edit.LineDownExtend",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Home",
+      "command": "Edit.LineStart",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "End",
+      "command": "Edit.LineEnd",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Shift+Home",
+      "command": "Edit.LineStartExtend",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Shift+End",
+      "command": "Edit.LineEndExtend",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Home",
+      "command": "Edit.DocumentStart",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+End",
+      "command": "Edit.DocumentEnd",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Shift+Home",
+      "command": "Edit.DocumentStartExtend",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Shift+End",
+      "command": "Edit.DocumentEndExtend",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+ArrowLeft",
+      "command": "Edit.WordPrevious",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+ArrowRight",
+      "command": "Edit.WordNext",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Shift+ArrowLeft",
+      "command": "Edit.WordPreviousExtend",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Shift+ArrowRight",
+      "command": "Edit.WordNextExtend",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "PageUp",
+      "command": "Edit.PageUp",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "PageDown",
+      "command": "Edit.PageDown",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Shift+PageUp",
+      "command": "Edit.PageUpExtend",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Shift+PageDown",
+      "command": "Edit.PageDownExtend",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Backspace",
+      "command": "Edit.Backspace",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Delete",
+      "command": "Edit.Delete",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Backspace",
+      "command": "Edit.WordDeleteToStart",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Delete",
+      "command": "Edit.WordDeleteToEnd",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Enter",
+      "command": "Edit.BreakLine",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Tab",
+      "command": "Edit.InsertTab",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Shift+Tab",
+      "command": "Edit.TabLeft",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+A",
+      "command": "Edit.SelectAll",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+C",
+      "command": "Edit.Copy",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+X",
+      "command": "Edit.Cut",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+V",
+      "command": "Edit.Paste",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Z",
+      "command": "Edit.Undo",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Y",
+      "command": "Edit.Redo",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Shift+Z",
+      "command": "Edit.Redo",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+F",
+      "command": "Edit.Find",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+H",
+      "command": "Edit.Replace",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "F3",
+      "command": "Edit.FindNext",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Shift+F3",
+      "command": "Edit.FindPrevious",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+F3",
+      "command": "Edit.FindNextSelected",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Shift+F3",
+      "command": "Edit.FindPreviousSelected",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "F12",
+      "command": "Edit.GoToDefinition",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Shift+F12",
+      "command": "Edit.FindAllReferences",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+F12",
+      "command": "Edit.GoToDeclaration",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Alt+F12",
+      "command": "Edit.PeekDefinition",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Space",
+      "command": "Edit.CompleteWord",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Shift+Space",
+      "command": "Edit.ParameterInfo",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+.",
+      "command": "View.ShowSmartTag",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+/",
+      "command": "Edit.ToggleLineComment",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Shift+F",
+      "command": "Edit.FindinFiles",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Shift+H",
+      "command": "Edit.ReplaceinFiles",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+S",
+      "command": "File.SaveSelectedItems",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Shift+S",
+      "command": "File.SaveAll",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+F4",
+      "command": "Window.CloseDocumentWindow",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Ctrl+F6",
+      "command": "Window.NextDocumentWindow",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Ctrl+Shift+F6",
+      "command": "Window.PreviousDocumentWindow",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Alt+N",
+      "command": "File.NewFile",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Alt+ArrowUp",
+      "command": "Edit.MoveSelectedLinesUp",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Alt+ArrowDown",
+      "command": "Edit.MoveSelectedLinesDown",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Escape",
+      "command": "Edit.SelectionCancel",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Insert",
+      "command": "Edit.OvertypeMode",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Alt+O",
+      "command": "File.OpenFile",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "F5",
+      "command": "Debug.Start",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+F5",
+      "command": "Debug.StartWithoutDebugging",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Shift+F5",
+      "command": "Debug.StopDebugging",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Shift+F5",
+      "command": "Debug.Restart",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "F9",
+      "command": "Debug.ToggleBreakpoint",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "F10",
+      "command": "Debug.StepOver",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "F11",
+      "command": "Debug.StepInto",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Shift+F11",
+      "command": "Debug.StepOut",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+F10",
+      "command": "Debug.RunToCursor",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Shift+F10",
+      "command": "Debug.SetNextStatement",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Shift+B",
+      "command": "Build.BuildSolution",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+K Mod+C",
+      "command": "Edit.CommentSelection",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+K Mod+U",
+      "command": "Edit.UncommentSelection",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+K Mod+D",
+      "command": "Edit.FormatDocument",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+K Mod+F",
+      "command": "Edit.FormatSelection",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+K Mod+S",
+      "command": "Edit.SurroundWith",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+K Mod+X",
+      "command": "Edit.InsertSnippet",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+K Mod+K",
+      "command": "Edit.ToggleBookmark",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+K Mod+N",
+      "command": "Edit.NextBookmark",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+K Mod+P",
+      "command": "Edit.PreviousBookmark",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+K Mod+L",
+      "command": "Edit.ClearBookmarks",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+K Mod+I",
+      "command": "Edit.QuickInfo",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+R Mod+W",
+      "command": "Edit.ViewWhiteSpace",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+K Mod+/",
+      "command": "Edit.ToggleLineComment",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+M Mod+M",
+      "command": "Edit.ToggleOutliningExpansion",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+M Mod+L",
+      "command": "Edit.ToggleAllOutlining",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+M Mod+O",
+      "command": "Edit.CollapseToDefinitions",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+M Mod+P",
+      "command": "Edit.StopOutlining",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+M Mod+U",
+      "command": "Edit.StopHidingCurrent",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+M Mod+H",
+      "command": "Edit.HideSelection",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+M Mod+S",
+      "command": "Edit.CollapseCurrentRegion",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+M Mod+A",
+      "command": "Edit.CollapseAllOutlining",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+M Mod+X",
+      "command": "Edit.ExpandAllOutlining",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+M Mod+E",
+      "command": "Edit.ExpandCurrentRegion",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+M Mod+T",
+      "command": "Edit.CollapseTag",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+R Mod+R",
+      "command": "Refactor.Rename",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+R Mod+M",
+      "command": "Refactor.ExtractMethod",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+R Mod+G",
+      "command": "EditorContextMenus.CodeWindow.RemoveAndSort",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+E Mod+C",
+      "command": "Edit.CommentSelection",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+E Mod+U",
+      "command": "Edit.UncommentSelection",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+E Mod+D",
+      "command": "Edit.FormatDocument",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+E Mod+F",
+      "command": "Edit.FormatSelection",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+E Mod+W",
+      "command": "Edit.WordWrap",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+E Mod+S",
+      "command": "Edit.ViewWhiteSpace",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+J",
+      "command": "Edit.ListMembers",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Alt+Space",
+      "command": "Edit.ToggleCompletionMode",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+G",
+      "command": "Edit.GoTo",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+I",
+      "command": "Edit.IncrementalSearch",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Shift+I",
+      "command": "Edit.ReverseIncrementalSearch",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Shift+L",
+      "command": "Edit.LineDelete",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+L",
+      "command": "Edit.LineCut",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+D",
+      "command": "Edit.Duplicate",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Enter",
+      "command": "Edit.LineOpenAbove",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Shift+Enter",
+      "command": "Edit.LineOpenBelow",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+]",
+      "command": "Edit.GoToMatchingBrace",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Shift+]",
+      "command": "Edit.GoToMatchingBraceExtend",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Shift+U",
+      "command": "Edit.MakeUppercase",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+U",
+      "command": "Edit.MakeLowercase",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Shift+ArrowUp",
+      "command": "Edit.PreviousHighlightedReference",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Shift+ArrowDown",
+      "command": "Edit.NextHighlightedReference",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Alt+Shift+ArrowUp",
+      "command": "Edit.LineUpExtendColumn",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Alt+Shift+ArrowDown",
+      "command": "Edit.LineDownExtendColumn",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Alt+Shift+ArrowLeft",
+      "command": "Edit.CharLeftExtendColumn",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Alt+Shift+ArrowRight",
+      "command": "Edit.CharRightExtendColumn",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Alt+]",
+      "command": "Edit.ExpandSelection",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Alt+[",
+      "command": "Edit.ShrinkSelection",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+,",
+      "command": "Edit.NavigateTo",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+-",
+      "command": "View.NavigateBackward",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Shift+-",
+      "command": "View.NavigateForward",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Shift+P",
+      "command": "View.CommandPalette",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Shift+.",
+      "command": "View.ZoomIn",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Shift+,",
+      "command": "View.ZoomOut",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Alt+Backspace",
+      "command": "Edit.Undo",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Alt+Shift+Backspace",
+      "command": "Edit.Redo",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Ctrl+Insert",
+      "command": "Edit.Copy",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Shift+Insert",
+      "command": "Edit.Paste",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Shift+Delete",
+      "command": "Edit.Cut",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Shift+Enter",
+      "command": "Edit.BreakLine",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Shift+Backspace",
+      "command": "Edit.DeleteBackwards",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Alt+ArrowRight",
+      "command": "Edit.CompleteWord",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+K Mod+\\",
+      "command": "Edit.DeleteHorizontalWhiteSpace",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Alt+Shift+-",
+      "command": "Edit.ContractSelection",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Alt+Shift+=",
+      "command": "Edit.ExpandSelection",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Alt+Shift+]",
+      "command": "Edit.ExpandSelectiontoContainingBlock",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Alt+Shift+C",
+      "command": "Edit.CopyParameterTip",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Alt+Shift+P",
+      "command": "Edit.PasteParameterTip",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Alt+,",
+      "command": "Edit.DecreaseFilterLevel",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Alt+.",
+      "command": "Edit.IncreaseFilterLevel",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Alt+PageDown",
+      "command": "Edit.GotoNextIssueinFile",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Alt+PageUp",
+      "command": "Edit.GotoPreviousIssueinFile",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Alt+Shift+;",
+      "command": "Edit.InsertCaretsatAllMatching",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Alt+Shift+.",
+      "command": "Edit.InsertNextMatchingCaret",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Alt+Shift+Home",
+      "command": "Edit.LineStartExtendColumn",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Alt+Shift+End",
+      "command": "Edit.LineEndExtendColumn",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Alt+Shift+T",
+      "command": "Edit.LineTranspose",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Shift+T",
+      "command": "Edit.WordTranspose",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Alt+-",
+      "command": "Edit.PeekBackward",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Alt+=",
+      "command": "Edit.PeekForward",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+ArrowDown",
+      "command": "Edit.ScrollLineDown",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+ArrowUp",
+      "command": "Edit.ScrollLineUp",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+=",
+      "command": "Edit.SelectToLastGoBack",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+K Mod+`",
+      "command": "Edit.ShowCodeLensMenu",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Alt+`",
+      "command": "Edit.ShowNavigateMenu",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+K Mod+A",
+      "command": "Edit.SwapAnchor",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+K Mod+H",
+      "command": "Edit.ToggleTaskListShortcut",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+PageDown",
+      "command": "Edit.ViewBottom",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Shift+PageDown",
+      "command": "Edit.ViewBottomExtend",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+PageUp",
+      "command": "Edit.ViewTop",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Shift+PageUp",
+      "command": "Edit.ViewTopExtend",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Alt+Shift+ArrowRight",
+      "command": "Edit.WordNextExtendColumn",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Mod+Alt+Shift+ArrowLeft",
+      "command": "Edit.WordPreviousExtendColumn",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Alt+Enter",
+      "command": "EditorContextMenus.CodeWindow.ExecuteInInteractive",
+      "scope": "Text Editor"
+    },
+    {
+      "keys": "Alt+'",
+      "command": "EditorContextMenus.CodeWindow.ExecuteLineInInteractive",
+      "scope": "Text Editor"
+    }
+  ],
+  "unboundKnownCommands": [
+    "Edit.SubwordPrevious",
+    "Edit.SubwordPreviousExtend",
+    "Edit.SubwordNext",
+    "Edit.SubwordNextExtend",
+    "Edit.CopyLineUp",
+    "Edit.CopyLineDown",
+    "Edit.Capitalize",
+    "Edit.TrimTrailingWhiteSpace",
+    "Edit.ConvertSpacesToTabs",
+    "Edit.ConvertTabsToSpaces",
+    "Edit.SelectCurrentWord",
+    "Edit.AddNextOccurrence",
+    "Edit.SelectAllOccurrences",
+    "Edit.Rename",
+    "Edit.GoToFindCombo",
+    "Window.ReopenClosedTab",
+    "Window.NextDocumentWindowNav",
+    "Window.PreviousDocumentWindowNav",
+    "View.Settings",
+    "View.KeyboardSettings",
+    "Window.NewVerticalTabGroup",
+    "Window.NewHorizontalTabGroup",
+    "Edit.UncollapseCurrentRegion",
+    "Edit.CollapseAllRegions",
+    "Edit.UncollapseAllRegions",
+    "Edit.AddCaretAbove",
+    "Edit.AddCaretBelow",
+    "Edit.SplitSelectionIntoLines",
+    "Edit.TransposeCharacter",
+    "Edit.TransposeWord",
+    "Edit.TransposeLine",
+    "Edit.JoinLines",
+    "Edit.SortLines",
+    "Edit.SelectCurrentLine",
+    "Edit.ReverseLines",
+    "View.ZoomReset",
+    "View.ScrollLineUp",
+    "View.ScrollLineDown",
+    "Edit.GotoBrace",
+    "Edit.GotoBraceExtend",
+    "Edit.GotoAll",
+    "Edit.ToggleWordWrap",
+    "Edit.GotoRecent",
+    "Build.Cancel",
+    "Build.Compile",
+    "Build.RunCodeAnalysisonSolution",
+    "Tools.CodeSnippetsManager",
+    "Edit.OpenFile"
+  ],
+  "deviations": [
+    {
+      "keys": "Mod+D",
+      "command": "Edit.Duplicate",
+      "reason": "Preserves established SharpForge editor binding; General Visual Studio assigns GoToFindCombo. NavigateTo is available on Mod+,."
+    },
+    {
+      "keys": "Mod+K Mod+S",
+      "command": "Edit.SurroundWith",
+      "reason": "Historical Visual Studio chord retained by the Project 16 compatibility contract."
+    },
+    {
+      "command": "Edit.GotoRecent",
+      "reason": "The reference Ctrl+T,R sequence is browser reserved. Recent documents are exposed through the workbench navigator."
+    }
+  ],
+  "platforms": [
+    {
+      "command": "Window.CloseDocumentWindow",
+      "reserved": "Ctrl+W",
+      "alternate": "Ctrl+F4",
+      "platform": "windows",
+      "browserMayIntercept": true
+    },
+    {
+      "command": "File.NewFile",
+      "reserved": "Ctrl+N",
+      "alternate": "Ctrl+Alt+N",
+      "platform": "windows",
+      "browserMayIntercept": true
+    },
+    {
+      "command": "Edit.NavigateTo",
+      "reserved": "Ctrl+T",
+      "alternate": "Ctrl+,",
+      "platform": "windows",
+      "browserMayIntercept": true
+    },
+    {
+      "command": "Window.NextDocumentWindowNav",
+      "reserved": "Ctrl+Tab",
+      "alternate": "Ctrl+F6",
+      "platform": "windows",
+      "browserMayIntercept": true
+    },
+    {
+      "command": "Window.PreviousDocumentWindowNav",
+      "reserved": "Ctrl+Shift+Tab",
+      "alternate": "Ctrl+Shift+F6",
+      "platform": "windows",
+      "browserMayIntercept": true
+    },
+    {
+      "command": "File.OpenFile",
+      "reserved": "Ctrl+O",
+      "alternate": "Ctrl+Alt+O",
+      "platform": "windows",
+      "browserMayIntercept": true
+    },
+    {
+      "command": "Window.CloseDocumentWindow",
+      "reserved": "Meta+W",
+      "alternate": "Meta+F4",
+      "platform": "mac",
+      "browserMayIntercept": true
+    },
+    {
+      "command": "File.NewFile",
+      "reserved": "Meta+N",
+      "alternate": "Meta+Alt+N",
+      "platform": "mac",
+      "browserMayIntercept": true
+    },
+    {
+      "command": "Edit.NavigateTo",
+      "reserved": "Meta+T",
+      "alternate": "Meta+,",
+      "platform": "mac",
+      "browserMayIntercept": true
+    },
+    {
+      "command": "Window.NextDocumentWindowNav",
+      "reserved": "Ctrl+Tab",
+      "alternate": "Ctrl+F6",
+      "platform": "mac",
+      "browserMayIntercept": true
+    },
+    {
+      "command": "Window.PreviousDocumentWindowNav",
+      "reserved": "Ctrl+Shift+Tab",
+      "alternate": "Ctrl+Shift+F6",
+      "platform": "mac",
+      "browserMayIntercept": true
+    },
+    {
+      "command": "File.OpenFile",
+      "reserved": "Meta+O",
+      "alternate": "Meta+Alt+O",
+      "platform": "mac",
+      "browserMayIntercept": true
+    },
+    {
+      "command": "Window.CloseDocumentWindow",
+      "reserved": "Ctrl+W",
+      "alternate": "Ctrl+F4",
+      "platform": "linux",
+      "browserMayIntercept": true
+    },
+    {
+      "command": "File.NewFile",
+      "reserved": "Ctrl+N",
+      "alternate": "Ctrl+Alt+N",
+      "platform": "linux",
+      "browserMayIntercept": true
+    },
+    {
+      "command": "Edit.NavigateTo",
+      "reserved": "Ctrl+T",
+      "alternate": "Ctrl+,",
+      "platform": "linux",
+      "browserMayIntercept": true
+    },
+    {
+      "command": "Window.NextDocumentWindowNav",
+      "reserved": "Ctrl+Tab",
+      "alternate": "Ctrl+F6",
+      "platform": "linux",
+      "browserMayIntercept": true
+    },
+    {
+      "command": "Window.PreviousDocumentWindowNav",
+      "reserved": "Ctrl+Shift+Tab",
+      "alternate": "Ctrl+Shift+F6",
+      "platform": "linux",
+      "browserMayIntercept": true
+    },
+    {
+      "command": "File.OpenFile",
+      "reserved": "Ctrl+O",
+      "alternate": "Ctrl+Alt+O",
+      "platform": "linux",
+      "browserMayIntercept": true
+    }
+  ]
+}

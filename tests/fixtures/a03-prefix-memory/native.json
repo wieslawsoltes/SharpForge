@@ -1,0 +1,163 @@
+{
+  "oracle": "ILVerify",
+  "version": "10.0.5",
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "toolSHA256": "ca75cb4d2299ee5413eaf602a6ba87b7c089f3785d06f6b8ccad013d4e4646be",
+  "sourceSHA256": "c49b9a2aefe556a1edee2323fa2e1cb81453173ede33982d3380f2b1dac17be7",
+  "assemblySHA256": "74fcd8f488855aa4cb73e22731c8f765490d76dbbe98054c24a7f25545febbfa",
+  "environment": {
+    "platform": "darwin-arm64",
+    "osRelease": "25.6.0",
+    "node": "v24.21.0",
+    "image": {
+      "kind": "local",
+      "pinnedImage": false,
+      "reason": "Local OS is recorded, not an immutable runner image."
+    },
+    "imageOS": null,
+    "imageVersion": null
+  },
+  "references": {
+    "count": 167,
+    "sha256": "a978e7aaf608f22e860328a42319b908a5a084cdb087b28b5c31a1e6726be362"
+  },
+  "observations": [
+    {
+      "name": "Volatile",
+      "code": "DwD+E0oq",
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "diagnostic": null,
+      "raw": {
+        "stdout": "All Classes and Methods in <temporary>/PrefixMemory.dll Verified.\nTypes found: 0\nTypes verified: 2\nMethods found: 8\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 78.90579200000002
+      }
+    },
+    {
+      "name": "Unaligned",
+      "code": "DwD+EgFKKg==",
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "diagnostic": null,
+      "raw": {
+        "stdout": "All Classes and Methods in <temporary>/PrefixMemory.dll Verified.\nTypes found: 0\nTypes verified: 2\nMethods found: 8\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 77.97441599999996
+      }
+    },
+    {
+      "name": "VolatileUnaligned",
+      "code": "DwD+E/4SAUoq",
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "diagnostic": null,
+      "raw": {
+        "stdout": "All Classes and Methods in <temporary>/PrefixMemory.dll Verified.\nTypes found: 0\nTypes verified: 2\nMethods found: 8\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 80.76495899999998
+      }
+    },
+    {
+      "name": "UnalignedVolatile",
+      "code": "DwD+EgH+E0oq",
+      "oracle": {
+        "accepted": true,
+        "errors": []
+      },
+      "diagnostic": null,
+      "raw": {
+        "stdout": "All Classes and Methods in <temporary>/PrefixMemory.dll Verified.\nTypes found: 0\nTypes verified: 2\nMethods found: 8\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 0,
+        "signal": null,
+        "elapsedMs": 82.44720799999993
+      }
+    },
+    {
+      "name": "BadVolatile",
+      "code": "/hMAKg==",
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "Volatile"
+        ]
+      },
+      "diagnostic": "CILPM0002",
+      "raw": {
+        "stdout": "[IL]: Error [Volatile]: [<temporary>/PrefixMemory.dll : Fixture.Program::BadVolatile()][offset 0x00000002] Missing ldsfld, stsfld, ldind, stind, ldfld, stfld, ldobj, stobj, initblk, or cpblk.\n1 Error(s) Verifying <temporary>/PrefixMemory.dll\nTypes found: 0\nTypes verified: 2\nMethods found: 8\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 83.74737500000003
+      }
+    },
+    {
+      "name": "BadUnaligned",
+      "code": "/hIBACo=",
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "Unaligned"
+        ]
+      },
+      "diagnostic": "CILPM0002",
+      "raw": {
+        "stdout": "[IL]: Error [Unaligned]: [<temporary>/PrefixMemory.dll : Fixture.Program::BadUnaligned()][offset 0x00000003] Missing ldind, stind, ldfld, stfld, ldobj, stobj, initblk, cpblk.\n1 Error(s) Verifying <temporary>/PrefixMemory.dll\nTypes found: 0\nTypes verified: 2\nMethods found: 8\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 91.940875
+      }
+    },
+    {
+      "name": "RepeatedVolatile",
+      "code": "DwD+E/4TSio=",
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "Volatile"
+        ]
+      },
+      "diagnostic": "CILPM0001",
+      "raw": {
+        "stdout": "[IL]: Error [Volatile]: [<temporary>/PrefixMemory.dll : Fixture.Program::RepeatedVolatile(int32)][offset 0x00000004] Missing ldsfld, stsfld, ldind, stind, ldfld, stfld, ldobj, stobj, initblk, or cpblk.\n1 Error(s) Verifying <temporary>/PrefixMemory.dll\nTypes found: 0\nTypes verified: 2\nMethods found: 8\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 88.61795799999993
+      }
+    },
+    {
+      "name": "NoArray",
+      "code": "Ahb+GQaUKg==",
+      "oracle": {
+        "accepted": false,
+        "errors": [
+          "Unverifiable"
+        ]
+      },
+      "diagnostic": "CILPM0004",
+      "raw": {
+        "stdout": "[IL]: Error [Unverifiable]: [<temporary>/PrefixMemory.dll : Fixture.Program::NoArray(int32[])][offset 0x00000002] Instruction cannot be verified.\n1 Error(s) Verifying <temporary>/PrefixMemory.dll\nTypes found: 0\nTypes verified: 2\nMethods found: 8\nMethods verified: 1\n",
+        "stderr": "",
+        "exitCode": 2,
+        "signal": null,
+        "elapsedMs": 111.15758300000005
+      }
+    }
+  ]
+}

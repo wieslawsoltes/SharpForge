@@ -1,3 +1,5 @@
+import {nativeIntegerBits} from '@sharpforge/bytecode';
+import {frameworkMethodTable} from './framework-method-table.js';
 import {frameworkType, canonicalType} from '@sharpforge/framework';
 import {exceptionTypeName, exceptionBaseType} from './exception-types.js';
 
@@ -49,7 +51,7 @@ export class MethodTable {
   constructor(registry,name,token) {this.registry=registry;this.name=name;this.token=token;}
 }
 
-function builtin(name) {
+function builtin(name, nativeIntBits = 32) {
   if(name==='System.Object')return {base:null};
   if(name==='System.ValueType')return {base:'System.Object'};
   if(name==='System.Enum')return {base:'System.ValueType',interfaces:['System.IComparable','System.IFormattable','System.IConvertible']};
@@ -62,7 +64,7 @@ function builtin(name) {
   if(name==='System.RuntimeType')return {base:'System.Reflection.TypeInfo',flags:{sealed:true}};
   if(name in primitiveSizes) {
     const interfaces=name==='System.Void'?[]:['System.IComparable',...(name==='System.Boolean'?[]:['System.IFormattable']),'System.IConvertible','System.IComparable`1<'+name+'>','System.IEquatable`1<'+name+'>'];
-    return {base:'System.ValueType',flags:{valueType:true,primitive:!['System.Decimal','System.Void'].includes(name),sealed:true},valueSize:primitiveSizes[name],interfaces};
+    return {base:'System.ValueType',flags:{valueType:true,primitive:!['System.Decimal','System.Void'].includes(name),sealed:true},valueSize:name==='System.IntPtr'||name==='System.UIntPtr'?nativeIntBits/8:primitiveSizes[name],interfaces};
   }
   if(name==='System.String')return {base:'System.Object',instanceSize:24,flags:{sealed:true},interfaces:['System.IComparable','System.ICloneable','System.IConvertible','System.IComparable`1<System.String>','System.IEquatable`1<System.String>','System.Collections.IEnumerable',genericPrefix+'IEnumerable`1<System.Char>']};
   const exceptionBase=exceptionBaseType(name);
@@ -84,14 +86,15 @@ function builtin(name) {
   if(name==='System.Collections.ICollection')return {flags:{interface:true},interfaces:['System.Collections.IEnumerable']};
   if(['System.IComparable','System.IFormattable','System.IConvertible','System.ICloneable','System.IDisposable','System.Collections.IEnumerable','System.Collections.IEnumerator','System.Collections.IStructuralComparable','System.Collections.IStructuralEquatable','System.Runtime.Serialization.ISerializable'].includes(name))return {flags:{interface:true}};
   const framework=frameworkType(name);
-  if(framework)return {base:framework.base??(framework.kind==='enum'?'System.Enum':framework.kind==='value'?'System.ValueType':framework.kind==='delegate'?'System.MulticastDelegate':'System.Object'),flags:{valueType:['value','enum'].includes(framework.kind),enum:framework.kind==='enum',delegate:framework.kind==='delegate',dynamic:true},enumUnderlyingType:framework.kind==='enum'?'int':null,fields:[]};
+  if(framework)return frameworkMethodTable(framework);
   return {base:'System.Object',flags:{external:true,dynamic:true}};
 }
 
 const substitute=(name,args)=>name.replace(/!!?\d+/g,match=>match.startsWith('!!')?match:args[Number(match.slice(1))]?.name??match);
 
 export class MethodTableRegistry {
-  constructor({tokenResolver=null}={}) {
+  constructor({tokenResolver=null,nativeIntBits=32}={}) {
+    Object.defineProperty(this,'nativeIntBits',{value:nativeIntegerBits({nativeIntBits}),enumerable:true});
     this.tokenResolver=tokenResolver;this.descriptors=new Map();this.descriptorTokens=new Map();this.tables=new Map();this.tokens=new Map();this.nextToken=-1;this.building=new Set();
   }
   define(descriptor) {
@@ -135,13 +138,13 @@ export class MethodTableRegistry {
       if(this.tables.has(name))return this.tables.get(name);
       // Read the definition descriptor so recursive fields (Node<T>.Next) do
       // not depend on the open table having finished materializing its fields.
-      const template=this.descriptors.get(definition.name)??builtin(definition.name);
+      const template=this.descriptors.get(definition.name)??builtin(definition.name,this.nativeIntBits);
       descriptor={name,genericDefinition:definition,typeArguments:args,base:template.base===null?null:substitute(template.base??'System.Object',args),
         interfaces:(template.interfaces??[]).map(type=>substitute(type,args)),flags:{...definition.flags,genericDefinition:false},variance:template.variance??definition.variance,
         fields:(template.fields??[]).map(field=>({...field,type:substitute(field.type,args),...(field.storageType?{storageType:substitute(field.storageType,args)}:{})})),enumUnderlyingType:template.enumUnderlyingType,vtable:template.vtable??definition.vtable,
         valueSize:template.valueSize};
     }
-    descriptor??={name,...builtin(name)};
+    descriptor??={name,...builtin(name,this.nativeIntBits)};
     const token=descriptor.token??this.nextToken--,table=new MethodTable(this,name,token);
     this.tables.set(name,table);this.tokens.set(token,table);this.building.add(name);
     try {
@@ -181,8 +184,8 @@ export class MethodTableRegistry {
 }
 
 /** Source and CIL heaps use the same headers; source fields retain their IR slots. */
-export function createSourceMethodTables(image) {
-  const registry=new MethodTableRegistry();
+export function createSourceMethodTables(image,options={}) {
+  const registry=new MethodTableRegistry(options);
   for(const [index,type] of (image.types??[]).entries())registry.define({name:type.name,token:type.token??0x02000001+(type.id??index),base:type.base??'System.Object',interfaces:type.interfaces??[],fields:type.fields??[],flags:{enum:!!type.enum,valueType:!!type.enum},enumUnderlyingType:type.enum?type.underlyingType??'int':null,
     vtable:(image.methods??[]).filter(method=>method.owner===type.name&&!method.isStatic).map(method=>[method.id,method.id])});
   for(const type of image.types??[])registry.get(type.name);

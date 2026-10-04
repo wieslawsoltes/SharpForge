@@ -73,7 +73,25 @@ test('A02-T84 initializers: allowed on a property that uses field, CS8050 otherw
   assert.deepEqual(codes(`class C { public int A { get { return 1; } } = 1; } ${main}`), ['CS8050:error']);
 });
 
-test('A02-T84 limit: below C# 14 the use is reported as the gated feature (Roslyn binds the name to a member there)', () => {
-  const source = `class C { int field = 5; public int P { get { return field; } } } ${main}`;
-  assert.deepEqual(codes(source, { langVersion: '13' }), ['CS9260:error']);
+test('A02-T84 below C# 14 field is an ordinary name: it binds to a member named field, or is CS0103 (as Roslyn)', () => {
+  // The Roslyn-pinned programs are field-keyword/csharp13-member-named-field and csharp13-no-member-named-field.
+  const withMember = `using System; class C { int field = 5; public int P { get { return field; } set { field = value * 2; } } } ` +
+    'class Program { static void Main() { var c = new C(); Console.WriteLine(c.P); c.P = 7; Console.WriteLine(c.P); } }';
+  const result = compile(withMember, { langVersion: '13' });
+  assert.deepEqual(codes(withMember, { langVersion: '13' }), []);
+  assert.equal(new VirtualMachine(result.image).run().output, '5\n14\n');
+  assert.equal(new CilVirtualMachine(compileToIL(withMember, { langVersion: '13', includeDebug: false }).assembly).run().output, '5\n14\n');
+  assert.deepEqual(codes(`class C { public int P { get { return field; } } } ${main}`, { langVersion: '13' }), ['CS0103:error']);
+  // A local named field is fine there, and an auto accessor next to a bodied one is the gated part (on the name).
+  assert.deepEqual(codes(`class C { public int L { get { int field = 1; return field; } } } ${main}`, { langVersion: '13' }), []);
+  assert.deepEqual(codes(`class C { public int M { get; set { } } } ${main}`, { langVersion: '13' }), ['CS9260:error']);
+});
+
+test('A02-T84 the string-typed profile does not bind the keyword: such a property is compiled by the semantic pipeline', () => {
+  // A program inside the profile except for `field`: it still runs on both back ends, through one implementation.
+  const source =
+    'using System; class C { public int P { get => field; set => field = value + 1; } public int Q { get; set => field = value * 2; } } ' +
+    'class Program { static void Main() { var c = new C(); c.P = 4; c.Q = 4; Console.WriteLine(c.P + " " + c.Q); } }';
+  assert.equal(run(source), '5 8\n');
+  assert.deepEqual(codes(`class C { public int P { get { int field = 1; return 2; } } } ${main}`).filter(code => code.endsWith(':error')), ['CS9273:error']);
 });

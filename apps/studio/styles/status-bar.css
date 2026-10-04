@@ -1,1 +1,13 @@
-.statusbar{background:#007acc;color:#fff}.statusbar.debugging{background:#bf6b22}.statusbar.running{background:#a54d16}.statusbar #editor-keymap-status{white-space:nowrap;border-left:1px solid #ffffff30;padding:0 8px;height:100%;color:inherit}
+.statusbar {
+  background: var(--status-bar-statusbar-background);
+  color: var(--status-bar-statusbar-foreground);
+}
+.statusbar.debugging { background: var(--status-bar-statusbar-debugging-background); }
+.statusbar.running { background: var(--status-bar-statusbar-running-background); }
+.statusbar #editor-keymap-status {
+  white-space: nowrap;
+  border-left: 1px solid var(--status-bar-statusbar-editor-keymap-status-border);
+  padding: 0 8px;
+  height: 100%;
+  color: inherit;
+}

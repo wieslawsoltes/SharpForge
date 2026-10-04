@@ -1,6 +1,7 @@
 import { designSourceFormat, designSourceFormats } from '../../../packages/designer/src/index.js';
 import { sourceSyncControls } from './source-controls.js';
 import { openDesignerSource } from './source-editor.js';
+import { captureDesignerTarget, reportDesignerError, reportDesignerSync, scheduleDesignerSync } from '../designer-diagnostics.js';
 
 /** Coordinates source and design baselines. Each registered format owns parsing, validation and write dispatch. */
 export class DesignerSourceSync {
@@ -16,10 +17,11 @@ export class DesignerSourceSync {
     this.writing = false;
     this.loading = false;
     this.generation = 0;
+    this.diagnosticTarget = null;
   }
 
-  files() {
-    const files = new Map((this.view.sourceFiles?.() ?? []).map(file => [file.uri, file]));
+  files(opened = this.view.sourceFiles?.() ?? []) {
+    const files = new Map(opened.map(file => [file.uri, file]));
     for (const record of this.view.records?.() ?? []) {
       const uri = record.uri ?? record.path;
       if (typeof record.text !== 'string' || !designSourceFormats.some(format => format.matches(uri)) || files.has(uri)) continue;
@@ -37,19 +39,15 @@ export class DesignerSourceSync {
       warnings: this.session?.analysis.warnings ?? [], structuralEditable: this.session?.analysis.structuralEditable ?? false };
   }
 
-  report(state, message) {
-    this.state = state;
-    this.message = message;
-    this.view.chrome?.renderSync();
-    this.view.status = message;
-    if (this.view.statusElement) this.view.statusElement.textContent = message;
-  }
+  report(state, message, target) { return reportDesignerSync(this, state, message, target); }
 
   clearTimers() { clearTimeout(this.sourceTimer); clearTimeout(this.designTimer); }
 
   async connect(uri) {
     this.view.ensure();
-    const files = this.files();
+    const generation = this.generation;
+    const opened = this.view.sourceFiles?.() ?? [];
+    const files = this.files(opened);
     if (!uri) {
       const active = files.find(file => file.uri === this.view.state.active);
       const preferred = files.find(file => /DesignedView.*\.cs$/.test(file.uri));
@@ -59,8 +57,23 @@ export class DesignerSourceSync {
     if (!uri) return null;
     const file = files.find(file => file.uri === uri);
     if (!file) throw new Error('Source file is not available in this workspace');
+    const currentOpened = this.view.sourceFiles?.() ?? [];
+    const current = this.files(currentOpened).find(candidate => candidate.uri === uri);
+    // Open buffers have stable identities; closed records are fresh views over versioned workspace data.
+    const replacedOpenFile = opened.includes(file) && currentOpened.find(candidate => candidate.uri === uri) !== file;
+    if (generation !== this.generation || replacedOpenFile || !current ||
+      current.version !== file.version || current.text !== file.text) {
+      throw new Error('Source selection changed while choosing a view');
+    }
+    const target = captureDesignerTarget(this.view, uri);
     const format = designSourceFormat(uri);
-    const session = new format.Session(file.text, { uri });
+    let session;
+    try { session = new format.Session(file.text, { uri }); }
+    catch (error) {
+      if (target || typeof this.view.toast === 'function') reportDesignerError(this.view, error, target);
+      throw error;
+    }
+    this.view.diagnostics?.clear(this.diagnosticTarget);
     this.generation++;
     this.clearTimers();
     this.session = session;
@@ -68,7 +81,7 @@ export class DesignerSourceSync {
     this.loading = true;
     try { this.view.replace(session.document, { path: uri.replace(/(?:\.g)?\.(?:cs|xaml)$/i, '.sfdesign.json') }); }
     finally { this.loading = false; }
-    this.report('synced', `Linked ${uri} · ${session.analysis.method.name} · ${session.analysis.warnings.length} protected expression(s)`);
+    this.report('synced', `Linked ${uri} · ${session.analysis.method.name} · ${session.analysis.warnings.length} protected expression(s)`, target);
     // Linking XAML must never open a modal or execute its code-behind.
     this.view.chrome?.setMode(format.viewMode);
     return this.snapshot();
@@ -92,7 +105,7 @@ export class DesignerSourceSync {
     if (!this.dirty()) { this.report('synced', 'Source and design are synchronized.'); return; }
     this.report('design-dirty', 'Designer changes staged · validating source before writeback');
     clearTimeout(this.designTimer);
-    if (this.auto) this.designTimer = setTimeout(() => this.write().catch(error => this.report('blocked', error.message)), 350);
+    if (this.auto) this.designTimer = scheduleDesignerSync(this, 'write', 350);
   }
 
   setAuto(enabled) {
@@ -111,7 +124,7 @@ export class DesignerSourceSync {
     clearTimeout(this.sourceTimer);
     if (this.dirty()) { this.report('conflict', 'Source and designer both changed; automatic synchronization is paused.'); return; }
     this.report('source-dirty', 'Source changed · waiting for a complete view');
-    if (this.auto) this.sourceTimer = setTimeout(() => this.read().catch(error => this.report('blocked', error.message)), 450);
+    if (this.auto) this.sourceTimer = scheduleDesignerSync(this, 'read', 450);
   }
 
   async read({ discardDesign = false } = {}) {
@@ -142,12 +155,13 @@ export class DesignerSourceSync {
     const session = this.session;
     const epoch = this.generation;
     const revision = this.view.document.revision;
+    const target = captureDesignerTarget(this.view, file.uri);
     const plan = session.plan(this.view.document.value, file.text);
     if (!plan.edits.length) { session.commit(plan); this.report('synced', 'Source and design are synchronized.'); return this.snapshot(); }
     const apply = this.view[this.format.writeService];
     if (typeof apply !== 'function') throw new Error('This host has no ' + this.format.label + ' source transaction service');
     this.writing = true;
-    this.report('validating', `Validating ${plan.edits.length} source edit(s)…`);
+    this.report('validating', `Validating ${plan.edits.length} source edit(s)…`, target);
     this.pending = (async () => {
       try {
         await apply.call(this.view, file.uri, plan, file.version, () => {
@@ -155,10 +169,14 @@ export class DesignerSourceSync {
             throw new Error('Designer changed during validation; retry the latest edit.');
           }
         });
+        if (epoch !== this.generation || session !== this.session) throw new Error('Source link changed during source update');
         session.commit(plan);
         this.report('synced', `Applied ${plan.edits.length} source edit(s) · user handlers retained`);
         return this.snapshot();
-      } catch (error) { this.report('blocked', error.message); throw error; }
+      } catch (error) {
+        if (epoch === this.generation && session === this.session) this.report('blocked', error.message, target);
+        throw error;
+      }
       finally { this.writing = false; this.pending = null; this.view.chrome?.refreshSource(); }
     })();
     return this.pending;

@@ -80,7 +80,11 @@ const attributes = [
   [interop, 'OutAttribute', T.Parameter, false, [[]], []],
   [interop, 'ComVisibleAttribute', types | T.Assembly | T.Method | T.Property | T.Field, false, [[['visibility', 'b']]], []],
   [interop, 'GuidAttribute', types | T.Assembly, false, [[['guid', 's']]], []],
+  [interop, 'ComImportAttribute', T.Class | T.Interface, false, [[]], []],
+  [interop, 'CoClassAttribute', T.Interface, false, [[['coClass', 't']]], []],
   ['System.Runtime.CompilerServices', 'CompilerGeneratedAttribute', T.All, false, [[]], []],
+  // The metadata name of an indexer (binder/members/indexer-names.js decodes it).
+  ['System.Runtime.CompilerServices', 'IndexerNameAttribute', T.Property, false, [[['indexerName', 's']]], []],
   // Caller info (binder/caller-info.js decodes them).
   ['System.Runtime.CompilerServices', 'CallerMemberNameAttribute', T.Parameter, false, [[]], []],
   ['System.Runtime.CompilerServices', 'CallerFilePathAttribute', T.Parameter, false, [[]], []],

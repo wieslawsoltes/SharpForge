@@ -1,7 +1,7 @@
 import { Writer, CilError } from '../binary.js';
 import { win32ResourceEntries } from './win32-input.js';
 
-const maximumBytes = 16 * 1024 * 1024;
+import { maximumWin32ResourceBytes } from './win32-limits.js';
 function validKey(key) {
   return Number.isInteger(key) && key >= 0 && key <= 65535
     || typeof key === 'string' && key.length > 0 && key.length <= 1024 && !key.includes('\0');
@@ -27,7 +27,7 @@ function resourceTree(entries) {
       names.add(key);
       bytes += 2 + key.length * 2;
     }
-    if (bytes > maximumBytes) throw new CilError('Win32 resources exceed size limit');
+    if (bytes > maximumWin32ResourceBytes) throw new CilError('Win32 resources exceed size limit');
     if (!root.has(entry.type)) root.set(entry.type, new Map());
     const type = root.get(entry.type);
     if (!type.has(entry.name)) type.set(entry.name, new Map());
@@ -58,7 +58,7 @@ function nameHandle(key, writer, names) {
 
 /** Build a deterministic three-level .rsrc directory for its final section RVA. */
 export function writeWin32Resources(options, { sectionRva, library = false } = {}) {
-  if (!Number.isInteger(sectionRva) || sectionRva < 0 || sectionRva > 0xffffffff - maximumBytes) {
+  if (!Number.isInteger(sectionRva) || sectionRva < 0 || sectionRva > 0xffffffff - maximumWin32ResourceBytes) {
     throw new CilError('Invalid Win32 resource section RVA');
   }
   const tree = resourceTree(win32ResourceEntries(options, { library }));
@@ -77,7 +77,7 @@ export function writeWin32Resources(options, { sectionRva, library = false } = {
         writer.patch32(at + 4, writer.length);
         writer.u32(sectionRva + writer.length + 16).u32(value.bytes.length).u32(value.codePage ?? 0).u32(0).bytes(value.bytes).pad();
       }
-      if (writer.length > maximumBytes) throw new CilError('Win32 resources exceed size limit');
+      if (writer.length > maximumWin32ResourceBytes) throw new CilError('Win32 resources exceed size limit');
     }
   }
   return writer.finish();

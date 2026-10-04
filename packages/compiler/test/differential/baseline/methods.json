@@ -4,10 +4,10 @@
   "methods/cs0127-return-value-from-void": ["diagnostics", "warnings"],
   "methods/cs0501-missing-body": ["diagnostics", "warnings"],
   "methods/cs1620-missing-ref": ["diagnostics", "warnings"],
-  "methods/expression-bodied-and-local": ["diagnostics", "warnings", "bytecode", "cil"],
-  "methods/optional-and-named": ["diagnostics", "warnings", "bytecode", "cil"],
-  "methods/params-array": ["diagnostics", "warnings", "bytecode", "cil"],
-  "methods/recursion": ["diagnostics", "warnings", "bytecode", "cil"],
-  "methods/ref-and-out": ["diagnostics", "warnings", "bytecode", "cil"],
-  "methods/value-vs-reference-arguments": ["diagnostics", "warnings", "bytecode", "cil"]
+  "methods/expression-bodied-and-local": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "methods/optional-and-named": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "methods/params-array": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "methods/recursion": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "methods/ref-and-out": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
+  "methods/value-vs-reference-arguments": ["diagnostics", "warnings", "bytecode", "cil", "directCil"]
 }

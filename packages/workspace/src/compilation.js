@@ -60,7 +60,8 @@ export function compileWorkspace(workspace, {signal, ...provided} = {}) {
   if (!files.length) return {success: false, image: null, diagnostics: [], symbols: [], references: [], metrics: {}};
   const parseMs = performance.now() - started;
   const generated = generatedInputs(workspace, files, options, signal);
-  const result = new Compilation(files, options).build();
+  const compilation = new Compilation(files, options);
+  const result = compilation.build();
   analyzeExtensions(workspace, result, files, generated, signal);
   if (signal?.aborted) throw new DOMException('Compilation cancelled', 'AbortError');
   result.metrics.totalMs = performance.now() - started;
@@ -69,6 +70,7 @@ export function compileWorkspace(workspace, {signal, ...provided} = {}) {
   result.metrics.reusedDocuments = files.length - result.metrics.parsedThisCompilation;
   result.revision = workspace.revision;
   workspace.result = result;
+  workspace.compilation = compilation;
   workspace.resultOptionKey = optionKey;
   workspace.resultExtensions = workspace.extensions;
   return result;

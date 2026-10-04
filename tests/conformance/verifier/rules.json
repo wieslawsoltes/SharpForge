@@ -1,0 +1,977 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "081d220c0a773ffb7c6bea6b48727833576a65ef",
+  "diagnostics": [
+    {
+      "id": "UnknownOpcode",
+      "description": "Unknown opcode.",
+      "classification": "metadata-or-encoding",
+      "rules": [],
+      "reason": "Instruction decoding: the opcode is not part of the CLI instruction encoding."
+    },
+    {
+      "id": "MethodFallthrough",
+      "description": "Fall through end of the method without returning.",
+      "classification": "partition-iii",
+      "rules": [
+        "method-fallthrough"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "FallthroughException",
+      "description": "Fallthrough the end of an exception block.",
+      "classification": "partition-iii",
+      "rules": [
+        "fallthrough-handler",
+        "fallthrough-filter"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "FallthroughIntoHandler",
+      "description": "Fallthrough into an exception handler.",
+      "classification": "partition-iii",
+      "rules": [
+        "fallthrough-handler"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "FallthroughIntoFilter",
+      "description": "Fallthrough into an exception filter.",
+      "classification": "partition-iii",
+      "rules": [
+        "fallthrough-filter"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "LeaveIntoTry",
+      "description": "Leave into try block.",
+      "classification": "partition-iii",
+      "rules": [
+        "leave-into-try"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "LeaveIntoHandler",
+      "description": "Leave into exception handler block.",
+      "classification": "partition-iii",
+      "rules": [
+        "leave-into-handler"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "LeaveIntoFilter",
+      "description": "Leave into filter block.",
+      "classification": "partition-iii",
+      "rules": [
+        "leave-into-filter"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "LeaveOutOfFilter",
+      "description": "Leave out of filter block.",
+      "classification": "partition-iii",
+      "rules": [
+        "leave-out-of-filter"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "LeaveOutOfFinally",
+      "description": "Leave out of finally block.",
+      "classification": "partition-iii",
+      "rules": [
+        "leave-out-of-finally"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "LeaveOutOfFault",
+      "description": "Leave out of fault block.",
+      "classification": "partition-iii",
+      "rules": [
+        "leave-out-of-fault"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "Rethrow",
+      "description": "Rethrow from outside a catch handler.",
+      "classification": "partition-iii",
+      "rules": [
+        "rethrow-handler"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "Endfinally",
+      "description": "Endfinally from outside a finally handler.",
+      "classification": "partition-iii",
+      "rules": [
+        "endfinally-handler"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "Endfilter",
+      "description": "Endfilter from outside an exception filter block.",
+      "classification": "partition-iii",
+      "rules": [
+        "endfilter-region"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "BranchIntoTry",
+      "description": "Branch into try block.",
+      "classification": "partition-iii",
+      "rules": [
+        "branch-into-try"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "BranchIntoHandler",
+      "description": "Branch into exception handler block.",
+      "classification": "partition-iii",
+      "rules": [
+        "branch-into-handler"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "BranchIntoFilter",
+      "description": "Branch into exception filter block.",
+      "classification": "partition-iii",
+      "rules": [
+        "branch-into-filter"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "BranchOutOfTry",
+      "description": "Branch out of try block.",
+      "classification": "partition-iii",
+      "rules": [
+        "branch-out-of-try",
+        "branch-into-handler",
+        "branch-into-filter"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "BranchOutOfHandler",
+      "description": "Branch out of exception handler block.",
+      "classification": "partition-iii",
+      "rules": [
+        "branch-out-of-catch"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "BranchOutOfFilter",
+      "description": "Branch out of exception filter block.",
+      "classification": "partition-iii",
+      "rules": [
+        "branch-out-of-filter"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "BranchOutOfFinally",
+      "description": "Branch out of finally block.",
+      "classification": "partition-iii",
+      "rules": [
+        "branch-out-of-finally"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "ReturnFromTry",
+      "description": "Return out of try block.",
+      "classification": "partition-iii",
+      "rules": [
+        "return-in-try"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "ReturnFromHandler",
+      "description": "Return out of exception handler block.",
+      "classification": "partition-iii",
+      "rules": [
+        "return-in-handler"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "ReturnFromFilter",
+      "description": "Return out of exception filter block.",
+      "classification": "partition-iii",
+      "rules": [
+        "return-in-filter"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "BadJumpTarget",
+      "description": "Branch / Leave into the middle of an instruction.",
+      "classification": "partition-iii",
+      "rules": [
+        "prefix-branch-target"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "PathStackUnexpected",
+      "description": "Non-compatible types on stack depending on path.",
+      "classification": "partition-iii",
+      "rules": [
+        "stack-merge-types"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "PathStackDepth",
+      "description": "Stack depth differs depending on path.",
+      "classification": "partition-iii",
+      "rules": [
+        "branch-stack-depth"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "ThisUninitStore",
+      "description": "Store into this when it is uninitialized.",
+      "classification": "partition-iii",
+      "rules": [
+        "constructor-this-store"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "ThisUninitReturn",
+      "description": "Return from .ctor when this is uninitialized.",
+      "classification": "partition-iii",
+      "rules": [
+        "constructor-initialization"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "LdftnCtor",
+      "description": "ldftn/ldvirtftn not allowed on .ctor.",
+      "classification": "partition-iii",
+      "rules": [
+        "ldftn-constructor"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "StackUnexpected",
+      "description": "Unexpected type on the stack.",
+      "classification": "partition-iii",
+      "rules": [
+        "return-type"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "StackUnexpectedArrayType",
+      "description": "Unexpected array type on the stack.",
+      "classification": "partition-iii",
+      "rules": [
+        "indirect-element-type"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "StackOverflow",
+      "description": "Stack overflow.",
+      "classification": "partition-iii",
+      "rules": [
+        "stack-overflow"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "StackUnderflow",
+      "description": "Stack underflow.",
+      "classification": "partition-iii",
+      "rules": [
+        "stack-underflow"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "UninitStack",
+      "description": "Uninitialized item on stack.",
+      "classification": "partition-iii",
+      "rules": [
+        "constructor-this-use"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "ExpectedIntegerType",
+      "description": "Expected I, I4, or I8 on the stack.",
+      "classification": "partition-iii",
+      "rules": [
+        "shift-count"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "ExpectedFloatType",
+      "description": "Expected R, R4, or R8 on the stack.",
+      "classification": "partition-iii",
+      "rules": [
+        "finite-float"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "ExpectedNumericType",
+      "description": "Expected numeric type on the stack.",
+      "classification": "partition-iii",
+      "rules": [
+        "numeric-negation"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "StackObjRef",
+      "description": "Expected an ObjRef on the stack.",
+      "classification": "partition-iii",
+      "rules": [
+        "throw-reference"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "StackByRef",
+      "description": "Expected ByRef on the stack.",
+      "classification": "partition-iii",
+      "rules": [
+        "managed-address"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "StackMethod",
+      "description": "Expected pointer to function on the stack.",
+      "classification": "partition-iii",
+      "rules": [
+        "delegate-method-pointer"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "UnrecognizedLocalNumber",
+      "description": "Unrecognized local variable number.",
+      "classification": "partition-iii",
+      "rules": [
+        "local-index"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "UnrecognizedArgumentNumber",
+      "description": "Unrecognized argument number.",
+      "classification": "partition-iii",
+      "rules": [
+        "argument-index"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "ExpectedTypeToken",
+      "description": "Expected type token.",
+      "classification": "metadata-or-encoding",
+      "rules": [],
+      "reason": "Metadata token kind validation before type verification."
+    },
+    {
+      "id": "TokenResolve",
+      "description": "Unable to resolve token.",
+      "classification": "metadata-or-encoding",
+      "rules": [],
+      "reason": "Metadata token/reference resolution failure."
+    },
+    {
+      "id": "ExpectedMethodToken",
+      "description": "Expected memberRef, memberDef or methodSpec token.",
+      "classification": "metadata-or-encoding",
+      "rules": [],
+      "reason": "Metadata token kind validation for method operands."
+    },
+    {
+      "id": "ExpectedFieldToken",
+      "description": "Expected field token.",
+      "classification": "metadata-or-encoding",
+      "rules": [],
+      "reason": "Metadata token kind validation for field operands."
+    },
+    {
+      "id": "Unverifiable",
+      "description": "Instruction can not be verified.",
+      "classification": "partition-iii",
+      "rules": [
+        "unverifiable-block-copy"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "StringOperand",
+      "description": "Operand does not point to a valid string ref.",
+      "classification": "metadata-or-encoding",
+      "rules": [],
+      "reason": "User-string heap/token integrity."
+    },
+    {
+      "id": "ReturnPtrToStack",
+      "description": "Return type is ByRef, TypedReference, ArgHandle, or ArgIterator.",
+      "classification": "partition-iii",
+      "rules": [
+        "return-byref-lifetime"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "ReturnVoid",
+      "description": "Stack must be empty on return from a void function.",
+      "classification": "partition-iii",
+      "rules": [
+        "void-return"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "ReturnMissing",
+      "description": "Return value missing on the stack.",
+      "classification": "partition-iii",
+      "rules": [
+        "missing-return"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "ReturnEmpty",
+      "description": "Stack must contain only the return value.",
+      "classification": "partition-iii",
+      "rules": [
+        "extra-return"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "ExpectedArray",
+      "description": "Expected single-dimension zero-based array.",
+      "classification": "partition-iii",
+      "rules": [
+        "array-instance"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "ValueTypeExpected",
+      "description": "Value type expected.",
+      "classification": "partition-iii",
+      "rules": [
+        "unbox-value-type"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "TypeAccess",
+      "description": "Type is not visible.",
+      "classification": "partition-iii",
+      "rules": [
+        "type-access"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "MethodAccess",
+      "description": "Method is not visible.",
+      "classification": "partition-iii",
+      "rules": [
+        "method-access"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "FieldAccess",
+      "description": "Field is not visible.",
+      "classification": "partition-iii",
+      "rules": [
+        "field-access"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "ExpectedStaticField",
+      "description": "Expected static field.",
+      "classification": "partition-iii",
+      "rules": [
+        "static-field-operand"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "InitOnly",
+      "description": "Cannot change initonly field outside its .ctor.",
+      "classification": "partition-iii",
+      "rules": [
+        "initonly-write"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "CallVirtOnValueType",
+      "description": "Callvirt on a value type method.",
+      "classification": "partition-iii",
+      "rules": [
+        "callvirt-value-type"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "CtorExpected",
+      "description": ".ctor expected.",
+      "classification": "partition-iii",
+      "rules": [
+        "newobj-constructor"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "CtorSig",
+      "description": "newobj on static or abstract method.",
+      "classification": "partition-iii",
+      "rules": [
+        "newobj-abstract-method"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "ArrayByRef",
+      "description": "Array of ELEMENT_TYPE_BYREF or ELEMENT_TYPE_TYPEDBYREF.",
+      "classification": "metadata-or-encoding",
+      "rules": [],
+      "reason": "Forbidden element signature shape (Partition II signatures)."
+    },
+    {
+      "id": "ByrefOfByref",
+      "description": "ByRef of ByRef.",
+      "classification": "metadata-or-encoding",
+      "rules": [],
+      "reason": "Forbidden nested byref signature shape (Partition II signatures)."
+    },
+    {
+      "id": "CodeSizeZero",
+      "description": "Code size is zero.",
+      "classification": "metadata-or-encoding",
+      "rules": [],
+      "reason": "Method body encoding has no instruction stream."
+    },
+    {
+      "id": "TailCall",
+      "description": "Missing call/callvirt/calli.",
+      "classification": "partition-iii",
+      "rules": [
+        "tail-next-instruction"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "TailByRef",
+      "description": "Cannot pass ByRef to a tail call.",
+      "classification": "partition-iii",
+      "rules": [
+        "tail-byref"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "TailRet",
+      "description": "tail.call may only be followed by ret.",
+      "classification": "partition-iii",
+      "rules": [
+        "tail-return",
+        "tail-protected-region"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "TailRetVoid",
+      "description": "Void ret type expected for tail call.",
+      "classification": "partition-iii",
+      "rules": [
+        "tail-void-return"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "TailRetType",
+      "description": "Tail call return type not compatible.",
+      "classification": "partition-iii",
+      "rules": [
+        "tail-return-type"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "TailStackEmpty",
+      "description": "Stack not empty after tail call.",
+      "classification": "partition-iii",
+      "rules": [
+        "tail-empty-stack"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "MethodEnd",
+      "description": "Method ends in the middle of an instruction.",
+      "classification": "metadata-or-encoding",
+      "rules": [],
+      "reason": "Truncated instruction encoding."
+    },
+    {
+      "id": "BadBranch",
+      "description": "Branch out of the method.",
+      "classification": "metadata-or-encoding",
+      "rules": [],
+      "reason": "Encoded branch target lies outside the method body."
+    },
+    {
+      "id": "Volatile",
+      "description": "Missing ldsfld, stsfld, ldind, stind, ldfld, stfld, ldobj, stobj, initblk, or cpblk.",
+      "classification": "partition-iii",
+      "rules": [
+        "volatile-prefix"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "Unaligned",
+      "description": "Missing ldind, stind, ldfld, stfld, ldobj, stobj, initblk, cpblk.",
+      "classification": "partition-iii",
+      "rules": [
+        "unaligned-prefix"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "CallAbstract",
+      "description": "Call not allowed on abstract methods.",
+      "classification": "partition-iii",
+      "rules": [
+        "call-abstract"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "TryNonEmptyStack",
+      "description": "Attempt to enter a try block with nonempty stack.",
+      "classification": "partition-iii",
+      "rules": [
+        "try-entry-stack"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "FilterOrCatchUnexpectedStack",
+      "description": "Attempt to enter a filter or catch block with unexpected stack state.",
+      "classification": "partition-iii",
+      "rules": [
+        "catch-entry-stack"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "FinOrFaultNonEmptyStack",
+      "description": "Attempt to enter a finally or fault block with nonempty stack.",
+      "classification": "partition-iii",
+      "rules": [
+        "finally-entry-stack"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "DelegateCtor",
+      "description": "Unrecognized arguments for delegate .ctor.",
+      "classification": "partition-iii",
+      "rules": [
+        "delegate-signature"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "DelegatePattern",
+      "description": "Dup, ldvirtftn, newobj delegate::.ctor() pattern expected (in the same basic block).",
+      "classification": "partition-iii",
+      "rules": [
+        "delegate-sequence"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "BoxByRef",
+      "description": "Cannot box byref.",
+      "classification": "partition-iii",
+      "rules": [
+        "box-byref"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "EndfilterStack",
+      "description": "Stack not empty when leaving an exception filter.",
+      "classification": "partition-iii",
+      "rules": [
+        "filter-exit-stack"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "DelegateCtorSigI",
+      "description": "Unrecognized delegate .ctor signature; expected Native Int.",
+      "classification": "partition-iii",
+      "rules": [
+        "delegate-ctor-pointer-signature"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "DelegateCtorSigO",
+      "description": "Unrecognized delegate .ctor signature; expected Object.",
+      "classification": "partition-iii",
+      "rules": [
+        "delegate-object-argument"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "CatchByRef",
+      "description": "ByRef not allowed as catch type.",
+      "classification": "metadata-or-encoding",
+      "rules": [],
+      "reason": "Exception clause type token has a forbidden byref signature."
+    },
+    {
+      "id": "ThrowOrCatchOnlyExceptionType",
+      "description": "The type caught or thrown must be derived from System.Exception.",
+      "classification": "optional-sanity",
+      "rules": [],
+      "reason": "ILVerify applies this only with --sanity-checks; CLI permits non-Exception object throws."
+    },
+    {
+      "id": "LdvirtftnOnStatic",
+      "description": "ldvirtftn on static.",
+      "classification": "partition-iii",
+      "rules": [
+        "ldvirtftn-static"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "CallVirtOnStatic",
+      "description": "callvirt on static.",
+      "classification": "partition-iii",
+      "rules": [
+        "callvirt-static"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "InitLocals",
+      "description": "initlocals must be set for verifiable methods with one or more local variables.",
+      "classification": "partition-iii",
+      "rules": [
+        "initlocals-required"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "CallCtor",
+      "description": "call to .ctor only allowed to initialize this pointer from within a .ctor. Try newobj.",
+      "classification": "partition-iii",
+      "rules": [
+        "call-existing-constructor"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "ExpectedValClassObjRefVariable",
+      "description": "Value type, ObjRef type or variable type expected.",
+      "classification": "partition-iii",
+      "rules": [
+        "box-byref"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "ReadOnly",
+      "description": "Missing ldelema or call following readonly prefix.",
+      "classification": "partition-iii",
+      "rules": [
+        "readonly-prefix"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "Constrained",
+      "description": "Missing callvirt following constrained prefix.",
+      "classification": "partition-iii",
+      "rules": [
+        "constrained-prefix"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "UnsatisfiedMethodInst",
+      "description": "Method instantiation has unsatisfied method type parameter constraints.",
+      "classification": "partition-iii",
+      "rules": [
+        "generic-method-constraint"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "UnsatisfiedMethodParentInst",
+      "description": "Method parent instantiation has unsatisfied class type parameter constraints.",
+      "classification": "partition-iii",
+      "rules": [
+        "generic-owner-constraint"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "UnsatisfiedFieldParentInst",
+      "description": "Field parent instantiation has unsatisfied class type parameter constraints.",
+      "classification": "partition-iii",
+      "rules": [
+        "generic-field-owner-constraint"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "UnsatisfiedBoxOperand",
+      "description": "Type operand of box instruction has unsatisfied class type parameter constraints.",
+      "classification": "partition-iii",
+      "rules": [
+        "box-generic-constraint"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "ConstrainedCallWithNonByRefThis",
+      "description": "The 'this' argument to a constrained call must have ByRef type.",
+      "classification": "partition-iii",
+      "rules": [
+        "constrained-this-address"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "ReadonlyUnexpectedCallee",
+      "description": "The readonly prefix may only be applied to calls to array methods returning ByRefs.",
+      "classification": "partition-iii",
+      "rules": [
+        "readonly-callee"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "ReadOnlyIllegalWrite",
+      "description": "Illegal write to readonly ByRef.",
+      "classification": "partition-iii",
+      "rules": [
+        "readonly-byref-write"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "TailCallInsideER",
+      "description": "The tail.call (or calli or callvirt) instruction cannot be used to transfer control out of a try, filter, catch, or finally block.",
+      "classification": "partition-iii",
+      "rules": [
+        "tail-protected-region"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "BackwardBranch",
+      "description": "Stack height at all points must be determinable in a single forward scan of IL.",
+      "classification": "partition-iii",
+      "rules": [
+        "backward-branch"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "NewobjAbstractClass",
+      "description": "Cannot construct an instance of abstract class.",
+      "classification": "partition-iii",
+      "rules": [
+        "newobj-abstract-class"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "UnmanagedPointer",
+      "description": "Unmanaged pointers are not a verifiable type.",
+      "classification": "partition-iii",
+      "rules": [
+        "unmanaged-pointer-type"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "LdftnNonFinalVirtual",
+      "description": "Cannot LDFTN a non-final virtual method for delegate creation if target object is potentially not the same type as the method class.",
+      "classification": "partition-iii",
+      "rules": [
+        "delegate-nonfinal-virtual"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "ThisMismatch",
+      "description": "The 'this' parameter to the call must be the calling method's 'this' parameter.",
+      "classification": "partition-iii",
+      "rules": [
+        "base-call-this"
+      ],
+      "reason": "Mapped to the named method-body constraint and ECMA section below."
+    },
+    {
+      "id": "InterfaceImplHasDuplicate",
+      "description": "InterfaceImpl has a duplicate",
+      "classification": "metadata-or-encoding",
+      "rules": [],
+      "reason": "Partition II InterfaceImpl table constraint."
+    },
+    {
+      "id": "InterfaceMethodNotImplemented",
+      "description": "Class implements interface but not method",
+      "classification": "metadata-or-encoding",
+      "rules": [],
+      "reason": "Type/interface implementation validation, not a Partition III method-body rule."
+    },
+    {
+      "id": "LocallocStackNotEmpty",
+      "description": "localloc requires that stack must be empty, except for 'size' argument",
+      "classification": "instruction-correctness",
+      "rules": [],
+      "reason": "localloc is always unverifiable; no ILVerify-accepting method can contain it. Unverifiable has its own pair."
+    }
+  ]
+}
