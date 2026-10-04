@@ -14,7 +14,9 @@ resolved reference to it share the same record. AST tokens remain scoped to this
 context and are not normalized verification-stack types.
 
 Supported references have a local, non-generic TypeDef parent and exactly match
-a declared field/method name and encoded signature. Overloads are indexed by
+the nearest declared field/method name and encoded signature along a local class
+base chain. Constructors and type initializers must be declared directly.
+Interface inheritance and unresolved/generic ancestry remain explicit unknowns. Overloads are indexed by
 owner, name and signature, not searched linearly. Public and private definitions
 can both be resolved: accessibility is a separate query, not implied by symbol
 resolution. Compiler-controlled definitions resolve through definition tokens;
@@ -23,7 +25,7 @@ MemberRefs to them remain unknown, following ECMA-335 I.8.5.3.2.
 Unresolved owners/signature types, unmatched/ambiguous declarations, MethodSpec,
 generic signatures, function pointers, varargs and non-default method conventions
 produce explicit unknown results. Same-named externals never bind locally. This
-increment does not perform inherited-member search, TypeRef alias unification,
+increment does not perform TypeRef alias unification,
 custom-modifier equivalence or whole-method verification. The separate
 [local member-access query](VERIFIER-MEMBER-ACCESS.md) handles local same-assembly
 rules, including bounded nested accessibility. The [local type-access query](VERIFIER-TYPE-ACCESS.md)
@@ -32,7 +34,11 @@ or receiver. External/generic access and whole-method #2400/#2407 services remai
 open; a missing or unsupported result must never grant access.
 
 Construction is O(type rows + member rows + copied heap bytes). Definition and
-exact declaration lookup are indexed; a signature is decoded once per unique
+exact declaration lookup are indexed; inherited lookup walks one base chain in
+O(depth) time and O(1) additional query storage, reusing canonical `baseType`.
+There is no new identity collection or cache. Shared `maxDepth` (256) and
+`maxQueryNodes` (4096) limits bound that walk; direct hits need no ancestry work.
+A signature is decoded once per unique
 heap entry on demand. Default/hard limits are 65,535 total Field/MethodDef/MemberRef
 rows (`maxMembers`), 1 MiB each for copied signature/name bytes (`maxMemberBytes`),
 and 65,536 decoded signature AST nodes (`maxMemberSignatureNodes`). Options may
@@ -77,3 +83,29 @@ changes are retained in `tests/fixtures/a03-verifier-members/performance.json`.
 Heap deltas are not allocation counts or peak memory. This is a new opt-in API;
 there is no previous implementation or speedup comparison. The existing lighter
 hierarchy factory and query paths are unchanged.
+
+## Inherited-reference increment (qualification pending)
+
+The isolated `codex/a03-inherited-member-references` increment adds nearest exact
+class declaration lookup; an ambiguous or compiler-controlled nearest match
+never falls back to a base member. Resolution does not grant accessibility or
+perform receiver typing/dispatch. Unknown direct misses now retain the actual
+unresolved base result when traversal reaches one. Class metadata validity and
+value-type normalization remain separate from this bounded lookup service.
+
+Seven authored tests cover inherited fields/overloads, nearest hiding, private
+access separation, direct-only constructors, ambiguous/compiler-controlled
+barriers, unknown ancestry, budgets, cancellation and owned source snapshots.
+A ten-case native plan uses pinned SDK 10.0.201/CoreCLR 10.0.5 `Module.ResolveMember`:
+eight expected declaration agreements plus two explicit adapter unknowns where
+native resolution is expected to throw. The existing reference harness seams
+retain tool/source/image hashes and raw output before assertions. No methods
+from the generated fixture are executed. Primary implementation evidence is
+[CoreCLR member lookup](https://github.com/dotnet/runtime/blob/v10.0.5/src/coreclr/vm/memberload.cpp#L993),
+which searches class bases and excludes inherited instance initializers.
+
+Local install/native/tests/paired existing-context controls/static checks have
+not run. They await the serial limiter slot, with concurrency 1 and a 1 GiB heap.
+The exact existing `benchmark-verifier-members.mjs` controls will run once on
+the parent and candidate; all chronological samples and any failures will be
+retained. The wider engine/platform matrix remains staged.
