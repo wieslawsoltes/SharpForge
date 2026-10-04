@@ -16,5 +16,5 @@ export function createMetadataVerificationContext(inspector, options = {}) {
   const snapshot = snapshotMembers(inspector, budget);
   const members = memberQueries(snapshot, types, budget);
   return Object.freeze({ ...types, resolveMember: members.resolveMember,
-    isMemberAccessible: memberAccess(snapshot.visibility, members, types) });
+    isMemberAccessible: memberAccess(snapshot, members, types, budget) });
 }

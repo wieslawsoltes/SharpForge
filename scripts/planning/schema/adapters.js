@@ -69,6 +69,16 @@ export function validateBody(body,{requireExecutable=false}={}){
     if(i.inputTypes.length>i.stackIn.length||JSON.stringify(i.stackIn.slice(i.stackIn.length-i.inputTypes.length))!==JSON.stringify(i.inputTypes))invalid('Instruction inputs differ from its stack');
     const expected=[...i.stackIn.slice(0,i.stackIn.length-i.inputTypes.length),...i.outputTypes];
     if(JSON.stringify(expected)!==JSON.stringify(i.stackOut)||i.resultType!==(i.outputTypes.at(-1)??'void'))invalid('Instruction output stack differs from its typed effect');
+    if(i.opcode==='return'){
+      const policy=i.operands?.[0];
+      if(!Array.isArray(i.operands)||i.operands.length!==1||!policy||typeof policy!=='object'||Array.isArray(policy)||
+        Object.keys(policy).length!==1||!Object.hasOwn(policy,'discardPadding')||typeof policy.discardPadding!=='boolean')invalid('Return must declare explicit void padding');
+      if(i.inputTypes.length!==i.stackIn.length||i.outputTypes.length||i.stackOut.length)invalid('Return must consume the complete stack without outputs');
+      // Padding is an explicit semantic operand; provenance does not choose the return convention.
+      const count=body.returnType==='void'&&!policy.discardPadding?0:1;
+      if(i.inputTypes.length!==count)invalid('Return arity differs from its signature and padding');
+      if(policy.discardPadding&&(body.returnType!=='void'||i.inputTypes[0]!=='null'))invalid('Return padding must be one null value for a void method');
+    }
     for(const target of i.successors){if(!Number.isInteger(target)||target<0||target>=n)invalid('Branch target is outside the instruction stream');const joined=body.instructions[target].stackIn;if(joined.length!==i.stackOut.length)invalid('Stack height conflict at branch target');for(let slot=0;slot<joined.length;slot++)if(mergeType(i.stackOut[slot],joined[slot])!==joined[slot])invalid('Type conflict at branch target');}
     const expectedSuccessors=['branch','leave'].includes(i.opcode)?[i.operands[0]]:i.opcode==='branch-if'?[i.operands[0],i.offset+1]:i.opcode==='compare-branch'?[i.operands[1],i.offset+1]:i.opcode==='switch'&&Array.isArray(i.operands[0])?[...i.operands[0],i.offset+1]:['return','throw','rethrow','end-finally'].includes(i.opcode)?[]:[i.offset+1];
     if(JSON.stringify(i.successors)!==JSON.stringify(expectedSuccessors))invalid('Operation and control-flow successors differ');

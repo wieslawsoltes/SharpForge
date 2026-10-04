@@ -44,6 +44,16 @@ export function constrainedReferenceObjectPlan(vm, table, descriptor) {
   return profile.references.select(table.definitionToken, descriptor);
 }
 
+/** Check the live substitution against the same metadata bound used for body reachability. */
+export function requireConstrainedObjectBound(vm, caller, token, table) {
+  const profile = profileFor(vm);
+  const bound = profile.references.genericBound(caller.method, token);
+  if (!bound) throw new ManagedFault('NotSupportedException', 'Generic Object.ToString requires an internal base-class bound');
+  if (!vm.typeSystem.castCache.isAssignableFrom(vm.typeSystem.table(bound), table)) {
+    throw new ManagedFault('InvalidProgramException', 'Constrained generic context violates its declared base-class bound');
+  }
+}
+
 /** Enter the exact override on its original byref, or root a copied box for the inherited intrinsic. */
 export function invokeConstrainedObject(vm, caller, descriptor, {table, plan, receiver, current}) {
   if (plan.target) {

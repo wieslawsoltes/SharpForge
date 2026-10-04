@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { MetadataBuilder, readMetadata, encodeSignature } from '@sharpforge/cil';
+import { MetadataBuilder, readMetadata, encodeSignature, writeMethodBody } from '@sharpforge/cil';
 import { loadSymbols, readPortablePdb } from '@sharpforge/symbols';
 import { PortablePdbBuilder } from '../packages/symbols/src/pdb-builder.js';
 import { createScopeTree } from '../packages/symbols/src/scope-tree.js';
@@ -20,7 +20,20 @@ function fixture(types = [primitive], scopes = [scope(1, 0, 10, [local()])]) {
   const signature = builder.add(17, [builder.blob(encodeSignature({ kind: 'locals', types }))]);
   builder.add(6, [1, 0, 0x16, builder.string('Method'), 0, 1]);
   const metadata = readMetadata(builder.finish());
-  const pe = { metadata, methodBody: () => ({ localSignature: signature }) };
+  const bytes = writeMethodBody(new Uint8Array(10), signature, 1);
+  const pe = {
+    metadata,
+    bytes,
+    sections: [{ offset: 0, size: bytes.length }],
+    offsetOf(rva, size = 1) {
+      const at = rva - 1;
+      if (at < 0 || at + size > pe.bytes.length) throw Error('Authored method extent');
+      return at;
+    },
+    setLocalSignature(token) {
+      new DataView(pe.bytes.buffer, pe.bytes.byteOffset).setUint32(8, token, true);
+    },
+  };
   const symbols = { scopes, methods: [{ token: method, localSignature: signature & 0xffffff }] };
   return { pe, symbols, lookup: createScopeTree(scopes, 1), signature };
 }
@@ -76,7 +89,7 @@ test('local binding owns exact byref/pinned/generic-parameter ASTs and fresh res
     element: { kind: 'byref', element: { kind: 'genericParameter', scope: 'method', index: 0 } },
   };
   const { pe, symbols, lookup } = fixture([type]);
-  const bound = bindLocalTypes(lookup, pe, symbols);
+  const bound = bindLocalTypes(lookup, pe, symbols).scopeTree;
   assert.deepEqual(bound(method)[0].locals[0].type, type);
   assert.equal(bound(method)[0].locals[0].typeName, '!!0& pinned');
   assert.equal(bound(method)[0].locals[0].typeReason, null);
@@ -90,9 +103,9 @@ test('local binding owns exact byref/pinned/generic-parameter ASTs and fresh res
 test('absent sequence-point rows use the PE local signature; nil signatures are explicit', () => {
   const { pe, symbols, lookup } = fixture();
   symbols.methods = [];
-  assert.equal(bindLocalTypes(lookup, pe, symbols)(method)[0].locals[0].typeName, 'int');
-  pe.methodBody = () => ({ localSignature: 0 });
-  const missing = bindLocalTypes(lookup, pe, symbols)(method)[0].locals[0];
+  assert.equal(bindLocalTypes(lookup, pe, symbols).scopeTree(method)[0].locals[0].typeName, 'int');
+  pe.setLocalSignature(0);
+  const missing = bindLocalTypes(lookup, pe, symbols).scopeTree(method)[0].locals[0];
   assert.equal(missing.type, null);
   assert.equal(missing.typeReason, 'missing-local-signature');
 });
@@ -106,7 +119,7 @@ test('bad slot, nonlocal signature, invalid token and signature limits fail befo
   state.pe.metadata.blob = () => new Uint8Array(4097);
   assert.throws(() => bindLocalTypes(state.lookup, state.pe, state.symbols), /signature byte limit/);
   state.symbols.methods = [];
-  state.pe.methodBody = () => ({ localSignature: 0x06000001 });
+  state.pe.setLocalSignature(0x06000001);
   assert.throws(() => bindLocalTypes(state.lookup, state.pe, state.symbols), /signature token/);
   const many = fixture();
   many.symbols.scopes = Array.from({ length: 33 }, (_, index) => ({
@@ -115,7 +128,14 @@ test('bad slot, nonlocal signature, invalid token and signature limits fail befo
   }));
   many.symbols.methods = Array.from({ length: 33 }, (_, index) => ({ localSignature: index + 1 }));
   many.pe.metadata.counts[17] = 33;
-  many.pe.metadata.row = () => [1];
+  many.pe.metadata.counts[6] = 33;
+  const bodySize = many.pe.bytes.length;
+  many.pe.bytes = new Uint8Array(bodySize * 33);
+  many.pe.sections[0].size = many.pe.bytes.length;
+  for (let index = 0; index < 33; index++) {
+    many.pe.bytes.set(writeMethodBody(new Uint8Array(10), 0x11000001 + index, 1), index * bodySize);
+  }
+  many.pe.metadata.row = (token) => (token >>> 24 === 6 ? [1 + ((token & 0xffffff) - 1) * bodySize, 0] : [1]);
   many.pe.metadata.blob = () => new Uint8Array(4096);
   assert.throws(() => bindLocalTypes(many.lookup, many.pe, many.symbols), /signature byte limit/);
 });
