@@ -1,6 +1,7 @@
 import {EditorModel} from '../model.js';
 import {normalizeSelections} from '../selections.js';
 import {subscribeViewSelections, updateViewSelections} from './view-selections.js';
+import {hasPreparedViewGeometry} from './view-geometry.js';
 import {NativeKeymapAdapter} from '../keymaps/native.js';
 import {EDITOR_KEYMAPS} from '../keymaps.js';
 import {SyntaxHighlightIndex} from '../highlight.js';
@@ -220,13 +221,16 @@ export class CodeEditor {
   modelChanged(change) {
     if (this.disposed || change.model && change.model !== this.model) return;
     updateViewSelections(this, change);
-    this.largeFile.update();
+    const geometryPrepared = hasPreparedViewGeometry(this, change);
+    if (!geometryPrepared) this.largeFile.update();
     this.highlightIndex.update(change.after, change);
     this.folding.applyChange(change);
     this.bookmarks.applyChange(change);
     this.changeTracking.applyChange(change);
-    this.view.layout.invalidate(change);
-    this.view.scroll.invalidate(change);
+    if (!geometryPrepared) {
+      this.view.layout.invalidate(change);
+      this.view.scroll.invalidate(change);
+    }
     this.presentation.transformDecorations(change);
     this.bracketColors.update();
     this.decorationRevision++;

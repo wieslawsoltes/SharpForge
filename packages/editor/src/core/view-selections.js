@@ -1,4 +1,5 @@
 import {transformSelections} from '../selections.js';
+import {prepareViewGeometry} from './view-geometry.js';
 
 /** Prepare view-owned selections before document-owner callbacks can refocus or capture the input. */
 export function updateViewSelections(editor, change) {
@@ -25,8 +26,10 @@ export function updateViewSelections(editor, change) {
 export function subscribeViewSelections(editor) {
   const model = editor.model;
   editor.selectionSnapshots = new WeakSet([model.snapshot()]);
+  editor.geometrySnapshots = new WeakSet([model.snapshot()]);
   return model.buffer.onDidChange(change => {
     if (editor.disposed || editor.model !== model) return;
     updateViewSelections(editor, change);
+    prepareViewGeometry(editor, change);
   });
 }

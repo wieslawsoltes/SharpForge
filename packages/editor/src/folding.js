@@ -5,6 +5,7 @@ export class FoldingModel {
     this.enabled = true;
     this.revision = 0;
     this.listeners = new Set();
+    this.preparedChanges = new WeakSet();
   }
 
   onDidChange(listener) { this.listeners.add(listener); return () => this.listeners.delete(listener); }
@@ -77,7 +78,19 @@ export class FoldingModel {
     return changed;
   }
 
+  /** Transform before owner callbacks; publish at the original model-listener boundary. */
+  prepareChange(event) {
+    if (this.preparedChanges.has(event.after)) return;
+    this.transformChange(event);
+    this.preparedChanges.add(event.after);
+  }
+
   applyChange(event) {
+    if (!this.preparedChanges.delete(event.after)) this.transformChange(event);
+    this.changed();
+  }
+
+  transformChange(event) {
     const edits = [...event.changes].sort((left, right) => right.start - left.start);
     for (const edit of edits) {
       const start = edit.range?.start.line ?? event.before.positionAt(edit.start).line;
@@ -96,7 +109,6 @@ export class FoldingModel {
       }
     }
     this.regions = this.regions.filter(region => region.endLine > region.startLine);
-    this.changed();
   }
 
   changed() {

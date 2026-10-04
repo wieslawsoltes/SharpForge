@@ -11,6 +11,7 @@
     "tests/a20-editor-search-diff.test.js",
     "tests/a20-editor-services.test.js",
     "tests/a20-editor-snippets-intelligence.test.js",
+    "tests/a20-input-transaction-geometry.test.js",
     "tests/a20-input-transaction-selection.test.js",
     "tests/a20-view-editing-options.test.js",
     "tests/a20-view-incremental-folding.test.js",
