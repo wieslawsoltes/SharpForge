@@ -48,7 +48,7 @@ for (const [engine, create] of Object.entries(engines)) {
       var writer = new StringWriter();
       using (writer) { writer.Write("inside"); }
       Console.WriteLine(writer.ToString());
-      writer.Write((string)null);`);
+      writer.Write("after");`);
     assert.equal(program.success, true, JSON.stringify(program.diagnostics));
     const vm = create(program);
     try {
