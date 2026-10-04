@@ -44,3 +44,19 @@ export function nullableAttributeRows(bytes) {
 export function tupleAttributeRows(bytes) {
   return attributeRows(bytes, data => data.tupleElementNames ? { names: data.tupleElementNames } : null);
 }
+
+/** The complete local nullable/embedded declarations, with constructor-independent attribute blobs. */
+export function embeddedAttributeDefinitions(bytes) {
+  const inspector = new AssemblyInspector(bytes), md = inspector.metadata, view = new MetadataView(bytes);
+  const names = new Set(['Microsoft.CodeAnalysis.EmbeddedAttribute',
+    'System.Runtime.CompilerServices.NullableAttribute', 'System.Runtime.CompilerServices.NullableContextAttribute']);
+  return inspector.types.filter(type => names.has(type.name)).map(type => ({
+    name: type.name,
+    flags: md.row(type.token)[0],
+    base: md.typeName(decodeCoded('TypeDefOrRef', md.row(type.token)[3])),
+    fields: type.fields.map(field => ({ name: field.name, flags: md.row(field.token)[0], signature: inspector.signature(field.token) })),
+    methods: type.methods.map(method => ({ name: method.name, flags: md.row(method.token)[2], signature: inspector.signature(method.token) })),
+    attributes: view.customAttributes(type.token).map(attribute => ({ name: attribute.fullName, blob: [...attribute.blob] }))
+      .sort((left, right) => left.name.localeCompare(right.name)),
+  })).sort((left, right) => left.name.localeCompare(right.name));
+}

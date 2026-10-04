@@ -12,7 +12,7 @@ import { dotnetHost, sdkVersion } from '../packages/compiler/test/differential/t
 const fixtures = dirname(fileURLToPath(new URL('./fixtures/nullable-metadata/NullableMetadata.cs', import.meta.url)));
 const pack = loadReferencePack();
 
-test('A02-T29 emitted annotations match Roslyn under real .NET NullabilityInfoContext', {
+test('A02-T05.3 emitted annotations match Roslyn under real .NET NullabilityInfoContext', {
   skip: pack ? false : 'no .NET reference pack installed',
 }, context => {
   const dotnet = dotnetHost(), sdk = sdkVersion(dotnet);

@@ -53,14 +53,14 @@ function typeShape(type) {
   };
 }
 
-test('A02-T29 oblivious ordinary declarations do not introduce nullable metadata', () => {
+test('A02-T05.3 oblivious ordinary declarations do not introduce nullable metadata', () => {
   const result = compileToAssembly('public class Plain { public string Field; public object Echo(object value) => value; }',
     { outputKind: 'library' });
   assert.deepEqual(errors(result), []);
   assert.deepEqual(nullableAttributeRows(result.assembly), []);
 });
 
-test('A02-T29 both assembly APIs preserve return and parameter annotations under a nullable context', () => {
+test('A02-T05.3 both assembly APIs preserve return and parameter annotations under a nullable context', () => {
   const source = '#nullable enable\npublic class Sample { public string? Read(string first, string second) => null; }';
   for (const emit of [compileToAssembly, compileToReferenceAssembly]) {
     const result = emit(source, { outputKind: 'library' });
@@ -95,7 +95,7 @@ test('A02-T05.3 nullable metadata fixture has genuine pinned Roslyn provenance',
   assert.match(provenance.sdk, /^\d+\.\d+\./);
 });
 
-test('A02-T29 nullable metadata round-trips like Roslyn on every public signature and constraint target', referenceOptions, () => {
+test('A02-T05.3 nullable metadata round-trips like Roslyn on every public signature and constraint target', referenceOptions, () => {
   const source = fixture('NullableMetadata.cs').toString('utf8');
   const reference = imported(fixture('NullableMetadata.dll'));
   for (const emit of [compileToAssembly, compileToReferenceAssembly]) {
