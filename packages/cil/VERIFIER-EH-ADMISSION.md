@@ -38,7 +38,8 @@ remain separate. Filters remain inspection-only even with valid lexical flow.
 The previous catch-seed and matching same-catch branch behavior remains covered
 by the [entry-state contract](VERIFIER-HANDLER-ENTRY.md). #2407 stays partial.
 
-Eleven authored focused tests and fourteen pinned ILVerify cases are described
-in the [reference plan](../../tests/fixtures/a03-eh-admission/README.md).
-Local validation, paired existing-path timings and static checks are pending
-the serial slot; no passing result is claimed yet.
+Eleven focused/seam tests and fourteen pinned ILVerify cases pass. The combined
+dependent affected suite passes 174 tests; static checks report zero errors.
+The [committed evidence](../../tests/fixtures/a03-eh-admission/README.md) records
+shared-source qualification, all chronological control samples and the accepted
+measured cost of handler-bearing lexical validation.
