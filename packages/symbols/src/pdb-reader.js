@@ -7,6 +7,7 @@ import { readLocalConstants } from './constant-rows.js';
 import { rejectUnsupportedSymbolFormat } from './symbol-format.js';
 import { readImports } from './import-reader.js';
 import { createAsyncInfoLookup } from './async-info.js';
+import { createImportLookup } from './imports.js';
 export function readPortablePdb(
   input,
   {
@@ -66,21 +67,14 @@ export function readPortablePdb(
     hidden: !!(r[0] & 1),
   }));
   const constants = readLocalConstants(md, { maxConstantBytes, maxConstantEntries, maxConstantModifiers });
+  if ((md.rows[53]?.length ?? 0) > 100000) fail('Import scope count limit exceeded');
+  const importBudget = { entries: 0, bytes: 0 };
   const imports = (md.rows[53] ?? []).map((r, i) => ({
     id: i + 1,
     parent: r[0],
-    definitions: readImports(md.blob(r[1]), md),
+    definitions: readImports(md.blob(r[1]), md, importBudget),
   }));
-  for (const scope of imports) {
-    let cur = scope,
-      seen = new Set();
-    while (cur) {
-      if (seen.has(cur.id)) fail('Import scope cycle');
-      seen.add(cur.id);
-      if (cur.parent > imports.length) fail('Invalid parent import scope');
-      cur = imports[cur.parent - 1];
-    }
-  }
+  const effectiveImports = createImportLookup(imports);
   const scopes = (md.rows[50] ?? []).map((r, i, all) => {
     const next = all[i + 1];
     if (
@@ -173,6 +167,7 @@ export function readPortablePdb(
     constants,
     scopes,
     imports,
+    effectiveImports,
     stateMachines,
     custom,
     sourceLink: custom.find((c) => c.sourceLink)?.sourceLink ?? null,
