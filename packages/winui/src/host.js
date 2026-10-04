@@ -1,6 +1,7 @@
 import {XAML,CONTROLS,propertiesFor,eventsFor,frameworkType} from '@sharpforge/framework';
 import {RenderSurface,cssColor,parseColor,drawingPrimitives} from './surface.js';
 import {HostGeometryUpdates} from './host-geometry-updates.js';
+import {shapeUsesDomPaint,resetHostBrushColors} from './host-gradients.js';
 const suffix=t=>t.slice(t.lastIndexOf('.')+1);
 const number=(x,fallback=0)=>Number.isFinite(x)?x:fallback;
 const margin=v=>v?`${number(v.Top)}px ${number(v.Right)}px ${number(v.Bottom)}px ${number(v.Left)}px`:'0px';
@@ -62,8 +63,8 @@ export class WinUIHost {
   layout(n,e){const p=n.properties,s=e.style;
     s.display=p.Visibility===1?'none':'';s.opacity=String(number(p.Opacity,1));s.pointerEvents=p.IsHitTestVisible===false||p.IsHitTestVisible===0?'none':'';
     for(const key of ['Width','Height','MinWidth','MinHeight','MaxWidth','MaxHeight'])s[key[0].toLowerCase()+key.slice(1)]=Number.isFinite(p[key])?Math.max(0,p[key])+'px':'';
-    this.renderTransform(n,e);s.margin=margin(p.Margin);s.padding=p.Padding?margin(p.Padding):'';s.borderWidth=p.BorderThickness?margin(p.BorderThickness):'';s.borderStyle=p.BorderThickness?'solid':'';s.borderColor=cssColor(p.BorderBrush);s.borderRadius=p.CornerRadius?radius(p.CornerRadius):'';
-    s.background=p.Background?cssColor(p.Background):'';s.color=p.Foreground?cssColor(p.Foreground):'';
+    this.renderTransform(n,e);s.margin=margin(p.Margin);s.padding=p.Padding?margin(p.Padding):'';s.borderWidth=p.BorderThickness?margin(p.BorderThickness):'';s.borderStyle=p.BorderThickness?'solid':'';s.borderRadius=p.CornerRadius?radius(p.CornerRadius):'';
+    resetHostBrushColors(p,s);
     s.fontSize=p.FontSize!==undefined?number(p.FontSize,14)+'px':'';if(p.FontFamily)s.fontFamily=String(p.FontFamily).replace(/[;{}]/g,'')+', system-ui, sans-serif';
     s.alignSelf=['flex-start','center','flex-end','stretch'][p.VerticalAlignment]??'';s.justifySelf=['start','center','end','stretch'][p.HorizontalAlignment]??'';
     if(p.HorizontalAlignment!==undefined&&p.HorizontalAlignment!==3)s.width=Number.isFinite(p.Width)?p.Width+'px':'fit-content';
@@ -134,7 +135,7 @@ export class WinUIHost {
   drawNode(n){const t=suffix(n.type);if(t!=='Canvas'&&t!=='DrawingSurface')return;const container=this.elements.get(n.id);let primitives=[];
     if(t==='DrawingSurface')primitives=drawingPrimitives(n.drawing??[]);
     else for(const value of n.collections.Children??[]){const node=this.nodes.get(value.$ref);if(!node||node.properties.Visibility===1||!['Rectangle','Ellipse','Line'].includes(suffix(node.type)))continue;const p=node.properties,kind=suffix(node.type),element=this.elements.get(node.id),w=number(p.Width,element?.clientWidth??0),h=number(p.Height,element?.clientHeight??0),x=number(p.Left),y=number(p.Top),stroke=number(p.StrokeThickness,1);
-      if(p.RenderTransform?.$ref){element.dataset.renderFallback='transformed shape uses DOM';continue;}delete element.dataset.renderFallback;
+      if(shapeUsesDomPaint(node,element))continue;
       element.style.background='transparent';element.style.borderColor='transparent';
       if(kind==='Line'){primitives.push(...drawingPrimitives([{op:'DrawLine',args:[x+number(p.X1),y+number(p.Y1),x+number(p.X2),y+number(p.Y2),stroke,p.Stroke]}]));continue;}
       const shape=kind==='Ellipse'?1:0;if(p.Stroke&&stroke>0)primitives.push({x,y,w,h,color:parseColor(p.Stroke),kind:shape,angle:0});if(p.Fill){const inset=p.Stroke?stroke:0;primitives.push({x:x+inset,y:y+inset,w:Math.max(0,w-inset*2),h:Math.max(0,h-inset*2),color:parseColor(p.Fill),kind:shape,angle:0});}

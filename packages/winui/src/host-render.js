@@ -1,3 +1,4 @@
+import {paintHostGradients} from './host-gradients.js';
 const suffix = type => type.slice(type.lastIndexOf('.') + 1);
 
 /** Report exactly the same CSS-pixel size changes for full scenes and retained geometry updates. */
@@ -7,6 +8,7 @@ export function measureHostNodes(host, ids) {
     const element = host.elements.get(id);
     if (!element) continue;
     const box = element.getBoundingClientRect();
+    paintHostGradients(host.nodes.get(id), element, box);
     const size = [Math.round(box.width * 100) / 100, Math.round(box.height * 100) / 100];
     const previous = host.layouts.get(id);
     if (previous && previous[0] === size[0] && previous[1] === size[1]) continue;
