@@ -57,11 +57,14 @@ export function tryPreparedVirtualCall(vm, caller, instruction) {
     let target = plan.targets.get(entry);
     const method = vm.inspector.getMethod(entry.target);
     if (!target || target.method !== method || target.signature !== method.signature ||
-        target.parameters !== method.signature.parameters || target.locals !== method.locals) {
+        target.parameters !== method.signature.parameters || target.locals !== method.locals ||
+        target.parameterCount !== method.signature.parameters.length || target.localCount !== method.locals.length ||
+        target.maxStack !== method.maxStack) {
       const extra = Object.freeze({genericIdentity: selectedCallOwner(vm, entry.target, receiver, null),
         methodArguments: descriptor.methodArguments});
       target = {extra, method, signature: method.signature, parameters: method.signature.parameters,
-        locals: method.locals, prepared: preparedCilTarget(vm, entry.target, extra)};
+        locals: method.locals, parameterCount: method.signature.parameters.length, localCount: method.locals.length,
+        maxStack: method.maxStack, prepared: preparedCilTarget(vm, entry.target, extra)};
       plan.targets.set(entry, target);
     }
     if (target.prepared && hasCanonicalCilCall(vm)) enterPreparedCilFrame(vm, target.prepared, stack, start, plan.count, target.extra);

@@ -1,5 +1,5 @@
 /** Preserve enumerable own-field semantics while giving fixed pool fields stable stores. */
-export function scrubPreparedSourceFrame(frame) {
+export function scrubPreparedFrame(frame) {
   for (const key in frame) {
     if (!Object.hasOwn(frame, key)) continue;
     // Host edits may remove or hide even factory fields; never read an inherited replacement.

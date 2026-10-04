@@ -1,0 +1,334 @@
+{
+  "schemaVersion": 2,
+  "suite": "SF-A05-T06.2",
+  "status": "measured",
+  "measurementKind": "post-GC-host-retention",
+  "nativeQualification": false,
+  "startedAt": "2026-10-04T15:32:59.757Z",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "--expose-gc",
+    "/workspace/scratch/42f7738360b9/a05-snapshots/bench/vm/snapshot-retention.js",
+    "--runner",
+    "linux-node24-a05-5909d54f2",
+    "--scenario",
+    "original-records",
+    "--max-retained-mib",
+    "256",
+    "--out",
+    "/workspace/scratch/42f7738360b9/a05-final-snapshot-retention-original-5909d54f2-r2.json"
+  ],
+  "commit": "5909d54f25ef9898c956c736c96db782e36978ff",
+  "worktreeStatus": "",
+  "harnessHash": "3b83797bbeb48a3617df79535fa34588fcb1a55cb9c6339ab6f455a4dc02d992",
+  "environment": {
+    "runner": "linux-node24-a05-5909d54f2",
+    "host": "a4a6cb866850d910ed62eb11bf180b15a7723a193c1953cabad275e6babdc766",
+    "platform": "linux",
+    "arch": "x64",
+    "os": "6.18.44",
+    "cpuModels": [
+      "AMD EPYC 9V74 80-Core Processor"
+    ],
+    "logicalCpus": 9,
+    "memoryBytes": 10451464192,
+    "node": "v24.19.0",
+    "v8": "13.6.233.17-node.51",
+    "versions": {
+      "node": "24.19.0",
+      "acorn": "8.17.0",
+      "ada": "3.4.4",
+      "amaro": "1.1.10",
+      "ares": "1.34.6",
+      "brotli": "1.2.0",
+      "cldr": "48.0",
+      "icu": "78.3",
+      "llhttp": "9.4.3",
+      "merve": "1.2.2",
+      "modules": "137",
+      "napi": "10",
+      "nbytes": "0.1.4",
+      "ncrypto": "0.0.1",
+      "nghttp2": "1.69.0",
+      "nghttp3": "",
+      "ngtcp2": "",
+      "openssl": "3.5.7",
+      "simdjson": "4.6.4",
+      "simdutf": "6.4.0",
+      "sqlite": "3.53.3",
+      "tz": "2026b",
+      "undici": "7.29.0",
+      "unicode": "17.0",
+      "uv": "1.52.1",
+      "uvwasi": "0.0.23",
+      "v8": "13.6.233.17-node.51",
+      "zlib": "1.3.2.1-motley-3246f1b",
+      "zstd": "1.5.7"
+    },
+    "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "execArgv": [
+      "--expose-gc"
+    ],
+    "gcExposed": true,
+    "locale": {
+      "LANG": "C.UTF-8",
+      "LC_ALL": "C.UTF-8",
+      "TZ": "Europe/Berlin"
+    }
+  },
+  "environmentFingerprint": "0111dd20e93845c982b3e7f6a71020b5566235ca803247455fcc6693bde62e20",
+  "protocol": {
+    "name": "snapshot-retention-v1",
+    "snapshots": 128,
+    "typedPayloadBytes": 10000000,
+    "scenario": "original-records",
+    "maxRetainedMiB": 256,
+    "runner": "linux-node24-a05-5909d54f2",
+    "out": "/workspace/scratch/42f7738360b9/a05-final-snapshot-retention-original-5909d54f2-r2.json"
+  },
+  "rows": [
+    {
+      "scenario": "original-records",
+      "fixture": {
+        "scenario": "original-records",
+        "managedLiveBytes": 10584064,
+        "liveRecords": 8192,
+        "typedPayloadBytes": 0,
+        "mutationUnit": "record",
+        "changedRecordsPerSnapshot": 82,
+        "changedPayloadBytesPerSnapshot": null,
+        "originalScalarSlotsWrittenPerSnapshot": 82,
+        "recordMutationFraction": 0.010009765625,
+        "byteMutationFraction": null,
+        "pattern": "Original 4096 immutable strings plus 4096 two-slot objects; rotate through 82 object scalar slots per snapshot."
+      },
+      "snapshotsRequested": 128,
+      "snapshotsCaptured": 128,
+      "stop": null,
+      "explicitGC": {
+        "callsPerBoundary": 3,
+        "eventLoopTurnsPerBoundary": 3
+      },
+      "hostCapBytes": 268435456,
+      "host": {
+        "empty": {
+          "rss": 99143680,
+          "heapTotal": 63803392,
+          "heapUsed": 29098776,
+          "external": 3897617,
+          "arrayBuffers": 220555
+        },
+        "live": {
+          "rss": 103194624,
+          "heapTotal": 100769792,
+          "heapUsed": 32635088,
+          "external": 3897657,
+          "arrayBuffers": 220555
+        },
+        "retained": {
+          "rss": 154681344,
+          "heapTotal": 114143232,
+          "heapUsed": 44640984,
+          "external": 3897657,
+          "arrayBuffers": 220555
+        },
+        "historyReleasedAfterRestoreChecks": {
+          "rss": 245121024,
+          "heapTotal": 176005120,
+          "heapUsed": 36698560,
+          "external": 3927864,
+          "arrayBuffers": 220555
+        },
+        "allHeapsReleased": {
+          "rss": 244854784,
+          "heapTotal": 164728832,
+          "heapUsed": 29467640,
+          "external": 3927864,
+          "arrayBuffers": 220555
+        }
+      },
+      "progress": [
+        {
+          "snapshots": 1,
+          "host": {
+            "rss": 125362176,
+            "heapTotal": 103133184,
+            "heapUsed": 34506504,
+            "external": 3897657,
+            "arrayBuffers": 220555
+          }
+        },
+        {
+          "snapshots": 16,
+          "host": {
+            "rss": 145199104,
+            "heapTotal": 104181760,
+            "heapUsed": 35736424,
+            "external": 3897657,
+            "arrayBuffers": 220555
+          }
+        },
+        {
+          "snapshots": 32,
+          "host": {
+            "rss": 146743296,
+            "heapTotal": 105492480,
+            "heapUsed": 37046688,
+            "external": 3897657,
+            "arrayBuffers": 220555
+          }
+        },
+        {
+          "snapshots": 48,
+          "host": {
+            "rss": 148033536,
+            "heapTotal": 106803200,
+            "heapUsed": 38317304,
+            "external": 3897657,
+            "arrayBuffers": 220555
+          }
+        },
+        {
+          "snapshots": 64,
+          "host": {
+            "rss": 149164032,
+            "heapTotal": 108376064,
+            "heapUsed": 39581904,
+            "external": 3897657,
+            "arrayBuffers": 220555
+          }
+        },
+        {
+          "snapshots": 80,
+          "host": {
+            "rss": 150622208,
+            "heapTotal": 109948928,
+            "heapUsed": 40846560,
+            "external": 3897657,
+            "arrayBuffers": 220555
+          }
+        },
+        {
+          "snapshots": 96,
+          "host": {
+            "rss": 152121344,
+            "heapTotal": 111259648,
+            "heapUsed": 42111592,
+            "external": 3897657,
+            "arrayBuffers": 220555
+          }
+        },
+        {
+          "snapshots": 112,
+          "host": {
+            "rss": 153329664,
+            "heapTotal": 112832512,
+            "heapUsed": 43376160,
+            "external": 3897657,
+            "arrayBuffers": 220555
+          }
+        },
+        {
+          "snapshots": 128,
+          "host": {
+            "rss": 154681344,
+            "heapTotal": 114143232,
+            "heapUsed": 44640872,
+            "external": 3897657,
+            "arrayBuffers": 220555
+          }
+        }
+      ],
+      "census": {
+        "uniqueSnapshotRecords": 18606,
+        "uniqueSnapshotTypedBackings": 0,
+        "exactSnapshotTypedBackingBytes": 0,
+        "exactLiveAndSnapshotTypedBackingBytes": 0,
+        "uniqueLiveAndSnapshotTypedBackings": 0,
+        "snapshotRecordIndexSlots": 1048576,
+        "uniqueGenerationSlots": 8192,
+        "ordinaryDataSlotsIncludingLive": 37212,
+        "uniqueSnapshotManagedRecordBytes": 11083936,
+        "logicalSnapshotEstimateBytes": 19538080,
+        "slotEstimateBytes": 8,
+        "limitations": "Managed record sizes and eight-byte index slots are logical accounting, not V8 object sizes. String backing, ropes, object headers and Set/Map/Array overhead are measured only by post-GC host counters."
+      },
+      "restoreEquivalence": {
+        "equal": true,
+        "revisions": 128,
+        "comparedRestoredStateSHA256": "8fce78a0cf873c119583cef20b93341275bb3cfdf220ae0cb8fb566bb752350f",
+        "policy": "Every shared snapshot restored into detached mutable storage and compared byte-for-byte/field-for-field against a separately replayed full-copy snapshot. Full-copy reference versions are released each iteration."
+      },
+      "copiedRecords": 18606,
+      "reusedRecords": 1029970,
+      "captureWallMsIncludingExplicitGC": 1237.1572589999998,
+      "liveHostDelta": {
+        "rss": 4050944,
+        "heapTotal": 36966400,
+        "heapUsed": 3536312,
+        "external": 40,
+        "arrayBuffers": 0
+      },
+      "retainedHostDelta": {
+        "rss": 51486720,
+        "heapTotal": 13373440,
+        "heapUsed": 12005896,
+        "external": 0,
+        "arrayBuffers": 0
+      },
+      "totalLiveAndSnapshotHostDelta": {
+        "rss": 55537664,
+        "heapTotal": 50339840,
+        "heapUsed": 15542208,
+        "external": 40,
+        "arrayBuffers": 0
+      },
+      "unit": "bytes",
+      "additiveHostMetric": "heapUsed + external; arrayBuffers is already included in external and is not added again",
+      "environment": {
+        "node": "v24.19.0",
+        "v8": "13.6.233.17-node.51",
+        "platform": "linux",
+        "arch": "x64"
+      },
+      "assessment": {
+        "complete": true,
+        "assessmentBasis": "Snapshot increment over the live baseline; combined live-plus-history is separate.",
+        "hostSnapshotDeltaBytes": 12005896,
+        "hostSnapshotDeltaRatio": 1.1343370561629258,
+        "hostCombinedDeltaBytes": 15542248,
+        "hostCombinedDeltaRatio": 1.468457484761997,
+        "hostUnderTwiceManagedHeap": true,
+        "exactSnapshotBackingRatioToManagedHeap": 0,
+        "logicalSnapshotRatio": 1.8459903492647058,
+        "exactTypedPayloadRatio": null,
+        "exactLiveAndSnapshotTypedPayloadRatio": null,
+        "restoreEquivalent": true,
+        "status": "met-for-this-workload"
+      },
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "--max-old-space-size=512",
+        "--expose-gc",
+        "/workspace/scratch/42f7738360b9/a05-snapshots/bench/vm/snapshot-retention-worker.js",
+        "original-records",
+        "268435456"
+      ],
+      "traceSHA256": "3d546369fda645e669b1cc0972f9e71ceacb17ec4c32b27b44f89c4a8fb09b64",
+      "tracePath": "/workspace/scratch/42f7738360b9/a05-final-snapshot-retention-original-5909d54f2-r2.json.original-records.log"
+    }
+  ],
+  "errors": [],
+  "unsupportedTargets": [
+    "Browser timing/host-memory: this Node harness does not qualify browsers",
+    "Native .NET throughput: no CLR executable is measured",
+    "Wasm tier: interpreter baseline options explicitly disable it"
+  ],
+  "format": "SharpForge.SnapshotRetention/1",
+  "unit": "bytes",
+  "acceptance": "workload-specific",
+  "limit": "The issue does not define a mutation unit or include/exclude the live heap. Record-fraction and byte-fraction workloads are reported separately; this probe grants no universal or cross-platform pass.",
+  "completedCommit": "5909d54f25ef9898c956c736c96db782e36978ff",
+  "completedWorktreeStatus": "",
+  "completedAt": "2026-10-04T15:33:11.405Z"
+}

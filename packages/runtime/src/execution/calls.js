@@ -75,7 +75,11 @@ export function invoke(vm,instruction) {
     if(instruction.name==='newobj'&&descriptor.owner==='System.String'&&descriptor.signature.parameters.join(',')==='char[]') {
       caller.stack.push(stringFromChars(vm,args[0]));return;
     }
-    if(instruction.name==='newobj'&&contract){caller.stack.push(vm.platform.invoke(contract,args));return;}
+    if(instruction.name==='newobj'&&contract) {
+      const value=vm.platform.invoke(contract,args);
+      if(vm.state!=='terminated')caller.stack.push(value);
+      return;
+    }
     if(instruction.name==='newobj'&&valueType){constructUserValue(vm,descriptor,valueType,args);return;}
     if(instruction.name==='newobj') {
       let ref;

@@ -1,5 +1,6 @@
 import {sourceFramePreparation} from './source-frame-capability.js';
-import {scrubPreparedSourceFrame} from './source-frame-scrub.js';
+import {cilFramePreparation, cilFramePreparationCurrent} from './cil-frame-capability.js';
+import {scrubPreparedFrame} from './prepared-frame-scrub.js';
 import {executionCodeState} from './code-version.js';
 import {releaseFrameMemory} from './frame-memory-release.js';
 
@@ -16,6 +17,7 @@ function storage(capacity) {
 /** Reuse frame storage under a logical byte budget; this is not a JS heap-size estimate. */
 class FramePool {
   #sourceBindings = new WeakMap();
+  #cilBindings = new WeakMap();
 
   constructor(vm) {
     const limit = vm.options.framePoolBytes ?? 1024 * 1024;
@@ -39,15 +41,22 @@ class FramePool {
     if (!capacities) sizes.set(argumentCount, capacities = new Map());
     const cil = !!this.vm.inspector;
     const stack = cil ? Math.min(method.maxStack, this.vm.options.maxStackValues ?? 65536) : 0;
+    const locals = cil ? method.locals.length : Math.max(method.locals.length, argumentCount);
     let bucket = capacities.get(stack);
+    if (bucket && bucket.locals !== locals) {
+      bucket.current = false;
+      this.bytes -= bucket.free.length * bucket.bytes;
+      this.statistics.cachedFrames -= bucket.free.length;
+      bucket.free.length = 0;
+      bucket = null;
+    }
     if (!bucket) {
       const args = cil ? argumentCount : 0;
-      const locals = cil ? method.locals.length : Math.max(method.locals.length, argumentCount);
       // Source frames use the VM's shared evaluation stack and need no per-frame capacity.
       if (![args, locals, stack].every(value => Number.isSafeInteger(value) && value >= 0)) {
         throw new TypeError('Invalid frame storage capacity');
       }
-      bucket = {args, locals, stack, bytes: 128 + (args + locals + stack) * 8, free: []};
+      bucket = {args, locals, stack, bytes: 128 + (args + locals + stack) * 8, free: [], current: true};
       capacities.set(stack, bucket);
     }
     return bucket;
@@ -68,14 +77,32 @@ class FramePool {
         plan.method.locals !== plan.locals || plan.method.locals.length !== plan.localCount) {
       throw new TypeError('Invalid prepared source frame storage capability');
     }
-    if (!binding) {
+    if (!binding || !binding.bucket.current) {
       binding = {plan, bucket: this.#bucketFor(plan.method, plan.capacity)};
       this.#sourceBindings.set(capability, binding);
     }
     return this.#acquireBucket(binding.bucket, true);
   }
 
-  #acquireBucket(bucket, preparedSource) {
+  /** A cached CIL bucket still observes current method shape, pool ownership and stack capacity. */
+  acquireCil(capability) {
+    if (!this.vm.inspector || pools.get(this.vm) !== this || this.owner !== ownerOf(this.vm)) {
+      throw new TypeError('Prepared CIL frame pool is no longer current');
+    }
+    let binding = this.#cilBindings.get(capability);
+    const plan = binding?.plan ?? cilFramePreparation(capability);
+    if (!plan || !cilFramePreparationCurrent(this.vm.inspector, plan)) {
+      throw new TypeError('Invalid prepared CIL frame storage capability');
+    }
+    const stack = Math.min(plan.maxStack, this.vm.options.maxStackValues ?? 65536);
+    if (!binding || binding.stack !== stack || !binding.bucket.current) {
+      binding = {plan, stack, bucket: this.#bucketFor(plan.method, plan.argumentCount)};
+      this.#cilBindings.set(capability, binding);
+    }
+    return this.#acquireBucket(binding.bucket, true);
+  }
+
+  #acquireBucket(bucket, preparedStorage) {
     let frame = bucket.free.pop();
     if (frame) {
       this.bytes -= bucket.bytes;
@@ -83,13 +110,13 @@ class FramePool {
       this.statistics.reused++;
       const entry = this.entries.get(frame);
       entry.retired = false;
-      entry.preparedSource = preparedSource;
+      entry.preparedStorage = preparedStorage;
     } else {
       frame = {id: 0, method: undefined, methodId: undefined, args: storage(bucket.args),
         locals: storage(bucket.locals), stack: storage(bucket.stack), caught: [], unwinds: [],
         pc: 0, lastOffset: 0, offsets: undefined, base: 0, point: null, exception: null,
         pending: null, needsInitialization: false, rootCaptures: null};
-      this.entries.set(frame, {bucket, retired: false, preparedSource});
+      this.entries.set(frame, {bucket, retired: false, preparedStorage});
       this.statistics.framesAllocated++;
       this.statistics.arraysAllocated += 5;
     }
@@ -115,7 +142,7 @@ class FramePool {
       const entry = this.entries.get(frame);
       // Return/EH continuations finish reading the frame before this boundary.
       // Include late generic/delegate fields, without allocating Object.keys per return.
-      if (entry.preparedSource) scrubPreparedSourceFrame(frame);
+      if (entry.preparedStorage) scrubPreparedFrame(frame);
       else {
         for (const key in frame) {
           if (!Object.hasOwn(frame, key)) continue;
@@ -124,7 +151,7 @@ class FramePool {
         }
       }
       this.statistics.released++;
-      if (this.vm.options.framePooling !== false && entry.bucket.bytes <= this.limit - this.bytes) {
+      if (entry.bucket.current && this.vm.options.framePooling !== false && entry.bucket.bytes <= this.limit - this.bytes) {
         entry.bucket.free.push(frame);
         this.bytes += entry.bucket.bytes;
         this.statistics.cachedFrames++;
@@ -168,6 +195,9 @@ export function retirePooledFrame(vm, frame) {
   else releaseFrameMemory(vm, frame);
 }
 export function flushFramePool(vm) { pools.get(vm)?.flush(); }
+
+/** Inspect the actual current pool, including retirements created by host callbacks or pool replacement. */
+export function hasPendingFrameRetirement(vm) { return (pools.get(vm)?.pending.length ?? 0) !== 0; }
 
 /** Retired frames remain live until the enclosing return/EH callback reaches its flush. */
 export function visitRetiredFrames(vm, visit) {

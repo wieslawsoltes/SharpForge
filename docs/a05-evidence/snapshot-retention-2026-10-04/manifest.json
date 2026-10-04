@@ -1,0 +1,83 @@
+{
+  "format": "SharpForge.SnapshotRetentionEvidenceManifest/1",
+  "issue": 1387,
+  "revision": "5909d54f25ef9898c956c736c96db782e36978ff",
+  "date": "2026-10-04",
+  "filesAndCommands": [
+    {
+      "file": "original-invalid-provenance.json",
+      "bytes": 22592,
+      "sha256": "7628ee98fc9f17d3d2ffd8d3d68763100261b1e94bbf43f2f87f3fad0a3e2046",
+      "run": "original-invalid-provenance"
+    },
+    {
+      "file": "original-invalid-provenance.worker.log",
+      "bytes": 4529,
+      "sha256": "a51c5aae8bfecd73fa375e0ccc7987a75a602079081667f6c8f1a64a10f86ee3",
+      "run": "original-invalid-provenance"
+    },
+    {
+      "file": "original-invalid-provenance.command.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "run": "original-invalid-provenance"
+    },
+    {
+      "run": "original-invalid-provenance",
+      "exitCode": 1,
+      "shellCommand": "SHARPFORGE_TEST_CONCURRENCY=1 SHARPFORGE_MAX_PARALLEL_RUNS=1 SHARPFORGE_MAX_OLD_SPACE_MB=512 node scripts/limited.js node --expose-gc bench/vm/snapshot-retention.js --runner linux-node24-a05-5909d54f2 --scenario original-records --max-retained-mib 256 --out /workspace/scratch/42f7738360b9/a05-final-snapshot-retention-original-5909d54f2.json > /workspace/scratch/42f7738360b9/a05-final-snapshot-retention-original-5909d54f2.command.log 2>&1"
+    },
+    {
+      "file": "original-clean.json",
+      "bytes": 10777,
+      "sha256": "b9285e0104583710f7cfe622a4f1f7a6e7d6da6abccff5150c76c17f67aeca07",
+      "run": "original-clean"
+    },
+    {
+      "file": "original-clean.worker.log",
+      "bytes": 4535,
+      "sha256": "3d546369fda645e669b1cc0972f9e71ceacb17ec4c32b27b44f89c4a8fb09b64",
+      "run": "original-clean"
+    },
+    {
+      "file": "original-clean.command.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "run": "original-clean"
+    },
+    {
+      "run": "original-clean",
+      "exitCode": 0,
+      "shellCommand": "SHARPFORGE_TEST_CONCURRENCY=1 SHARPFORGE_MAX_PARALLEL_RUNS=1 SHARPFORGE_MAX_OLD_SPACE_MB=512 node scripts/limited.js node --expose-gc bench/vm/snapshot-retention.js --runner linux-node24-a05-5909d54f2 --scenario original-records --max-retained-mib 256 --out /workspace/scratch/42f7738360b9/a05-final-snapshot-retention-original-5909d54f2-r2.json > /workspace/scratch/42f7738360b9/a05-final-snapshot-retention-original-5909d54f2-r2.command.log 2>&1"
+    },
+    {
+      "file": "distributed-cap.json",
+      "bytes": 9436,
+      "sha256": "9f33cedcae500385c02df5c8a1c0408ae46da8780f4fbb66227d6f908fd2d591",
+      "run": "distributed-cap"
+    },
+    {
+      "file": "distributed-cap.worker.log",
+      "bytes": 3928,
+      "sha256": "cbd440a37a062872d7348af511d8f4297377d1f49a80e494a7d7a25e8f06ff1b",
+      "run": "distributed-cap"
+    },
+    {
+      "file": "distributed-cap.command.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "run": "distributed-cap"
+    },
+    {
+      "run": "distributed-cap",
+      "exitCode": 2,
+      "shellCommand": "SHARPFORGE_TEST_CONCURRENCY=1 SHARPFORGE_MAX_PARALLEL_RUNS=1 SHARPFORGE_MAX_OLD_SPACE_MB=512 node scripts/limited.js node --expose-gc bench/vm/snapshot-retention.js --runner linux-node24-a05-5909d54f2 --scenario distributed-bytes --max-retained-mib 256 --out /workspace/scratch/42f7738360b9/a05-final-snapshot-retention-distributed-5909d54f2.json > /workspace/scratch/42f7738360b9/a05-final-snapshot-retention-distributed-5909d54f2.command.log 2>&1"
+    }
+  ],
+  "notes": [
+    "Raw files copied without rewriting their original paths or contents.",
+    "Only original-clean and distributed-cap have unchanged clean revision provenance.",
+    "Original invalid-provenance observation is retained but excluded from qualification.",
+    "Node host retention only; no native CLR, browser, Wasm-host, or whole-VM frame memory claim."
+  ]
+}

@@ -1,0 +1,139 @@
+{
+  "workItem": "SF-A02-T29",
+  "issue": 610,
+  "recordedAt": "2026-10-04T13:05:53Z",
+  "testHead": "0ac4fd7fec948991c2375306058d5847a0276889",
+  "benchmarkHead": "16a5684c46dbe0aa04d081d81bf8d720e6f40299",
+  "benchmarkBaseline": "dcc43cfe1de9326ea1f26a97c13d83203f2fde00",
+  "changesAfterTests": "Benchmark methodology only; no production or test source changed after the 22-test pass.",
+  "toolchain": {
+    "node": "v24.19.0",
+    "platform": "linux",
+    "architecture": "x64",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "dotnetSdk": "10.0.201",
+    "referencePack": "10.0.5",
+    "installedMicrosoftNetCoreApp": [
+      "10.0.5"
+    ],
+    "runtimeEvidence": "The SDK inventory contained only Microsoft.NETCore.App 10.0.5; all three executed net10.0 applications selected that framework.",
+    "cscSha256": "4913fa70d10c99901edbb825fdedcc92465be08665016a5d258ea45f953624f0"
+  },
+  "hashes": {
+    "fixtureSource": "fc448256cefc5400e425769b40e42f1c342b98f26d478259f49953e34485b469",
+    "files": [
+      {
+        "path": "tests/compiler-cil-portable-pdb-reference.test.js",
+        "sha256": "61986264593f274ad0609af41486a870235d53e998b21ba9b719bbd2aea60e2d"
+      },
+      {
+        "path": "packages/symbols/interop/SrmReader/Program.cs",
+        "sha256": "d1993a0c08fd3ff12e512570b47e8aa1622285d5877aa6b3cf0dd966cecf657a"
+      },
+      {
+        "path": "packages/symbols/interop/SrmReader/SrmReader.csproj",
+        "sha256": "cbda77be076f6ff67d1a510c950892ab127591d8dec1e78eb4f9a23d48b41661"
+      }
+    ]
+  },
+  "command": "DOTNET_ROOT=/workspace/scratch/1692a10afba9/toolchain/dotnet DOTNET=/workspace/scratch/1692a10afba9/toolchain/dotnet/dotnet PATH=/workspace/scratch/1692a10afba9/toolchain/dotnet:$PATH node scripts/limited.js node --test --test-concurrency=1 tests/a13-document-only.test.js tests/compiler-cil-portable-pdb.test.js tests/compiler-cil-portable-pdb-reference.test.js",
+  "tests": {
+    "total": 22,
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0,
+    "publicDocumentWriter": 6,
+    "compilerProducer": 15,
+    "nativeReference": 1
+  },
+  "native": {
+    "reader": "System.Reflection.Metadata, compiled from packages/symbols/interop/SrmReader at the recorded source hash",
+    "reference": "Roslyn live build, net10.0, LangVersion 14, Optimize false, DebugType portable",
+    "expectedOutput": "42\n1\n2\nTrue",
+    "sidecarOutputMatches": true,
+    "embeddedOutputMatches": true,
+    "embeddedRunHadNoSidecar": true,
+    "compared": [
+      "PDB id",
+      "entry point",
+      "document names, checksums, algorithms, languages",
+      "all sequence points",
+      "local scopes and row lists",
+      "raw local constant signatures",
+      "all raw custom debug records",
+      "enhanced line span against Roslyn",
+      "async catch kinds against Roslyn"
+    ],
+    "enhancedLineSpan": [
+      200,
+      5,
+      201,
+      9
+    ],
+    "asyncCatchKinds": {
+      "Fire": true,
+      "Main": true,
+      "Value": false
+    },
+    "referencePeEntryName": "<Main>",
+    "referencePdbEntryName": "<Main>"
+  },
+  "sourceReferences": [
+    {
+      "url": "https://github.com/dotnet/roslyn/blob/main/src/Compilers/CSharp/Portable/Compiler/MethodCompiler.cs",
+      "gitBlob": "86855e8e608ef7a71bd8e77c26507868a23600cc",
+      "finding": "Debugger catch entry applies to async void and the selected async source entry point."
+    },
+    {
+      "url": "https://github.com/dotnet/csharplang/blob/main/proposals/csharp-10.0/enhanced-line-directives.md",
+      "finding": "Enhanced line prefix mapping uses the declared span; live Roslyn establishes the exclusive Portable PDB end column."
+    },
+    {
+      "url": "https://github.com/dotnet/runtime/blob/main/docs/design/specs/PortablePdb-Metadata.md",
+      "finding": "Portable PDB documents, instruction offsets, lexical scopes, and state machine records use standard metadata."
+    }
+  ],
+  "boundaries": [
+    {
+      "head": "779d372a",
+      "finding": "Stackalloc stream replacement discarded PDB collection: actual visible points [], expected lines [2,3].",
+      "fix": "6a6b596c"
+    },
+    {
+      "head": "6a6b596c",
+      "finding": "Live Roslyn enhanced line directive (201,8) emitted exclusive PDB EndColumn 9; the producer and initial test expected 8.",
+      "fix": "5d0eb579"
+    },
+    {
+      "head": "5d0eb579",
+      "finding": "Live Roslyn marked selected Task-returning async Main with a debugger catch entry; the initial reference assertion expected no entry.",
+      "fixes": [
+        "50d59b8f",
+        "0ac4fd7f"
+      ]
+    }
+  ],
+  "limitations": [
+    "No Edit and Continue or closure-capture map reconstruction.",
+    "Locals whose only lexical scope is a lowered query clause or switch expression arm are omitted when no dedicated emission scope is available.",
+    "No allocation counts measured; shared-host timing variation prevents a speedup claim.",
+    "This is targeted PDB qualification, not the repository-wide core/build/full-suite gate."
+  ],
+  "files": {
+    "tests": "final-tests.log",
+    "boundaries": "boundary-repros.log",
+    "benchmarks": "benchmark-results.json"
+  },
+  "isolatedReplay": {
+    "sourceHead": "01231617c3c3da9ffe0bdfe0ccff6f93fb2547c8",
+    "base": "bf85020e6024cdd679a0234d9f050ca7dedddf53",
+    "tests": {
+      "passed": 22,
+      "failed": 0,
+      "skipped": 0
+    },
+    "log": "isolated-tests.log",
+    "command": "DOTNET_ROOT=<sdk-root> DOTNET=<dotnet-host> node scripts/limited.js node --test tests/a13-document-only.test.js tests/compiler-cil-portable-pdb.test.js tests/compiler-cil-portable-pdb-reference.test.js",
+    "native": "Independent System.Reflection.Metadata comparison and both sidecar/embedded executions passed on the same pinned SDK10.0.201/runtime10.0.5 host."
+  }
+}

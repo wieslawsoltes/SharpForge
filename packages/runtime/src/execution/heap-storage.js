@@ -1,5 +1,4 @@
 import {recordAllocation} from './heap-allocation.js';
-import {createHeapReference} from './heap-reference.js';
 import {arrayStorageBytes, primitiveArrayConstructor, primitiveArrayStorage, normalizeArrayStorage} from './array-storage.js';
 
 /** Size of owned payload, with exact primitive-array widths and a fixed record header. */
@@ -14,20 +13,22 @@ export function allocateHeapRecord(heap, {kind, type, data, roots = []}, Fault) 
   const element = kind === 'array' ? methodTable.elementType : null;
   const constructor = element && primitiveArrayConstructor(element);
   const size = constructor ? 32 + data.length * constructor.BYTES_PER_ELEMENT : heapRecordSize(kind, data);
-  const allocationRoots = (function* () {
-    yield* roots;
-    if (kind !== 'string' && !ArrayBuffer.isView(data)) yield* data;
-  })();
-  heap.reserve(size, allocationRoots);
-  if (element) data = normalizeArrayStorage(element, data);
-  const generation = heap.generationCounter + 1;
-  if (!Number.isSafeInteger(generation)) throw new Fault('OutOfMemoryException', 'Managed reference identity exhausted');
-  heap.generationCounter = generation;
-  const handle = heap.free.length ? heap.free.pop() : heap.records.length;
-  heap.generations[handle] = generation;
-  heap.records[handle] = {kind, type: typeName, methodTable, data, size};
-  recordAllocation(heap, size);
-  return createHeapReference(heap, handle, generation);
+  const pinStart = heap.pins.length;
+  try {
+    // Explicit caller roots outlive admission and any synchronous allocation observer.
+    for (const value of roots) heap.pins.push(value);
+    heap.reserve(size, kind === 'string' || ArrayBuffer.isView(data) ? [] : data);
+    if (element) data = normalizeArrayStorage(element, data);
+    const generation = heap.generationCounter + 1;
+    if (!Number.isSafeInteger(generation)) throw new Fault('OutOfMemoryException', 'Managed reference identity exhausted');
+    heap.generationCounter = generation;
+    const handle = heap.free.length ? heap.free.pop() : heap.records.length;
+    heap.generations[handle] = generation;
+    heap.records[handle] = {kind, type: typeName, methodTable, data, size};
+    return recordAllocation(heap, size, handle, generation);
+  } finally {
+    heap.pins.length = pinStart;
+  }
 }
 
 /** Standalone heap vector allocation uses a byte-derived limit instead of a fixed element cap. */

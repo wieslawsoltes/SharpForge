@@ -6,6 +6,11 @@ The current [Project 7 acceptance audit](a05-project7-acceptance-audit.md) accou
 for all 83 open issues and their 210 stated criteria in the newer 108-issue capture.
 Pending entries remain delivery requirements, not declared capabilities.
 
+The current [scalar, call, preparation, numeric-option and frame API map](a05-runtime-capabilities.md)
+links runnable examples and focused regressions for parents #74, #75 and #80–#82.
+It separates source/reloaded-source from direct CIL admission and keeps measured
+results tied to their recorded revisions.
+
 The E03/E04 and defect qualification counts below are historical and apply only
 to the revisions in their linked JSON. They are not a passing claim for the
 current integration or its new memory, control, compiler and snapshot features.

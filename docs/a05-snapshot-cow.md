@@ -47,8 +47,11 @@ The separate [host-retention protocol](performance/a05-snapshot-retention.md)
 preserves this original workload and adds concentrated and distributed exact
 1%-of-payload-byte mutations. It records explicit-GC host counters, exact unique
 typed backing, logical estimates and full-copy restore equivalence separately.
-The probe is authored; an actual measurement is still required before claiming
-that the requested host-retention bound has been met.
+The [2026-10-04 clean Node/Linux measurement](a05-evidence/snapshot-retention-2026-10-04/README.md)
+retained all 128 original-workload versions with 1.134337× managed-heap host-history
+increment and identical full-copy restores. The supplemental distributed-byte
+run stopped at 23 versions under the explicit 256 MiB cap and is incomplete.
+This establishes a bound for the original workload, not arbitrary byte mutation.
 
 ## Verification
 

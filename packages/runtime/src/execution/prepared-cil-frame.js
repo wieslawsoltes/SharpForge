@@ -9,6 +9,7 @@ import {initializeFloatFrame} from './typed-float-frame.js';
 import {admitCallFrame} from './call-frames.js';
 import {enterCilMethod} from './cil-method-events.js';
 import {hasCanonicalCilCall} from './call-entry-guard.js';
+import {cilFrameCapability} from './cil-frame-capability.js';
 
 /** Ordinary closed class targets can copy directly from rooted caller storage. */
 export function preparedCilTarget(vm, token, extra) {
@@ -17,11 +18,13 @@ export function preparedCilTarget(vm, token, extra) {
   if (signature.isStatic || signature.genericArity || signature.callingConvention || signature.explicitThis ||
       signature.sentinel != null || method.name === '.ctor' || method.name === '.cctor') return null;
   const owner = vm.typeSystem.table(method.ownerToken);
-  return owner.flags.valueType || owner.flags.interface || owner.genericArity || owner.containsGenericParameters ? null : method;
+  if (owner.flags.valueType || owner.flags.interface || owner.genericArity || owner.containsGenericParameters) return null;
+  return Object.freeze({method, frameCapability: cilFrameCapability(vm.inspector, method, signature.parameters.length + 1)});
 }
 
 /** Admission and observer order match enterManagedCall; no scratch argument array escapes or is allocated. */
-export function enterPreparedCilFrame(vm, method, stack, start, count, extra) {
+export function enterPreparedCilFrame(vm, prepared, stack, start, count, extra) {
+  const method = prepared.method;
   let pool, frame, ticket;
   try {
     if (vm.frames.length >= vm.options.maxFrames) {
@@ -30,7 +33,7 @@ export function enterPreparedCilFrame(vm, method, stack, start, count, extra) {
     const capacity = admitCilStack(vm, method);
     ticket = reserveStackFrame(vm, method, count);
     pool = framePool(vm);
-    frame = pool.acquire(method, count);
+    frame = pool.acquireCil(prepared.frameCapability);
     frame.id = nextFrameId(vm);
     frame.method = method;
     frame.offsets = methodOffsets(method);

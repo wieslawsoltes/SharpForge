@@ -1,0 +1,339 @@
+{
+  "schemaVersion": 2,
+  "suite": "SF-A05-T06.2",
+  "status": "failed",
+  "measurementKind": "post-GC-host-retention",
+  "nativeQualification": false,
+  "startedAt": "2026-10-04T15:30:56.083Z",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "--expose-gc",
+    "/workspace/scratch/42f7738360b9/a05-snapshots/bench/vm/snapshot-retention.js",
+    "--runner",
+    "linux-node24-a05-5909d54f2",
+    "--scenario",
+    "original-records",
+    "--max-retained-mib",
+    "256",
+    "--out",
+    "/workspace/scratch/42f7738360b9/a05-final-snapshot-retention-original-5909d54f2.json"
+  ],
+  "commit": "5909d54f25ef9898c956c736c96db782e36978ff",
+  "worktreeStatus": "",
+  "harnessHash": "3b83797bbeb48a3617df79535fa34588fcb1a55cb9c6339ab6f455a4dc02d992",
+  "environment": {
+    "runner": "linux-node24-a05-5909d54f2",
+    "host": "a4a6cb866850d910ed62eb11bf180b15a7723a193c1953cabad275e6babdc766",
+    "platform": "linux",
+    "arch": "x64",
+    "os": "6.18.44",
+    "cpuModels": [
+      "AMD EPYC 9V74 80-Core Processor"
+    ],
+    "logicalCpus": 9,
+    "memoryBytes": 10451464192,
+    "node": "v24.19.0",
+    "v8": "13.6.233.17-node.51",
+    "versions": {
+      "node": "24.19.0",
+      "acorn": "8.17.0",
+      "ada": "3.4.4",
+      "amaro": "1.1.10",
+      "ares": "1.34.6",
+      "brotli": "1.2.0",
+      "cldr": "48.0",
+      "icu": "78.3",
+      "llhttp": "9.4.3",
+      "merve": "1.2.2",
+      "modules": "137",
+      "napi": "10",
+      "nbytes": "0.1.4",
+      "ncrypto": "0.0.1",
+      "nghttp2": "1.69.0",
+      "nghttp3": "",
+      "ngtcp2": "",
+      "openssl": "3.5.7",
+      "simdjson": "4.6.4",
+      "simdutf": "6.4.0",
+      "sqlite": "3.53.3",
+      "tz": "2026b",
+      "undici": "7.29.0",
+      "unicode": "17.0",
+      "uv": "1.52.1",
+      "uvwasi": "0.0.23",
+      "v8": "13.6.233.17-node.51",
+      "zlib": "1.3.2.1-motley-3246f1b",
+      "zstd": "1.5.7"
+    },
+    "executable": "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "execArgv": [
+      "--expose-gc"
+    ],
+    "gcExposed": true,
+    "locale": {
+      "LANG": "C.UTF-8",
+      "LC_ALL": "C.UTF-8",
+      "TZ": "Europe/Berlin"
+    }
+  },
+  "environmentFingerprint": "0111dd20e93845c982b3e7f6a71020b5566235ca803247455fcc6693bde62e20",
+  "protocol": {
+    "name": "snapshot-retention-v1",
+    "snapshots": 128,
+    "typedPayloadBytes": 10000000,
+    "scenario": "original-records",
+    "maxRetainedMiB": 256,
+    "runner": "linux-node24-a05-5909d54f2",
+    "out": "/workspace/scratch/42f7738360b9/a05-final-snapshot-retention-original-5909d54f2.json"
+  },
+  "rows": [
+    {
+      "scenario": "original-records",
+      "fixture": {
+        "scenario": "original-records",
+        "managedLiveBytes": 10584064,
+        "liveRecords": 8192,
+        "typedPayloadBytes": 0,
+        "mutationUnit": "record",
+        "changedRecordsPerSnapshot": 82,
+        "changedPayloadBytesPerSnapshot": null,
+        "originalScalarSlotsWrittenPerSnapshot": 82,
+        "recordMutationFraction": 0.010009765625,
+        "byteMutationFraction": null,
+        "pattern": "Original 4096 immutable strings plus 4096 two-slot objects; rotate through 82 object scalar slots per snapshot."
+      },
+      "snapshotsRequested": 128,
+      "snapshotsCaptured": 128,
+      "stop": null,
+      "explicitGC": {
+        "callsPerBoundary": 3,
+        "eventLoopTurnsPerBoundary": 3
+      },
+      "hostCapBytes": 268435456,
+      "host": {
+        "empty": {
+          "rss": 98136064,
+          "heapTotal": 64327680,
+          "heapUsed": 29098416,
+          "external": 3897617,
+          "arrayBuffers": 220555
+        },
+        "live": {
+          "rss": 102785024,
+          "heapTotal": 101294080,
+          "heapUsed": 32634536,
+          "external": 3897657,
+          "arrayBuffers": 220555
+        },
+        "retained": {
+          "rss": 153968640,
+          "heapTotal": 114667520,
+          "heapUsed": 44640848,
+          "external": 3897657,
+          "arrayBuffers": 220555
+        },
+        "historyReleasedAfterRestoreChecks": {
+          "rss": 242098176,
+          "heapTotal": 176791552,
+          "heapUsed": 36698544,
+          "external": 3927864,
+          "arrayBuffers": 220555
+        },
+        "allHeapsReleased": {
+          "rss": 241831936,
+          "heapTotal": 165253120,
+          "heapUsed": 29467624,
+          "external": 3927864,
+          "arrayBuffers": 220555
+        }
+      },
+      "progress": [
+        {
+          "snapshots": 1,
+          "host": {
+            "rss": 122765312,
+            "heapTotal": 102871040,
+            "heapUsed": 34521256,
+            "external": 3897657,
+            "arrayBuffers": 220555
+          }
+        },
+        {
+          "snapshots": 16,
+          "host": {
+            "rss": 144302080,
+            "heapTotal": 104443904,
+            "heapUsed": 35736552,
+            "external": 3897657,
+            "arrayBuffers": 220555
+          }
+        },
+        {
+          "snapshots": 32,
+          "host": {
+            "rss": 145952768,
+            "heapTotal": 105754624,
+            "heapUsed": 37046720,
+            "external": 3897657,
+            "arrayBuffers": 220555
+          }
+        },
+        {
+          "snapshots": 48,
+          "host": {
+            "rss": 147337216,
+            "heapTotal": 107327488,
+            "heapUsed": 38317168,
+            "external": 3897657,
+            "arrayBuffers": 220555
+          }
+        },
+        {
+          "snapshots": 64,
+          "host": {
+            "rss": 148729856,
+            "heapTotal": 108638208,
+            "heapUsed": 39581768,
+            "external": 3897657,
+            "arrayBuffers": 220555
+          }
+        },
+        {
+          "snapshots": 80,
+          "host": {
+            "rss": 149807104,
+            "heapTotal": 110473216,
+            "heapUsed": 40846424,
+            "external": 3897657,
+            "arrayBuffers": 220555
+          }
+        },
+        {
+          "snapshots": 96,
+          "host": {
+            "rss": 151289856,
+            "heapTotal": 111783936,
+            "heapUsed": 42111456,
+            "external": 3897657,
+            "arrayBuffers": 220555
+          }
+        },
+        {
+          "snapshots": 112,
+          "host": {
+            "rss": 152641536,
+            "heapTotal": 113094656,
+            "heapUsed": 43376024,
+            "external": 3897657,
+            "arrayBuffers": 220555
+          }
+        },
+        {
+          "snapshots": 128,
+          "host": {
+            "rss": 153968640,
+            "heapTotal": 114667520,
+            "heapUsed": 44640736,
+            "external": 3897657,
+            "arrayBuffers": 220555
+          }
+        }
+      ],
+      "census": {
+        "uniqueSnapshotRecords": 18606,
+        "uniqueSnapshotTypedBackings": 0,
+        "exactSnapshotTypedBackingBytes": 0,
+        "exactLiveAndSnapshotTypedBackingBytes": 0,
+        "uniqueLiveAndSnapshotTypedBackings": 0,
+        "snapshotRecordIndexSlots": 1048576,
+        "uniqueGenerationSlots": 8192,
+        "ordinaryDataSlotsIncludingLive": 37212,
+        "uniqueSnapshotManagedRecordBytes": 11083936,
+        "logicalSnapshotEstimateBytes": 19538080,
+        "slotEstimateBytes": 8,
+        "limitations": "Managed record sizes and eight-byte index slots are logical accounting, not V8 object sizes. String backing, ropes, object headers and Set/Map/Array overhead are measured only by post-GC host counters."
+      },
+      "restoreEquivalence": {
+        "equal": true,
+        "revisions": 128,
+        "comparedRestoredStateSHA256": "8fce78a0cf873c119583cef20b93341275bb3cfdf220ae0cb8fb566bb752350f",
+        "policy": "Every shared snapshot restored into detached mutable storage and compared byte-for-byte/field-for-field against a separately replayed full-copy snapshot. Full-copy reference versions are released each iteration."
+      },
+      "copiedRecords": 18606,
+      "reusedRecords": 1029970,
+      "captureWallMsIncludingExplicitGC": 1425.234192,
+      "liveHostDelta": {
+        "rss": 4648960,
+        "heapTotal": 36966400,
+        "heapUsed": 3536120,
+        "external": 40,
+        "arrayBuffers": 0
+      },
+      "retainedHostDelta": {
+        "rss": 51183616,
+        "heapTotal": 13373440,
+        "heapUsed": 12006312,
+        "external": 0,
+        "arrayBuffers": 0
+      },
+      "totalLiveAndSnapshotHostDelta": {
+        "rss": 55832576,
+        "heapTotal": 50339840,
+        "heapUsed": 15542432,
+        "external": 40,
+        "arrayBuffers": 0
+      },
+      "unit": "bytes",
+      "additiveHostMetric": "heapUsed + external; arrayBuffers is already included in external and is not added again",
+      "environment": {
+        "node": "v24.19.0",
+        "v8": "13.6.233.17-node.51",
+        "platform": "linux",
+        "arch": "x64"
+      },
+      "assessment": {
+        "complete": true,
+        "assessmentBasis": "Snapshot increment over the live baseline; combined live-plus-history is separate.",
+        "hostSnapshotDeltaBytes": 12006312,
+        "hostSnapshotDeltaRatio": 1.1343763605359907,
+        "hostCombinedDeltaBytes": 15542472,
+        "hostCombinedDeltaRatio": 1.4684786486551857,
+        "hostUnderTwiceManagedHeap": true,
+        "exactSnapshotBackingRatioToManagedHeap": 0,
+        "logicalSnapshotRatio": 1.8459903492647058,
+        "exactTypedPayloadRatio": null,
+        "exactLiveAndSnapshotTypedPayloadRatio": null,
+        "restoreEquivalent": true,
+        "status": "met-for-this-workload"
+      },
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "--max-old-space-size=512",
+        "--expose-gc",
+        "/workspace/scratch/42f7738360b9/a05-snapshots/bench/vm/snapshot-retention-worker.js",
+        "original-records",
+        "268435456"
+      ],
+      "traceSHA256": "a51c5aae8bfecd73fa375e0ccc7987a75a602079081667f6c8f1a64a10f86ee3",
+      "tracePath": "/workspace/scratch/42f7738360b9/a05-final-snapshot-retention-original-5909d54f2.json.original-records.log"
+    }
+  ],
+  "errors": [
+    {
+      "name": "MeasurementRevisionError",
+      "message": "Code or worktree changed during measurement"
+    }
+  ],
+  "unsupportedTargets": [
+    "Browser timing/host-memory: this Node harness does not qualify browsers",
+    "Native .NET throughput: no CLR executable is measured",
+    "Wasm tier: interpreter baseline options explicitly disable it"
+  ],
+  "format": "SharpForge.SnapshotRetention/1",
+  "unit": "bytes",
+  "acceptance": "workload-specific",
+  "limit": "The issue does not define a mutation unit or include/exclude the live heap. Record-fraction and byte-fraction workloads are reported separately; this probe grants no universal or cross-platform pass.",
+  "completedCommit": "5909d54f25ef9898c956c736c96db782e36978ff",
+  "completedWorktreeStatus": "?? docs/evidence/project16-a5-baseline-profile/.rsync-tmp/\n?? docs/evidence/project16-a5-boundary-benchmark/.rsync-tmp/\n?? docs/evidence/project16-a5-boundary-benchmark/capture/.rsync-tmp/\n?? docs/evidence/project16-a5-boundary-benchmark/harness/.rsync-tmp/\n?? docs/evidence/project16-a5-changed-source/.rsync-tmp/\n?? docs/evidence/project16-a5-corrections-local/.rsync-tmp/\n?? docs/evidence/project16-a5-corrections-local/affected-retry/.rsync-tmp/\n?? docs/evidence/project16-a5-corrections-local/full-areas/.rsync-tmp/\n?? docs/evidence/project16-acceptance/.rsync-tmp/\n?? docs/evidence/project16-final-followup-local/.rsync-tmp/\n?? docs/evidence/project16-final-followup-local/baseline/.rsync-tmp/\n?? docs/evidence/project16-final-followup-local/targeted/.rsync-tmp/\n?? docs/evidence/project16-followup-local/p16-followup-local-r1/.rsync-tmp/\n?? docs/evidence/project16-followup-local/p16-followup-local-r2/.rsync-tmp/\n?? docs/evidence/project16-followup-local/p16-followup-local/.rsync-tmp/\n?? docs/evidence/project16-followup-local/p16-followup-python/.rsync-tmp/\n?? docs/evidence/project16-followup-local/p16-followup-static/.rsync-tmp/\n?? docs/evidence/project16-followup-model/.rsync-tmp/\n?? docs/evidence/project16-hosted/.rsync-tmp/\n?? docs/evidence/project16-hosted/a1/.rsync-tmp/\n?? docs/evidence/project16-hosted/a2/.rsync-tmp/\n?? docs/evidence/project16-hosted/a2/browser_a19_docking_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a3/.rsync-tmp/\n?? docs/evidence/project16-hosted/a3/browser_a19_docking_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a3/browser_a19_lazy_tools_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a3/browser_a19_shell_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a3/browser_a20_insights_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a3/browser_a20_language_providers_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a3/browser_a20_view_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a3/browser_multi_session_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a3/browser_vs_workflows_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a4/.rsync-tmp/\n?? docs/evidence/project16-hosted/a4/browser_a19_docking_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a4/browser_a19_lazy_tools_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a4/browser_a19_shell_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a4/browser_a20_insights_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a4/browser_a20_language_providers_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a4/browser_a20_studio_large_file_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a4/browser_a20_view_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a4/browser_editor_budgets_test_definition/.rsync-tmp/\n?? docs/evidence/project16-hosted/a4/browser_editor_budgets_test_overview/.rsync-tmp/\n?? docs/evidence/project16-hosted/a4/browser_multi_session_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a4/browser_vs_workflows_standalone_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a4/browser_vs_workflows_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a4/browser_workbench_perf_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a5/.rsync-tmp/\n?? docs/evidence/project16-hosted/a5/browser_a19_docking_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a5/browser_a19_lazy_tools_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a5/browser_a19_shell_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a5/browser_a20_insights_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a5/browser_a20_language_providers_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a5/browser_a20_studio_large_file_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a5/browser_a20_view_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a5/browser_editor_budgets_test_definition/.rsync-tmp/\n?? docs/evidence/project16-hosted/a5/browser_editor_budgets_test_overview/.rsync-tmp/\n?? docs/evidence/project16-hosted/a5/browser_multi_session_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a5/browser_vs_workflows_standalone_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a5/browser_vs_workflows_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a5/browser_workbench_perf_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a6/.rsync-tmp/\n?? docs/evidence/project16-hosted/a6/browser_a19_docking_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a6/browser_a19_lazy_tools_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a6/browser_a19_shell_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a6/browser_a20_insights_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a6/browser_a20_language_providers_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a6/browser_a20_studio_large_file_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a6/browser_a20_view_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a6/browser_editor_budgets_test_definition/.rsync-tmp/\n?? docs/evidence/project16-hosted/a6/browser_editor_budgets_test_overview/.rsync-tmp/\n?? docs/evidence/project16-hosted/a6/browser_multi_session_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a6/browser_vs_workflows_standalone_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a6/browser_vs_workflows_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a6/browser_workbench_perf_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a7/.rsync-tmp/\n?? docs/evidence/project16-hosted/a7/browser_a20_studio_large_file_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/a7/browser_editor_budgets_test_definition/.rsync-tmp/\n?? docs/evidence/project16-hosted/a7/browser_editor_budgets_test_overview/.rsync-tmp/\n?? docs/evidence/project16-hosted/a7/browser_workbench_perf_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/m1/.rsync-tmp/\n?? docs/evidence/project16-hosted/m1/browser_a19_docking_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/m1/browser_a19_lazy_tools_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/m1/browser_a19_shell_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/m1/browser_a20_insights_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/m1/browser_a20_language_providers_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/m1/browser_a20_view_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/m1/browser_multi_session_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/m1/browser_vs_workflows_standalone_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/m1/browser_vs_workflows_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/m2/.rsync-tmp/\n?? docs/evidence/project16-hosted/m2/browser_vs_workflows_standalone_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/w1/.rsync-tmp/\n?? docs/evidence/project16-hosted/w1/browser_a19_docking_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/w1/browser_a19_lazy_tools_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/w1/browser_a19_shell_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/w1/browser_a20_insights_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/w1/browser_a20_language_providers_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/w1/browser_a20_view_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/w1/browser_multi_session_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/w1/browser_vs_workflows_standalone_test/.rsync-tmp/\n?? docs/evidence/project16-hosted/w1/browser_vs_workflows_test/.rsync-tmp/\n?? docs/evidence/project16-integration/.rsync-tmp/\n?? docs/evidence/project16-integration/p16-capture-policy-core-48472269/.rsync-tmp/\n?? docs/evidence/project16-integration/p16-final-core-756ff0cb/.rsync-tmp/\n?? docs/evidence/project16-integration/p16-provider-bench-1699e53a/.rsync-tmp/\n?? docs/evidence/project16-integration/p16-provider-bench-1699e53a/baseline/.rsync-tmp/\n?? docs/evidence/project16-integration/p16-provider-bench-1699e53a/candidate/.rsync-tmp/\n?? docs/evidence/project16-integration/p16-provider-bench-40bbdea7/.rsync-tmp/\n?? docs/evidence/project16-integration/p16-provider-bench-40bbdea7/baseline/.rsync-tmp/\n?? docs/evidence/project16-integration/p16-provider-bench-40bbdea7/candidate/.rsync-tmp/\n?? docs/evidence/project16-integration/p16-provider-bench-48472269/.rsync-tmp/\n?? docs/evidence/project16-integration/p16-provider-bench-48472269/baseline/.rsync-tmp/\n?? docs/evidence/project16-integration/p16-provider-bench-48472269/candidate/.rsync-tmp/\n?? docs/evidence/project16-integration/p16-provider-tail-1699e53a/.rsync-tmp/\n?? docs/evidence/project16-integration/p16-provider-tail-1699e53a/baseline/.rsync-tmp/\n?? docs/evidence/project16-integration/p16-provider-tail-1699e53a/candidate/.rsync-tmp/\n?? docs/evidence/project16-pr10-core-initial/.rsync-tmp/\n?? docs/evidence/project16-pr10-import-review/.rsync-tmp/\n?? docs/evidence/project16-published-stack-20261004/.rsync-tmp/\n?? docs/evidence/project16-shell-providers/.rsync-tmp/\n?? docs/screenshots/.rsync-tmp/\n?? planning/qualification/.rsync-tmp/\n?? planning/qualification/acceptance/.rsync-tmp/\n?? planning/qualification/browser/.rsync-tmp/\n?? planning/qualification/browser/evidence/.rsync-tmp/\n?? planning/qualification/browser/known-failures/.rsync-tmp/\n?? planning/qualification/browser/ui-fixes-evidence/.rsync-tmp/\n?? planning/qualification/ci-planning/.rsync-tmp/\n?? planning/qualification/ci-planning/evidence/.rsync-tmp/\n?? planning/qualification/coverage/.rsync-tmp/\n?? planning/qualification/differential/.rsync-tmp/\n?? planning/qualification/gc/.rsync-tmp/\n?? planning/qualification/gc/stress/.rsync-tmp/\n?? planning/qualification/integration-performance/.rsync-tmp/\n?? planning/qualification/integration-performance/binder-types-ab/.rsync-tmp/\n?? planning/qualification/integration-performance/compiler-adapters/.rsync-tmp/\n?? planning/qualification/integration-performance/compiler-binder-types-ab/.rsync-tmp/\n?? planning/qualification/integration-performance/size/.rsync-tmp/\n?? planning/qualification/inventory/.rsync-tmp/\n?? planning/qualification/inventory/references/.rsync-tmp/\n?? planning/qualification/native/.rsync-tmp/\n?? planning/qualification/perf-baselines/.rsync-tmp/\n?? planning/qualification/performance/.rsync-tmp/\n?? planning/qualification/performance/evidence/macos-arm64-2026-10-03/.rsync-tmp/\n?? planning/qualification/performance/evidence/macos-arm64-2026-10-03/aa/.rsync-tmp/\n?? planning/qualification/performance/evidence/macos-arm64-2026-10-03/browser/chromium/.rsync-tmp/\n?? planning/qualification/performance/evidence/macos-arm64-2026-10-03/browser/firefox/.rsync-tmp/\n?? planning/qualification/performance/evidence/macos-arm64-2026-10-03/browser/webkit/.rsync-tmp/\n?? planning/qualification/performance/evidence/macos-arm64-2026-10-03/legacy/.rsync-tmp/\n?? planning/qualification/protocol/.rsync-tmp/\n?? planning/qualification/protocol/observed/.rsync-tmp/\n?? planning/qualification/protocol/schema/.rsync-tmp/\n?? planning/qualification/release-policy/.rsync-tmp/\n?? planning/qualification/release-policy/examples/.rsync-tmp/\n?? planning/qualification/release15/.rsync-tmp/\n?? planning/qualification/repro/.rsync-tmp/\n?? planning/qualification/runtime-performance-repair/.rsync-tmp/\n?? planning/qualification/runtime-performance-repair/cil-repair-integration/.rsync-tmp/\n?? planning/qualification/runtime-performance-repair/cil-repair-original/.rsync-tmp/\n?? planning/qualification/security/.rsync-tmp/\n?? planning/qualification/suites/.rsync-tmp/\n?? planning/qualification/supply/.rsync-tmp/\n?? planning/qualification/supply/cyclonedx/.rsync-tmp/\n?? planning/qualification/supply/evidence/macos-arm64-2026-10-03/.rsync-tmp/\n?? planning/qualification/supply/licenses/.rsync-tmp/\n?? planning/qualification/verifier/.rsync-tmp/",
+  "completedAt": "2026-10-04T15:31:07.309Z"
+}

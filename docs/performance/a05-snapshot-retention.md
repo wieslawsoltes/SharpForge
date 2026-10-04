@@ -77,5 +77,10 @@ None of these exits grants a universal or cross-platform qualification. The prob
 exercises the ManagedHeap shared by source and direct CIL engines; it does not
 qualify whole-VM frame retention, browsers, Wasm hosts, or native .NET snapshots.
 
-Authoring checks and protocol unit tests are separate from measurement. This
-protocol has not yet produced evidence; no retained-memory result is claimed.
+Authoring checks and protocol unit tests are separate from measurement. The
+[2026-10-04 observation](../a05-evidence/snapshot-retention-2026-10-04/README.md)
+records the actual clean Node/Linux original workload: 128 matching restores,
+1.134337× managed-heap host-history increment, and 1.468457× combined increment.
+The separate distributed-byte run hit the 256 MiB cap at 23 versions and remains
+incomplete. The concentrated-byte workload remains unmeasured. These are
+workload-specific observations, not a universal or cross-platform bound.

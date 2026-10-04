@@ -8,7 +8,7 @@ const read = path => readFileSync(new URL('../packages/runtime/src/' + path, imp
 
 test('prepared pool capabilities, source identities, calls and callbacks remain byte-identical in the reference', () => {
   const unchanged = ['source-prepared-calls', 'prepared-cil-frame', 'prepared-virtual-call', 'source-fusion-batch', 'callback-frames',
-    'frame-pool', 'source-frame-capability', 'source-frame-scrub', 'method-table', 'source-type-display',
+    'frame-pool', 'source-frame-capability', 'cil-frame-capability', 'prepared-frame-scrub', 'method-table', 'source-type-display',
     'type-display-name', 'runtime-type-assembly', 'tokens', 'type-system', 'managed-object-string'];
   for (const name of unchanged) {
     const path = 'execution/' + name + '.js', source = read(path);

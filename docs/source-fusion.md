@@ -142,3 +142,17 @@ at the same clean revision measured **1.47278×**, interval [1.41347, 1.52400]. 
 are inconclusive against 1.5×, with point estimates below it. The benchmark
 reference, options and threshold are unchanged, and both reports are retained in
 [the evidence bundle](a05-evidence/source-fibonacci-2026-10-04/README.md).
+
+The subsequent CPU diagnostic at that exact revision still attributed 18.45%
+of candidate guest samples to prepared frame scrubbing, 10.80% to the pool flush
+body and 3.34% to its VM lookup wrapper. The next candidate marks call/return
+blocks during cold preparation and avoids dispatching an empty flush after
+successful scalar blocks. Every fault and every call/return still flushes at its
+existing boundary. Other blocks inspect the actual current pool before skipping
+the call, so initial pending roots and retirements created by a host edit or pool
+replacement are preserved. The outer slice flush remains unchanged.
+
+`tests/a05-source-fusion-retirement.test.js` covers empty and pending scalar
+boundaries, host-created/replaced pools, fault addresses, calls/returns, quotas,
+pool statistics and custom adapters that stop execution. Validation and paired
+qualification of this follow-up are pending.

@@ -22,6 +22,8 @@ The root source release includes the complete backend contract, public API examp
 The [decompiler API](DECOMPILER.md) exposes bounded immutable normal control-flow
 graphs and the conservative source reconstruction pipeline, including explicit
 IL fallbacks and exception-boundary metadata.
+Assembly results include a [physical metadata inventory](DECOMPILER-INVENTORY.md)
+with exact row accounting and explicit limits on source reconstruction.
 
 0.6 emits actual checked arithmetic/conversion instructions and InterfaceImpl metadata for concrete IDisposable resources, alongside finally cleanup. The canonical loader reconstructs and verifies these supported forms.
 

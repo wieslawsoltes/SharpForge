@@ -26,13 +26,24 @@ counts cover allocations owned by this pool, not every runtime or engine allocat
 Method lookup and free-list operations are constant time; clearing a retired frame
 is linear in its fields, and context disposal is linear in its frames.
 
-Prepared primitive source calls carry an opaque storage capability for the exact
-image, method and local shape. Each current VM pool privately binds it to that
-pool's existing size bucket once. Shared source metadata never shares frames,
+Prepared primitive source calls and eligible closed CIL virtual calls carry an
+opaque storage capability for the exact code metadata and storage shape. CIL
+bindings also validate the live signature, parameter count and stack capacity.
+Each current VM pool privately binds it to that pool's existing size bucket once.
+Shared metadata never shares frames,
 free lists or managed roots between VMs. Replaced metadata and discarded pools
 reject the old binding; a new pool may bind the same unchanged metadata afresh.
 The capability contains no VM, pool, bucket, frame or managed value, and neither
-capabilities nor bindings are serialized.
+capabilities nor bindings are serialized. Prepared CIL entry still performs the
+ordinary stack admission, argument storage conversions, fresh frame-ID issuance,
+registration and method events. Custom `vm.call` hooks keep the ordinary call
+path, and custom storage hooks continue to normalize arguments with caller roots
+held live until admission completes.
+
+Changing a method's local capacity invalidates its old size bucket. Already-clean
+cached frames are dropped with matching retention counters; still-active frames
+from that bucket are scrubbed at retirement but cannot be cached into it again.
+Both source and CIL prepared bindings rebind when their prior bucket is invalid.
 
 Prepared retirement clears present enumerable own fixed fields with explicit
 stores and retains the ordinary cleanup for additional runtime and
@@ -48,6 +59,11 @@ array identities and retention budgets. All seven new cases and the combined
 122-test pool/fusion/index run passed at `48c62243`. The unchanged Fibonacci
 measurements remain inconclusive against 1.5×; see the
 [retained 20- and 100-pair evidence](a05-evidence/source-fibonacci-2026-10-04/README.md).
+
+The corresponding CIL pool suite adds
+signature/stack-capacity checks, changed-local rebinding with delayed retirement,
+and ordinary/prepared setter-order parity. The CIL extension awaits its serial
+test and unchanged paired performance runs; no speedup is claimed for it.
 
 This is the storage-reuse increment of #1399. Focused tests exercise warmed calls,
 recursion, EH, snapshots, stale addresses, budgets and parked cancellation. Allocation,

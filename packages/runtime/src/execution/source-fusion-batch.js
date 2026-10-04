@@ -1,5 +1,5 @@
 import {executionCodeState} from './code-version.js';
-import {flushFramePool} from './frame-pool.js';
+import {flushFramePool, hasPendingFrameRetirement} from './frame-pool.js';
 import {beginSourceStackInstruction, handleSourceInstructionFault} from './source-stack-admission.js';
 import {executeSourceFusion, selectSourceFrameFusion} from './source-fusion.js';
 
@@ -12,15 +12,17 @@ export function executeSourceFusionBatch(vm, frame, group, remaining) {
     const frameId = frame.id;
     const code = vm.image.methods[methodId].code;
     let next;
+    let completed = false;
     try {
       next = executeSourceFusion(vm, frame, group, remaining - (vm.instructions - started), state);
+      completed = true;
     } catch (error) {
       // A call can change vm.top, so fault ownership is the block's original executing frame.
       const index = frame.pc - 1;
       return handleSourceInstructionFault(vm, error, {frame, opcode: code[index * 3], index, method: methodId, frameId});
     } finally {
-      // Return continuations have finished. Revoke/clear storage before the next block can reuse it.
-      flushFramePool(vm);
+      // Faults and calls/returns retain their boundary. Host-created retirements use the actual current pool.
+      if (!completed || group.retirementBoundary || hasPendingFrameRetirement(vm)) flushFramePool(vm);
     }
     const budget = remaining - (vm.instructions - started);
     if (next === false || budget < 2 || vm.state !== 'running' || !vm.frames.length) return true;

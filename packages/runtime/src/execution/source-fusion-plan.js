@@ -32,7 +32,9 @@ function block(code, start, entries, image) {
     if (terminal.has(opcode)) break;
   }
   if (instructions.length < 2) return null;
-  return Object.freeze({execute: executeSourceBlock, length: instructions.length, instructions: Object.freeze(instructions)});
+  const lastOpcode = instructions[instructions.length - 1].opcode;
+  return Object.freeze({execute: executeSourceBlock, length: instructions.length,
+    retirementBoundary: lastOpcode === Op.CALL || lastOpcode === Op.RET, instructions: Object.freeze(instructions)});
 }
 
 /** Linear cold preparation: bounded blocks end at control transfer and retain no guest values or frames. */

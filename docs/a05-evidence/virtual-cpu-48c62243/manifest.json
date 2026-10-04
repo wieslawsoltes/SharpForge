@@ -1,0 +1,60 @@
+{
+  "revision": "48c62243ef4cf614dfcafdb7af9a7ce360b643c4",
+  "kind": "V8 CPU diagnostic, not qualification",
+  "wrapper": "scripts/limited.js",
+  "resourceEnvironment": {
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "512"
+  },
+  "files": {
+    "summary.json": {
+      "bytes": 149955,
+      "sha256": "6d35190d92cdc3a2d95fb5ffa48223692fa95bf1461d5306f9791ed8dcc8b89c"
+    },
+    "guest-summary.json": {
+      "bytes": 124291,
+      "sha256": "5c4722386f3a3cd8cd614c8e13497d181249b83de2c36111a13610f49e10305e"
+    },
+    "a05-virtual-profile-48c62243.mjs": {
+      "bytes": 5122,
+      "sha256": "150fc5f294732653d536b4e4c09bfa938e295dc5f93551f4085a7a45b7682b52"
+    },
+    "a05-virtual-profile-48c62243.log": {
+      "bytes": 53,
+      "sha256": "db34904ac43fcf52655afcaad26242dc0fe46898b825333ad0af0b03121b0898"
+    },
+    "candidate-00.cpuprofile": {
+      "bytes": 66678,
+      "sha256": "aceb75e34eb328830e8798cd6ce8aadd6a6a32e1045cfc7c66987bd14f06004b"
+    },
+    "candidate-01.cpuprofile": {
+      "bytes": 65513,
+      "sha256": "cf0fff0efae856207b8992d7874aaefe92be63953e72eb0aad254bd25e71a6c9"
+    },
+    "candidate-02.cpuprofile": {
+      "bytes": 61304,
+      "sha256": "924a746498c3d715c8f2d77a4fec28be4cfc1808f92de47c0f987b33ba654777"
+    },
+    "candidate-03.cpuprofile": {
+      "bytes": 66796,
+      "sha256": "7a9cf0ba389afc111bad7cdf8a2032af76ddefd3079093e37303b1a404805e23"
+    },
+    "candidate-04.cpuprofile": {
+      "bytes": 59844,
+      "sha256": "02d16a1137428183a39d7de9eac81a19de1d632999d7ef1a4cf99950d3f64139"
+    },
+    "candidate-05.cpuprofile": {
+      "bytes": 69431,
+      "sha256": "30ee94dfed0ba3c67f35a89bb5ea92de93cc961745d32a09e79045e9d6856e24"
+    },
+    "candidate-06.cpuprofile": {
+      "bytes": 62509,
+      "sha256": "8f00a2ff2d380ae6ca1bfdc675d5ae9d56ecfa793f497abdeb236dcf131f20ea"
+    },
+    "candidate-07.cpuprofile": {
+      "bytes": 54560,
+      "sha256": "05f318f2ae964472b018b82bc044ca618e9f1128c006ecb8f749b7c59ff88ee0"
+    }
+  }
+}
