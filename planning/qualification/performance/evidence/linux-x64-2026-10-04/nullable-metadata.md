@@ -29,7 +29,9 @@ This tests missing contracts on a controlled modern reference projection; no his
 
 ## Correctness results
 
-All 23 focused tests passed with no skips in the final metadata composition. The six test files cover shared
+All 23 focused tests passed with no skips in the metadata composition before publication isolation, using
+implementation `04f236d9a33b3524ac54258e9ed7bf7beff3c57a` and the fixture/test payload committed as `b25520c2`.
+The six test files cover shared
 transform/source-context handling, modern emission/import, native reflection, tuple relation metadata, embedded
 definition metadata, and native embedded constructor/consumer behavior. Both `compileToAssembly` and
 `compileToReferenceAssembly` preserve the qualified signatures. Native execution was on Linux x64 using the
@@ -111,3 +113,16 @@ Implementation-author sign-off: the quantified median and registry-size increase
 exception for this batch. Preserving the qualified source annotation meaning, emitting resolvable contracts and
 retaining native consumer parity take precedence over the baseline that omitted that metadata. This acceptance
 does not certify a performance-budget pass or waive measurement of future changes.
+
+## Publication scope
+
+The isolated publication branch is based on the attribute metadata dependency at
+`a72246a65dad50ea458ff5938fc88a77c9e06565`. It preserves the owned source/test batches as separate commits and
+adapts only the nullable, tuple and compiler-attribute composition hooks. The benchmark above remains evidence for
+its explicitly recorded complete revisions; it is not relabeled as a run on the isolated branch. Independent replay
+of that isolated branch must be recorded separately.
+
+The only manifest change outside the compiler workstream is the exact path/count/SHA-256 entry for
+`packages/compiler/bench/nullable-metadata.bench.js` in `scripts/conformance/static/allowlist.json`. It reviews the
+single dynamic import of the fixed compiler package entry from an operator-selected trusted checkout. The checker
+and all other policy entries remain unchanged by this batch.

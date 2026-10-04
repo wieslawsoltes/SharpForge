@@ -86,6 +86,13 @@
       "reason": "Developer-run Constant benchmark loads the metadata importer from an explicitly selected trusted local baseline or its fixed workspace path; the tool is not shipped in the product."
     },
     {
+      "path": "packages/compiler/bench/nullable-metadata.bench.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "9d5ce736872b1bd1a0f1525f386be5079b904b7cf3e13dbb49c7c3a4e373c884",
+      "reason": "Trusted operator-selected checkout supplies the fixed @sharpforge/compiler public package entry for the paired nullable benchmark; the resolved entry must stay inside that checkout, and managed source or metadata never selects a JavaScript module."
+    },
+    {
       "path": "packages/compiler/smoke.mjs",
       "operation": "dynamic-import",
       "count": 3,
