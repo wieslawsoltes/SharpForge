@@ -7,8 +7,8 @@ const native = JSON.parse(readFileSync(new URL('../../../tests/fixtures/clr-prop
 const image = Buffer.from(native.image, 'base64');
 const load = async () => (await new AssemblyLoadSession().createContext().loadFromStream(image)).manifestModule;
 function summary(name, samples) {
-  samples.sort((left, right) => left - right);
-  return { name, unit: 'microseconds/operation', median: samples[50], p95: samples[95], p99: samples[99] };
+  const sorted = [...samples].sort((left, right) => left - right);
+  return { name, unit: 'microseconds/operation', median: sorted[50], p95: sorted[95], p99: sorted[99], samples };
 }
 const cold = [];
 for (let sample = 0; sample < 100; sample++) {

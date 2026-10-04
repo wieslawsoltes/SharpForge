@@ -34,8 +34,22 @@ synchronous operation introduces no asynchronous cancellation point.
 Authored tests cover getter preference, write-only projection, omitted rows,
 ParamPtr order, malformed lazy data, limits and unload. The independent C#
 fixture covers defaults, a nonpublic getter, generic and array index types,
-write-only/ordinary properties and interface indexers. Native capture, focused
-tests and measurements are pending the assigned serial validation slot.
+write-only/ordinary properties and interface indexers. SDK 10.0.201/CoreCLR
+10.0.5 captured seven properties; all 33 focused Property/Method tests pass on
+Node 24.21.0. Syntax/static checks pass (2,600/2,596 modules), and the structure
+report has 268 existing findings with none in CLR. All local jobs ran serially.
+
+On a shared Apple M3 Pro/darwin-arm64, new projection cold metadata/constants
+measured median 90.459 µs / p95 298.459 µs; cached projected constant access
+measured 0.009800 µs / p95 0.024233 µs. The existing method-parameter control
+used exact parent e35a69d0 and product 14d9a902 with identical fixture/script:
+parent/head cold medians were 42.000/37.166 µs and p95 95.083/110.041 µs;
+cached medians were 0.008792/0.008896 µs and p95 0.024446/0.025188 µs.
+The root reviewer explicitly accepted cold p95 +14.958 µs (+15.7%) and cached
+p95 +0.742 ns for the additive lazy projection. The shared-host pair cannot
+establish causality; no general speed or significance claim is made. All 600
+measured samples are committed in collection order, with exact sources/hashes.
+Allocations were not measured. No benchmark was repeated or retuned.
 
 ```sh
 node scripts/limited.js node packages/clr/tools/capture-property-parameters.mjs tests/fixtures/clr-property-parameters
