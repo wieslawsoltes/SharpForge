@@ -29,13 +29,13 @@ test('six illegal lexical patterns retain exact prefix or decoder offsets', () =
     errorAt('CILPT0003', 0));
   const duplicate = new CilWriter().group('call', 0x06000001, [tail, tail]).op('ret').finish();
   assert.throws(() => validateTailPrefixes(duplicate), errorAt('CILPT0001', 2));
-  const skippedPrefix = new CilWriter().op('br.s', 'call').op('tail.').label('call').op('call', 0x06000001).op('ret').finish();
+  const skippedPrefix = new CilWriter().op('br.s', 'call').op('tail.').mark('call').op('call', 0x06000001).op('ret').finish();
   assert.throws(() => validateTailPrefixes(skippedPrefix), /instruction-group boundary/);
 });
 
 test('branches may enter the first prefix or the following ret', () => {
   for (const target of ['prefix', 'return']) {
-    const writer = new CilWriter().op('br.s', target).label('prefix').group('call', 0x06000001, [tail]).label('return').op('ret');
+    const writer = new CilWriter().op('br.s', target).mark('prefix').group('call', 0x06000001, [tail]).mark('return').op('ret');
     assert.doesNotThrow(() => validateTailPrefixes(writer.finish()));
   }
 });

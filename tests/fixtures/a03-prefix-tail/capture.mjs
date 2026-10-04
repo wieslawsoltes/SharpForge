@@ -45,6 +45,7 @@ try {
     sourceSHA256: sha256(source), assemblySHA256: sha256(bytes), environment: toolchain.environment,
     references: toolchain.actual.referenceAssemblies, observations, execution };
   await writeFile(output, JSON.stringify(result, null, 2) + '\n');
+  if (execution.exitCode !== 42 || execution.signal !== null) throw new Error('Native tail call did not return 42; capture retained');
   console.log(JSON.stringify({ observations: observations.map(({ name, oracle, diagnostic }) => ({ name, oracle, diagnostic })), execution }));
 } finally {
   await rm(temporary, { recursive: true, force: true });
