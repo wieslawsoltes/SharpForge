@@ -4,6 +4,7 @@ import {cilHandlers} from './handlers/index.js';
 import {executionCodeState} from './code-version.js';
 import {methodOffsets, methodOffsetAllocations} from './method-offsets.js';
 import {specializeInt32Plan, numericPlanCurrent, numericPlanIdentity} from './numeric-specialization.js';
+import {specializeFloatPlan, floatPlanCurrent, floatPlanIdentity} from './typed-float-plan.js';
 
 function invalid(message) {
   throw new ManagedFault('InvalidProgramException', message);
@@ -58,6 +59,7 @@ function createPlan(vm, method, state) {
     }
   }
   const numericHandlerIds = specializeInt32Plan(vm, method, offsets, handlers);
+  specializeFloatPlan(vm, method, offsets, handlers);
   // Dispatch only needs handlers and original instructions. Allocate optional
   // numeric diagnostics on their first read; these buffers never enter snapshots.
   let metadata;
@@ -83,12 +85,14 @@ export function getDecodePlan(vm, method) {
   const state = executionCodeState(vm);
   const cache = state.decode ??= {methods: new Map(), lastMethod: null, lastEntry: null};
   if (cache.lastMethod === method && cache.lastEntry.instructions === method.instructions &&
-      numericPlanCurrent(vm, method, cache.lastEntry)) return cache.lastEntry.plan;
+      numericPlanCurrent(vm, method, cache.lastEntry) && floatPlanCurrent(vm, method, cache.lastEntry)) return cache.lastEntry.plan;
   let methods = cache.methods.get(method.token);
   if (!methods) cache.methods.set(method.token, methods = new WeakMap());
   let entry = methods.get(method);
-  if (!entry || entry.instructions !== method.instructions || !numericPlanCurrent(vm, method, entry)) {
-    entry = {instructions: method.instructions, plan: createPlan(vm, method, state), ...numericPlanIdentity(vm, method)};
+  if (!entry || entry.instructions !== method.instructions || !numericPlanCurrent(vm, method, entry) ||
+      !floatPlanCurrent(vm, method, entry)) {
+    entry = {instructions: method.instructions, plan: createPlan(vm, method, state),
+      ...numericPlanIdentity(vm, method), ...floatPlanIdentity(vm, method)};
     methods.set(method, entry);
   }
   cache.lastMethod = method;

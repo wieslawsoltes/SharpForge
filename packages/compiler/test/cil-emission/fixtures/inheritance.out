@@ -1,0 +1,19 @@
+shape rectangle
+shape square
+shape circle
+shape:rectangle area 6
+square! area 16 side 4
+shape:circle area 3
+25
+square!
+scaled 24
+fixed 3
+True
+False
+True
+True
+square!
+invalid cast
+42
+True
+False
