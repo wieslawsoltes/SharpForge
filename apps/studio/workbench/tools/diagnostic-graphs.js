@@ -36,7 +36,9 @@ export function drawDiagnosticGraph(canvas, samples, metric) {
   if (!chart || !values.length) return false;
   const {context, width, height} = chart;
   const maximum = settings.maximum ?? Math.max(1, ...values.map(sample => sample[metric]));
-  const start = values[0].timestamp, end = values.at(-1).timestamp, span = Math.max(1, end - start);
+  const intervals = metric === 'occupancyPercent';
+  const start = intervals ? values[0].startMs : values[0].timestamp;
+  const end = values.at(-1).timestamp, span = Math.max(1, end - start);
   context.fillText(maximum.toLocaleString() + ' ' + settings.unit, 4, 13);
   context.fillText('0', 4, height - 23);
   context.fillText((start / 1000).toFixed(2) + ' s', 44, height - 4);
@@ -45,10 +47,12 @@ export function drawDiagnosticGraph(canvas, samples, metric) {
   context.textAlign = 'left';
   context.beginPath();
   values.forEach((sample, index) => {
-    const x = 44 + (sample.timestamp - start) / span * (width - 52), y = height - 25 - sample[metric] / maximum * (height - 45);
-    const gap = metric === 'occupancyPercent' && index > 0 && sample.sequence !== values[index - 1].sequence + 1;
+    const x = 44 + ((intervals ? sample.startMs : sample.timestamp) - start) / span * (width - 52);
+    const y = height - 25 - sample[metric] / maximum * (height - 45);
+    const gap = intervals && index > 0 && sample.sequence !== values[index - 1].sequence + 1;
     if (!index || gap) context.moveTo(x, y);
     else context.lineTo(x, y);
+    if (intervals) context.lineTo(44 + (sample.endMs - start) / span * (width - 52), y);
   });
   context.stroke();
   const latest = values.at(-1)[metric];
