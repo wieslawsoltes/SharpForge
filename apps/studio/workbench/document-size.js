@@ -1,3 +1,5 @@
+export const AUTOMATIC_DOCUMENT_CHARACTERS = 8_000_000;
+
 /** Determine UTF-16 size without materializing an EditorModel-backed document's lazy text getter. */
 export function documentSize(documents, record) {
   const model = documents.models?.get(record.uri) ?? record.model;
