@@ -41,7 +41,9 @@ export function subscribeShellServices(shell) {
     shell.updateContext();
   });
   listen(shell.services.sessions, event => {
-    if (event.session) shell.timeline.record(event.session.id, event.event ?? event.session.debug ?? event);
+    if (event.session) shell.timeline.record(event.session.id, event.event ?? event.session.debug ?? event,
+      {identity: event.session.identity, name: event.session.name, projectId: event.projectId,
+        runtimeSession: event.session.runtimeSession, generation: event.generation});
     invalidate('diagnostic-timeline');
     if (event.active) {
       invalidate('output', 'properties');
@@ -53,6 +55,7 @@ export function subscribeShellServices(shell) {
     }
   });
   listen(shell.references, () => invalidate('references'));
+  listen(shell.timeline, () => invalidate('diagnostic-timeline'));
   listen(shell.bookmarks, () => invalidate('bookmarks'));
   listen(shell.taskList, () => invalidate('task-list'));
   listen(shell.tests, () => { invalidate('test-explorer'); shell.commands.invalidate(); });

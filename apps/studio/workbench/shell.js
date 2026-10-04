@@ -318,8 +318,8 @@ export class WorkbenchShell {
     this.registeredPanels.clear();
     this.mounts.clear(); this.scheduler.dispose(); this.dialogs.dispose(); this.statusBar?.dispose(); this.announcer?.dispose();
     for (const model of [this.tasks, this.notifications, this.search, this.symbols, this.taskList, this.bookmarks,
-      this.calls, this.tests, this.timeline, this.references, this.recent, this.toolbars, this.configuration,
-      this.explorerViews, this.metadata]) model.dispose?.();
+      this.calls, this.tests, this.executionCapture, this.timeline, this.references, this.recent, this.toolbars, this.configuration,
+      this.explorerViews, this.metadata]) model?.dispose?.();
     this.restoreEnvironment?.();
     this.contextKeys.dispose();
   }
