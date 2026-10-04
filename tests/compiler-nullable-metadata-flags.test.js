@@ -3,9 +3,11 @@ import assert from 'node:assert/strict';
 import { frameworkBridge } from '../packages/compiler/src/symbols/registry-bridge.js';
 import {
   ArrayTypeSymbol, ConstructedNamedTypeSymbol, ErrorTypeSymbol, FunctionPointerTypeSymbol, NamedTypeSymbol,
-  NullableAnnotation, PointerTypeSymbol, RefKind, TypeKind, TypeParameterSymbol, TypeWithAnnotations,
+  NullableAnnotation, PointerTypeSymbol, RefKind, SymbolKind, TypeKind, TypeParameterSymbol, TypeWithAnnotations,
 } from '../packages/compiler/src/symbols/types.js';
 import { encodeNullableFlags, applyNullableMetadataFlags, decodeNullableFlags } from '../packages/compiler/src/nullable/metadata-flags.js';
+import { parseCompilerInput } from '../packages/compiler/src/parse-input.js';
+import { SemanticAnalysis } from '../packages/compiler/src/semantic-analysis.js';
 
 const bridge = frameworkBridge();
 const string = bridge.typeFromName('string');
@@ -90,4 +92,19 @@ test('A02-T05.3 the source decoder retains a registry delegate\'s closed Invoke 
   assert.equal(annotated.type.unannotated, original);
   assert.ok(annotated.type.delegateInvokeMethod.returnType.equals(string));
   assert.equal(annotated.type.delegateInvokeMethod.parameters.length, 0);
+});
+
+test('A02-T05.3 unconstrained and interface-constrained type uses retain the source annotation context', () => {
+  const source = `interface I { }
+    class Uses<T, TInterface, TNew, TValue> where TInterface : I where TNew : new() where TValue : struct {
+      public T Value; public T? Optional; public T[] Array; public TInterface Contract; public TNew Created; public TValue Number;
+    }`;
+  for (const nullableContext of ['enable', 'disable']) {
+    const options = { nullableContext }, analysis = new SemanticAnalysis(parseCompilerInput(source, options), options);
+    assert.deepEqual(analysis.run().diagnostics.filter(item => item.severity === 'error'), []);
+    const type = analysis.assembly.globalNamespace.lookupType('Uses', 4), flag = nullableContext === 'enable' ? 1 : 0;
+    const fields = Object.fromEntries(type.getMembers().filter(member => member.kind === SymbolKind.Field)
+      .map(field => [field.name, encodeNullableFlags(field.typeWithAnnotations)]));
+    assert.deepEqual(fields, { Value: [flag], Optional: [2], Array: [flag, flag], Contract: [flag], Created: [flag], Number: [0] });
+  }
 });
