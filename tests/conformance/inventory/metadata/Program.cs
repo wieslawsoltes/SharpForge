@@ -15,7 +15,9 @@ internal sealed class Types : ISignatureTypeProvider<string, object?>
 {
     public string GetArrayType(string element, ArrayShape shape) => element + "[" + new string(',', shape.Rank - 1) + "]";
     public string GetByReferenceType(string element) => element + "&";
-    public string GetFunctionPointerType(MethodSignature<string> signature) => "method " + signature.ReturnType + " *(" + string.Join(",", signature.ParameterTypes) + ")";
+    // Preserve the calling convention/flags and the vararg boundary, including inside other types.
+    public string GetFunctionPointerType(MethodSignature<string> signature) => FormattableString.Invariant(
+        $"method[header=0x{signature.Header.RawValue:X2};generic={signature.GenericParameterCount};required={signature.RequiredParameterCount}] {signature.ReturnType} *({string.Join(",", signature.ParameterTypes)})");
     public string GetGenericInstantiation(string generic, ImmutableArray<string> arguments) => generic + "<" + string.Join(",", arguments) + ">";
     public string GetGenericMethodParameter(object? context, int index) => "!!" + index;
     public string GetGenericTypeParameter(object? context, int index) => "!" + index;
