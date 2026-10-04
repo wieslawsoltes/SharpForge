@@ -147,3 +147,21 @@ under `tests/fixtures/nullable-metadata/qualification/`.
 This replay validates the isolated publication's correctness. The before/after
 performance evidence above remains attributed to its explicitly recorded whole
 revisions and was not rerun or relabeled as this isolated commit.
+
+## Replay after resolving current-main conflicts
+
+PR #4571 required a real merge of main `e60b0764782f1122439e5b161cb9494c75724e32`.
+The resolved source at `ea25b45b24a3c7dc9b18e22c22e5f23cb3a59069` retains main's
+allocation-saving attribute recognition, fixed-buffer type-name correction and
+current attribute evidence, together with this batch's nullable transforms,
+compiler-owned contracts and return metadata. The allowlist retains all current
+main entries and the exact nullable benchmark entry.
+
+The combined nullable and adjacent attribute/parameter suites passed **63/63
+tests, with zero failures and zero skips**. In addition, the selected
+`attribute-targets` and `pseudo-attributes` assemblies each printed exactly the
+genuine Roslyn output on .NET with the 10.0.5 reference pack. The worktree was
+clean before and after these runs. Complete commands, logs and hashes are in
+`tests/fixtures/nullable-metadata/qualification/main-merge-results.json`.
+This is additional correctness evidence at the stated integration source; the
+whole-revision performance comparison above has not been relabeled or rerun.
