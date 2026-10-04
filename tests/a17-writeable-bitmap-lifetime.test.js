@@ -1,0 +1,33 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {WriteableBitmap} from '../packages/rendering/src/media/images.js';
+
+test('the shared bitmap model preserves buffer identity, exact bytes and silent rewind', () => {
+  const bitmap = new WriteableBitmap(2, 1), revisions = [];
+  const buffer = bitmap.PixelBuffer;
+  bitmap.on('Invalidated', event => revisions.push(event.Revision));
+  const input = new Uint8Array([9, 255, 0, 0, 128, 0, 0, 255, 255, 9]);
+  bitmap.setPixels(input.subarray(1, 9));
+  const snapshot = bitmap.snapshot();
+  bitmap.PixelBuffer[0] = 1;
+  bitmap.Invalidate();
+  bitmap.restore(snapshot);
+  assert.equal(bitmap.PixelWidth, 2);
+  assert.equal(bitmap.PixelHeight, 1);
+  assert.equal(bitmap.PixelBuffer, buffer);
+  assert.deepEqual([...buffer], [255, 0, 0, 128, 0, 0, 255, 255]);
+  assert.equal(bitmap.Revision, 1);
+  assert.equal(bitmap.revision, 1);
+  assert.deepEqual(revisions, [1, 2]);
+  bitmap.dispose({preserveValues: true});
+  bitmap.restore(snapshot);
+  assert.equal(bitmap.PixelBuffer, buffer);
+  bitmap.Invalidate();
+  assert.deepEqual(revisions, [1, 2]);
+  bitmap.dispose();
+  assert.throws(() => bitmap.setPixels(input), error => error.code === 'SFRENDER060');
+  bitmap.restore(snapshot);
+  assert.notEqual(bitmap.PixelBuffer, buffer);
+  assert.throws(() => bitmap.setPixels(new Uint8Array(4)), error => error.code === 'SFRENDER063');
+  assert.throws(() => bitmap.restore({...snapshot, revision: -1}), error => error.code === 'SFRENDER063');
+});

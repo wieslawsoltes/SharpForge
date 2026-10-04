@@ -1,0 +1,137 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {AnimationClock} from '@sharpforge/framework';
+import {Compositor} from '../packages/rendering/src/composition/compositor.js';
+import {LoadedImageSurface} from '../packages/rendering/src/composition/brushes.js';
+import {PathGeometry, PathFigure, LineSegment} from '../packages/rendering/src/geometry/path-geometry.js';
+import {encodeCompositionValue, decodeCompositionValue, serializeCompositionGraph, applyCompositionGraph}
+  from '../packages/rendering/src/composition/transport-codec.js';
+
+const clockFactory = adapter => new AnimationClock(adapter);
+
+test('composition graph preflight rejects typed changes and source errors before changing live values', async () => {
+  const source = new Compositor(), host = new Compositor();
+  const visual = source.CreateSpriteVisual();
+  visual.Properties.InsertScalar('Progress', 0);
+  const effect = source.CreateEffectFactory({type: 'Opacity', opacity: 0.5, source: {type: 'Source', name: 'Paint'}}).CreateBrush();
+  effect.SetSourceParameter('Paint', source.CreateColorBrush([1, 0, 0, 1]));
+  visual.Brush = effect;
+  source.attach(visual);
+  const initial = serializeCompositionGraph(source);
+  const objects = applyCompositionGraph(host, initial);
+  const target = objects.get(visual.id);
+  const badType = structuredClone(initial);
+  badType.objects.find(row => row.id === visual.id).values.Opacity = 0.25;
+  badType.objects.find(row => row.id === visual.Properties.id).entries = [['Progress', 'Vector2', [1, 2]]];
+  assert.throws(() => applyCompositionGraph(host, badType, objects), /cannot change its type/);
+  assert.equal(target.Opacity, 1);
+  assert.equal(target.Properties.TryGetScalar('Progress').value, 0);
+  const badSource = structuredClone(initial);
+  badSource.objects.find(row => row.id === visual.id).values.Opacity = 0.5;
+  badSource.objects.find(row => row.id === effect.id).sources[0][0] = 'Unknown';
+  assert.throws(() => applyCompositionGraph(host, badSource, objects), /source binding/);
+  assert.equal(target.Opacity, 1);
+  const badIdentity = structuredClone(initial);
+  badIdentity.objects.find(row => row.id === visual.id).kind = 'ShapeVisual';
+  assert.throws(() => applyCompositionGraph(host, badIdentity, objects), /identity cannot change/);
+  await source.dispose();
+  await host.dispose();
+});
+
+test('effect graph reconciliation removes obsolete entries and sources while retaining object identity', async () => {
+  const source = new Compositor(), host = new Compositor();
+  const brush = source.CreateColorBrush([1, 0, 0, 1]);
+  const effect = source.CreateEffectFactory({type: 'Source', name: 'Paint'}).CreateBrush();
+  effect.SetSourceParameter('Paint', brush);
+  const visual = source.CreateSpriteVisual();
+  visual.Brush = effect;
+  visual.Properties.InsertScalar('Removed', 3);
+  source.attach(visual);
+  let objects = applyCompositionGraph(host, serializeCompositionGraph(source));
+  const target = objects.get(effect.id);
+  visual.Properties.remove('Removed');
+  effect.SetSourceParameter('Paint', null);
+  effect.graph = {type: 'ColorSource', color: [0, 1, 0, 1]};
+  objects = applyCompositionGraph(host, serializeCompositionGraph(source), objects);
+  assert.equal(objects.get(effect.id), target);
+  assert.equal(target.sources.size, 0);
+  assert.equal(target.graph.type, 'ColorSource');
+  assert.equal(objects.get(visual.id).Properties.TryGetScalar('Removed').status, 'NotFound');
+  await source.dispose();
+  await host.dispose();
+});
+
+test('retained effect sources propagate mutations through repeated edges and reject indirect cycles', async () => {
+  const compositor = new Compositor();
+  const paint = compositor.CreateColorBrush([1, 0, 0, 1]);
+  const effect = compositor.CreateEffectFactory({type: 'Source', name: 'Paint'}).CreateBrush();
+  effect.SetSourceParameter('Paint', paint);
+  effect.Opacity = 0.75;
+  const handle = compositor.resource(effect, 'brush');
+  paint.Color = [0, 1, 0, 1];
+  assert.deepEqual(compositor.resources.resolve(handle, 'brush').sources.Paint.Color, [0, 1, 0, 1]);
+  assert.equal(compositor.resources.resolve(handle, 'brush').opacity, 0.75);
+  const mask = compositor.CreateMaskBrush();
+  mask.Source = paint;
+  mask.Mask = paint;
+  const maskHandle = compositor.resource(mask, 'brush');
+  mask.Source = null;
+  paint.Color = [0, 0, 1, 1];
+  assert.deepEqual(compositor.resources.resolve(maskHandle, 'brush').mask.Color, [0, 0, 1, 1]);
+  mask.Source = effect;
+  assert.throws(() => effect.SetSourceParameter('Paint', mask), /cycle/);
+  effect.dispose();
+  assert.equal(compositor.dependents.get(paint)?.has(effect) ?? false, false);
+  mask.Source = null;
+  await compositor.dispose();
+});
+
+test('geometry and decoded image transport remain data-only and reject accessors, cycles and forged classes', async () => {
+  const path = new PathGeometry([new PathFigure([0, 0], [new LineSegment([3, 4])])]);
+  const encoded = encodeCompositionValue(path);
+  assert.deepEqual(structuredClone(encoded).figures[0].segments[0].end, [3, 4]);
+  assert.equal(Object.getPrototypeOf(decodeCompositionValue(encoded, new Map())), null);
+  const cyclic = {};
+  cyclic.self = cyclic;
+  assert.throws(() => encodeCompositionValue(cyclic), /cycle/);
+  let read = 0;
+  const getter = Object.defineProperty({}, 'value', {get() { read++; return 1; }});
+  assert.throws(() => encodeCompositionValue(getter), /accessor/);
+  assert.equal(read, 0);
+  assert.throws(() => encodeCompositionValue(new (class Foreign { constructor() { this.value = 1; } })()), /TRANSFER_UNSUPPORTED/);
+  assert.throws(() => decodeCompositionValue({$composition: 1, value: 3}, new Map([[1, path]])), /invalid transported/);
+  const view = new DataView(new Uint8Array([1, 2, 3, 4]).buffer, 1, 2);
+  assert.deepEqual([...new Uint8Array(encodeCompositionValue(view).buffer)], [2, 3]);
+  const image = new LoadedImageSurface('fixture:rgba', {load: async () => ({width: 1, height: 1, data: new Uint8Array([1, 2, 3, 255])})});
+  await image.ready;
+  const pixels = encodeCompositionValue(image);
+  assert.deepEqual([...pixels.data], [1, 2, 3, 255]);
+  assert.notEqual(pixels.data, image.image.data);
+  image.dispose();
+});
+
+test('surface readiness invalidates retained brushes and restoring a pre-clock snapshot clears future timelines', async () => {
+  const compositor = new Compositor({clockFactory});
+  let loaded;
+  const image = new LoadedImageSurface('fixture:pending', {load: () => new Promise(resolve => { loaded = resolve; })});
+  const brush = compositor.CreateSurfaceBrush(image);
+  const initialVersion = brush.version;
+  await Promise.resolve();
+  loaded({width: 1, height: 1, data: new Uint8Array([0, 0, 0, 255])});
+  await image.ready;
+  assert.ok(brush.version > initialVersion);
+  const snapshot = compositor.snapshot();
+  const visual = compositor.CreateSpriteVisual();
+  const animation = compositor.CreateScalarKeyFrameAnimation();
+  animation.Duration = 100;
+  animation.InsertKeyFrame(1, 0);
+  visual.StartAnimation('Opacity', animation);
+  compositor.restore(snapshot);
+  compositor.advance(50);
+  assert.equal(compositor.animations.records.size, 0);
+  assert.equal(brush.Surface, image);
+  brush.dispose();
+  assert.equal(image.listeners.size, 0);
+  image.dispose();
+  await compositor.dispose();
+});

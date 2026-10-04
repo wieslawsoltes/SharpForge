@@ -58,6 +58,22 @@ The framework continues to export `AnimationClock` through its existing entry po
 
 `registerCompositionContracts` adds the typed surface through the caller’s reserved registry; `ensureNumericsContracts` preserves existing value definitions. `registerCompositionAdapters` accepts the shared native/managed context. TryGet methods use actual out references, and dash CopyTo/GetMany use managed array hooks so conversion and rewind notifications remain observable. No global framework registry is changed at package import.
 
+## Brushes and images
+
+Solid, linear and radial brushes share explicit color, opacity, transform, interpolation and spread rules. `ImageCache` owns decoded images through cancellation and eviction. `WriteableBitmap` snapshots its exact pixel storage and publishes invalidation. Image fitting and nine-grid placement preserve the requested source rectangle and alignment.
+
+## Fills, strokes and painted bounds
+
+Scanbeam tessellation preserves holes and self-intersections. Strokes preserve dash seams, cap dots, joins and explicit work/vertex budgets. Painted bounds include transforms, stroke extent, glyph overhang and conservative shadow/effect expansion.
+
+## Typed drawing resources
+
+`DrawingModel` and `DrawingCollection` retain explicit native state and snapshots. Resource descriptors materialize according to the declared CLR type; Point, Size, Rect and Matrix cross value boundaries as flat typed fields, while scene geometry and brushes retain their property descriptors. Browser system backdrops report their approximation policy.
+
+## Composition graph transport
+
+`serializeCompositionGraph` emits only bounded data and explicit object identities. `applyCompositionGraph` checks kinds, property types, ownership, roots, cycles and effect sources before committing. It preserves existing object/content identities on placement changes and transports geometry, decoded images and stroke dash collections without executable callbacks or host classes.
+
 ## Validation
 
 The publication manifest lists authored fixtures and the prior completed-scope evidence separately. Repairs and newly authored cases await the consolidated rerun; required core is pending on this exact branch tree. Browser pixels, native WinUI comparisons and physical GPU qualification remain separate gates.
