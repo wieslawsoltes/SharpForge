@@ -1,4 +1,6 @@
 import { createBrowserCsp, NetworkError, NetworkPolicy } from '@sharpforge/network';
+import { httpTransportPlan, httpTransportSeeds } from './http-transport-input.js';
+import { runHttpTransport } from './http-transport.js';
 import { nativeHostPlan, nativeHostSeeds } from './native-host-input.js';
 import { runNativeHost } from './native-host.js';
 import {
@@ -22,6 +24,7 @@ function createSeeds() {
     seed('denied-header', { operation: 'headers', headers: { Origin: 'https://example.test' } }),
     seed('browser-csp', { operation: 'csp', allowedOrigins: ['https://example.test'] }),
     ...nativeHostSeeds(),
+    ...httpTransportSeeds(),
   ];
 }
 
@@ -74,6 +77,7 @@ function parse(input, limits) {
   const data = parseTextJson(decodeText(input));
   requireInput(record(data) && typeof data.operation === 'string');
   if (data.operation === 'native-host') return runNativeHost(nativeHostPlan(data), limits);
+  if (data.operation === 'http-transport') return runHttpTransport(httpTransportPlan(data), limits);
   if (unsupportedProfiles.has(data.operation)) {
     return { status: 'unsupported', code: unsupportedProfiles.get(data.operation) };
   }
@@ -89,7 +93,7 @@ function parse(input, limits) {
   operations[data.operation](data, policy, limits);
 }
 
-/** Pure outbound policy cases plus fixed, data-only native-host cases on a disposable loopback server. */
+/** Pure policy plus fixed native-host and public HttpTransport cases on disposable owned loopback servers. */
 export const target = {
   id: 'network',
   createSeeds,
