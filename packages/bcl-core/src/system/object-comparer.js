@@ -1,5 +1,6 @@
 import {compareObjects} from './object-comparison.js';
-import {resolveStringComparer} from './string-comparer.js';
+import {resolveStringComparer, registerStringComparerExtensions} from './string-comparer.js';
+import {registerStringComparisonExtensions} from './string.js';
 
 const comparerType = 'System.Collections.IComparer';
 
@@ -8,6 +9,9 @@ function contracts(registry) {
   registry.member(comparerType, 'Compare', ['object', 'object'], 'int', {isAbstract: true});
   registry.member('System.StringComparer', 'Compare', ['object', 'object'], 'int');
   registry.member('System.Array', 'BinarySearch', ['System.Array', 'object', comparerType], 'int', {isStatic: true});
+  // Ordered A07 append point: new registrations follow these calls, never precede released IDs.
+  registerStringComparerExtensions(registry);
+  registerStringComparisonExtensions(registry);
 }
 
 function invoke(platform, descriptor, args) {

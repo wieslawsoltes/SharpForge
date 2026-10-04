@@ -22,6 +22,14 @@ export function executeCilStep(vm) {
   if (!handler) {
     throw new ManagedFault('NotSupportedException', `Opcode '${instruction.name}' is not executable`);
   }
-  try { handler(vm, frame, instruction); }
-  finally { flushFramePool(vm); }
+  const profiler = vm.profiler;
+  profiler?.instruction(frame);
+  let succeeded = false;
+  try {
+    handler(vm, frame, instruction);
+    succeeded = true;
+  } finally {
+    flushFramePool(vm);
+    profiler?.endInstruction(succeeded);
+  }
 }

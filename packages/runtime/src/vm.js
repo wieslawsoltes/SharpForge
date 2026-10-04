@@ -1,4 +1,6 @@
 import {callSourceFrame} from './execution/call-frames.js';
+import {rootValues} from './execution/frame-roots.js';
+import {executionProfiler} from './execution/profiler.js';
 import {flushFramePool} from './execution/frame-pool.js';
 import {stopExecution} from './execution/stop.js';
 import {sourceConstant} from './execution/source-numbers.js';
@@ -10,17 +12,17 @@ import { ManagedFault, isReference } from './heap.js';
 import {builtin} from './execution/source-builtins.js';
 import {sourceValue} from './execution/source-values.js';
 import {initializeSourceVM} from './execution/initialize-source.js';
-import {stringRoots} from './execution/strings.js';
-import {binary,runtimeTypeRoots} from './execution/source-ops.js';
-import {roots as exceptionRoots,makeFault,enterCatch,finalizers,finishReturn,transfer,resumeUnwind,handleFault} from './execution/source-eh.js';
+import {binary} from './execution/source-ops.js';
+import {makeFault,enterCatch,finalizers,finishReturn,transfer,resumeUnwind,handleFault} from './execution/source-eh.js';
 export class VirtualMachine {
   constructor(image,options={}){
     initializeSourceVM(this,image,options);
   }
-  *roots(){yield* this.platform?.roots()??[];yield* this.scheduler?.roots()??[];yield this.returnValue;yield* this.stack;yield* this.statics;yield* this.constantValues.values();yield* stringRoots(this);yield* runtimeTypeRoots(this);for(const f of this.frames)yield* f.locals;yield* exceptionRoots(this);}
+  *roots(){yield* rootValues(this);}
   call(methodId,args){return callSourceFrame(this,methodId,args);}
   notifyWrite(write){this.writeRevision++;if(['field','array'].includes(write.kind))this.heap.mutationRevision++;this.onWrite?.(write);}
   get top(){return this.frames.at(-1);}
+  get profiler(){return executionProfiler(this);}
   value(ref){return sourceValue(this.heap,ref);}
   format(value,type){return formatSourceValue(this,value,type);}
   display(value){if(value===null)return 'null';if(isReference(value)){const r=this.heap.get(value);if(r.kind==='string')return JSON.stringify(r.data);if(r.kind==='array')return `${r.type} [${r.data.length}]`;return `${r.type} {#${value.h}}`;}return this.format(value);}
@@ -37,6 +39,7 @@ export class VirtualMachine {
   resumeUnwind(frame){return resumeUnwind(this,frame);}
   handleFault(error){return handleFault(this,error);}
   runSlice({instructionBudget=15000,timeBudgetMs=8,onSequence=null}={}){
+    const profiler=this.profiler;
     try {
     this.scheduler.beforeSlice();if(this.state==='ready')this.state='running';if(this.state!=='running')return this.state;
     const started=performance.now();let count=0;
@@ -48,6 +51,7 @@ export class VirtualMachine {
       this.sourcePause=false;frame.pc++;count++;this.instructions++;
       try{
         if(this.instructions>this.options.maxInstructions)throw new ManagedFault('InstructionLimitException','Program exceeded its instruction budget');
+        profiler?.instruction(frame);
         const handler=sourceOpcodeHandlers[op];
         if(!handler)throw new ManagedFault('InvalidProgramException','Unknown instruction');
         handler(this,frame,a,b);
@@ -55,7 +59,7 @@ export class VirtualMachine {
       this.scheduler.afterInstruction();
     }
     this.currentPoint=this.top?.point??null;this.elapsedMs+=performance.now()-started;return this.state;
-    } finally {flushFramePool(this);}
+    } finally {flushFramePool(this);profiler?.boundary();}
   }
   allFrames(){return this.scheduler.allFrames();}
   run(){if(this.state==='paused')this.state='running';while(this.state==='ready'||this.state==='running')this.runSlice({instructionBudget:100000,timeBudgetMs:100});return {state:this.state,output:this.output.join(''),exitCode:this.exitCode,fault:this.fault,stats:this.statistics()};}
