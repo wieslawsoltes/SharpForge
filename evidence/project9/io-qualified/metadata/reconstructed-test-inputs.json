@@ -1,0 +1,4011 @@
+{
+  "schemaVersion": 1,
+  "kind": "test-input-reconstruction",
+  "status": "reconstructed-from-retained-TAP-and-static-source-not-original-argv",
+  "originalInvocationKnown": false,
+  "originalArgv": null,
+  "originalRuntimeVersion": null,
+  "observedWorkingTreeHead": "fe8288772be85395909d5de582c444db3d605ca3",
+  "reportedProductQualificationRevision": "f8414bfcadbab039280d580a8152ac21f9fe6452",
+  "finalStackRevision": "fe8288772be85395909d5de582c444db3d605ca3",
+  "revisionAttributionNote": "Revision identities come from the root qualification record; the retained TAP itself contains no argv or revision stamp.",
+  "selectedTestFilesChangedBetweenProductAndFinal": [],
+  "retainedTap": {
+    "path": "artifacts/project9-resume/io-dispatch-final-tests.tap",
+    "sha256": "661b10bee9539c026a58ccaf7d0cff37276901b6c87e20b724f52c6d0d3390c4",
+    "bytes": 68322,
+    "plan": "1..278",
+    "tests": 278,
+    "pass": 278,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "method": [
+    "Read retained top-level TAP subtest names without executing tests.",
+    "Match each name to an exact literal or interpolated test-name declaration in the 18 source files; record source line and observed interpolation values.",
+    "Inspect declaration loops and fixture metadata to derive per-file counts independently of execution.",
+    "Read the local tests/ helper import closure; no imported helper has a node:test import or top-level test declaration.",
+    "Read git diff to verify selected test sources are unchanged from the reported product qualification revision to the final documentation revision."
+  ],
+  "limitations": [
+    "This reconstructs a file set explaining all 278 observed tests, not the original argv, environment, test flags, shell globs or scheduling configuration.",
+    "TAP names alone cannot exclude an original wrapper/import aggregator or additional input files that registered zero tests.",
+    "The proposed rerun command is new and explicit; its reporter/concurrency flags are chosen for recording a fresh qualification and are not inferred historical flags.",
+    "Name matching is static text analysis with manually checked loop cardinalities, not execution or a general JavaScript evaluator."
+  ],
+  "matchingSummary": {
+    "matchedTopLevelTests": 278,
+    "unmatched": [],
+    "ambiguous": [],
+    "sourceDeclarations": 130,
+    "allSelectedDeclarationsRepresented": true,
+    "foundationAndJsonTests": 87,
+    "ioTests": 191
+  },
+  "proposedRerun": {
+    "status": "not-executed",
+    "cwd": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars",
+    "argv": [
+      "node",
+      "scripts/limited.js",
+      "node",
+      "--test",
+      "--test-reporter=tap",
+      "--test-concurrency=1",
+      "tests/a05-synchronous-host-callbacks.test.js",
+      "tests/a07-framework-object-string.test.js",
+      "tests/a07-stopwatch-clock-boundary.test.js",
+      "tests/a07-stopwatch-object-string.test.js",
+      "tests/a09-json-escaping.test.js",
+      "tests/a09-json-int64.test.js",
+      "tests/a09-json-integer-keys.test.js",
+      "tests/a09-json-number-formatting.test.js",
+      "tests/a09-string-reader-buffer.test.js",
+      "tests/a09-string-reader.test.js",
+      "tests/a09-string-writer-buffer.test.js",
+      "tests/a09-string-writer-char-line.test.js",
+      "tests/a09-string-writer-line-buffer.test.js",
+      "tests/a09-string-writer-object.test.js",
+      "tests/a09-string-writer-scalars-state.test.js",
+      "tests/a09-string-writer-scalars.test.js",
+      "tests/a09-string-writer-string-line.test.js",
+      "tests/a09-string-writer.test.js"
+    ],
+    "expectedTopLevelTestsFromStaticReconstruction": 278,
+    "instruction": "Root may execute after its current serial CI job and must retain actual argv, revision, environment and exit status alongside a fresh TAP artifact."
+  },
+  "files": [
+    {
+      "path": "tests/a05-synchronous-host-callbacks.test.js",
+      "sha256": "d67cfceab874aa3f450b288d7d75728b81dd91c6ef77ceec6e531b57dc7e6838",
+      "expectedTopLevelCount": 6,
+      "countExplanation": "2 engines × 3 declarations",
+      "declarations": [
+        {
+          "line": 23,
+          "nameTemplate": "synchronous host callback ${engine}: receiver, nested scopes and result inspection retain the boundary",
+          "matchedTapNumbers": [
+            1,
+            4
+          ]
+        },
+        {
+          "line": 64,
+          "nameTemplate": "synchronous host callback ${engine}: callback and inspection failures release the scope unchanged",
+          "matchedTapNumbers": [
+            2,
+            5
+          ]
+        },
+        {
+          "line": 87,
+          "nameTemplate": "synchronous host callback ${engine}: explicit stop keeps the boundary until callback completion",
+          "matchedTapNumbers": [
+            3,
+            6
+          ]
+        }
+      ],
+      "observedTopLevelCount": 6,
+      "tapRangeInclusive": [
+        1,
+        6
+      ],
+      "contiguous": true,
+      "allDeclarationsRepresented": true
+    },
+    {
+      "path": "tests/a07-framework-object-string.test.js",
+      "sha256": "063290f47f140f695fcc0ec84adf145ab918b50e0c28b8684289a982509f628b",
+      "expectedTopLevelCount": 29,
+      "countExplanation": "1 fixed + 2 pipelines × 2 declarations + 2 engines × 5 declarations + 5 fixture inputs × 2 call kinds + 1 hidden-method case + 2 primitive call kinds + 1 metadata case",
+      "declarations": [
+        {
+          "line": 35,
+          "nameTemplate": "framework Object.ToString: pinned source hash and exact override opt-ins",
+          "matchedTapNumbers": [
+            7
+          ]
+        },
+        {
+          "line": 54,
+          "nameTemplate": "framework Object.ToString ${pipeline}: emitted calls and profile round trip keep Convert distinct",
+          "matchedTapNumbers": [
+            8,
+            10
+          ]
+        },
+        {
+          "line": 77,
+          "nameTemplate": "framework Object.ToString ${pipeline}: null faults after the emitted profile round trip",
+          "matchedTapNumbers": [
+            9,
+            11
+          ]
+        },
+        {
+          "line": 89,
+          "nameTemplate": "framework Object.ToString ${engine}: object references invoke only opted-in framework overrides",
+          "matchedTapNumbers": [
+            12,
+            17
+          ]
+        },
+        {
+          "line": 101,
+          "nameTemplate": "framework Object.ToString ${engine}: primitive, Convert and Console profiles remain unchanged",
+          "matchedTapNumbers": [
+            13,
+            18
+          ]
+        },
+        {
+          "line": 113,
+          "nameTemplate": "framework Object.ToString ${engine}: null receiver faults",
+          "matchedTapNumbers": [
+            14,
+            19
+          ]
+        },
+        {
+          "line": 122,
+          "nameTemplate": "framework Object.ToString ${engine}: GC, snapshot and allocation faults preserve builder state",
+          "matchedTapNumbers": [
+            15,
+            20
+          ]
+        },
+        {
+          "line": 146,
+          "nameTemplate": "framework Object.ToString ${engine}: unmarked framework methods stay on the fallback profile",
+          "matchedTapNumbers": [
+            16,
+            21
+          ]
+        },
+        {
+          "line": 161,
+          "nameTemplate": "framework Object.ToString CIL: ${kind} ${input[0]} matches native",
+          "matchedTapNumbers": [
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31
+          ]
+        },
+        {
+          "line": 174,
+          "nameTemplate": "framework Object.ToString CIL: hidden user method is not an override",
+          "matchedTapNumbers": [
+            32
+          ]
+        },
+        {
+          "line": 185,
+          "nameTemplate": "framework Object.ToString CIL: ${kind} retains released primitive formatting",
+          "matchedTapNumbers": [
+            33,
+            34
+          ]
+        },
+        {
+          "line": 198,
+          "nameTemplate": "framework Object.ToString metadata rejects invalid override opt-ins",
+          "matchedTapNumbers": [
+            35
+          ]
+        }
+      ],
+      "observedTopLevelCount": 29,
+      "tapRangeInclusive": [
+        7,
+        35
+      ],
+      "contiguous": true,
+      "allDeclarationsRepresented": true
+    },
+    {
+      "path": "tests/a07-stopwatch-clock-boundary.test.js",
+      "sha256": "1029eb6a68531e21be6a57be3dcdd7e0d0c26f9a78ad44b5c43db7557210752c",
+      "expectedTopLevelCount": 10,
+      "countExplanation": "2 engines × (2 snapshot actions × 2 clock operations + 1 failure/reentry/stop declaration)",
+      "declarations": [
+        {
+          "line": 128,
+          "nameTemplate": "Stopwatch clock boundary ${engine}/${operation}: a caught ${action} rejection preserves the live continuation",
+          "matchedTapNumbers": [
+            36,
+            37,
+            38,
+            39,
+            41,
+            42,
+            43,
+            44
+          ]
+        },
+        {
+          "line": 133,
+          "nameTemplate": "Stopwatch clock boundary ${engine}: callback failure, reentry and explicit stop release the boundary",
+          "matchedTapNumbers": [
+            40,
+            45
+          ]
+        }
+      ],
+      "observedTopLevelCount": 10,
+      "tapRangeInclusive": [
+        36,
+        45
+      ],
+      "contiguous": true,
+      "allDeclarationsRepresented": true
+    },
+    {
+      "path": "tests/a07-stopwatch-object-string.test.js",
+      "sha256": "f7dfc6dd14f6d9043c3821ef9c0db482e08e2b2dbb14432dea1a4cd6a99ba9f0",
+      "expectedTopLevelCount": 7,
+      "countExplanation": "2 pipelines × 3 engines + 1 independent CIL declaration",
+      "declarations": [
+        {
+          "line": 33,
+          "nameTemplate": "Stopwatch Object.ToString ${pipeline}/${engine}: running and stopped overrides preserve Convert and Console formatting",
+          "matchedTapNumbers": [
+            46,
+            47,
+            48,
+            49,
+            50,
+            51
+          ]
+        },
+        {
+          "line": 83,
+          "nameTemplate": "Stopwatch Object.ToString independent CIL: only virtual Object calls dispatch while Convert and Console retain type names",
+          "matchedTapNumbers": [
+            52
+          ]
+        }
+      ],
+      "observedTopLevelCount": 7,
+      "tapRangeInclusive": [
+        46,
+        52
+      ],
+      "contiguous": true,
+      "allDeclarationsRepresented": true
+    },
+    {
+      "path": "tests/a09-json-escaping.test.js",
+      "sha256": "460db49e6260ae002aa046ede0ff88b37990508c5710a36a8a01a220cc3db114",
+      "expectedTopLevelCount": 11,
+      "countExplanation": "2 engines × 5 declarations + 1 oracle declaration",
+      "declarations": [
+        {
+          "line": 57,
+          "nameTemplate": "A09 ${engine}: default escaping matches native scalar, array and dictionary cases",
+          "matchedTapNumbers": [
+            53,
+            58
+          ]
+        },
+        {
+          "line": 64,
+          "nameTemplate": "A09 ${engine}: compiled serializer calls retain UTF-16 string escaping",
+          "matchedTapNumbers": [
+            54,
+            59
+          ]
+        },
+        {
+          "line": 76,
+          "nameTemplate": "A09 ${engine}: registered string collections use the same default escaping",
+          "matchedTapNumbers": [
+            55,
+            60
+          ]
+        },
+        {
+          "line": 98,
+          "nameTemplate": "A09 ${engine}: escape expansion enforces the existing JSON output budget",
+          "matchedTapNumbers": [
+            56,
+            61
+          ]
+        },
+        {
+          "line": 116,
+          "nameTemplate": "A09 ${engine}: serializer retains cycle and unsupported-object failures",
+          "matchedTapNumbers": [
+            57,
+            62
+          ]
+        },
+        {
+          "line": 128,
+          "nameTemplate": "A09 default escaping reference pins its source, SDK, runtime and complete ASCII coverage",
+          "matchedTapNumbers": [
+            63
+          ]
+        }
+      ],
+      "observedTopLevelCount": 11,
+      "tapRangeInclusive": [
+        53,
+        63
+      ],
+      "contiguous": true,
+      "allDeclarationsRepresented": true
+    },
+    {
+      "path": "tests/a09-json-int64.test.js",
+      "sha256": "754da88c3e9ff9ba62037c839885d318107dda70fd97174d181aa9f23ab685ff",
+      "expectedTopLevelCount": 8,
+      "countExplanation": "2 engines × 2 declarations + 2 pipeline declarations + 2 fixed declarations",
+      "declarations": [
+        {
+          "line": 39,
+          "nameTemplate": "SF-A09-B02 ${engine} bytecode GetInt64 matches all 63 native lines and managed types",
+          "matchedTapNumbers": [
+            64,
+            66
+          ]
+        },
+        {
+          "line": 52,
+          "nameTemplate": "SF-A09-B02 ${engine} exact Int64 access retains existing Int32 and approximate Double behavior",
+          "matchedTapNumbers": [
+            65,
+            67
+          ]
+        },
+        {
+          "line": 62,
+          "nameTemplate": "SF-A09-B02 ${pipeline} source compiler retains Int64 and typed-catch profile diagnostics",
+          "matchedTapNumbers": [
+            68,
+            69
+          ]
+        },
+        {
+          "line": 71,
+          "nameTemplate": "SF-A09-B02 GetInt64 uses the A09 reservation and an actual managed Int64 return",
+          "matchedTapNumbers": [
+            70
+          ]
+        },
+        {
+          "line": 78,
+          "nameTemplate": "SF-A09-B02 Int64 reference pins source bytes, SDK, runtime and precision boundaries",
+          "matchedTapNumbers": [
+            71
+          ]
+        }
+      ],
+      "observedTopLevelCount": 8,
+      "tapRangeInclusive": [
+        64,
+        71
+      ],
+      "contiguous": true,
+      "allDeclarationsRepresented": true
+    },
+    {
+      "path": "tests/a09-json-integer-keys.test.js",
+      "sha256": "b03fb44fe380a222e5ed218b248cc47424c813bc024aca84873eb2f474331086",
+      "expectedTopLevelCount": 9,
+      "countExplanation": "2 pipelines × 2 engines + 2 engine fault declarations + 3 fixed declarations",
+      "declarations": [
+        {
+          "line": 19,
+          "nameTemplate": "SF-A09-B02 ${pipeline}/${engine} native JSON retains source Char with only the typed-catch adaptation",
+          "matchedTapNumbers": [
+            72,
+            73,
+            74,
+            75
+          ]
+        },
+        {
+          "line": 43,
+          "nameTemplate": "SF-A09-B02 ${engine} integer dictionary retains nonfinite and unsupported-object faults",
+          "matchedTapNumbers": [
+            76,
+            77
+          ]
+        },
+        {
+          "line": 71,
+          "nameTemplate": "SF-A09-B02 independently assembled CIL serializes signed dictionary keys in entry order",
+          "matchedTapNumbers": [
+            78
+          ]
+        },
+        {
+          "line": 97,
+          "nameTemplate": "SF-A09-B02 independently assembled CIL preserves genuine boxed Char and Boolean JSON values",
+          "matchedTapNumbers": [
+            79
+          ]
+        },
+        {
+          "line": 132,
+          "nameTemplate": "SF-A09-B02 integer dictionary oracle pins source, SDK, runtime and all eighteen cases",
+          "matchedTapNumbers": [
+            80
+          ]
+        }
+      ],
+      "observedTopLevelCount": 9,
+      "tapRangeInclusive": [
+        72,
+        80
+      ],
+      "contiguous": true,
+      "allDeclarationsRepresented": true
+    },
+    {
+      "path": "tests/a09-json-number-formatting.test.js",
+      "sha256": "3751e55adeeda739cfa195cc6cdc8757e6fe9855c69e6b43c10a41814fe1f8d7",
+      "expectedTopLevelCount": 7,
+      "countExplanation": "2 engines × 3 declarations + 1 oracle declaration",
+      "declarations": [
+        {
+          "line": 70,
+          "nameTemplate": "SF-A09-B01 ${engine} binary64 JSON tokens match all pinned finite native values",
+          "matchedTapNumbers": [
+            81,
+            84
+          ]
+        },
+        {
+          "line": 91,
+          "nameTemplate": "SF-A09-B01 ${engine} compiled mixed arrays and dictionary values retain native numeric spelling",
+          "matchedTapNumbers": [
+            82,
+            85
+          ]
+        },
+        {
+          "line": 105,
+          "nameTemplate": "SF-A09-B01 ${engine} numeric token expansion respects the existing output budget",
+          "matchedTapNumbers": [
+            83,
+            86
+          ]
+        },
+        {
+          "line": 125,
+          "nameTemplate": "SF-A09-B01 numeric oracle pins fifty values, source, SDK and runtime",
+          "matchedTapNumbers": [
+            87
+          ]
+        }
+      ],
+      "observedTopLevelCount": 7,
+      "tapRangeInclusive": [
+        81,
+        87
+      ],
+      "contiguous": true,
+      "allDeclarationsRepresented": true
+    },
+    {
+      "path": "tests/a09-string-reader-buffer.test.js",
+      "sha256": "56a3a62bd2543eb1cd92067f68a041597986bf02bd0368f0634dbf6c8b7d5d86",
+      "expectedTopLevelCount": 18,
+      "countExplanation": "2 engines × 6 declarations + 2 fixed declarations + 2 pipelines × 2 engines",
+      "declarations": [
+        {
+          "line": 24,
+          "nameTemplate": "SF-A09-T03 buffer ${engine}: all 56 native slice results execute through real bytecode",
+          "matchedTapNumbers": [
+            88,
+            94
+          ]
+        },
+        {
+          "line": 43,
+          "nameTemplate": "SF-A09-T03 buffer ${engine}: slice writes retain storage and allocate no managed values",
+          "matchedTapNumbers": [
+            89,
+            95
+          ]
+        },
+        {
+          "line": 76,
+          "nameTemplate": "SF-A09-T03 buffer ${engine}: read and read-block share cursor state and restore with the buffer",
+          "matchedTapNumbers": [
+            90,
+            96
+          ]
+        },
+        {
+          "line": 98,
+          "nameTemplate": "SF-A09-T03 buffer ${engine}: buffer and input stay rooted across write observers",
+          "matchedTapNumbers": [
+            91,
+            97
+          ]
+        },
+        {
+          "line": 116,
+          "nameTemplate": "SF-A09-T03 buffer ${engine}: observer failure releases roots and leaves the cursor uncommitted",
+          "matchedTapNumbers": [
+            92,
+            98
+          ]
+        },
+        {
+          "line": 136,
+          "nameTemplate": "SF-A09-T03 buffer ${engine}: invalid platform array shapes and numeric arguments do not consume input",
+          "matchedTapNumbers": [
+            93,
+            99
+          ]
+        },
+        {
+          "line": 154,
+          "nameTemplate": "SF-A09-T03 buffer: registration appends after all reader and writer base IDs",
+          "matchedTapNumbers": [
+            100
+          ]
+        },
+        {
+          "line": 178,
+          "nameTemplate": "SF-A09-T03 buffer: native capture pins exact source bytes and UTF-16 boundary data",
+          "matchedTapNumbers": [
+            101
+          ]
+        },
+        {
+          "line": 189,
+          "nameTemplate": "SF-A09-T03 buffer ${pipeline} ${engine}: source character arrays preserve destination slices",
+          "matchedTapNumbers": [
+            102,
+            103,
+            104,
+            105
+          ]
+        }
+      ],
+      "observedTopLevelCount": 18,
+      "tapRangeInclusive": [
+        88,
+        105
+      ],
+      "contiguous": true,
+      "allDeclarationsRepresented": true
+    },
+    {
+      "path": "tests/a09-string-reader.test.js",
+      "sha256": "574f040c4f71f69d98f964f42ff4cb3774bf196e61da488c182f8772fb522280",
+      "expectedTopLevelCount": 19,
+      "countExplanation": "2 engines × 7 declarations + 5 fixed declarations",
+      "declarations": [
+        {
+          "line": 25,
+          "nameTemplate": "SF-A09-T03.1 ${engine}: unchanged StringReader fixture matches .NET 10.0.5",
+          "matchedTapNumbers": [
+            106,
+            113
+          ]
+        },
+        {
+          "line": 36,
+          "nameTemplate": "SF-A09-T03.1 ${engine}: using calls inherited Dispose through existing lowering",
+          "matchedTapNumbers": [
+            107,
+            114
+          ]
+        },
+        {
+          "line": 51,
+          "nameTemplate": "SF-A09-T03.1 ${engine}: native faults and disposed-before-EOF precedence",
+          "matchedTapNumbers": [
+            108,
+            115
+          ]
+        },
+        {
+          "line": 72,
+          "nameTemplate": "SF-A09-T03.1 ${engine}: reader roots source, releases it on disposal, and restores its cursor",
+          "matchedTapNumbers": [
+            109,
+            116
+          ]
+        },
+        {
+          "line": 91,
+          "nameTemplate": "SF-A09-T03.1 ${engine}: returned text survives a collection during cursor notification",
+          "matchedTapNumbers": [
+            110,
+            117
+          ]
+        },
+        {
+          "line": 107,
+          "nameTemplate": "SF-A09-T03.1 ${engine}: failed output allocation leaves the cursor unchanged",
+          "matchedTapNumbers": [
+            111,
+            118
+          ]
+        },
+        {
+          "line": 124,
+          "nameTemplate": "SF-A09-T03.1 ${engine}: invalid constructor values and unknown TextReader implementations fail explicitly",
+          "matchedTapNumbers": [
+            112,
+            119
+          ]
+        },
+        {
+          "line": 135,
+          "nameTemplate": "SF-A09-T03.1 ordinary CIL base dispatch and interface assignability match native observations",
+          "matchedTapNumbers": [
+            120
+          ]
+        },
+        {
+          "line": 156,
+          "nameTemplate": "SF-A09-T03.1 abstract metadata and A09 IDs preserve existing JSON contracts",
+          "matchedTapNumbers": [
+            121
+          ]
+        },
+        {
+          "line": 167,
+          "nameTemplate": "SF-A09-T03.1 deferred async APIs and abstract construction remain compile-time errors",
+          "matchedTapNumbers": [
+            122
+          ]
+        },
+        {
+          "line": 176,
+          "nameTemplate": "SF-A09-T03.1 public IO registration uses the shared module protocol",
+          "matchedTapNumbers": [
+            123
+          ]
+        },
+        {
+          "line": 190,
+          "nameTemplate": "SF-A09-T03.1 external IDisposable.Dispose invocation remains outside the verified CIL profile",
+          "matchedTapNumbers": [
+            124
+          ]
+        }
+      ],
+      "observedTopLevelCount": 19,
+      "tapRangeInclusive": [
+        106,
+        124
+      ],
+      "contiguous": true,
+      "allDeclarationsRepresented": true
+    },
+    {
+      "path": "tests/a09-string-writer-buffer.test.js",
+      "sha256": "7d9aea959a3fcf352ad01c37b9ecfdc578a3862ccb39fb112893eb561dd18c5c",
+      "expectedTopLevelCount": 17,
+      "countExplanation": "2 engines × 6 declarations + 2 pipelines × 2 engines + 1 contract/oracle declaration",
+      "declarations": [
+        {
+          "line": 19,
+          "nameTemplate": "StringWriter buffer ${engine}: all native full/slice calls preserve text, input and faults",
+          "matchedTapNumbers": [
+            125,
+            131
+          ]
+        },
+        {
+          "line": 34,
+          "nameTemplate": "StringWriter buffer ${engine}: one bulk chunk preserves storage, input copy and observer GC",
+          "matchedTapNumbers": [
+            126,
+            132
+          ]
+        },
+        {
+          "line": 61,
+          "nameTemplate": "StringWriter buffer ${engine}: zero/null writes, snapshots and disposed overload rules",
+          "matchedTapNumbers": [
+            127,
+            133
+          ]
+        },
+        {
+          "line": 85,
+          "nameTemplate": "StringWriter buffer ${engine}: invalid host arrays and numeric slices retain writer content",
+          "matchedTapNumbers": [
+            128,
+            134
+          ]
+        },
+        {
+          "line": 106,
+          "nameTemplate": "StringWriter buffer ${engine}: host text limit and managed OOM leave prior text intact",
+          "matchedTapNumbers": [
+            129,
+            135
+          ]
+        },
+        {
+          "line": 129,
+          "nameTemplate": "StringWriter buffer ${engine}: a throwing observer releases roots without consuming a partial character prefix",
+          "matchedTapNumbers": [
+            130,
+            136
+          ]
+        },
+        {
+          "line": 150,
+          "nameTemplate": "StringWriter buffer ${pipeline} ${engine}: compiled overloads and base references use character arrays",
+          "matchedTapNumbers": [
+            137,
+            138,
+            139,
+            140
+          ]
+        },
+        {
+          "line": 167,
+          "nameTemplate": "StringWriter buffer contracts append after reader buffers and native capture pins source",
+          "matchedTapNumbers": [
+            141
+          ]
+        }
+      ],
+      "observedTopLevelCount": 17,
+      "tapRangeInclusive": [
+        125,
+        141
+      ],
+      "contiguous": true,
+      "allDeclarationsRepresented": true
+    },
+    {
+      "path": "tests/a09-string-writer-char-line.test.js",
+      "sha256": "d3ac796ac03b3b740149c58ea1e02e96e88296e0ec1442bf7eda82576c82483c",
+      "expectedTopLevelCount": 21,
+      "countExplanation": "2 fixed native-replay declarations + 2 engines × 7 state declarations + 2 pipelines × 2 engines + 1 contract/oracle declaration",
+      "declarations": [
+        {
+          "line": 45,
+          "nameTemplate": "StringWriter character line source: real platform dispatch matches all native character/null/disposal rows",
+          "matchedTapNumbers": [
+            142
+          ]
+        },
+        {
+          "line": 64,
+          "nameTemplate": "StringWriter character line CIL: independent concrete/base callvirt matches all native rows",
+          "matchedTapNumbers": [
+            143
+          ]
+        },
+        {
+          "line": 79,
+          "nameTemplate": "StringWriter character line ${engine}: observer NewLine/disposal changes match the native sequencing boundary",
+          "matchedTapNumbers": [
+            144,
+            151
+          ]
+        },
+        {
+          "line": 107,
+          "nameTemplate": "StringWriter character line ${engine}: two chunks survive GC and snapshot restoration",
+          "matchedTapNumbers": [
+            145,
+            152
+          ]
+        },
+        {
+          "line": 131,
+          "nameTemplate": "StringWriter character line ${engine}: receiver/disposal precedence and existing character range guards remain",
+          "matchedTapNumbers": [
+            146,
+            153
+          ]
+        },
+        {
+          "line": 148,
+          "nameTemplate": "StringWriter character line ${engine}: host-limit failures distinguish character and newline progress",
+          "matchedTapNumbers": [
+            147,
+            154
+          ]
+        },
+        {
+          "line": 163,
+          "nameTemplate": "StringWriter character line ${engine}: managed OOM before/between appends preserves completed text",
+          "matchedTapNumbers": [
+            148,
+            155
+          ]
+        },
+        {
+          "line": 185,
+          "nameTemplate": "StringWriter character line ${engine}: throwing value/newline observers release roots without rollback claims",
+          "matchedTapNumbers": [
+            149,
+            156
+          ]
+        },
+        {
+          "line": 205,
+          "nameTemplate": "StringWriter character line ${engine}: released Write(char) keeps its single disposal check",
+          "matchedTapNumbers": [
+            150,
+            157
+          ]
+        },
+        {
+          "line": 227,
+          "nameTemplate": "StringWriter character line ${pipeline}/${engine}: compiled literals and base references preserve UTF-16",
+          "matchedTapNumbers": [
+            158,
+            159,
+            160,
+            161
+          ]
+        },
+        {
+          "line": 249,
+          "nameTemplate": "StringWriter character line appends one ID after buffers and pins the unchanged native fixture",
+          "matchedTapNumbers": [
+            162
+          ]
+        }
+      ],
+      "observedTopLevelCount": 21,
+      "tapRangeInclusive": [
+        142,
+        162
+      ],
+      "contiguous": true,
+      "allDeclarationsRepresented": true
+    },
+    {
+      "path": "tests/a09-string-writer-line-buffer.test.js",
+      "sha256": "d93e77027f5425fabd19e45ba0ea75f17b2b8b354aa6fca6740367aca094f187",
+      "expectedTopLevelCount": 21,
+      "countExplanation": "2 engines × 8 declarations + 2 pipelines × 2 engines + 1 contract/oracle declaration",
+      "declarations": [
+        {
+          "line": 18,
+          "nameTemplate": "StringWriter buffer line ${engine}: native concrete/base calls preserve text, input and faults",
+          "matchedTapNumbers": [
+            163,
+            171
+          ]
+        },
+        {
+          "line": 33,
+          "nameTemplate": "StringWriter buffer line ${engine}: native value/newline sequencing survives observer GC",
+          "matchedTapNumbers": [
+            164,
+            172
+          ]
+        },
+        {
+          "line": 66,
+          "nameTemplate": "StringWriter buffer line ${engine}: bulk value and newline use two managed chunks without retaining input",
+          "matchedTapNumbers": [
+            165,
+            173
+          ]
+        },
+        {
+          "line": 94,
+          "nameTemplate": "StringWriter buffer line ${engine}: snapshots preserve writer state and null/empty disposal rules",
+          "matchedTapNumbers": [
+            166,
+            174
+          ]
+        },
+        {
+          "line": 118,
+          "nameTemplate": "StringWriter buffer line ${engine}: the string overload rechecks disposal before its newline",
+          "matchedTapNumbers": [
+            167,
+            175
+          ]
+        },
+        {
+          "line": 138,
+          "nameTemplate": "StringWriter buffer line ${engine}: host text limit preserves a completed value before newline failure",
+          "matchedTapNumbers": [
+            168,
+            176
+          ]
+        },
+        {
+          "line": 154,
+          "nameTemplate": "StringWriter buffer line ${engine}: managed OOM between appends retains the completed value",
+          "matchedTapNumbers": [
+            169,
+            177
+          ]
+        },
+        {
+          "line": 175,
+          "nameTemplate": "StringWriter buffer line ${engine}: throwing newline observer releases roots and preserves completed value",
+          "matchedTapNumbers": [
+            170,
+            178
+          ]
+        },
+        {
+          "line": 196,
+          "nameTemplate": "StringWriter buffer line ${pipeline}/${engine}: compiled whole/slice calls retain real base references",
+          "matchedTapNumbers": [
+            179,
+            180,
+            181,
+            182
+          ]
+        },
+        {
+          "line": 219,
+          "nameTemplate": "StringWriter buffer line contracts append without changing released slots or the pinned native fixture",
+          "matchedTapNumbers": [
+            183
+          ]
+        }
+      ],
+      "observedTopLevelCount": 21,
+      "tapRangeInclusive": [
+        163,
+        183
+      ],
+      "contiguous": true,
+      "allDeclarationsRepresented": true
+    },
+    {
+      "path": "tests/a09-string-writer-object.test.js",
+      "sha256": "a73415a6ab437aab10910ee92639cae575a750c86c3d89030a6ac03d3e9024eb",
+      "expectedTopLevelCount": 18,
+      "countExplanation": "1 provenance declaration + 3 engines + 10 native call/callvirt fixture rows + 2 engines × 2 state declarations",
+      "declarations": [
+        {
+          "line": 55,
+          "nameTemplate": "StringWriter Object.ToString: pinned source and existing contract identity",
+          "matchedTapNumbers": [
+            184
+          ]
+        },
+        {
+          "line": 67,
+          "nameTemplate": "StringWriter Object.ToString ${engine}: actual object locals retain current and disposed builder text",
+          "matchedTapNumbers": [
+            185,
+            186,
+            187
+          ]
+        },
+        {
+          "line": 83,
+          "nameTemplate": "StringWriter Object.ToString independent CIL: ${row.kind} ${row.name}",
+          "matchedTapNumbers": [
+            188,
+            189,
+            190,
+            191,
+            192,
+            193,
+            194,
+            195,
+            196,
+            197
+          ]
+        },
+        {
+          "line": 95,
+          "nameTemplate": "StringWriter Object.ToString ${engine}: observer GC, disposal faults and snapshot restoration retain the builder",
+          "matchedTapNumbers": [
+            198,
+            200
+          ]
+        },
+        {
+          "line": 120,
+          "nameTemplate": "StringWriter Object.ToString ${engine}: allocation fault leaves text reachable and releases roots",
+          "matchedTapNumbers": [
+            199,
+            201
+          ]
+        }
+      ],
+      "observedTopLevelCount": 18,
+      "tapRangeInclusive": [
+        184,
+        201
+      ],
+      "contiguous": true,
+      "allDeclarationsRepresented": true
+    },
+    {
+      "path": "tests/a09-string-writer-scalars-state.test.js",
+      "sha256": "a806c0310ef332d024adf02a09dfa37409ff39c0ec638d0e8e81200aaec65886",
+      "expectedTopLevelCount": 17,
+      "countExplanation": "2 engines × 8 declarations + 1 independent CIL declaration",
+      "declarations": [
+        {
+          "line": 19,
+          "nameTemplate": "StringWriter scalars ${engine}: native subclass transitions match host-observer sequencing",
+          "matchedTapNumbers": [
+            202,
+            210
+          ]
+        },
+        {
+          "line": 53,
+          "nameTemplate": "StringWriter scalars ${engine}: receiver validation and disposal precede writing for every scalar type",
+          "matchedTapNumbers": [
+            203,
+            211
+          ]
+        },
+        {
+          "line": 80,
+          "nameTemplate": "StringWriter scalars ${engine}: two rooted chunks preserve storage, exact carriers and snapshot state",
+          "matchedTapNumbers": [
+            204,
+            212
+          ]
+        },
+        {
+          "line": 112,
+          "nameTemplate": "StringWriter scalars ${engine}: value/newline boundary observes NewLine, disposal and callback faults",
+          "matchedTapNumbers": [
+            205,
+            213
+          ]
+        },
+        {
+          "line": 146,
+          "nameTemplate": "StringWriter scalars ${engine}: Write has one disposal gate and newline reset preserves the LF profile",
+          "matchedTapNumbers": [
+            206,
+            214
+          ]
+        },
+        {
+          "line": 169,
+          "nameTemplate": "StringWriter scalars ${engine}: text-limit failure preserves precisely the completed value",
+          "matchedTapNumbers": [
+            207,
+            215
+          ]
+        },
+        {
+          "line": 187,
+          "nameTemplate": "StringWriter scalars ${engine}: managed OOM before or after value append retains committed text",
+          "matchedTapNumbers": [
+            208,
+            216
+          ]
+        },
+        {
+          "line": 211,
+          "nameTemplate": "StringWriter scalars ${engine}: throwing chunk observers preserve prior committed chunks and release roots",
+          "matchedTapNumbers": [
+            209,
+            217
+          ]
+        },
+        {
+          "line": 234,
+          "nameTemplate": "StringWriter scalars independent CIL: null and disposed receivers fault for every scalar signature",
+          "matchedTapNumbers": [
+            218
+          ]
+        }
+      ],
+      "observedTopLevelCount": 17,
+      "tapRangeInclusive": [
+        202,
+        218
+      ],
+      "contiguous": true,
+      "allDeclarationsRepresented": true
+    },
+    {
+      "path": "tests/a09-string-writer-scalars.test.js",
+      "sha256": "f1f8ae640e6d07340d2b657c4db42a62bdd8b153b73b73594e7f78e123d8c5c6",
+      "expectedTopLevelCount": 27,
+      "countExplanation": "3 fixed provenance/contract declarations + 2 native-replay engines + 2 engines × 2 methods + 2 base views × 2 methods + 2 pipelines × (2 engines × 3 declarations + 1 unsupported-profile declaration)",
+      "declarations": [
+        {
+          "line": 20,
+          "nameTemplate": "StringWriter scalars append sixteen exact IDs after all released IO contracts",
+          "matchedTapNumbers": [
+            219
+          ]
+        },
+        {
+          "line": 36,
+          "nameTemplate": "StringWriter scalar expected text retains existing core .NET capture provenance",
+          "matchedTapNumbers": [
+            220
+          ]
+        },
+        {
+          "line": 52,
+          "nameTemplate": "StringWriter scalars independent native capture pins exact input, UTF-16 output and source provenance",
+          "matchedTapNumbers": [
+            221
+          ]
+        },
+        {
+          "line": 67,
+          "nameTemplate": "StringWriter scalars ${engine === 'source' ? 'source platform' : 'independent CIL'}: captured writer values and faults",
+          "matchedTapNumbers": [
+            222,
+            223
+          ]
+        },
+        {
+          "line": 106,
+          "nameTemplate": "StringWriter scalars ${engine}/${method}: typed dispatch preserves reused native scalar text",
+          "matchedTapNumbers": [
+            224,
+            225,
+            226,
+            227
+          ]
+        },
+        {
+          "line": 125,
+          "nameTemplate": "StringWriter scalars independent CIL ${baseView ? 'base' : 'concrete'}/${method}: exact stack widths and scalar text",
+          "matchedTapNumbers": [
+            228,
+            229,
+            230,
+            231
+          ]
+        },
+        {
+          "line": 140,
+          "nameTemplate": "StringWriter scalars ${pipeline}/${engine}: typed locals select all sixteen concrete/base overloads",
+          "matchedTapNumbers": [
+            232,
+            235,
+            239,
+            242
+          ]
+        },
+        {
+          "line": 163,
+          "nameTemplate": "StringWriter scalars ${pipeline}/${engine}: narrow numeric widening leaves character and string overloads intact",
+          "matchedTapNumbers": [
+            233,
+            236,
+            240,
+            243
+          ]
+        },
+        {
+          "line": 179,
+          "nameTemplate": "StringWriter scalars ${pipeline}/${engine}: compiled null/disposed calls keep managed faults",
+          "matchedTapNumbers": [
+            234,
+            237,
+            241,
+            244
+          ]
+        },
+        {
+          "line": 200,
+          "nameTemplate": "StringWriter scalars ${pipeline}: object, composite formatting and provider constructors remain unsupported",
+          "matchedTapNumbers": [
+            238,
+            245
+          ]
+        }
+      ],
+      "observedTopLevelCount": 27,
+      "tapRangeInclusive": [
+        219,
+        245
+      ],
+      "contiguous": true,
+      "allDeclarationsRepresented": true
+    },
+    {
+      "path": "tests/a09-string-writer-string-line.test.js",
+      "sha256": "a5b03a266d40e49125cef5990e78dfdfbc3ffc321acf89850c3b6456b5ce0d1f",
+      "expectedTopLevelCount": 12,
+      "countExplanation": "2 engines × 3 declarations + 1 independent CIL declaration + 2 pipelines × 2 engines + 1 contract/oracle declaration",
+      "declarations": [
+        {
+          "line": 14,
+          "nameTemplate": "StringWriter string line ${engine}: captured ordinary null/empty/disposal precedence is preserved",
+          "matchedTapNumbers": [
+            246,
+            249
+          ]
+        },
+        {
+          "line": 36,
+          "nameTemplate": "StringWriter string line ${engine}: captured value/newline callbacks preserve progress and roots",
+          "matchedTapNumbers": [
+            247,
+            250
+          ]
+        },
+        {
+          "line": 78,
+          "nameTemplate": "StringWriter string line ${engine}: disposal after text also prevents an empty newline",
+          "matchedTapNumbers": [
+            248,
+            251
+          ]
+        },
+        {
+          "line": 102,
+          "nameTemplate": "StringWriter string line CIL: independent concrete/base string calls match every native ordinary row",
+          "matchedTapNumbers": [
+            252
+          ]
+        },
+        {
+          "line": 120,
+          "nameTemplate": "StringWriter string line ${pipeline}/${engine}: compiled string overloads preserve captured null/disposal behavior",
+          "matchedTapNumbers": [
+            253,
+            254,
+            255,
+            256
+          ]
+        },
+        {
+          "line": 143,
+          "nameTemplate": "StringWriter string line correction preserves contracts and pins separate native capture provenance",
+          "matchedTapNumbers": [
+            257
+          ]
+        }
+      ],
+      "observedTopLevelCount": 12,
+      "tapRangeInclusive": [
+        246,
+        257
+      ],
+      "contiguous": true,
+      "allDeclarationsRepresented": true
+    },
+    {
+      "path": "tests/a09-string-writer.test.js",
+      "sha256": "90ddb99a10d99132678df9e214fd49032141abb3c2bc743034b5bece74b71c1c",
+      "expectedTopLevelCount": 21,
+      "countExplanation": "2 pipelines × 2 engines + 2 engines × 7 declarations + 3 fixed declarations",
+      "declarations": [
+        {
+          "line": 32,
+          "nameTemplate": "SF-A09-T03.2 ${pipeline} ${engine}: source character writes use the registered overload",
+          "matchedTapNumbers": [
+            258,
+            259,
+            260,
+            261
+          ]
+        },
+        {
+          "line": 46,
+          "nameTemplate": "SF-A09-T03.2 ${engine}: unchanged StringWriter source matches .NET 10.0.5",
+          "matchedTapNumbers": [
+            262,
+            269
+          ]
+        },
+        {
+          "line": 57,
+          "nameTemplate": "SF-A09-T03.2 ${engine}: top-level using calls inherited Dispose through the supported lowering",
+          "matchedTapNumbers": [
+            263,
+            270
+          ]
+        },
+        {
+          "line": 73,
+          "nameTemplate": "SF-A09-T03.2 ${engine}: native disposal faults precede null and empty writes",
+          "matchedTapNumbers": [
+            264,
+            271
+          ]
+        },
+        {
+          "line": 94,
+          "nameTemplate": "SF-A09-T03.2 ${engine}: managed builder identity survives disposal, GC and snapshot restore",
+          "matchedTapNumbers": [
+            265,
+            272
+          ]
+        },
+        {
+          "line": 115,
+          "nameTemplate": "SF-A09-T03.2 ${engine}: UTF-16 units and newline storage survive write-observer collection",
+          "matchedTapNumbers": [
+            266,
+            273
+          ]
+        },
+        {
+          "line": 135,
+          "nameTemplate": "SF-A09-T03.2 ${engine}: writes retain StringBuilder bounds and WriteLine partial progress",
+          "matchedTapNumbers": [
+            267,
+            274
+          ]
+        },
+        {
+          "line": 150,
+          "nameTemplate": "SF-A09-T03.2 ${engine}: unsupported receiver and invalid primitive inputs fail explicitly",
+          "matchedTapNumbers": [
+            268,
+            275
+          ]
+        },
+        {
+          "line": 163,
+          "nameTemplate": "SF-A09-T03.2 independent CIL TextWriter dispatch matches native UTF-16 and disposal observations",
+          "matchedTapNumbers": [
+            276
+          ]
+        },
+        {
+          "line": 181,
+          "nameTemplate": "SF-A09-T03.2 writer contracts append after released reader and JSON IDs",
+          "matchedTapNumbers": [
+            277
+          ]
+        },
+        {
+          "line": 197,
+          "nameTemplate": "SF-A09-T03.2 deferred writer surfaces retain compiler errors",
+          "matchedTapNumbers": [
+            278
+          ]
+        }
+      ],
+      "observedTopLevelCount": 21,
+      "tapRangeInclusive": [
+        258,
+        278
+      ],
+      "contiguous": true,
+      "allDeclarationsRepresented": true
+    }
+  ],
+  "localTestHelpers": [
+    {
+      "path": "tests/a05-decimal-fixtures.js",
+      "sha256": "d436adaddf156a912e503d6cc46e1000d0843ece3e3499045769ea1085d0b5d7",
+      "importsNodeTest": false,
+      "hasTopLevelTestDeclaration": false
+    },
+    {
+      "path": "tests/fixtures/a07/legacy-builtin-engines.js",
+      "sha256": "6ece11fd875b47838a218f0fd1beff5cbf5a0e4c1b270af5bb01dafc8f250d7e",
+      "importsNodeTest": false,
+      "hasTopLevelTestDeclaration": false
+    },
+    {
+      "path": "tests/fixtures/json-int64/engines.js",
+      "sha256": "9b513eb84e4cf130e3dc12456a996aa0f516bebe3974db664506fb1319218f6f",
+      "importsNodeTest": false,
+      "hasTopLevelTestDeclaration": false
+    },
+    {
+      "path": "tests/fixtures/object-string.js",
+      "sha256": "f361a0ff2139dd1ab05788357f3e94ed66147bb038f24b24fb1ddec474afbfc0",
+      "importsNodeTest": false,
+      "hasTopLevelTestDeclaration": false
+    },
+    {
+      "path": "tests/fixtures/stopwatch.js",
+      "sha256": "20b098603796cf2f6aa55b119eff6fccf25a848efd8c2e06af6550ea6246bb33",
+      "importsNodeTest": false,
+      "hasTopLevelTestDeclaration": false
+    },
+    {
+      "path": "tests/fixtures/text-reader/buffer.js",
+      "sha256": "c6290d838aeb71dc9624b01b2d11657da675b2ddfa87849fc0bce7cfc9c11b85",
+      "importsNodeTest": false,
+      "hasTopLevelTestDeclaration": false
+    },
+    {
+      "path": "tests/fixtures/text-reader/engines.js",
+      "sha256": "9d8729b7ea418df4864eb4f15119b5262939e4497bac977402aa2c931eb6fa7b",
+      "importsNodeTest": false,
+      "hasTopLevelTestDeclaration": false
+    },
+    {
+      "path": "tests/fixtures/text-writer/buffer-cases.js",
+      "sha256": "de7dbb1d6385315eb439a31e80b9683605595d6c2ba64a636d1e31c704f5ceff",
+      "importsNodeTest": false,
+      "hasTopLevelTestDeclaration": false
+    },
+    {
+      "path": "tests/fixtures/text-writer/engines.js",
+      "sha256": "f8e83167502593e91f8c754a745136e96eee385fd94e393a1630a3ff1ec4f31e",
+      "importsNodeTest": false,
+      "hasTopLevelTestDeclaration": false
+    },
+    {
+      "path": "tests/fixtures/text-writer/scalars.js",
+      "sha256": "c4b410487c4d2c3c0ea8d7011dffcd0f56a9acfe59c26646bcb1292e9515aff8",
+      "importsNodeTest": false,
+      "hasTopLevelTestDeclaration": false
+    },
+    {
+      "path": "tests/fixtures/text-writer/string-line.js",
+      "sha256": "af537cd260932fbf2586425ee9d9267cae691bf95c2052c93411bac7bcaf2479",
+      "importsNodeTest": false,
+      "hasTopLevelTestDeclaration": false
+    },
+    {
+      "path": "tests/managed-fixtures.js",
+      "sha256": "53b6e844b4a1dccd707aed5ffa0e0e4840558ed4bb67adc9b9ae04ed7573e7fd",
+      "importsNodeTest": false,
+      "hasTopLevelTestDeclaration": false
+    }
+  ],
+  "topLevelTests": [
+    {
+      "tapNumber": 1,
+      "name": "synchronous host callback source: receiver, nested scopes and result inspection retain the boundary",
+      "sourceFile": "tests/a05-synchronous-host-callbacks.test.js",
+      "declarationLine": 23,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 2,
+      "name": "synchronous host callback source: callback and inspection failures release the scope unchanged",
+      "sourceFile": "tests/a05-synchronous-host-callbacks.test.js",
+      "declarationLine": 64,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 3,
+      "name": "synchronous host callback source: explicit stop keeps the boundary until callback completion",
+      "sourceFile": "tests/a05-synchronous-host-callbacks.test.js",
+      "declarationLine": 87,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 4,
+      "name": "synchronous host callback cil: receiver, nested scopes and result inspection retain the boundary",
+      "sourceFile": "tests/a05-synchronous-host-callbacks.test.js",
+      "declarationLine": 23,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 5,
+      "name": "synchronous host callback cil: callback and inspection failures release the scope unchanged",
+      "sourceFile": "tests/a05-synchronous-host-callbacks.test.js",
+      "declarationLine": 64,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 6,
+      "name": "synchronous host callback cil: explicit stop keeps the boundary until callback completion",
+      "sourceFile": "tests/a05-synchronous-host-callbacks.test.js",
+      "declarationLine": 87,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 7,
+      "name": "framework Object.ToString: pinned source hash and exact override opt-ins",
+      "sourceFile": "tests/a07-framework-object-string.test.js",
+      "declarationLine": 35,
+      "observedTemplateValues": {}
+    },
+    {
+      "tapNumber": 8,
+      "name": "framework Object.ToString bound: emitted calls and profile round trip keep Convert distinct",
+      "sourceFile": "tests/a07-framework-object-string.test.js",
+      "declarationLine": 54,
+      "observedTemplateValues": {
+        "pipeline": "bound"
+      }
+    },
+    {
+      "tapNumber": 9,
+      "name": "framework Object.ToString bound: null faults after the emitted profile round trip",
+      "sourceFile": "tests/a07-framework-object-string.test.js",
+      "declarationLine": 77,
+      "observedTemplateValues": {
+        "pipeline": "bound"
+      }
+    },
+    {
+      "tapNumber": 10,
+      "name": "framework Object.ToString legacy: emitted calls and profile round trip keep Convert distinct",
+      "sourceFile": "tests/a07-framework-object-string.test.js",
+      "declarationLine": 54,
+      "observedTemplateValues": {
+        "pipeline": "legacy"
+      }
+    },
+    {
+      "tapNumber": 11,
+      "name": "framework Object.ToString legacy: null faults after the emitted profile round trip",
+      "sourceFile": "tests/a07-framework-object-string.test.js",
+      "declarationLine": 77,
+      "observedTemplateValues": {
+        "pipeline": "legacy"
+      }
+    },
+    {
+      "tapNumber": 12,
+      "name": "framework Object.ToString source: object references invoke only opted-in framework overrides",
+      "sourceFile": "tests/a07-framework-object-string.test.js",
+      "declarationLine": 89,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 13,
+      "name": "framework Object.ToString source: primitive, Convert and Console profiles remain unchanged",
+      "sourceFile": "tests/a07-framework-object-string.test.js",
+      "declarationLine": 101,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 14,
+      "name": "framework Object.ToString source: null receiver faults",
+      "sourceFile": "tests/a07-framework-object-string.test.js",
+      "declarationLine": 113,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 15,
+      "name": "framework Object.ToString source: GC, snapshot and allocation faults preserve builder state",
+      "sourceFile": "tests/a07-framework-object-string.test.js",
+      "declarationLine": 122,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 16,
+      "name": "framework Object.ToString source: unmarked framework methods stay on the fallback profile",
+      "sourceFile": "tests/a07-framework-object-string.test.js",
+      "declarationLine": 146,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 17,
+      "name": "framework Object.ToString cil: object references invoke only opted-in framework overrides",
+      "sourceFile": "tests/a07-framework-object-string.test.js",
+      "declarationLine": 89,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 18,
+      "name": "framework Object.ToString cil: primitive, Convert and Console profiles remain unchanged",
+      "sourceFile": "tests/a07-framework-object-string.test.js",
+      "declarationLine": 101,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 19,
+      "name": "framework Object.ToString cil: null receiver faults",
+      "sourceFile": "tests/a07-framework-object-string.test.js",
+      "declarationLine": 113,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 20,
+      "name": "framework Object.ToString cil: GC, snapshot and allocation faults preserve builder state",
+      "sourceFile": "tests/a07-framework-object-string.test.js",
+      "declarationLine": 122,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 21,
+      "name": "framework Object.ToString cil: unmarked framework methods stay on the fallback profile",
+      "sourceFile": "tests/a07-framework-object-string.test.js",
+      "declarationLine": 146,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 22,
+      "name": "framework Object.ToString CIL: call empty-builder matches native",
+      "sourceFile": "tests/a07-framework-object-string.test.js",
+      "declarationLine": 161,
+      "observedTemplateValues": {
+        "kind": "call",
+        "input[0]": "empty-builder"
+      }
+    },
+    {
+      "tapNumber": 23,
+      "name": "framework Object.ToString CIL: callvirt empty-builder matches native",
+      "sourceFile": "tests/a07-framework-object-string.test.js",
+      "declarationLine": 161,
+      "observedTemplateValues": {
+        "kind": "callvirt",
+        "input[0]": "empty-builder"
+      }
+    },
+    {
+      "tapNumber": 24,
+      "name": "framework Object.ToString CIL: call builder matches native",
+      "sourceFile": "tests/a07-framework-object-string.test.js",
+      "declarationLine": 161,
+      "observedTemplateValues": {
+        "kind": "call",
+        "input[0]": "builder"
+      }
+    },
+    {
+      "tapNumber": 25,
+      "name": "framework Object.ToString CIL: callvirt builder matches native",
+      "sourceFile": "tests/a07-framework-object-string.test.js",
+      "declarationLine": 161,
+      "observedTemplateValues": {
+        "kind": "callvirt",
+        "input[0]": "builder"
+      }
+    },
+    {
+      "tapNumber": 26,
+      "name": "framework Object.ToString CIL: call mutated-builder matches native",
+      "sourceFile": "tests/a07-framework-object-string.test.js",
+      "declarationLine": 161,
+      "observedTemplateValues": {
+        "kind": "call",
+        "input[0]": "mutated-builder"
+      }
+    },
+    {
+      "tapNumber": 27,
+      "name": "framework Object.ToString CIL: callvirt mutated-builder matches native",
+      "sourceFile": "tests/a07-framework-object-string.test.js",
+      "declarationLine": 161,
+      "observedTemplateValues": {
+        "kind": "callvirt",
+        "input[0]": "mutated-builder"
+      }
+    },
+    {
+      "tapNumber": 28,
+      "name": "framework Object.ToString CIL: call uri matches native",
+      "sourceFile": "tests/a07-framework-object-string.test.js",
+      "declarationLine": 161,
+      "observedTemplateValues": {
+        "kind": "call",
+        "input[0]": "uri"
+      }
+    },
+    {
+      "tapNumber": 29,
+      "name": "framework Object.ToString CIL: callvirt uri matches native",
+      "sourceFile": "tests/a07-framework-object-string.test.js",
+      "declarationLine": 161,
+      "observedTemplateValues": {
+        "kind": "callvirt",
+        "input[0]": "uri"
+      }
+    },
+    {
+      "tapNumber": 30,
+      "name": "framework Object.ToString CIL: call null matches native",
+      "sourceFile": "tests/a07-framework-object-string.test.js",
+      "declarationLine": 161,
+      "observedTemplateValues": {
+        "kind": "call",
+        "input[0]": "null"
+      }
+    },
+    {
+      "tapNumber": 31,
+      "name": "framework Object.ToString CIL: callvirt null matches native",
+      "sourceFile": "tests/a07-framework-object-string.test.js",
+      "declarationLine": 161,
+      "observedTemplateValues": {
+        "kind": "callvirt",
+        "input[0]": "null"
+      }
+    },
+    {
+      "tapNumber": 32,
+      "name": "framework Object.ToString CIL: hidden user method is not an override",
+      "sourceFile": "tests/a07-framework-object-string.test.js",
+      "declarationLine": 174,
+      "observedTemplateValues": {}
+    },
+    {
+      "tapNumber": 33,
+      "name": "framework Object.ToString CIL: call retains released primitive formatting",
+      "sourceFile": "tests/a07-framework-object-string.test.js",
+      "declarationLine": 185,
+      "observedTemplateValues": {
+        "kind": "call"
+      }
+    },
+    {
+      "tapNumber": 34,
+      "name": "framework Object.ToString CIL: callvirt retains released primitive formatting",
+      "sourceFile": "tests/a07-framework-object-string.test.js",
+      "declarationLine": 185,
+      "observedTemplateValues": {
+        "kind": "callvirt"
+      }
+    },
+    {
+      "tapNumber": 35,
+      "name": "framework Object.ToString metadata rejects invalid override opt-ins",
+      "sourceFile": "tests/a07-framework-object-string.test.js",
+      "declarationLine": 198,
+      "observedTemplateValues": {}
+    },
+    {
+      "tapNumber": 36,
+      "name": "Stopwatch clock boundary source/Stop: a caught snapshot rejection preserves the live continuation",
+      "sourceFile": "tests/a07-stopwatch-clock-boundary.test.js",
+      "declarationLine": 128,
+      "observedTemplateValues": {
+        "engine": "source",
+        "operation": "Stop",
+        "action": "snapshot"
+      }
+    },
+    {
+      "tapNumber": 37,
+      "name": "Stopwatch clock boundary source/GetTimestamp: a caught snapshot rejection preserves the live continuation",
+      "sourceFile": "tests/a07-stopwatch-clock-boundary.test.js",
+      "declarationLine": 128,
+      "observedTemplateValues": {
+        "engine": "source",
+        "operation": "GetTimestamp",
+        "action": "snapshot"
+      }
+    },
+    {
+      "tapNumber": 38,
+      "name": "Stopwatch clock boundary source/Stop: a caught restore rejection preserves the live continuation",
+      "sourceFile": "tests/a07-stopwatch-clock-boundary.test.js",
+      "declarationLine": 128,
+      "observedTemplateValues": {
+        "engine": "source",
+        "operation": "Stop",
+        "action": "restore"
+      }
+    },
+    {
+      "tapNumber": 39,
+      "name": "Stopwatch clock boundary source/GetTimestamp: a caught restore rejection preserves the live continuation",
+      "sourceFile": "tests/a07-stopwatch-clock-boundary.test.js",
+      "declarationLine": 128,
+      "observedTemplateValues": {
+        "engine": "source",
+        "operation": "GetTimestamp",
+        "action": "restore"
+      }
+    },
+    {
+      "tapNumber": 40,
+      "name": "Stopwatch clock boundary source: callback failure, reentry and explicit stop release the boundary",
+      "sourceFile": "tests/a07-stopwatch-clock-boundary.test.js",
+      "declarationLine": 133,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 41,
+      "name": "Stopwatch clock boundary cil/Stop: a caught snapshot rejection preserves the live continuation",
+      "sourceFile": "tests/a07-stopwatch-clock-boundary.test.js",
+      "declarationLine": 128,
+      "observedTemplateValues": {
+        "engine": "cil",
+        "operation": "Stop",
+        "action": "snapshot"
+      }
+    },
+    {
+      "tapNumber": 42,
+      "name": "Stopwatch clock boundary cil/GetTimestamp: a caught snapshot rejection preserves the live continuation",
+      "sourceFile": "tests/a07-stopwatch-clock-boundary.test.js",
+      "declarationLine": 128,
+      "observedTemplateValues": {
+        "engine": "cil",
+        "operation": "GetTimestamp",
+        "action": "snapshot"
+      }
+    },
+    {
+      "tapNumber": 43,
+      "name": "Stopwatch clock boundary cil/Stop: a caught restore rejection preserves the live continuation",
+      "sourceFile": "tests/a07-stopwatch-clock-boundary.test.js",
+      "declarationLine": 128,
+      "observedTemplateValues": {
+        "engine": "cil",
+        "operation": "Stop",
+        "action": "restore"
+      }
+    },
+    {
+      "tapNumber": 44,
+      "name": "Stopwatch clock boundary cil/GetTimestamp: a caught restore rejection preserves the live continuation",
+      "sourceFile": "tests/a07-stopwatch-clock-boundary.test.js",
+      "declarationLine": 128,
+      "observedTemplateValues": {
+        "engine": "cil",
+        "operation": "GetTimestamp",
+        "action": "restore"
+      }
+    },
+    {
+      "tapNumber": 45,
+      "name": "Stopwatch clock boundary cil: callback failure, reentry and explicit stop release the boundary",
+      "sourceFile": "tests/a07-stopwatch-clock-boundary.test.js",
+      "declarationLine": 133,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 46,
+      "name": "Stopwatch Object.ToString bound/source: running and stopped overrides preserve Convert and Console formatting",
+      "sourceFile": "tests/a07-stopwatch-object-string.test.js",
+      "declarationLine": 33,
+      "observedTemplateValues": {
+        "pipeline": "bound",
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 47,
+      "name": "Stopwatch Object.ToString bound/reload: running and stopped overrides preserve Convert and Console formatting",
+      "sourceFile": "tests/a07-stopwatch-object-string.test.js",
+      "declarationLine": 33,
+      "observedTemplateValues": {
+        "pipeline": "bound",
+        "engine": "reload"
+      }
+    },
+    {
+      "tapNumber": 48,
+      "name": "Stopwatch Object.ToString bound/cil: running and stopped overrides preserve Convert and Console formatting",
+      "sourceFile": "tests/a07-stopwatch-object-string.test.js",
+      "declarationLine": 33,
+      "observedTemplateValues": {
+        "pipeline": "bound",
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 49,
+      "name": "Stopwatch Object.ToString legacy/source: running and stopped overrides preserve Convert and Console formatting",
+      "sourceFile": "tests/a07-stopwatch-object-string.test.js",
+      "declarationLine": 33,
+      "observedTemplateValues": {
+        "pipeline": "legacy",
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 50,
+      "name": "Stopwatch Object.ToString legacy/reload: running and stopped overrides preserve Convert and Console formatting",
+      "sourceFile": "tests/a07-stopwatch-object-string.test.js",
+      "declarationLine": 33,
+      "observedTemplateValues": {
+        "pipeline": "legacy",
+        "engine": "reload"
+      }
+    },
+    {
+      "tapNumber": 51,
+      "name": "Stopwatch Object.ToString legacy/cil: running and stopped overrides preserve Convert and Console formatting",
+      "sourceFile": "tests/a07-stopwatch-object-string.test.js",
+      "declarationLine": 33,
+      "observedTemplateValues": {
+        "pipeline": "legacy",
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 52,
+      "name": "Stopwatch Object.ToString independent CIL: only virtual Object calls dispatch while Convert and Console retain type names",
+      "sourceFile": "tests/a07-stopwatch-object-string.test.js",
+      "declarationLine": 83,
+      "observedTemplateValues": {}
+    },
+    {
+      "tapNumber": 53,
+      "name": "A09 source: default escaping matches native scalar, array and dictionary cases",
+      "sourceFile": "tests/a09-json-escaping.test.js",
+      "declarationLine": 57,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 54,
+      "name": "A09 source: compiled serializer calls retain UTF-16 string escaping",
+      "sourceFile": "tests/a09-json-escaping.test.js",
+      "declarationLine": 64,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 55,
+      "name": "A09 source: registered string collections use the same default escaping",
+      "sourceFile": "tests/a09-json-escaping.test.js",
+      "declarationLine": 76,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 56,
+      "name": "A09 source: escape expansion enforces the existing JSON output budget",
+      "sourceFile": "tests/a09-json-escaping.test.js",
+      "declarationLine": 98,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 57,
+      "name": "A09 source: serializer retains cycle and unsupported-object failures",
+      "sourceFile": "tests/a09-json-escaping.test.js",
+      "declarationLine": 116,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 58,
+      "name": "A09 cil: default escaping matches native scalar, array and dictionary cases",
+      "sourceFile": "tests/a09-json-escaping.test.js",
+      "declarationLine": 57,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 59,
+      "name": "A09 cil: compiled serializer calls retain UTF-16 string escaping",
+      "sourceFile": "tests/a09-json-escaping.test.js",
+      "declarationLine": 64,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 60,
+      "name": "A09 cil: registered string collections use the same default escaping",
+      "sourceFile": "tests/a09-json-escaping.test.js",
+      "declarationLine": 76,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 61,
+      "name": "A09 cil: escape expansion enforces the existing JSON output budget",
+      "sourceFile": "tests/a09-json-escaping.test.js",
+      "declarationLine": 98,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 62,
+      "name": "A09 cil: serializer retains cycle and unsupported-object failures",
+      "sourceFile": "tests/a09-json-escaping.test.js",
+      "declarationLine": 116,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 63,
+      "name": "A09 default escaping reference pins its source, SDK, runtime and complete ASCII coverage",
+      "sourceFile": "tests/a09-json-escaping.test.js",
+      "declarationLine": 128,
+      "observedTemplateValues": {}
+    },
+    {
+      "tapNumber": 64,
+      "name": "SF-A09-B02 source bytecode GetInt64 matches all 63 native lines and managed types",
+      "sourceFile": "tests/a09-json-int64.test.js",
+      "declarationLine": 39,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 65,
+      "name": "SF-A09-B02 source exact Int64 access retains existing Int32 and approximate Double behavior",
+      "sourceFile": "tests/a09-json-int64.test.js",
+      "declarationLine": 52,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 66,
+      "name": "SF-A09-B02 cil bytecode GetInt64 matches all 63 native lines and managed types",
+      "sourceFile": "tests/a09-json-int64.test.js",
+      "declarationLine": 39,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 67,
+      "name": "SF-A09-B02 cil exact Int64 access retains existing Int32 and approximate Double behavior",
+      "sourceFile": "tests/a09-json-int64.test.js",
+      "declarationLine": 52,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 68,
+      "name": "SF-A09-B02 bound source compiler retains Int64 and typed-catch profile diagnostics",
+      "sourceFile": "tests/a09-json-int64.test.js",
+      "declarationLine": 62,
+      "observedTemplateValues": {
+        "pipeline": "bound"
+      }
+    },
+    {
+      "tapNumber": 69,
+      "name": "SF-A09-B02 legacy source compiler retains Int64 and typed-catch profile diagnostics",
+      "sourceFile": "tests/a09-json-int64.test.js",
+      "declarationLine": 62,
+      "observedTemplateValues": {
+        "pipeline": "legacy"
+      }
+    },
+    {
+      "tapNumber": 70,
+      "name": "SF-A09-B02 GetInt64 uses the A09 reservation and an actual managed Int64 return",
+      "sourceFile": "tests/a09-json-int64.test.js",
+      "declarationLine": 71,
+      "observedTemplateValues": {}
+    },
+    {
+      "tapNumber": 71,
+      "name": "SF-A09-B02 Int64 reference pins source bytes, SDK, runtime and precision boundaries",
+      "sourceFile": "tests/a09-json-int64.test.js",
+      "declarationLine": 78,
+      "observedTemplateValues": {}
+    },
+    {
+      "tapNumber": 72,
+      "name": "SF-A09-B02 bound/source native JSON retains source Char with only the typed-catch adaptation",
+      "sourceFile": "tests/a09-json-integer-keys.test.js",
+      "declarationLine": 19,
+      "observedTemplateValues": {
+        "pipeline": "bound",
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 73,
+      "name": "SF-A09-B02 bound/cil native JSON retains source Char with only the typed-catch adaptation",
+      "sourceFile": "tests/a09-json-integer-keys.test.js",
+      "declarationLine": 19,
+      "observedTemplateValues": {
+        "pipeline": "bound",
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 74,
+      "name": "SF-A09-B02 legacy/source native JSON retains source Char with only the typed-catch adaptation",
+      "sourceFile": "tests/a09-json-integer-keys.test.js",
+      "declarationLine": 19,
+      "observedTemplateValues": {
+        "pipeline": "legacy",
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 75,
+      "name": "SF-A09-B02 legacy/cil native JSON retains source Char with only the typed-catch adaptation",
+      "sourceFile": "tests/a09-json-integer-keys.test.js",
+      "declarationLine": 19,
+      "observedTemplateValues": {
+        "pipeline": "legacy",
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 76,
+      "name": "SF-A09-B02 source integer dictionary retains nonfinite and unsupported-object faults",
+      "sourceFile": "tests/a09-json-integer-keys.test.js",
+      "declarationLine": 43,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 77,
+      "name": "SF-A09-B02 cil integer dictionary retains nonfinite and unsupported-object faults",
+      "sourceFile": "tests/a09-json-integer-keys.test.js",
+      "declarationLine": 43,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 78,
+      "name": "SF-A09-B02 independently assembled CIL serializes signed dictionary keys in entry order",
+      "sourceFile": "tests/a09-json-integer-keys.test.js",
+      "declarationLine": 71,
+      "observedTemplateValues": {}
+    },
+    {
+      "tapNumber": 79,
+      "name": "SF-A09-B02 independently assembled CIL preserves genuine boxed Char and Boolean JSON values",
+      "sourceFile": "tests/a09-json-integer-keys.test.js",
+      "declarationLine": 97,
+      "observedTemplateValues": {}
+    },
+    {
+      "tapNumber": 80,
+      "name": "SF-A09-B02 integer dictionary oracle pins source, SDK, runtime and all eighteen cases",
+      "sourceFile": "tests/a09-json-integer-keys.test.js",
+      "declarationLine": 132,
+      "observedTemplateValues": {}
+    },
+    {
+      "tapNumber": 81,
+      "name": "SF-A09-B01 source binary64 JSON tokens match all pinned finite native values",
+      "sourceFile": "tests/a09-json-number-formatting.test.js",
+      "declarationLine": 70,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 82,
+      "name": "SF-A09-B01 source compiled mixed arrays and dictionary values retain native numeric spelling",
+      "sourceFile": "tests/a09-json-number-formatting.test.js",
+      "declarationLine": 91,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 83,
+      "name": "SF-A09-B01 source numeric token expansion respects the existing output budget",
+      "sourceFile": "tests/a09-json-number-formatting.test.js",
+      "declarationLine": 105,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 84,
+      "name": "SF-A09-B01 cil binary64 JSON tokens match all pinned finite native values",
+      "sourceFile": "tests/a09-json-number-formatting.test.js",
+      "declarationLine": 70,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 85,
+      "name": "SF-A09-B01 cil compiled mixed arrays and dictionary values retain native numeric spelling",
+      "sourceFile": "tests/a09-json-number-formatting.test.js",
+      "declarationLine": 91,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 86,
+      "name": "SF-A09-B01 cil numeric token expansion respects the existing output budget",
+      "sourceFile": "tests/a09-json-number-formatting.test.js",
+      "declarationLine": 105,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 87,
+      "name": "SF-A09-B01 numeric oracle pins fifty values, source, SDK and runtime",
+      "sourceFile": "tests/a09-json-number-formatting.test.js",
+      "declarationLine": 125,
+      "observedTemplateValues": {}
+    },
+    {
+      "tapNumber": 88,
+      "name": "SF-A09-T03 buffer source: all 56 native slice results execute through real bytecode",
+      "sourceFile": "tests/a09-string-reader-buffer.test.js",
+      "declarationLine": 24,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 89,
+      "name": "SF-A09-T03 buffer source: slice writes retain storage and allocate no managed values",
+      "sourceFile": "tests/a09-string-reader-buffer.test.js",
+      "declarationLine": 43,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 90,
+      "name": "SF-A09-T03 buffer source: read and read-block share cursor state and restore with the buffer",
+      "sourceFile": "tests/a09-string-reader-buffer.test.js",
+      "declarationLine": 76,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 91,
+      "name": "SF-A09-T03 buffer source: buffer and input stay rooted across write observers",
+      "sourceFile": "tests/a09-string-reader-buffer.test.js",
+      "declarationLine": 98,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 92,
+      "name": "SF-A09-T03 buffer source: observer failure releases roots and leaves the cursor uncommitted",
+      "sourceFile": "tests/a09-string-reader-buffer.test.js",
+      "declarationLine": 116,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 93,
+      "name": "SF-A09-T03 buffer source: invalid platform array shapes and numeric arguments do not consume input",
+      "sourceFile": "tests/a09-string-reader-buffer.test.js",
+      "declarationLine": 136,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 94,
+      "name": "SF-A09-T03 buffer cil: all 56 native slice results execute through real bytecode",
+      "sourceFile": "tests/a09-string-reader-buffer.test.js",
+      "declarationLine": 24,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 95,
+      "name": "SF-A09-T03 buffer cil: slice writes retain storage and allocate no managed values",
+      "sourceFile": "tests/a09-string-reader-buffer.test.js",
+      "declarationLine": 43,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 96,
+      "name": "SF-A09-T03 buffer cil: read and read-block share cursor state and restore with the buffer",
+      "sourceFile": "tests/a09-string-reader-buffer.test.js",
+      "declarationLine": 76,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 97,
+      "name": "SF-A09-T03 buffer cil: buffer and input stay rooted across write observers",
+      "sourceFile": "tests/a09-string-reader-buffer.test.js",
+      "declarationLine": 98,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 98,
+      "name": "SF-A09-T03 buffer cil: observer failure releases roots and leaves the cursor uncommitted",
+      "sourceFile": "tests/a09-string-reader-buffer.test.js",
+      "declarationLine": 116,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 99,
+      "name": "SF-A09-T03 buffer cil: invalid platform array shapes and numeric arguments do not consume input",
+      "sourceFile": "tests/a09-string-reader-buffer.test.js",
+      "declarationLine": 136,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 100,
+      "name": "SF-A09-T03 buffer: registration appends after all reader and writer base IDs",
+      "sourceFile": "tests/a09-string-reader-buffer.test.js",
+      "declarationLine": 154,
+      "observedTemplateValues": {}
+    },
+    {
+      "tapNumber": 101,
+      "name": "SF-A09-T03 buffer: native capture pins exact source bytes and UTF-16 boundary data",
+      "sourceFile": "tests/a09-string-reader-buffer.test.js",
+      "declarationLine": 178,
+      "observedTemplateValues": {}
+    },
+    {
+      "tapNumber": 102,
+      "name": "SF-A09-T03 buffer bound source: source character arrays preserve destination slices",
+      "sourceFile": "tests/a09-string-reader-buffer.test.js",
+      "declarationLine": 189,
+      "observedTemplateValues": {
+        "pipeline": "bound",
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 103,
+      "name": "SF-A09-T03 buffer bound cil: source character arrays preserve destination slices",
+      "sourceFile": "tests/a09-string-reader-buffer.test.js",
+      "declarationLine": 189,
+      "observedTemplateValues": {
+        "pipeline": "bound",
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 104,
+      "name": "SF-A09-T03 buffer legacy source: source character arrays preserve destination slices",
+      "sourceFile": "tests/a09-string-reader-buffer.test.js",
+      "declarationLine": 189,
+      "observedTemplateValues": {
+        "pipeline": "legacy",
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 105,
+      "name": "SF-A09-T03 buffer legacy cil: source character arrays preserve destination slices",
+      "sourceFile": "tests/a09-string-reader-buffer.test.js",
+      "declarationLine": 189,
+      "observedTemplateValues": {
+        "pipeline": "legacy",
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 106,
+      "name": "SF-A09-T03.1 source: unchanged StringReader fixture matches .NET 10.0.5",
+      "sourceFile": "tests/a09-string-reader.test.js",
+      "declarationLine": 25,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 107,
+      "name": "SF-A09-T03.1 source: using calls inherited Dispose through existing lowering",
+      "sourceFile": "tests/a09-string-reader.test.js",
+      "declarationLine": 36,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 108,
+      "name": "SF-A09-T03.1 source: native faults and disposed-before-EOF precedence",
+      "sourceFile": "tests/a09-string-reader.test.js",
+      "declarationLine": 51,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 109,
+      "name": "SF-A09-T03.1 source: reader roots source, releases it on disposal, and restores its cursor",
+      "sourceFile": "tests/a09-string-reader.test.js",
+      "declarationLine": 72,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 110,
+      "name": "SF-A09-T03.1 source: returned text survives a collection during cursor notification",
+      "sourceFile": "tests/a09-string-reader.test.js",
+      "declarationLine": 91,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 111,
+      "name": "SF-A09-T03.1 source: failed output allocation leaves the cursor unchanged",
+      "sourceFile": "tests/a09-string-reader.test.js",
+      "declarationLine": 107,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 112,
+      "name": "SF-A09-T03.1 source: invalid constructor values and unknown TextReader implementations fail explicitly",
+      "sourceFile": "tests/a09-string-reader.test.js",
+      "declarationLine": 124,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 113,
+      "name": "SF-A09-T03.1 cil: unchanged StringReader fixture matches .NET 10.0.5",
+      "sourceFile": "tests/a09-string-reader.test.js",
+      "declarationLine": 25,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 114,
+      "name": "SF-A09-T03.1 cil: using calls inherited Dispose through existing lowering",
+      "sourceFile": "tests/a09-string-reader.test.js",
+      "declarationLine": 36,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 115,
+      "name": "SF-A09-T03.1 cil: native faults and disposed-before-EOF precedence",
+      "sourceFile": "tests/a09-string-reader.test.js",
+      "declarationLine": 51,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 116,
+      "name": "SF-A09-T03.1 cil: reader roots source, releases it on disposal, and restores its cursor",
+      "sourceFile": "tests/a09-string-reader.test.js",
+      "declarationLine": 72,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 117,
+      "name": "SF-A09-T03.1 cil: returned text survives a collection during cursor notification",
+      "sourceFile": "tests/a09-string-reader.test.js",
+      "declarationLine": 91,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 118,
+      "name": "SF-A09-T03.1 cil: failed output allocation leaves the cursor unchanged",
+      "sourceFile": "tests/a09-string-reader.test.js",
+      "declarationLine": 107,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 119,
+      "name": "SF-A09-T03.1 cil: invalid constructor values and unknown TextReader implementations fail explicitly",
+      "sourceFile": "tests/a09-string-reader.test.js",
+      "declarationLine": 124,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 120,
+      "name": "SF-A09-T03.1 ordinary CIL base dispatch and interface assignability match native observations",
+      "sourceFile": "tests/a09-string-reader.test.js",
+      "declarationLine": 135,
+      "observedTemplateValues": {}
+    },
+    {
+      "tapNumber": 121,
+      "name": "SF-A09-T03.1 abstract metadata and A09 IDs preserve existing JSON contracts",
+      "sourceFile": "tests/a09-string-reader.test.js",
+      "declarationLine": 156,
+      "observedTemplateValues": {}
+    },
+    {
+      "tapNumber": 122,
+      "name": "SF-A09-T03.1 deferred async APIs and abstract construction remain compile-time errors",
+      "sourceFile": "tests/a09-string-reader.test.js",
+      "declarationLine": 167,
+      "observedTemplateValues": {}
+    },
+    {
+      "tapNumber": 123,
+      "name": "SF-A09-T03.1 public IO registration uses the shared module protocol",
+      "sourceFile": "tests/a09-string-reader.test.js",
+      "declarationLine": 176,
+      "observedTemplateValues": {}
+    },
+    {
+      "tapNumber": 124,
+      "name": "SF-A09-T03.1 external IDisposable.Dispose invocation remains outside the verified CIL profile",
+      "sourceFile": "tests/a09-string-reader.test.js",
+      "declarationLine": 190,
+      "observedTemplateValues": {}
+    },
+    {
+      "tapNumber": 125,
+      "name": "StringWriter buffer source: all native full/slice calls preserve text, input and faults",
+      "sourceFile": "tests/a09-string-writer-buffer.test.js",
+      "declarationLine": 19,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 126,
+      "name": "StringWriter buffer source: one bulk chunk preserves storage, input copy and observer GC",
+      "sourceFile": "tests/a09-string-writer-buffer.test.js",
+      "declarationLine": 34,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 127,
+      "name": "StringWriter buffer source: zero/null writes, snapshots and disposed overload rules",
+      "sourceFile": "tests/a09-string-writer-buffer.test.js",
+      "declarationLine": 61,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 128,
+      "name": "StringWriter buffer source: invalid host arrays and numeric slices retain writer content",
+      "sourceFile": "tests/a09-string-writer-buffer.test.js",
+      "declarationLine": 85,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 129,
+      "name": "StringWriter buffer source: host text limit and managed OOM leave prior text intact",
+      "sourceFile": "tests/a09-string-writer-buffer.test.js",
+      "declarationLine": 106,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 130,
+      "name": "StringWriter buffer source: a throwing observer releases roots without consuming a partial character prefix",
+      "sourceFile": "tests/a09-string-writer-buffer.test.js",
+      "declarationLine": 129,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 131,
+      "name": "StringWriter buffer cil: all native full/slice calls preserve text, input and faults",
+      "sourceFile": "tests/a09-string-writer-buffer.test.js",
+      "declarationLine": 19,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 132,
+      "name": "StringWriter buffer cil: one bulk chunk preserves storage, input copy and observer GC",
+      "sourceFile": "tests/a09-string-writer-buffer.test.js",
+      "declarationLine": 34,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 133,
+      "name": "StringWriter buffer cil: zero/null writes, snapshots and disposed overload rules",
+      "sourceFile": "tests/a09-string-writer-buffer.test.js",
+      "declarationLine": 61,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 134,
+      "name": "StringWriter buffer cil: invalid host arrays and numeric slices retain writer content",
+      "sourceFile": "tests/a09-string-writer-buffer.test.js",
+      "declarationLine": 85,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 135,
+      "name": "StringWriter buffer cil: host text limit and managed OOM leave prior text intact",
+      "sourceFile": "tests/a09-string-writer-buffer.test.js",
+      "declarationLine": 106,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 136,
+      "name": "StringWriter buffer cil: a throwing observer releases roots without consuming a partial character prefix",
+      "sourceFile": "tests/a09-string-writer-buffer.test.js",
+      "declarationLine": 129,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 137,
+      "name": "StringWriter buffer bound source: compiled overloads and base references use character arrays",
+      "sourceFile": "tests/a09-string-writer-buffer.test.js",
+      "declarationLine": 150,
+      "observedTemplateValues": {
+        "pipeline": "bound",
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 138,
+      "name": "StringWriter buffer bound cil: compiled overloads and base references use character arrays",
+      "sourceFile": "tests/a09-string-writer-buffer.test.js",
+      "declarationLine": 150,
+      "observedTemplateValues": {
+        "pipeline": "bound",
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 139,
+      "name": "StringWriter buffer legacy source: compiled overloads and base references use character arrays",
+      "sourceFile": "tests/a09-string-writer-buffer.test.js",
+      "declarationLine": 150,
+      "observedTemplateValues": {
+        "pipeline": "legacy",
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 140,
+      "name": "StringWriter buffer legacy cil: compiled overloads and base references use character arrays",
+      "sourceFile": "tests/a09-string-writer-buffer.test.js",
+      "declarationLine": 150,
+      "observedTemplateValues": {
+        "pipeline": "legacy",
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 141,
+      "name": "StringWriter buffer contracts append after reader buffers and native capture pins source",
+      "sourceFile": "tests/a09-string-writer-buffer.test.js",
+      "declarationLine": 167,
+      "observedTemplateValues": {}
+    },
+    {
+      "tapNumber": 142,
+      "name": "StringWriter character line source: real platform dispatch matches all native character/null/disposal rows",
+      "sourceFile": "tests/a09-string-writer-char-line.test.js",
+      "declarationLine": 45,
+      "observedTemplateValues": {}
+    },
+    {
+      "tapNumber": 143,
+      "name": "StringWriter character line CIL: independent concrete/base callvirt matches all native rows",
+      "sourceFile": "tests/a09-string-writer-char-line.test.js",
+      "declarationLine": 64,
+      "observedTemplateValues": {}
+    },
+    {
+      "tapNumber": 144,
+      "name": "StringWriter character line source: observer NewLine/disposal changes match the native sequencing boundary",
+      "sourceFile": "tests/a09-string-writer-char-line.test.js",
+      "declarationLine": 79,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 145,
+      "name": "StringWriter character line source: two chunks survive GC and snapshot restoration",
+      "sourceFile": "tests/a09-string-writer-char-line.test.js",
+      "declarationLine": 107,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 146,
+      "name": "StringWriter character line source: receiver/disposal precedence and existing character range guards remain",
+      "sourceFile": "tests/a09-string-writer-char-line.test.js",
+      "declarationLine": 131,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 147,
+      "name": "StringWriter character line source: host-limit failures distinguish character and newline progress",
+      "sourceFile": "tests/a09-string-writer-char-line.test.js",
+      "declarationLine": 148,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 148,
+      "name": "StringWriter character line source: managed OOM before/between appends preserves completed text",
+      "sourceFile": "tests/a09-string-writer-char-line.test.js",
+      "declarationLine": 163,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 149,
+      "name": "StringWriter character line source: throwing value/newline observers release roots without rollback claims",
+      "sourceFile": "tests/a09-string-writer-char-line.test.js",
+      "declarationLine": 185,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 150,
+      "name": "StringWriter character line source: released Write(char) keeps its single disposal check",
+      "sourceFile": "tests/a09-string-writer-char-line.test.js",
+      "declarationLine": 205,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 151,
+      "name": "StringWriter character line cil: observer NewLine/disposal changes match the native sequencing boundary",
+      "sourceFile": "tests/a09-string-writer-char-line.test.js",
+      "declarationLine": 79,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 152,
+      "name": "StringWriter character line cil: two chunks survive GC and snapshot restoration",
+      "sourceFile": "tests/a09-string-writer-char-line.test.js",
+      "declarationLine": 107,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 153,
+      "name": "StringWriter character line cil: receiver/disposal precedence and existing character range guards remain",
+      "sourceFile": "tests/a09-string-writer-char-line.test.js",
+      "declarationLine": 131,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 154,
+      "name": "StringWriter character line cil: host-limit failures distinguish character and newline progress",
+      "sourceFile": "tests/a09-string-writer-char-line.test.js",
+      "declarationLine": 148,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 155,
+      "name": "StringWriter character line cil: managed OOM before/between appends preserves completed text",
+      "sourceFile": "tests/a09-string-writer-char-line.test.js",
+      "declarationLine": 163,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 156,
+      "name": "StringWriter character line cil: throwing value/newline observers release roots without rollback claims",
+      "sourceFile": "tests/a09-string-writer-char-line.test.js",
+      "declarationLine": 185,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 157,
+      "name": "StringWriter character line cil: released Write(char) keeps its single disposal check",
+      "sourceFile": "tests/a09-string-writer-char-line.test.js",
+      "declarationLine": 205,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 158,
+      "name": "StringWriter character line bound/source: compiled literals and base references preserve UTF-16",
+      "sourceFile": "tests/a09-string-writer-char-line.test.js",
+      "declarationLine": 227,
+      "observedTemplateValues": {
+        "pipeline": "bound",
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 159,
+      "name": "StringWriter character line bound/cil: compiled literals and base references preserve UTF-16",
+      "sourceFile": "tests/a09-string-writer-char-line.test.js",
+      "declarationLine": 227,
+      "observedTemplateValues": {
+        "pipeline": "bound",
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 160,
+      "name": "StringWriter character line legacy/source: compiled literals and base references preserve UTF-16",
+      "sourceFile": "tests/a09-string-writer-char-line.test.js",
+      "declarationLine": 227,
+      "observedTemplateValues": {
+        "pipeline": "legacy",
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 161,
+      "name": "StringWriter character line legacy/cil: compiled literals and base references preserve UTF-16",
+      "sourceFile": "tests/a09-string-writer-char-line.test.js",
+      "declarationLine": 227,
+      "observedTemplateValues": {
+        "pipeline": "legacy",
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 162,
+      "name": "StringWriter character line appends one ID after buffers and pins the unchanged native fixture",
+      "sourceFile": "tests/a09-string-writer-char-line.test.js",
+      "declarationLine": 249,
+      "observedTemplateValues": {}
+    },
+    {
+      "tapNumber": 163,
+      "name": "StringWriter buffer line source: native concrete/base calls preserve text, input and faults",
+      "sourceFile": "tests/a09-string-writer-line-buffer.test.js",
+      "declarationLine": 18,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 164,
+      "name": "StringWriter buffer line source: native value/newline sequencing survives observer GC",
+      "sourceFile": "tests/a09-string-writer-line-buffer.test.js",
+      "declarationLine": 33,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 165,
+      "name": "StringWriter buffer line source: bulk value and newline use two managed chunks without retaining input",
+      "sourceFile": "tests/a09-string-writer-line-buffer.test.js",
+      "declarationLine": 66,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 166,
+      "name": "StringWriter buffer line source: snapshots preserve writer state and null/empty disposal rules",
+      "sourceFile": "tests/a09-string-writer-line-buffer.test.js",
+      "declarationLine": 94,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 167,
+      "name": "StringWriter buffer line source: the string overload rechecks disposal before its newline",
+      "sourceFile": "tests/a09-string-writer-line-buffer.test.js",
+      "declarationLine": 118,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 168,
+      "name": "StringWriter buffer line source: host text limit preserves a completed value before newline failure",
+      "sourceFile": "tests/a09-string-writer-line-buffer.test.js",
+      "declarationLine": 138,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 169,
+      "name": "StringWriter buffer line source: managed OOM between appends retains the completed value",
+      "sourceFile": "tests/a09-string-writer-line-buffer.test.js",
+      "declarationLine": 154,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 170,
+      "name": "StringWriter buffer line source: throwing newline observer releases roots and preserves completed value",
+      "sourceFile": "tests/a09-string-writer-line-buffer.test.js",
+      "declarationLine": 175,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 171,
+      "name": "StringWriter buffer line cil: native concrete/base calls preserve text, input and faults",
+      "sourceFile": "tests/a09-string-writer-line-buffer.test.js",
+      "declarationLine": 18,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 172,
+      "name": "StringWriter buffer line cil: native value/newline sequencing survives observer GC",
+      "sourceFile": "tests/a09-string-writer-line-buffer.test.js",
+      "declarationLine": 33,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 173,
+      "name": "StringWriter buffer line cil: bulk value and newline use two managed chunks without retaining input",
+      "sourceFile": "tests/a09-string-writer-line-buffer.test.js",
+      "declarationLine": 66,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 174,
+      "name": "StringWriter buffer line cil: snapshots preserve writer state and null/empty disposal rules",
+      "sourceFile": "tests/a09-string-writer-line-buffer.test.js",
+      "declarationLine": 94,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 175,
+      "name": "StringWriter buffer line cil: the string overload rechecks disposal before its newline",
+      "sourceFile": "tests/a09-string-writer-line-buffer.test.js",
+      "declarationLine": 118,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 176,
+      "name": "StringWriter buffer line cil: host text limit preserves a completed value before newline failure",
+      "sourceFile": "tests/a09-string-writer-line-buffer.test.js",
+      "declarationLine": 138,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 177,
+      "name": "StringWriter buffer line cil: managed OOM between appends retains the completed value",
+      "sourceFile": "tests/a09-string-writer-line-buffer.test.js",
+      "declarationLine": 154,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 178,
+      "name": "StringWriter buffer line cil: throwing newline observer releases roots and preserves completed value",
+      "sourceFile": "tests/a09-string-writer-line-buffer.test.js",
+      "declarationLine": 175,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 179,
+      "name": "StringWriter buffer line bound/source: compiled whole/slice calls retain real base references",
+      "sourceFile": "tests/a09-string-writer-line-buffer.test.js",
+      "declarationLine": 196,
+      "observedTemplateValues": {
+        "pipeline": "bound",
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 180,
+      "name": "StringWriter buffer line bound/cil: compiled whole/slice calls retain real base references",
+      "sourceFile": "tests/a09-string-writer-line-buffer.test.js",
+      "declarationLine": 196,
+      "observedTemplateValues": {
+        "pipeline": "bound",
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 181,
+      "name": "StringWriter buffer line legacy/source: compiled whole/slice calls retain real base references",
+      "sourceFile": "tests/a09-string-writer-line-buffer.test.js",
+      "declarationLine": 196,
+      "observedTemplateValues": {
+        "pipeline": "legacy",
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 182,
+      "name": "StringWriter buffer line legacy/cil: compiled whole/slice calls retain real base references",
+      "sourceFile": "tests/a09-string-writer-line-buffer.test.js",
+      "declarationLine": 196,
+      "observedTemplateValues": {
+        "pipeline": "legacy",
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 183,
+      "name": "StringWriter buffer line contracts append without changing released slots or the pinned native fixture",
+      "sourceFile": "tests/a09-string-writer-line-buffer.test.js",
+      "declarationLine": 219,
+      "observedTemplateValues": {}
+    },
+    {
+      "tapNumber": 184,
+      "name": "StringWriter Object.ToString: pinned source and existing contract identity",
+      "sourceFile": "tests/a09-string-writer-object.test.js",
+      "declarationLine": 55,
+      "observedTemplateValues": {}
+    },
+    {
+      "tapNumber": 185,
+      "name": "StringWriter Object.ToString source: actual object locals retain current and disposed builder text",
+      "sourceFile": "tests/a09-string-writer-object.test.js",
+      "declarationLine": 67,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 186,
+      "name": "StringWriter Object.ToString cil: actual object locals retain current and disposed builder text",
+      "sourceFile": "tests/a09-string-writer-object.test.js",
+      "declarationLine": 67,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 187,
+      "name": "StringWriter Object.ToString roundtrip: actual object locals retain current and disposed builder text",
+      "sourceFile": "tests/a09-string-writer-object.test.js",
+      "declarationLine": 67,
+      "observedTemplateValues": {
+        "engine": "roundtrip"
+      }
+    },
+    {
+      "tapNumber": 188,
+      "name": "StringWriter Object.ToString independent CIL: call empty",
+      "sourceFile": "tests/a09-string-writer-object.test.js",
+      "declarationLine": 83,
+      "observedTemplateValues": {
+        "row.kind": "call",
+        "row.name": "empty"
+      }
+    },
+    {
+      "tapNumber": 189,
+      "name": "StringWriter Object.ToString independent CIL: callvirt empty",
+      "sourceFile": "tests/a09-string-writer-object.test.js",
+      "declarationLine": 83,
+      "observedTemplateValues": {
+        "row.kind": "callvirt",
+        "row.name": "empty"
+      }
+    },
+    {
+      "tapNumber": 190,
+      "name": "StringWriter Object.ToString independent CIL: call written",
+      "sourceFile": "tests/a09-string-writer-object.test.js",
+      "declarationLine": 83,
+      "observedTemplateValues": {
+        "row.kind": "call",
+        "row.name": "written"
+      }
+    },
+    {
+      "tapNumber": 191,
+      "name": "StringWriter Object.ToString independent CIL: callvirt written",
+      "sourceFile": "tests/a09-string-writer-object.test.js",
+      "declarationLine": 83,
+      "observedTemplateValues": {
+        "row.kind": "callvirt",
+        "row.name": "written"
+      }
+    },
+    {
+      "tapNumber": 192,
+      "name": "StringWriter Object.ToString independent CIL: call disposed",
+      "sourceFile": "tests/a09-string-writer-object.test.js",
+      "declarationLine": 83,
+      "observedTemplateValues": {
+        "row.kind": "call",
+        "row.name": "disposed"
+      }
+    },
+    {
+      "tapNumber": 193,
+      "name": "StringWriter Object.ToString independent CIL: callvirt disposed",
+      "sourceFile": "tests/a09-string-writer-object.test.js",
+      "declarationLine": 83,
+      "observedTemplateValues": {
+        "row.kind": "callvirt",
+        "row.name": "disposed"
+      }
+    },
+    {
+      "tapNumber": 194,
+      "name": "StringWriter Object.ToString independent CIL: call mutated-after-disposal",
+      "sourceFile": "tests/a09-string-writer-object.test.js",
+      "declarationLine": 83,
+      "observedTemplateValues": {
+        "row.kind": "call",
+        "row.name": "mutated-after-disposal"
+      }
+    },
+    {
+      "tapNumber": 195,
+      "name": "StringWriter Object.ToString independent CIL: callvirt mutated-after-disposal",
+      "sourceFile": "tests/a09-string-writer-object.test.js",
+      "declarationLine": 83,
+      "observedTemplateValues": {
+        "row.kind": "callvirt",
+        "row.name": "mutated-after-disposal"
+      }
+    },
+    {
+      "tapNumber": 196,
+      "name": "StringWriter Object.ToString independent CIL: call null",
+      "sourceFile": "tests/a09-string-writer-object.test.js",
+      "declarationLine": 83,
+      "observedTemplateValues": {
+        "row.kind": "call",
+        "row.name": "null"
+      }
+    },
+    {
+      "tapNumber": 197,
+      "name": "StringWriter Object.ToString independent CIL: callvirt null",
+      "sourceFile": "tests/a09-string-writer-object.test.js",
+      "declarationLine": 83,
+      "observedTemplateValues": {
+        "row.kind": "callvirt",
+        "row.name": "null"
+      }
+    },
+    {
+      "tapNumber": 198,
+      "name": "StringWriter Object.ToString source: observer GC, disposal faults and snapshot restoration retain the builder",
+      "sourceFile": "tests/a09-string-writer-object.test.js",
+      "declarationLine": 95,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 199,
+      "name": "StringWriter Object.ToString source: allocation fault leaves text reachable and releases roots",
+      "sourceFile": "tests/a09-string-writer-object.test.js",
+      "declarationLine": 120,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 200,
+      "name": "StringWriter Object.ToString cil: observer GC, disposal faults and snapshot restoration retain the builder",
+      "sourceFile": "tests/a09-string-writer-object.test.js",
+      "declarationLine": 95,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 201,
+      "name": "StringWriter Object.ToString cil: allocation fault leaves text reachable and releases roots",
+      "sourceFile": "tests/a09-string-writer-object.test.js",
+      "declarationLine": 120,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 202,
+      "name": "StringWriter scalars source: native subclass transitions match host-observer sequencing",
+      "sourceFile": "tests/a09-string-writer-scalars-state.test.js",
+      "declarationLine": 19,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 203,
+      "name": "StringWriter scalars source: receiver validation and disposal precede writing for every scalar type",
+      "sourceFile": "tests/a09-string-writer-scalars-state.test.js",
+      "declarationLine": 53,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 204,
+      "name": "StringWriter scalars source: two rooted chunks preserve storage, exact carriers and snapshot state",
+      "sourceFile": "tests/a09-string-writer-scalars-state.test.js",
+      "declarationLine": 80,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 205,
+      "name": "StringWriter scalars source: value/newline boundary observes NewLine, disposal and callback faults",
+      "sourceFile": "tests/a09-string-writer-scalars-state.test.js",
+      "declarationLine": 112,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 206,
+      "name": "StringWriter scalars source: Write has one disposal gate and newline reset preserves the LF profile",
+      "sourceFile": "tests/a09-string-writer-scalars-state.test.js",
+      "declarationLine": 146,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 207,
+      "name": "StringWriter scalars source: text-limit failure preserves precisely the completed value",
+      "sourceFile": "tests/a09-string-writer-scalars-state.test.js",
+      "declarationLine": 169,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 208,
+      "name": "StringWriter scalars source: managed OOM before or after value append retains committed text",
+      "sourceFile": "tests/a09-string-writer-scalars-state.test.js",
+      "declarationLine": 187,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 209,
+      "name": "StringWriter scalars source: throwing chunk observers preserve prior committed chunks and release roots",
+      "sourceFile": "tests/a09-string-writer-scalars-state.test.js",
+      "declarationLine": 211,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 210,
+      "name": "StringWriter scalars cil: native subclass transitions match host-observer sequencing",
+      "sourceFile": "tests/a09-string-writer-scalars-state.test.js",
+      "declarationLine": 19,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 211,
+      "name": "StringWriter scalars cil: receiver validation and disposal precede writing for every scalar type",
+      "sourceFile": "tests/a09-string-writer-scalars-state.test.js",
+      "declarationLine": 53,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 212,
+      "name": "StringWriter scalars cil: two rooted chunks preserve storage, exact carriers and snapshot state",
+      "sourceFile": "tests/a09-string-writer-scalars-state.test.js",
+      "declarationLine": 80,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 213,
+      "name": "StringWriter scalars cil: value/newline boundary observes NewLine, disposal and callback faults",
+      "sourceFile": "tests/a09-string-writer-scalars-state.test.js",
+      "declarationLine": 112,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 214,
+      "name": "StringWriter scalars cil: Write has one disposal gate and newline reset preserves the LF profile",
+      "sourceFile": "tests/a09-string-writer-scalars-state.test.js",
+      "declarationLine": 146,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 215,
+      "name": "StringWriter scalars cil: text-limit failure preserves precisely the completed value",
+      "sourceFile": "tests/a09-string-writer-scalars-state.test.js",
+      "declarationLine": 169,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 216,
+      "name": "StringWriter scalars cil: managed OOM before or after value append retains committed text",
+      "sourceFile": "tests/a09-string-writer-scalars-state.test.js",
+      "declarationLine": 187,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 217,
+      "name": "StringWriter scalars cil: throwing chunk observers preserve prior committed chunks and release roots",
+      "sourceFile": "tests/a09-string-writer-scalars-state.test.js",
+      "declarationLine": 211,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 218,
+      "name": "StringWriter scalars independent CIL: null and disposed receivers fault for every scalar signature",
+      "sourceFile": "tests/a09-string-writer-scalars-state.test.js",
+      "declarationLine": 234,
+      "observedTemplateValues": {}
+    },
+    {
+      "tapNumber": 219,
+      "name": "StringWriter scalars append sixteen exact IDs after all released IO contracts",
+      "sourceFile": "tests/a09-string-writer-scalars.test.js",
+      "declarationLine": 20,
+      "observedTemplateValues": {}
+    },
+    {
+      "tapNumber": 220,
+      "name": "StringWriter scalar expected text retains existing core .NET capture provenance",
+      "sourceFile": "tests/a09-string-writer-scalars.test.js",
+      "declarationLine": 36,
+      "observedTemplateValues": {}
+    },
+    {
+      "tapNumber": 221,
+      "name": "StringWriter scalars independent native capture pins exact input, UTF-16 output and source provenance",
+      "sourceFile": "tests/a09-string-writer-scalars.test.js",
+      "declarationLine": 52,
+      "observedTemplateValues": {}
+    },
+    {
+      "tapNumber": 222,
+      "name": "StringWriter scalars source platform: captured writer values and faults",
+      "sourceFile": "tests/a09-string-writer-scalars.test.js",
+      "declarationLine": 67,
+      "observedTemplateValues": {
+        "engine === 'source' ? 'source platform' : 'independent CIL'": "source platform"
+      }
+    },
+    {
+      "tapNumber": 223,
+      "name": "StringWriter scalars independent CIL: captured writer values and faults",
+      "sourceFile": "tests/a09-string-writer-scalars.test.js",
+      "declarationLine": 67,
+      "observedTemplateValues": {
+        "engine === 'source' ? 'source platform' : 'independent CIL'": "independent CIL"
+      }
+    },
+    {
+      "tapNumber": 224,
+      "name": "StringWriter scalars source/Write: typed dispatch preserves reused native scalar text",
+      "sourceFile": "tests/a09-string-writer-scalars.test.js",
+      "declarationLine": 106,
+      "observedTemplateValues": {
+        "engine": "source",
+        "method": "Write"
+      }
+    },
+    {
+      "tapNumber": 225,
+      "name": "StringWriter scalars source/WriteLine: typed dispatch preserves reused native scalar text",
+      "sourceFile": "tests/a09-string-writer-scalars.test.js",
+      "declarationLine": 106,
+      "observedTemplateValues": {
+        "engine": "source",
+        "method": "WriteLine"
+      }
+    },
+    {
+      "tapNumber": 226,
+      "name": "StringWriter scalars cil/Write: typed dispatch preserves reused native scalar text",
+      "sourceFile": "tests/a09-string-writer-scalars.test.js",
+      "declarationLine": 106,
+      "observedTemplateValues": {
+        "engine": "cil",
+        "method": "Write"
+      }
+    },
+    {
+      "tapNumber": 227,
+      "name": "StringWriter scalars cil/WriteLine: typed dispatch preserves reused native scalar text",
+      "sourceFile": "tests/a09-string-writer-scalars.test.js",
+      "declarationLine": 106,
+      "observedTemplateValues": {
+        "engine": "cil",
+        "method": "WriteLine"
+      }
+    },
+    {
+      "tapNumber": 228,
+      "name": "StringWriter scalars independent CIL concrete/Write: exact stack widths and scalar text",
+      "sourceFile": "tests/a09-string-writer-scalars.test.js",
+      "declarationLine": 125,
+      "observedTemplateValues": {
+        "baseView ? 'base' : 'concrete'": "concrete",
+        "method": "Write"
+      }
+    },
+    {
+      "tapNumber": 229,
+      "name": "StringWriter scalars independent CIL concrete/WriteLine: exact stack widths and scalar text",
+      "sourceFile": "tests/a09-string-writer-scalars.test.js",
+      "declarationLine": 125,
+      "observedTemplateValues": {
+        "baseView ? 'base' : 'concrete'": "concrete",
+        "method": "WriteLine"
+      }
+    },
+    {
+      "tapNumber": 230,
+      "name": "StringWriter scalars independent CIL base/Write: exact stack widths and scalar text",
+      "sourceFile": "tests/a09-string-writer-scalars.test.js",
+      "declarationLine": 125,
+      "observedTemplateValues": {
+        "baseView ? 'base' : 'concrete'": "base",
+        "method": "Write"
+      }
+    },
+    {
+      "tapNumber": 231,
+      "name": "StringWriter scalars independent CIL base/WriteLine: exact stack widths and scalar text",
+      "sourceFile": "tests/a09-string-writer-scalars.test.js",
+      "declarationLine": 125,
+      "observedTemplateValues": {
+        "baseView ? 'base' : 'concrete'": "base",
+        "method": "WriteLine"
+      }
+    },
+    {
+      "tapNumber": 232,
+      "name": "StringWriter scalars bound/source: typed locals select all sixteen concrete/base overloads",
+      "sourceFile": "tests/a09-string-writer-scalars.test.js",
+      "declarationLine": 140,
+      "observedTemplateValues": {
+        "pipeline": "bound",
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 233,
+      "name": "StringWriter scalars bound/source: narrow numeric widening leaves character and string overloads intact",
+      "sourceFile": "tests/a09-string-writer-scalars.test.js",
+      "declarationLine": 163,
+      "observedTemplateValues": {
+        "pipeline": "bound",
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 234,
+      "name": "StringWriter scalars bound/source: compiled null/disposed calls keep managed faults",
+      "sourceFile": "tests/a09-string-writer-scalars.test.js",
+      "declarationLine": 179,
+      "observedTemplateValues": {
+        "pipeline": "bound",
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 235,
+      "name": "StringWriter scalars bound/cil: typed locals select all sixteen concrete/base overloads",
+      "sourceFile": "tests/a09-string-writer-scalars.test.js",
+      "declarationLine": 140,
+      "observedTemplateValues": {
+        "pipeline": "bound",
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 236,
+      "name": "StringWriter scalars bound/cil: narrow numeric widening leaves character and string overloads intact",
+      "sourceFile": "tests/a09-string-writer-scalars.test.js",
+      "declarationLine": 163,
+      "observedTemplateValues": {
+        "pipeline": "bound",
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 237,
+      "name": "StringWriter scalars bound/cil: compiled null/disposed calls keep managed faults",
+      "sourceFile": "tests/a09-string-writer-scalars.test.js",
+      "declarationLine": 179,
+      "observedTemplateValues": {
+        "pipeline": "bound",
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 238,
+      "name": "StringWriter scalars bound: object, composite formatting and provider constructors remain unsupported",
+      "sourceFile": "tests/a09-string-writer-scalars.test.js",
+      "declarationLine": 200,
+      "observedTemplateValues": {
+        "pipeline": "bound"
+      }
+    },
+    {
+      "tapNumber": 239,
+      "name": "StringWriter scalars legacy/source: typed locals select all sixteen concrete/base overloads",
+      "sourceFile": "tests/a09-string-writer-scalars.test.js",
+      "declarationLine": 140,
+      "observedTemplateValues": {
+        "pipeline": "legacy",
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 240,
+      "name": "StringWriter scalars legacy/source: narrow numeric widening leaves character and string overloads intact",
+      "sourceFile": "tests/a09-string-writer-scalars.test.js",
+      "declarationLine": 163,
+      "observedTemplateValues": {
+        "pipeline": "legacy",
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 241,
+      "name": "StringWriter scalars legacy/source: compiled null/disposed calls keep managed faults",
+      "sourceFile": "tests/a09-string-writer-scalars.test.js",
+      "declarationLine": 179,
+      "observedTemplateValues": {
+        "pipeline": "legacy",
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 242,
+      "name": "StringWriter scalars legacy/cil: typed locals select all sixteen concrete/base overloads",
+      "sourceFile": "tests/a09-string-writer-scalars.test.js",
+      "declarationLine": 140,
+      "observedTemplateValues": {
+        "pipeline": "legacy",
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 243,
+      "name": "StringWriter scalars legacy/cil: narrow numeric widening leaves character and string overloads intact",
+      "sourceFile": "tests/a09-string-writer-scalars.test.js",
+      "declarationLine": 163,
+      "observedTemplateValues": {
+        "pipeline": "legacy",
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 244,
+      "name": "StringWriter scalars legacy/cil: compiled null/disposed calls keep managed faults",
+      "sourceFile": "tests/a09-string-writer-scalars.test.js",
+      "declarationLine": 179,
+      "observedTemplateValues": {
+        "pipeline": "legacy",
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 245,
+      "name": "StringWriter scalars legacy: object, composite formatting and provider constructors remain unsupported",
+      "sourceFile": "tests/a09-string-writer-scalars.test.js",
+      "declarationLine": 200,
+      "observedTemplateValues": {
+        "pipeline": "legacy"
+      }
+    },
+    {
+      "tapNumber": 246,
+      "name": "StringWriter string line source: captured ordinary null/empty/disposal precedence is preserved",
+      "sourceFile": "tests/a09-string-writer-string-line.test.js",
+      "declarationLine": 14,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 247,
+      "name": "StringWriter string line source: captured value/newline callbacks preserve progress and roots",
+      "sourceFile": "tests/a09-string-writer-string-line.test.js",
+      "declarationLine": 36,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 248,
+      "name": "StringWriter string line source: disposal after text also prevents an empty newline",
+      "sourceFile": "tests/a09-string-writer-string-line.test.js",
+      "declarationLine": 78,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 249,
+      "name": "StringWriter string line cil: captured ordinary null/empty/disposal precedence is preserved",
+      "sourceFile": "tests/a09-string-writer-string-line.test.js",
+      "declarationLine": 14,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 250,
+      "name": "StringWriter string line cil: captured value/newline callbacks preserve progress and roots",
+      "sourceFile": "tests/a09-string-writer-string-line.test.js",
+      "declarationLine": 36,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 251,
+      "name": "StringWriter string line cil: disposal after text also prevents an empty newline",
+      "sourceFile": "tests/a09-string-writer-string-line.test.js",
+      "declarationLine": 78,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 252,
+      "name": "StringWriter string line CIL: independent concrete/base string calls match every native ordinary row",
+      "sourceFile": "tests/a09-string-writer-string-line.test.js",
+      "declarationLine": 102,
+      "observedTemplateValues": {}
+    },
+    {
+      "tapNumber": 253,
+      "name": "StringWriter string line bound/source: compiled string overloads preserve captured null/disposal behavior",
+      "sourceFile": "tests/a09-string-writer-string-line.test.js",
+      "declarationLine": 120,
+      "observedTemplateValues": {
+        "pipeline": "bound",
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 254,
+      "name": "StringWriter string line bound/cil: compiled string overloads preserve captured null/disposal behavior",
+      "sourceFile": "tests/a09-string-writer-string-line.test.js",
+      "declarationLine": 120,
+      "observedTemplateValues": {
+        "pipeline": "bound",
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 255,
+      "name": "StringWriter string line legacy/source: compiled string overloads preserve captured null/disposal behavior",
+      "sourceFile": "tests/a09-string-writer-string-line.test.js",
+      "declarationLine": 120,
+      "observedTemplateValues": {
+        "pipeline": "legacy",
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 256,
+      "name": "StringWriter string line legacy/cil: compiled string overloads preserve captured null/disposal behavior",
+      "sourceFile": "tests/a09-string-writer-string-line.test.js",
+      "declarationLine": 120,
+      "observedTemplateValues": {
+        "pipeline": "legacy",
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 257,
+      "name": "StringWriter string line correction preserves contracts and pins separate native capture provenance",
+      "sourceFile": "tests/a09-string-writer-string-line.test.js",
+      "declarationLine": 143,
+      "observedTemplateValues": {}
+    },
+    {
+      "tapNumber": 258,
+      "name": "SF-A09-T03.2 bound source: source character writes use the registered overload",
+      "sourceFile": "tests/a09-string-writer.test.js",
+      "declarationLine": 32,
+      "observedTemplateValues": {
+        "pipeline": "bound",
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 259,
+      "name": "SF-A09-T03.2 bound cil: source character writes use the registered overload",
+      "sourceFile": "tests/a09-string-writer.test.js",
+      "declarationLine": 32,
+      "observedTemplateValues": {
+        "pipeline": "bound",
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 260,
+      "name": "SF-A09-T03.2 legacy source: source character writes use the registered overload",
+      "sourceFile": "tests/a09-string-writer.test.js",
+      "declarationLine": 32,
+      "observedTemplateValues": {
+        "pipeline": "legacy",
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 261,
+      "name": "SF-A09-T03.2 legacy cil: source character writes use the registered overload",
+      "sourceFile": "tests/a09-string-writer.test.js",
+      "declarationLine": 32,
+      "observedTemplateValues": {
+        "pipeline": "legacy",
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 262,
+      "name": "SF-A09-T03.2 source: unchanged StringWriter source matches .NET 10.0.5",
+      "sourceFile": "tests/a09-string-writer.test.js",
+      "declarationLine": 46,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 263,
+      "name": "SF-A09-T03.2 source: top-level using calls inherited Dispose through the supported lowering",
+      "sourceFile": "tests/a09-string-writer.test.js",
+      "declarationLine": 57,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 264,
+      "name": "SF-A09-T03.2 source: native disposal faults precede null and empty writes",
+      "sourceFile": "tests/a09-string-writer.test.js",
+      "declarationLine": 73,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 265,
+      "name": "SF-A09-T03.2 source: managed builder identity survives disposal, GC and snapshot restore",
+      "sourceFile": "tests/a09-string-writer.test.js",
+      "declarationLine": 94,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 266,
+      "name": "SF-A09-T03.2 source: UTF-16 units and newline storage survive write-observer collection",
+      "sourceFile": "tests/a09-string-writer.test.js",
+      "declarationLine": 115,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 267,
+      "name": "SF-A09-T03.2 source: writes retain StringBuilder bounds and WriteLine partial progress",
+      "sourceFile": "tests/a09-string-writer.test.js",
+      "declarationLine": 135,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 268,
+      "name": "SF-A09-T03.2 source: unsupported receiver and invalid primitive inputs fail explicitly",
+      "sourceFile": "tests/a09-string-writer.test.js",
+      "declarationLine": 150,
+      "observedTemplateValues": {
+        "engine": "source"
+      }
+    },
+    {
+      "tapNumber": 269,
+      "name": "SF-A09-T03.2 cil: unchanged StringWriter source matches .NET 10.0.5",
+      "sourceFile": "tests/a09-string-writer.test.js",
+      "declarationLine": 46,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 270,
+      "name": "SF-A09-T03.2 cil: top-level using calls inherited Dispose through the supported lowering",
+      "sourceFile": "tests/a09-string-writer.test.js",
+      "declarationLine": 57,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 271,
+      "name": "SF-A09-T03.2 cil: native disposal faults precede null and empty writes",
+      "sourceFile": "tests/a09-string-writer.test.js",
+      "declarationLine": 73,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 272,
+      "name": "SF-A09-T03.2 cil: managed builder identity survives disposal, GC and snapshot restore",
+      "sourceFile": "tests/a09-string-writer.test.js",
+      "declarationLine": 94,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 273,
+      "name": "SF-A09-T03.2 cil: UTF-16 units and newline storage survive write-observer collection",
+      "sourceFile": "tests/a09-string-writer.test.js",
+      "declarationLine": 115,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 274,
+      "name": "SF-A09-T03.2 cil: writes retain StringBuilder bounds and WriteLine partial progress",
+      "sourceFile": "tests/a09-string-writer.test.js",
+      "declarationLine": 135,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 275,
+      "name": "SF-A09-T03.2 cil: unsupported receiver and invalid primitive inputs fail explicitly",
+      "sourceFile": "tests/a09-string-writer.test.js",
+      "declarationLine": 150,
+      "observedTemplateValues": {
+        "engine": "cil"
+      }
+    },
+    {
+      "tapNumber": 276,
+      "name": "SF-A09-T03.2 independent CIL TextWriter dispatch matches native UTF-16 and disposal observations",
+      "sourceFile": "tests/a09-string-writer.test.js",
+      "declarationLine": 163,
+      "observedTemplateValues": {}
+    },
+    {
+      "tapNumber": 277,
+      "name": "SF-A09-T03.2 writer contracts append after released reader and JSON IDs",
+      "sourceFile": "tests/a09-string-writer.test.js",
+      "declarationLine": 181,
+      "observedTemplateValues": {}
+    },
+    {
+      "tapNumber": 278,
+      "name": "SF-A09-T03.2 deferred writer surfaces retain compiler errors",
+      "sourceFile": "tests/a09-string-writer.test.js",
+      "declarationLine": 197,
+      "observedTemplateValues": {}
+    }
+  ]
+}

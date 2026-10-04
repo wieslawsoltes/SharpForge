@@ -1,0 +1,11 @@
+{
+  "number": 4515,
+  "url": "https://github.com/wieslawsoltes/SharpForge/pull/4515",
+  "title": "SF-A09-T03.1: add StringWriter character buffer writes",
+  "state": "open",
+  "draft": true,
+  "base": "codex/a09-string-writer-object",
+  "base_sha": "376c1955474d04a5386e22352a8f27a18a46f2c5",
+  "head": "codex/a09-string-writer-buffer",
+  "head_sha": "955da4bb7197d027c5471034ed01e6e4dcd60a31"
+}

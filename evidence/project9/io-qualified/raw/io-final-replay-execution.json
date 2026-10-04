@@ -1,0 +1,121 @@
+{
+  "kind": "actual-final-revision-test-execution",
+  "argv": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "--test",
+    "--test-reporter=tap",
+    "--test-concurrency=1",
+    "tests/a05-synchronous-host-callbacks.test.js",
+    "tests/a07-framework-object-string.test.js",
+    "tests/a07-stopwatch-clock-boundary.test.js",
+    "tests/a07-stopwatch-object-string.test.js",
+    "tests/a09-json-escaping.test.js",
+    "tests/a09-json-int64.test.js",
+    "tests/a09-json-integer-keys.test.js",
+    "tests/a09-json-number-formatting.test.js",
+    "tests/a09-string-reader-buffer.test.js",
+    "tests/a09-string-reader.test.js",
+    "tests/a09-string-writer-buffer.test.js",
+    "tests/a09-string-writer-char-line.test.js",
+    "tests/a09-string-writer-line-buffer.test.js",
+    "tests/a09-string-writer-object.test.js",
+    "tests/a09-string-writer-scalars-state.test.js",
+    "tests/a09-string-writer-scalars.test.js",
+    "tests/a09-string-writer-string-line.test.js",
+    "tests/a09-string-writer.test.js"
+  ],
+  "cwd": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars",
+  "revision": "fe8288772be85395909d5de582c444db3d605ca3",
+  "tree": "541c835f876aefd506ec55ee30511929f131accd",
+  "node": "v24.19.0",
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+  "startedAt": "2026-10-04T16:44:23.162298+00:00",
+  "testFiles": [
+    {
+      "path": "tests/a05-synchronous-host-callbacks.test.js",
+      "sha256": "d67cfceab874aa3f450b288d7d75728b81dd91c6ef77ceec6e531b57dc7e6838"
+    },
+    {
+      "path": "tests/a07-framework-object-string.test.js",
+      "sha256": "063290f47f140f695fcc0ec84adf145ab918b50e0c28b8684289a982509f628b"
+    },
+    {
+      "path": "tests/a07-stopwatch-clock-boundary.test.js",
+      "sha256": "1029eb6a68531e21be6a57be3dcdd7e0d0c26f9a78ad44b5c43db7557210752c"
+    },
+    {
+      "path": "tests/a07-stopwatch-object-string.test.js",
+      "sha256": "f7dfc6dd14f6d9043c3821ef9c0db482e08e2b2dbb14432dea1a4cd6a99ba9f0"
+    },
+    {
+      "path": "tests/a09-json-escaping.test.js",
+      "sha256": "460db49e6260ae002aa046ede0ff88b37990508c5710a36a8a01a220cc3db114"
+    },
+    {
+      "path": "tests/a09-json-int64.test.js",
+      "sha256": "754da88c3e9ff9ba62037c839885d318107dda70fd97174d181aa9f23ab685ff"
+    },
+    {
+      "path": "tests/a09-json-integer-keys.test.js",
+      "sha256": "b03fb44fe380a222e5ed218b248cc47424c813bc024aca84873eb2f474331086"
+    },
+    {
+      "path": "tests/a09-json-number-formatting.test.js",
+      "sha256": "3751e55adeeda739cfa195cc6cdc8757e6fe9855c69e6b43c10a41814fe1f8d7"
+    },
+    {
+      "path": "tests/a09-string-reader-buffer.test.js",
+      "sha256": "56a3a62bd2543eb1cd92067f68a041597986bf02bd0368f0634dbf6c8b7d5d86"
+    },
+    {
+      "path": "tests/a09-string-reader.test.js",
+      "sha256": "574f040c4f71f69d98f964f42ff4cb3774bf196e61da488c182f8772fb522280"
+    },
+    {
+      "path": "tests/a09-string-writer-buffer.test.js",
+      "sha256": "7d9aea959a3fcf352ad01c37b9ecfdc578a3862ccb39fb112893eb561dd18c5c"
+    },
+    {
+      "path": "tests/a09-string-writer-char-line.test.js",
+      "sha256": "d3ac796ac03b3b740149c58ea1e02e96e88296e0ec1442bf7eda82576c82483c"
+    },
+    {
+      "path": "tests/a09-string-writer-line-buffer.test.js",
+      "sha256": "d93e77027f5425fabd19e45ba0ea75f17b2b8b354aa6fca6740367aca094f187"
+    },
+    {
+      "path": "tests/a09-string-writer-object.test.js",
+      "sha256": "a73415a6ab437aab10910ee92639cae575a750c86c3d89030a6ac03d3e9024eb"
+    },
+    {
+      "path": "tests/a09-string-writer-scalars-state.test.js",
+      "sha256": "a806c0310ef332d024adf02a09dfa37409ff39c0ec638d0e8e81200aaec65886"
+    },
+    {
+      "path": "tests/a09-string-writer-scalars.test.js",
+      "sha256": "f1f8ae640e6d07340d2b657c4db42a62bdd8b153b73b73594e7f78e123d8c5c6"
+    },
+    {
+      "path": "tests/a09-string-writer-string-line.test.js",
+      "sha256": "a5b03a266d40e49125cef5990e78dfdfbc3ffc321acf89850c3b6456b5ce0d1f"
+    },
+    {
+      "path": "tests/a09-string-writer.test.js",
+      "sha256": "90ddb99a10d99132678df9e214fd49032141abb3c2bc743034b5bece74b71c1c"
+    }
+  ],
+  "tap": "io-final-replay-tests.tap",
+  "finishedAt": "2026-10-04T16:44:46.179239+00:00",
+  "exitCode": 0,
+  "tapSha256": "61ced2a96f0a98c1809cf96763dc2c0d3bdd690d5d783751ba9901488cc9679c",
+  "summary": {
+    "tests": 278,
+    "pass": 278,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  }
+}

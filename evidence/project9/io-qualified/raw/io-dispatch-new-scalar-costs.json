@@ -1,0 +1,2598 @@
+{
+  "schemaVersion": 1,
+  "commit": "f8414bfcadbab039280d580a8152ac21f9fe6452",
+  "comparisonBase": "726fbd8303042c7634a057807b51adeaddffa9a8",
+  "runnerSha256": "a2cbf021f0c215a7963aa8ecbe24997bb6445220e8e4a40f0807a0e8a9cbd327",
+  "node": "v24.19.0",
+  "platform": "linux",
+  "arch": "x64",
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "calls": 256,
+  "length": 256,
+  "warmups": 1,
+  "samples": 5,
+  "hostGc": true,
+  "selectedEngines": [
+    "source",
+    "cil"
+  ],
+  "selectedCases": [
+    "scalar-bool-Write",
+    "scalar-bool-WriteLine",
+    "scalar-bool-separate-line",
+    "scalar-int-Write",
+    "scalar-int-WriteLine",
+    "scalar-int-separate-line",
+    "scalar-uint-Write",
+    "scalar-uint-WriteLine",
+    "scalar-uint-separate-line",
+    "scalar-long-Write",
+    "scalar-long-WriteLine",
+    "scalar-long-separate-line",
+    "scalar-ulong-Write",
+    "scalar-ulong-WriteLine",
+    "scalar-ulong-separate-line",
+    "scalar-float-Write",
+    "scalar-float-WriteLine",
+    "scalar-float-separate-line",
+    "scalar-double-Write",
+    "scalar-double-WriteLine",
+    "scalar-double-separate-line",
+    "scalar-decimal-Write",
+    "scalar-decimal-WriteLine",
+    "scalar-decimal-separate-line"
+  ],
+  "workloadOrder": "released-controls-first",
+  "workload": "Source/CIL platform dispatch: unchanged string/character/buffer controls, exact scalar writes and separate newline controls",
+  "notes": "Setup, argument preparation, host GC and final materialization excluded. Managed allocation and slot-write counters included.",
+  "engines": {
+    "source": {
+      "scalar-bool-Write": {
+        "kind": "scalar",
+        "outputUnits": 1024,
+        "platformCalls": 256,
+        "elapsedMs": {
+          "median": 2.2787379999999757,
+          "p95": 3.973838999999998
+        },
+        "managedAllocations": {
+          "median": 263,
+          "p95": 263
+        },
+        "managedAllocatedBytes": {
+          "median": 12496,
+          "p95": 12496
+        },
+        "slotWrites": {
+          "median": 256,
+          "p95": 256
+        },
+        "samples": [
+          {
+            "elapsedMs": 3.973838999999998,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 12496,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 2.2976869999999963,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 12496,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.4742359999997916,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 12496,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 2.2415240000000267,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 12496,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 2.2787379999999757,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 12496,
+            "slotWrites": 256
+          }
+        ]
+      },
+      "scalar-bool-WriteLine": {
+        "kind": "scalar",
+        "outputUnits": 1280,
+        "platformCalls": 256,
+        "elapsedMs": {
+          "median": 2.940461000000141,
+          "p95": 3.6210110000001805
+        },
+        "managedAllocations": {
+          "median": 520,
+          "p95": 520
+        },
+        "managedAllocatedBytes": {
+          "median": 23280,
+          "p95": 23280
+        },
+        "slotWrites": {
+          "median": 512,
+          "p95": 512
+        },
+        "samples": [
+          {
+            "elapsedMs": 3.6210110000001805,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 23280,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 3.145612999999912,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 23280,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.848265000000083,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 23280,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.940461000000141,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 23280,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.8942429999999604,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 23280,
+            "slotWrites": 512
+          }
+        ]
+      },
+      "scalar-bool-separate-line": {
+        "kind": "scalar",
+        "outputUnits": 1280,
+        "platformCalls": 512,
+        "elapsedMs": {
+          "median": 3.240530999999919,
+          "p95": 3.7401659999998174
+        },
+        "managedAllocations": {
+          "median": 520,
+          "p95": 520
+        },
+        "managedAllocatedBytes": {
+          "median": 23280,
+          "p95": 23280
+        },
+        "slotWrites": {
+          "median": 512,
+          "p95": 512
+        },
+        "samples": [
+          {
+            "elapsedMs": 3.0622789999999895,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 23280,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 3.7401659999998174,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 23280,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 3.4877950000000055,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 23280,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 3.240530999999919,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 23280,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.5137549999999464,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 23280,
+            "slotWrites": 512
+          }
+        ]
+      },
+      "scalar-int-Write": {
+        "kind": "scalar",
+        "outputUnits": 2816,
+        "platformCalls": 256,
+        "elapsedMs": {
+          "median": 2.0260370000000876,
+          "p95": 2.3159629999997833
+        },
+        "managedAllocations": {
+          "median": 263,
+          "p95": 263
+        },
+        "managedAllocatedBytes": {
+          "median": 16080,
+          "p95": 16080
+        },
+        "slotWrites": {
+          "median": 256,
+          "p95": 256
+        },
+        "samples": [
+          {
+            "elapsedMs": 2.3159629999997833,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 16080,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 2.0260370000000876,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 16080,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.981471000000056,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 16080,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 2.0195580000001883,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 16080,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 2.2038480000001073,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 16080,
+            "slotWrites": 256
+          }
+        ]
+      },
+      "scalar-int-WriteLine": {
+        "kind": "scalar",
+        "outputUnits": 3072,
+        "platformCalls": 256,
+        "elapsedMs": {
+          "median": 2.3409999999998945,
+          "p95": 3.3572729999996227
+        },
+        "managedAllocations": {
+          "median": 520,
+          "p95": 520
+        },
+        "managedAllocatedBytes": {
+          "median": 26864,
+          "p95": 26864
+        },
+        "slotWrites": {
+          "median": 512,
+          "p95": 512
+        },
+        "samples": [
+          {
+            "elapsedMs": 2.217018000000053,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 26864,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.11864300000002,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 26864,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 3.3572729999996227,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 26864,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.5755049999997937,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 26864,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.3409999999998945,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 26864,
+            "slotWrites": 512
+          }
+        ]
+      },
+      "scalar-int-separate-line": {
+        "kind": "scalar",
+        "outputUnits": 3072,
+        "platformCalls": 512,
+        "elapsedMs": {
+          "median": 3.1845100000000457,
+          "p95": 3.7274170000000595
+        },
+        "managedAllocations": {
+          "median": 520,
+          "p95": 520
+        },
+        "managedAllocatedBytes": {
+          "median": 26864,
+          "p95": 26864
+        },
+        "slotWrites": {
+          "median": 512,
+          "p95": 512
+        },
+        "samples": [
+          {
+            "elapsedMs": 2.7119150000003174,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 26864,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.9980759999998554,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 26864,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 3.7274170000000595,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 26864,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 3.313670000000002,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 26864,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 3.1845100000000457,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 26864,
+            "slotWrites": 512
+          }
+        ]
+      },
+      "scalar-uint-Write": {
+        "kind": "scalar",
+        "outputUnits": 2560,
+        "platformCalls": 256,
+        "elapsedMs": {
+          "median": 1.2544640000000982,
+          "p95": 1.5897460000001047
+        },
+        "managedAllocations": {
+          "median": 263,
+          "p95": 263
+        },
+        "managedAllocatedBytes": {
+          "median": 15568,
+          "p95": 15568
+        },
+        "slotWrites": {
+          "median": 256,
+          "p95": 256
+        },
+        "samples": [
+          {
+            "elapsedMs": 1.5897460000001047,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 15568,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.2544640000000982,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 15568,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.2189909999997326,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 15568,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.2974859999999353,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 15568,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.1677060000001802,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 15568,
+            "slotWrites": 256
+          }
+        ]
+      },
+      "scalar-uint-WriteLine": {
+        "kind": "scalar",
+        "outputUnits": 2816,
+        "platformCalls": 256,
+        "elapsedMs": {
+          "median": 2.4111229999998613,
+          "p95": 2.912579999999707
+        },
+        "managedAllocations": {
+          "median": 520,
+          "p95": 520
+        },
+        "managedAllocatedBytes": {
+          "median": 26352,
+          "p95": 26352
+        },
+        "slotWrites": {
+          "median": 512,
+          "p95": 512
+        },
+        "samples": [
+          {
+            "elapsedMs": 2.3430829999997513,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 26352,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.1909490000002734,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 26352,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.842247000000043,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 26352,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.912579999999707,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 26352,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.4111229999998613,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 26352,
+            "slotWrites": 512
+          }
+        ]
+      },
+      "scalar-uint-separate-line": {
+        "kind": "scalar",
+        "outputUnits": 2816,
+        "platformCalls": 512,
+        "elapsedMs": {
+          "median": 2.6331789999999273,
+          "p95": 2.8611839999998665
+        },
+        "managedAllocations": {
+          "median": 520,
+          "p95": 520
+        },
+        "managedAllocatedBytes": {
+          "median": 26352,
+          "p95": 26352
+        },
+        "slotWrites": {
+          "median": 512,
+          "p95": 512
+        },
+        "samples": [
+          {
+            "elapsedMs": 2.6331789999999273,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 26352,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.8611839999998665,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 26352,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.2349739999999656,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 26352,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.6539899999997942,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 26352,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.580231000000367,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 26352,
+            "slotWrites": 512
+          }
+        ]
+      },
+      "scalar-long-Write": {
+        "kind": "scalar",
+        "outputUnits": 4352,
+        "platformCalls": 256,
+        "elapsedMs": {
+          "median": 1.7731659999999465,
+          "p95": 4.3727349999999205
+        },
+        "managedAllocations": {
+          "median": 263,
+          "p95": 263
+        },
+        "managedAllocatedBytes": {
+          "median": 19152,
+          "p95": 19152
+        },
+        "slotWrites": {
+          "median": 256,
+          "p95": 256
+        },
+        "samples": [
+          {
+            "elapsedMs": 2.2555740000002515,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 19152,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.7547479999998359,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 19152,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.7731659999999465,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 19152,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.2757050000000163,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 19152,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 4.3727349999999205,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 19152,
+            "slotWrites": 256
+          }
+        ]
+      },
+      "scalar-long-WriteLine": {
+        "kind": "scalar",
+        "outputUnits": 4608,
+        "platformCalls": 256,
+        "elapsedMs": {
+          "median": 1.7839410000001408,
+          "p95": 2.2838660000002164
+        },
+        "managedAllocations": {
+          "median": 520,
+          "p95": 520
+        },
+        "managedAllocatedBytes": {
+          "median": 29936,
+          "p95": 29936
+        },
+        "slotWrites": {
+          "median": 512,
+          "p95": 512
+        },
+        "samples": [
+          {
+            "elapsedMs": 2.2838660000002164,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 29936,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.0775730000000294,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 29936,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 1.656594000000041,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 29936,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 1.7839410000001408,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 29936,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 1.7753789999997025,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 29936,
+            "slotWrites": 512
+          }
+        ]
+      },
+      "scalar-long-separate-line": {
+        "kind": "scalar",
+        "outputUnits": 4608,
+        "platformCalls": 512,
+        "elapsedMs": {
+          "median": 2.3506539999998495,
+          "p95": 3.5300170000000435
+        },
+        "managedAllocations": {
+          "median": 520,
+          "p95": 520
+        },
+        "managedAllocatedBytes": {
+          "median": 29936,
+          "p95": 29936
+        },
+        "slotWrites": {
+          "median": 512,
+          "p95": 512
+        },
+        "samples": [
+          {
+            "elapsedMs": 2.7681970000003275,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 29936,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 1.8735130000000026,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 29936,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.2537609999999404,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 29936,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 3.5300170000000435,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 29936,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.3506539999998495,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 29936,
+            "slotWrites": 512
+          }
+        ]
+      },
+      "scalar-ulong-Write": {
+        "kind": "scalar",
+        "outputUnits": 5120,
+        "platformCalls": 256,
+        "elapsedMs": {
+          "median": 1.4911509999992631,
+          "p95": 1.7240440000005037
+        },
+        "managedAllocations": {
+          "median": 263,
+          "p95": 263
+        },
+        "managedAllocatedBytes": {
+          "median": 20688,
+          "p95": 20688
+        },
+        "slotWrites": {
+          "median": 256,
+          "p95": 256
+        },
+        "samples": [
+          {
+            "elapsedMs": 1.68535699999984,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 20688,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.407198000000335,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 20688,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.1191039999998793,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 20688,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.4911509999992631,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 20688,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.7240440000005037,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 20688,
+            "slotWrites": 256
+          }
+        ]
+      },
+      "scalar-ulong-WriteLine": {
+        "kind": "scalar",
+        "outputUnits": 5376,
+        "platformCalls": 256,
+        "elapsedMs": {
+          "median": 2.626248999999916,
+          "p95": 4.802958000000217
+        },
+        "managedAllocations": {
+          "median": 520,
+          "p95": 520
+        },
+        "managedAllocatedBytes": {
+          "median": 31472,
+          "p95": 31472
+        },
+        "slotWrites": {
+          "median": 512,
+          "p95": 512
+        },
+        "samples": [
+          {
+            "elapsedMs": 2.112844999999652,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 31472,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.1043319999998857,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 31472,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 4.802958000000217,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 31472,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.626248999999916,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 31472,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.781616999999642,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 31472,
+            "slotWrites": 512
+          }
+        ]
+      },
+      "scalar-ulong-separate-line": {
+        "kind": "scalar",
+        "outputUnits": 5376,
+        "platformCalls": 512,
+        "elapsedMs": {
+          "median": 2.307170000000042,
+          "p95": 3.6916049999999814
+        },
+        "managedAllocations": {
+          "median": 520,
+          "p95": 520
+        },
+        "managedAllocatedBytes": {
+          "median": 31472,
+          "p95": 31472
+        },
+        "slotWrites": {
+          "median": 512,
+          "p95": 512
+        },
+        "samples": [
+          {
+            "elapsedMs": 2.0202189999999973,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 31472,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.4812259999998787,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 31472,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.122208999999202,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 31472,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.307170000000042,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 31472,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 3.6916049999999814,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 31472,
+            "slotWrites": 512
+          }
+        ]
+      },
+      "scalar-float-Write": {
+        "kind": "scalar",
+        "outputUnits": 768,
+        "platformCalls": 256,
+        "elapsedMs": {
+          "median": 1.848135999999613,
+          "p95": 2.631618000000344
+        },
+        "managedAllocations": {
+          "median": 263,
+          "p95": 263
+        },
+        "managedAllocatedBytes": {
+          "median": 11984,
+          "p95": 11984
+        },
+        "slotWrites": {
+          "median": 256,
+          "p95": 256
+        },
+        "samples": [
+          {
+            "elapsedMs": 2.631618000000344,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 11984,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 2.0091520000005403,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 11984,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.848135999999613,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 11984,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.7734759999993912,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 11984,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.7624699999996665,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 11984,
+            "slotWrites": 256
+          }
+        ]
+      },
+      "scalar-float-WriteLine": {
+        "kind": "scalar",
+        "outputUnits": 1024,
+        "platformCalls": 256,
+        "elapsedMs": {
+          "median": 1.8600229999992735,
+          "p95": 2.1072260000000824
+        },
+        "managedAllocations": {
+          "median": 520,
+          "p95": 520
+        },
+        "managedAllocatedBytes": {
+          "median": 22768,
+          "p95": 22768
+        },
+        "slotWrites": {
+          "median": 512,
+          "p95": 512
+        },
+        "samples": [
+          {
+            "elapsedMs": 2.0573730000005526,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 22768,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.1072260000000824,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 22768,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 1.8600229999992735,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 22768,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 1.7867560000004232,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 22768,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 1.4908909999994648,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 22768,
+            "slotWrites": 512
+          }
+        ]
+      },
+      "scalar-float-separate-line": {
+        "kind": "scalar",
+        "outputUnits": 1024,
+        "platformCalls": 512,
+        "elapsedMs": {
+          "median": 2.9998679999998785,
+          "p95": 8.485670000000027
+        },
+        "managedAllocations": {
+          "median": 520,
+          "p95": 520
+        },
+        "managedAllocatedBytes": {
+          "median": 22768,
+          "p95": 22768
+        },
+        "slotWrites": {
+          "median": 512,
+          "p95": 512
+        },
+        "samples": [
+          {
+            "elapsedMs": 2.939220000000205,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 22768,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.9998679999998785,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 22768,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 8.485670000000027,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 22768,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.9507659999999305,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 22768,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 3.1170499999998356,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 22768,
+            "slotWrites": 512
+          }
+        ]
+      },
+      "scalar-double-Write": {
+        "kind": "scalar",
+        "outputUnits": 4608,
+        "platformCalls": 256,
+        "elapsedMs": {
+          "median": 1.4001170000001366,
+          "p95": 2.218630000000303
+        },
+        "managedAllocations": {
+          "median": 263,
+          "p95": 263
+        },
+        "managedAllocatedBytes": {
+          "median": 19664,
+          "p95": 19664
+        },
+        "slotWrites": {
+          "median": 256,
+          "p95": 256
+        },
+        "samples": [
+          {
+            "elapsedMs": 2.218630000000303,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 19664,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.218721000000187,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 19664,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.3096050000003743,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 19664,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.4995529999996506,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 19664,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.4001170000001366,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 19664,
+            "slotWrites": 256
+          }
+        ]
+      },
+      "scalar-double-WriteLine": {
+        "kind": "scalar",
+        "outputUnits": 4864,
+        "platformCalls": 256,
+        "elapsedMs": {
+          "median": 2.5049810000000434,
+          "p95": 3.3189870000005612
+        },
+        "managedAllocations": {
+          "median": 520,
+          "p95": 520
+        },
+        "managedAllocatedBytes": {
+          "median": 30448,
+          "p95": 30448
+        },
+        "slotWrites": {
+          "median": 512,
+          "p95": 512
+        },
+        "samples": [
+          {
+            "elapsedMs": 3.145002000000204,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 30448,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 3.3189870000005612,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 30448,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.4829979999994976,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 30448,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.448207999999795,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 30448,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.5049810000000434,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 30448,
+            "slotWrites": 512
+          }
+        ]
+      },
+      "scalar-double-separate-line": {
+        "kind": "scalar",
+        "outputUnits": 4864,
+        "platformCalls": 512,
+        "elapsedMs": {
+          "median": 2.8633669999999256,
+          "p95": 2.947920999999951
+        },
+        "managedAllocations": {
+          "median": 520,
+          "p95": 520
+        },
+        "managedAllocatedBytes": {
+          "median": 30448,
+          "p95": 30448
+        },
+        "slotWrites": {
+          "median": 512,
+          "p95": 512
+        },
+        "samples": [
+          {
+            "elapsedMs": 1.731184000000212,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 30448,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.8633669999999256,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 30448,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.947920999999951,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 30448,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.739604999999756,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 30448,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.9097860000001674,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 30448,
+            "slotWrites": 512
+          }
+        ]
+      },
+      "scalar-decimal-Write": {
+        "kind": "scalar",
+        "outputUnits": 2048,
+        "platformCalls": 256,
+        "elapsedMs": {
+          "median": 2.1529439999994793,
+          "p95": 2.50564200000008
+        },
+        "managedAllocations": {
+          "median": 263,
+          "p95": 263
+        },
+        "managedAllocatedBytes": {
+          "median": 14544,
+          "p95": 14544
+        },
+        "slotWrites": {
+          "median": 256,
+          "p95": 256
+        },
+        "samples": [
+          {
+            "elapsedMs": 2.50564200000008,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 14544,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 2.1529439999994793,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 14544,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.4407469999996465,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 14544,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.5309299999998984,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 14544,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 2.203357999999753,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 14544,
+            "slotWrites": 256
+          }
+        ]
+      },
+      "scalar-decimal-WriteLine": {
+        "kind": "scalar",
+        "outputUnits": 2304,
+        "platformCalls": 256,
+        "elapsedMs": {
+          "median": 2.0923249999996187,
+          "p95": 3.1119220000000496
+        },
+        "managedAllocations": {
+          "median": 520,
+          "p95": 520
+        },
+        "managedAllocatedBytes": {
+          "median": 25328,
+          "p95": 25328
+        },
+        "slotWrites": {
+          "median": 512,
+          "p95": 512
+        },
+        "samples": [
+          {
+            "elapsedMs": 2.0923249999996187,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 25328,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.623384999999871,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 25328,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 1.6408110000002125,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 25328,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 1.8263839999999618,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 25328,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 3.1119220000000496,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 25328,
+            "slotWrites": 512
+          }
+        ]
+      },
+      "scalar-decimal-separate-line": {
+        "kind": "scalar",
+        "outputUnits": 2304,
+        "platformCalls": 512,
+        "elapsedMs": {
+          "median": 1.8196740000003047,
+          "p95": 3.645676999999523
+        },
+        "managedAllocations": {
+          "median": 520,
+          "p95": 520
+        },
+        "managedAllocatedBytes": {
+          "median": 25328,
+          "p95": 25328
+        },
+        "slotWrites": {
+          "median": 512,
+          "p95": 512
+        },
+        "samples": [
+          {
+            "elapsedMs": 1.7971200000001772,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 25328,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 1.7936359999994238,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 25328,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 1.8196740000003047,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 25328,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 3.645676999999523,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 25328,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 3.5489040000002205,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 25328,
+            "slotWrites": 512
+          }
+        ]
+      }
+    },
+    "cil": {
+      "scalar-bool-Write": {
+        "kind": "scalar",
+        "outputUnits": 1024,
+        "platformCalls": 256,
+        "elapsedMs": {
+          "median": 2.333569000000125,
+          "p95": 2.50482100000022
+        },
+        "managedAllocations": {
+          "median": 263,
+          "p95": 263
+        },
+        "managedAllocatedBytes": {
+          "median": 12496,
+          "p95": 12496
+        },
+        "slotWrites": {
+          "median": 256,
+          "p95": 256
+        },
+        "samples": [
+          {
+            "elapsedMs": 2.3747800000001007,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 12496,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 2.333569000000125,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 12496,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.6054090000000087,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 12496,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.5112100000001192,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 12496,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 2.50482100000022,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 12496,
+            "slotWrites": 256
+          }
+        ]
+      },
+      "scalar-bool-WriteLine": {
+        "kind": "scalar",
+        "outputUnits": 1280,
+        "platformCalls": 256,
+        "elapsedMs": {
+          "median": 2.46238900000003,
+          "p95": 2.5167579999999816
+        },
+        "managedAllocations": {
+          "median": 520,
+          "p95": 520
+        },
+        "managedAllocatedBytes": {
+          "median": 23280,
+          "p95": 23280
+        },
+        "slotWrites": {
+          "median": 512,
+          "p95": 512
+        },
+        "samples": [
+          {
+            "elapsedMs": 2.5167579999999816,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 23280,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.297395999999935,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 23280,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.465363000000025,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 23280,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.46238900000003,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 23280,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.3490119999999024,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 23280,
+            "slotWrites": 512
+          }
+        ]
+      },
+      "scalar-bool-separate-line": {
+        "kind": "scalar",
+        "outputUnits": 1280,
+        "platformCalls": 512,
+        "elapsedMs": {
+          "median": 2.4954069999998865,
+          "p95": 4.144381000000067
+        },
+        "managedAllocations": {
+          "median": 520,
+          "p95": 520
+        },
+        "managedAllocatedBytes": {
+          "median": 23280,
+          "p95": 23280
+        },
+        "slotWrites": {
+          "median": 512,
+          "p95": 512
+        },
+        "samples": [
+          {
+            "elapsedMs": 4.144381000000067,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 23280,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.4029809999999543,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 23280,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.4954069999998865,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 23280,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.3264879999999266,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 23280,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.6133400000001075,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 23280,
+            "slotWrites": 512
+          }
+        ]
+      },
+      "scalar-int-Write": {
+        "kind": "scalar",
+        "outputUnits": 2816,
+        "platformCalls": 256,
+        "elapsedMs": {
+          "median": 1.738444999999956,
+          "p95": 2.452433999999812
+        },
+        "managedAllocations": {
+          "median": 263,
+          "p95": 263
+        },
+        "managedAllocatedBytes": {
+          "median": 16080,
+          "p95": 16080
+        },
+        "slotWrites": {
+          "median": 256,
+          "p95": 256
+        },
+        "samples": [
+          {
+            "elapsedMs": 2.452433999999812,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 16080,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.738444999999956,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 16080,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.8122829999999794,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 16080,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.5449699999999211,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 16080,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.4451739999999518,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 16080,
+            "slotWrites": 256
+          }
+        ]
+      },
+      "scalar-int-WriteLine": {
+        "kind": "scalar",
+        "outputUnits": 3072,
+        "platformCalls": 256,
+        "elapsedMs": {
+          "median": 3.3048060000000987,
+          "p95": 3.715048999999908
+        },
+        "managedAllocations": {
+          "median": 520,
+          "p95": 520
+        },
+        "managedAllocatedBytes": {
+          "median": 26864,
+          "p95": 26864
+        },
+        "slotWrites": {
+          "median": 512,
+          "p95": 512
+        },
+        "samples": [
+          {
+            "elapsedMs": 2.7498509999995804,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 26864,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 3.715048999999908,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 26864,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 3.3484309999998914,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 26864,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 3.3048060000000987,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 26864,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 3.0913430000000517,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 26864,
+            "slotWrites": 512
+          }
+        ]
+      },
+      "scalar-int-separate-line": {
+        "kind": "scalar",
+        "outputUnits": 3072,
+        "platformCalls": 512,
+        "elapsedMs": {
+          "median": 3.8763770000000477,
+          "p95": 4.2459389999999075
+        },
+        "managedAllocations": {
+          "median": 520,
+          "p95": 520
+        },
+        "managedAllocatedBytes": {
+          "median": 26864,
+          "p95": 26864
+        },
+        "slotWrites": {
+          "median": 512,
+          "p95": 512
+        },
+        "samples": [
+          {
+            "elapsedMs": 4.2459389999999075,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 26864,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 3.8763770000000477,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 26864,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 3.974459999999908,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 26864,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 3.576614999999947,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 26864,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 3.594340999999986,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 26864,
+            "slotWrites": 512
+          }
+        ]
+      },
+      "scalar-uint-Write": {
+        "kind": "scalar",
+        "outputUnits": 2560,
+        "platformCalls": 256,
+        "elapsedMs": {
+          "median": 2.0811989999997422,
+          "p95": 2.765993999999864
+        },
+        "managedAllocations": {
+          "median": 263,
+          "p95": 263
+        },
+        "managedAllocatedBytes": {
+          "median": 15568,
+          "p95": 15568
+        },
+        "slotWrites": {
+          "median": 256,
+          "p95": 256
+        },
+        "samples": [
+          {
+            "elapsedMs": 2.765993999999864,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 15568,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 2.0811989999997422,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 15568,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.9350139999996827,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 15568,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.8748450000002777,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 15568,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 2.445332999999664,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 15568,
+            "slotWrites": 256
+          }
+        ]
+      },
+      "scalar-uint-WriteLine": {
+        "kind": "scalar",
+        "outputUnits": 2816,
+        "platformCalls": 256,
+        "elapsedMs": {
+          "median": 2.910476000000017,
+          "p95": 3.9670390000001134
+        },
+        "managedAllocations": {
+          "median": 520,
+          "p95": 520
+        },
+        "managedAllocatedBytes": {
+          "median": 26352,
+          "p95": 26352
+        },
+        "slotWrites": {
+          "median": 512,
+          "p95": 512
+        },
+        "samples": [
+          {
+            "elapsedMs": 2.404493999999886,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 26352,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 1.9586679999997614,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 26352,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.910476000000017,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 26352,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 3.9670390000001134,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 26352,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 3.6362129999997705,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 26352,
+            "slotWrites": 512
+          }
+        ]
+      },
+      "scalar-uint-separate-line": {
+        "kind": "scalar",
+        "outputUnits": 2816,
+        "platformCalls": 512,
+        "elapsedMs": {
+          "median": 2.8638679999999113,
+          "p95": 3.244137000000137
+        },
+        "managedAllocations": {
+          "median": 520,
+          "p95": 520
+        },
+        "managedAllocatedBytes": {
+          "median": 26352,
+          "p95": 26352
+        },
+        "slotWrites": {
+          "median": 512,
+          "p95": 512
+        },
+        "samples": [
+          {
+            "elapsedMs": 2.5583990000000085,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 26352,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.8476439999999457,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 26352,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 3.041649000000234,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 26352,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 3.244137000000137,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 26352,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.8638679999999113,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 26352,
+            "slotWrites": 512
+          }
+        ]
+      },
+      "scalar-long-Write": {
+        "kind": "scalar",
+        "outputUnits": 4352,
+        "platformCalls": 256,
+        "elapsedMs": {
+          "median": 1.3928869999999733,
+          "p95": 1.7686690000000453
+        },
+        "managedAllocations": {
+          "median": 263,
+          "p95": 263
+        },
+        "managedAllocatedBytes": {
+          "median": 19152,
+          "p95": 19152
+        },
+        "slotWrites": {
+          "median": 256,
+          "p95": 256
+        },
+        "samples": [
+          {
+            "elapsedMs": 1.7686690000000453,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 19152,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.3928869999999733,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 19152,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.227343000000019,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 19152,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.1891279999999824,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 19152,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.646618999999646,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 19152,
+            "slotWrites": 256
+          }
+        ]
+      },
+      "scalar-long-WriteLine": {
+        "kind": "scalar",
+        "outputUnits": 4608,
+        "platformCalls": 256,
+        "elapsedMs": {
+          "median": 1.8998810000002777,
+          "p95": 2.8163280000003397
+        },
+        "managedAllocations": {
+          "median": 520,
+          "p95": 520
+        },
+        "managedAllocatedBytes": {
+          "median": 29936,
+          "p95": 29936
+        },
+        "slotWrites": {
+          "median": 512,
+          "p95": 512
+        },
+        "samples": [
+          {
+            "elapsedMs": 1.886931999999888,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 29936,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 1.8998810000002777,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 29936,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 1.8429180000002816,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 29936,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.8163280000003397,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 29936,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.3257779999999,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 29936,
+            "slotWrites": 512
+          }
+        ]
+      },
+      "scalar-long-separate-line": {
+        "kind": "scalar",
+        "outputUnits": 4608,
+        "platformCalls": 512,
+        "elapsedMs": {
+          "median": 2.411283999999796,
+          "p95": 2.762880000000223
+        },
+        "managedAllocations": {
+          "median": 520,
+          "p95": 520
+        },
+        "managedAllocatedBytes": {
+          "median": 29936,
+          "p95": 29936
+        },
+        "slotWrites": {
+          "median": 512,
+          "p95": 512
+        },
+        "samples": [
+          {
+            "elapsedMs": 2.5407940000000053,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 29936,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.3475000000003092,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 29936,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.411283999999796,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 29936,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.762880000000223,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 29936,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.322603000000072,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 29936,
+            "slotWrites": 512
+          }
+        ]
+      },
+      "scalar-ulong-Write": {
+        "kind": "scalar",
+        "outputUnits": 5120,
+        "platformCalls": 256,
+        "elapsedMs": {
+          "median": 1.8379910000003292,
+          "p95": 2.205840999999964
+        },
+        "managedAllocations": {
+          "median": 263,
+          "p95": 263
+        },
+        "managedAllocatedBytes": {
+          "median": 20688,
+          "p95": 20688
+        },
+        "slotWrites": {
+          "median": 256,
+          "p95": 256
+        },
+        "samples": [
+          {
+            "elapsedMs": 1.8949650000004112,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 20688,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.258520000000317,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 20688,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.2278440000000046,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 20688,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.8379910000003292,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 20688,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 2.205840999999964,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 20688,
+            "slotWrites": 256
+          }
+        ]
+      },
+      "scalar-ulong-WriteLine": {
+        "kind": "scalar",
+        "outputUnits": 5376,
+        "platformCalls": 256,
+        "elapsedMs": {
+          "median": 2.9701249999998254,
+          "p95": 9.081123999999363
+        },
+        "managedAllocations": {
+          "median": 520,
+          "p95": 520
+        },
+        "managedAllocatedBytes": {
+          "median": 31472,
+          "p95": 31472
+        },
+        "slotWrites": {
+          "median": 512,
+          "p95": 512
+        },
+        "samples": [
+          {
+            "elapsedMs": 3.061279000000468,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 31472,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.9701249999998254,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 31472,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 9.081123999999363,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 31472,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.1666230000000724,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 31472,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.6669590000001335,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 31472,
+            "slotWrites": 512
+          }
+        ]
+      },
+      "scalar-ulong-separate-line": {
+        "kind": "scalar",
+        "outputUnits": 5376,
+        "platformCalls": 512,
+        "elapsedMs": {
+          "median": 3.2422340000002805,
+          "p95": 3.8496769999992466
+        },
+        "managedAllocations": {
+          "median": 520,
+          "p95": 520
+        },
+        "managedAllocatedBytes": {
+          "median": 31472,
+          "p95": 31472
+        },
+        "slotWrites": {
+          "median": 512,
+          "p95": 512
+        },
+        "samples": [
+          {
+            "elapsedMs": 2.8739439999999377,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 31472,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 3.2422340000002805,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 31472,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 3.1145470000001296,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 31472,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 3.8496769999992466,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 31472,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 3.73069200000009,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 31472,
+            "slotWrites": 512
+          }
+        ]
+      },
+      "scalar-float-Write": {
+        "kind": "scalar",
+        "outputUnits": 768,
+        "platformCalls": 256,
+        "elapsedMs": {
+          "median": 1.5801919999994425,
+          "p95": 1.767957999999453
+        },
+        "managedAllocations": {
+          "median": 263,
+          "p95": 263
+        },
+        "managedAllocatedBytes": {
+          "median": 11984,
+          "p95": 11984
+        },
+        "slotWrites": {
+          "median": 256,
+          "p95": 256
+        },
+        "samples": [
+          {
+            "elapsedMs": 1.767957999999453,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 11984,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.6010029999997641,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 11984,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.2778380000008838,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 11984,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.555805999999393,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 11984,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.5801919999994425,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 11984,
+            "slotWrites": 256
+          }
+        ]
+      },
+      "scalar-float-WriteLine": {
+        "kind": "scalar",
+        "outputUnits": 1024,
+        "platformCalls": 256,
+        "elapsedMs": {
+          "median": 3.3028439999998227,
+          "p95": 3.5368069999994987
+        },
+        "managedAllocations": {
+          "median": 520,
+          "p95": 520
+        },
+        "managedAllocatedBytes": {
+          "median": 22768,
+          "p95": 22768
+        },
+        "slotWrites": {
+          "median": 512,
+          "p95": 512
+        },
+        "samples": [
+          {
+            "elapsedMs": 2.65004399999998,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 22768,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 3.033988000000136,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 22768,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 3.5368069999994987,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 22768,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 3.3028439999998227,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 22768,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 3.439994999999726,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 22768,
+            "slotWrites": 512
+          }
+        ]
+      },
+      "scalar-float-separate-line": {
+        "kind": "scalar",
+        "outputUnits": 1024,
+        "platformCalls": 512,
+        "elapsedMs": {
+          "median": 2.8992800000005445,
+          "p95": 4.056470999999874
+        },
+        "managedAllocations": {
+          "median": 520,
+          "p95": 520
+        },
+        "managedAllocatedBytes": {
+          "median": 22768,
+          "p95": 22768
+        },
+        "slotWrites": {
+          "median": 512,
+          "p95": 512
+        },
+        "samples": [
+          {
+            "elapsedMs": 2.8992800000005445,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 22768,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.7806860000000597,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 22768,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.386657000000014,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 22768,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 4.056470999999874,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 22768,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 3.5742330000002767,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 22768,
+            "slotWrites": 512
+          }
+        ]
+      },
+      "scalar-double-Write": {
+        "kind": "scalar",
+        "outputUnits": 4608,
+        "platformCalls": 256,
+        "elapsedMs": {
+          "median": 2.277476000000206,
+          "p95": 2.333679000000302
+        },
+        "managedAllocations": {
+          "median": 263,
+          "p95": 263
+        },
+        "managedAllocatedBytes": {
+          "median": 19664,
+          "p95": 19664
+        },
+        "slotWrites": {
+          "median": 256,
+          "p95": 256
+        },
+        "samples": [
+          {
+            "elapsedMs": 2.333679000000302,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 19664,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.885309999999663,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 19664,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.9132520000002842,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 19664,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 2.277476000000206,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 19664,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 2.287420999999995,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 19664,
+            "slotWrites": 256
+          }
+        ]
+      },
+      "scalar-double-WriteLine": {
+        "kind": "scalar",
+        "outputUnits": 4864,
+        "platformCalls": 256,
+        "elapsedMs": {
+          "median": 2.6621019999993223,
+          "p95": 3.5598409999993237
+        },
+        "managedAllocations": {
+          "median": 520,
+          "p95": 520
+        },
+        "managedAllocatedBytes": {
+          "median": 30448,
+          "p95": 30448
+        },
+        "slotWrites": {
+          "median": 512,
+          "p95": 512
+        },
+        "samples": [
+          {
+            "elapsedMs": 2.6621019999993223,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 30448,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.5953840000001946,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 30448,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.509598000000551,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 30448,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 3.5598409999993237,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 30448,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 3.084563000000344,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 30448,
+            "slotWrites": 512
+          }
+        ]
+      },
+      "scalar-double-separate-line": {
+        "kind": "scalar",
+        "outputUnits": 4864,
+        "platformCalls": 512,
+        "elapsedMs": {
+          "median": 3.736019999999371,
+          "p95": 4.0068780000001425
+        },
+        "managedAllocations": {
+          "median": 520,
+          "p95": 520
+        },
+        "managedAllocatedBytes": {
+          "median": 30448,
+          "p95": 30448
+        },
+        "slotWrites": {
+          "median": 512,
+          "p95": 512
+        },
+        "samples": [
+          {
+            "elapsedMs": 3.824971000000005,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 30448,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 3.0378040000005058,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 30448,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.932778999999755,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 30448,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 4.0068780000001425,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 30448,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 3.736019999999371,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 30448,
+            "slotWrites": 512
+          }
+        ]
+      },
+      "scalar-decimal-Write": {
+        "kind": "scalar",
+        "outputUnits": 2048,
+        "platformCalls": 256,
+        "elapsedMs": {
+          "median": 2.265237999999954,
+          "p95": 2.3693819999998595
+        },
+        "managedAllocations": {
+          "median": 263,
+          "p95": 263
+        },
+        "managedAllocatedBytes": {
+          "median": 14544,
+          "p95": 14544
+        },
+        "slotWrites": {
+          "median": 256,
+          "p95": 256
+        },
+        "samples": [
+          {
+            "elapsedMs": 2.322983000000022,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 14544,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 2.3693819999998595,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 14544,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 1.4162110000006578,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 14544,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 2.0836120000003575,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 14544,
+            "slotWrites": 256
+          },
+          {
+            "elapsedMs": 2.265237999999954,
+            "managedAllocations": 263,
+            "managedAllocatedBytes": 14544,
+            "slotWrites": 256
+          }
+        ]
+      },
+      "scalar-decimal-WriteLine": {
+        "kind": "scalar",
+        "outputUnits": 2304,
+        "platformCalls": 256,
+        "elapsedMs": {
+          "median": 2.1451170000000275,
+          "p95": 2.8016160000006494
+        },
+        "managedAllocations": {
+          "median": 520,
+          "p95": 520
+        },
+        "managedAllocatedBytes": {
+          "median": 25328,
+          "p95": 25328
+        },
+        "slotWrites": {
+          "median": 512,
+          "p95": 512
+        },
+        "samples": [
+          {
+            "elapsedMs": 2.3026929999996355,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 25328,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.055540999999721,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 25328,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.1451170000000275,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 25328,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.8016160000006494,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 25328,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 1.560483000000204,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 25328,
+            "slotWrites": 512
+          }
+        ]
+      },
+      "scalar-decimal-separate-line": {
+        "kind": "scalar",
+        "outputUnits": 2304,
+        "platformCalls": 512,
+        "elapsedMs": {
+          "median": 1.9561540000004243,
+          "p95": 2.6245060000001104
+        },
+        "managedAllocations": {
+          "median": 520,
+          "p95": 520
+        },
+        "managedAllocatedBytes": {
+          "median": 25328,
+          "p95": 25328
+        },
+        "slotWrites": {
+          "median": 512,
+          "p95": 512
+        },
+        "samples": [
+          {
+            "elapsedMs": 2.5600409999997282,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 25328,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 1.9143030000004728,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 25328,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 1.816820000000007,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 25328,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 1.9561540000004243,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 25328,
+            "slotWrites": 512
+          },
+          {
+            "elapsedMs": 2.6245060000001104,
+            "managedAllocations": 520,
+            "managedAllocatedBytes": 25328,
+            "slotWrites": 512
+          }
+        ]
+      }
+    }
+  }
+}

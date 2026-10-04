@@ -1,0 +1,11 @@
+{
+  "number": 4514,
+  "url": "https://github.com/wieslawsoltes/SharpForge/pull/4514",
+  "title": "SF-A09-T03.1: support object writes in StringWriter",
+  "state": "open",
+  "draft": true,
+  "base": "codex/a09-string-reader-buffer",
+  "base_sha": "6f1e0c1dd89d8dc9129f10446ad548cb82a8fd37",
+  "head": "codex/a09-string-writer-object",
+  "head_sha": "376c1955474d04a5386e22352a8f27a18a46f2c5"
+}

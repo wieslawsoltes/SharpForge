@@ -1,0 +1,76 @@
+[
+  {
+    "id": "@sharpforge/bcl-io@0.14.0",
+    "name": "@sharpforge/bcl-io",
+    "version": "0.14.0",
+    "size": 9439,
+    "unpackedSize": 29892,
+    "shasum": "ed4eb544928bd95057a609d00f62a09da483edcc",
+    "integrity": "sha512-OcqVVHqLWOL6/trNFo9VED3Xe2uudcItgSvNz0woJRnNGX4jo/Pe0lM4z5ZrYvVzLeWVWFtE9edT68M07hUsPw==",
+    "filename": "sharpforge-bcl-io-0.14.0.tgz",
+    "files": [
+      {
+        "path": "LICENSE",
+        "size": 1080,
+        "mode": 420
+      },
+      {
+        "path": "README.md",
+        "size": 10773,
+        "mode": 420
+      },
+      {
+        "path": "package.json",
+        "size": 379,
+        "mode": 420
+      },
+      {
+        "path": "src/character-buffer.js",
+        "size": 1192,
+        "mode": 420
+      },
+      {
+        "path": "src/index.js",
+        "size": 770,
+        "mode": 420
+      },
+      {
+        "path": "src/string-reader-buffer.js",
+        "size": 1494,
+        "mode": 420
+      },
+      {
+        "path": "src/string-reader.js",
+        "size": 3086,
+        "mode": 420
+      },
+      {
+        "path": "src/string-writer-buffer.js",
+        "size": 1821,
+        "mode": 420
+      },
+      {
+        "path": "src/string-writer-builder.js",
+        "size": 1730,
+        "mode": 420
+      },
+      {
+        "path": "src/string-writer.js",
+        "size": 4252,
+        "mode": 420
+      },
+      {
+        "path": "src/text-reader-writer.js",
+        "size": 1494,
+        "mode": 420
+      },
+      {
+        "path": "src/text-writer.js",
+        "size": 1821,
+        "mode": 420
+      }
+    ],
+    "entryCount": 12,
+    "bundled": []
+  }
+]

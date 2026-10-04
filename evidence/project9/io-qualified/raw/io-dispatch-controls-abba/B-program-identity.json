@@ -1,0 +1,7 @@
+{
+  "source": "class Program { static void Main() {} }",
+  "sourceSha256": "b01aafb078834d803cdb6e55f358558aefddaa44cd224fe0065c26d11ff57a22",
+  "fixtureSha256": "f8e83167502593e91f8c754a745136e96eee385fd94e393a1630a3ff1ec4f31e",
+  "imageSha256": "6348a90d87d1eb8033747998eebbf955cfd4b7d2993e9e8bb4e5dcadd765462a",
+  "assemblySha256": "212c5a974d6e8483284f418c3ffab29284c9b3001beb585acf2436c111ae6e98"
+}

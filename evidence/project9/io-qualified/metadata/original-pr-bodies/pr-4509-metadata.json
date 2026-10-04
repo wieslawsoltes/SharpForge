@@ -1,0 +1,11 @@
+{
+  "number": 4509,
+  "url": "https://github.com/wieslawsoltes/SharpForge/pull/4509",
+  "title": "SF-A09-T03.1: add synchronous StringReader operations",
+  "state": "open",
+  "draft": true,
+  "base": "main",
+  "base_sha": "ca3c083b61d637f98d53d0e55d9c2e564b11bf5d",
+  "head": "codex/a09-string-reader",
+  "head_sha": "408cae030fcf2738c38e13ad33a3efe5ecade0e2"
+}

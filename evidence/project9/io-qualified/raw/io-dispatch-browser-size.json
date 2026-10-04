@@ -1,0 +1,42 @@
+{
+  "baseline": {
+    "revision": "726fbd8303042c7634a057807b51adeaddffa9a8",
+    "files": 5269,
+    "bytes": 110064607,
+    "leaves": {
+      "packages/bcl-io/src/string-writer.js": {
+        "sourceSha256": "13a986e5123b942bd3139697e86512c218d4dde07e1b92df78114880da0fc6ce",
+        "builtSha256": "ee3d6bff597bf3513ebcfe4201e8cf0cfe4723c1ba0b699d4d4dac85d2fa2ac9",
+        "sourceBytes": 4252,
+        "builtBytes": 4259
+      },
+      "packages/bcl-io/src/string-writer-builder.js": {
+        "sourceSha256": "c9fa931cfe1695546fb5f16983d49343c9e7a0b5ec99cce508935eca9b407ca6",
+        "builtSha256": "f67921fbc69c274da361ea44ac7cb85d88d5f0d8153b4f1938917d400852781b",
+        "sourceBytes": 1730,
+        "builtBytes": 1737
+      }
+    }
+  },
+  "candidate": {
+    "revision": "f8414bfcadbab039280d580a8152ac21f9fe6452",
+    "files": 5270,
+    "bytes": 110073130,
+    "leaves": {
+      "packages/bcl-io/src/string-writer.js": {
+        "sourceSha256": "faac5d137964074527a621914e9aa78da8961fe55f48c28a731ceaebca22ad5e",
+        "builtSha256": "1e6959598c47a87fba19e8298fcc5823043e963eaa2c007366be28a0b85bff26",
+        "sourceBytes": 4693,
+        "builtBytes": 4700
+      },
+      "packages/bcl-io/src/string-writer-builder.js": {
+        "sourceSha256": "940f50c538837e4411a7864aae00e6c1e473ee44c1ff5045dee47d786f578443",
+        "builtSha256": "8fe4d138226367298a68d6aebe4a59555cccb32b578dcba691ee97338fc28e2b",
+        "sourceBytes": 2348,
+        "builtBytes": 2355
+      }
+    }
+  },
+  "deltaBytes": 8523,
+  "percent": 0.007743633700529884
+}

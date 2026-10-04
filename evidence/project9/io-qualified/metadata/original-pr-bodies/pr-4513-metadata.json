@@ -1,0 +1,11 @@
+{
+  "number": 4513,
+  "url": "https://github.com/wieslawsoltes/SharpForge/pull/4513",
+  "title": "SF-A09-T03.1: add buffered StringReader reads",
+  "state": "open",
+  "draft": true,
+  "base": "codex/a09-string-writer",
+  "base_sha": "3ffe7b9b7dd65475429d797b8825a81b2b33b1e3",
+  "head": "codex/a09-string-reader-buffer",
+  "head_sha": "6f1e0c1dd89d8dc9129f10446ad548cb82a8fd37"
+}

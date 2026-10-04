@@ -1,0 +1,1718 @@
+TAP version 13
+# Subtest: synchronous host callback source: receiver, nested scopes and result inspection retain the boundary
+ok 1 - synchronous host callback source: receiver, nested scopes and result inspection retain the boundary
+  ---
+  duration_ms: 73.269037
+  type: 'test'
+  ...
+# Subtest: synchronous host callback source: callback and inspection failures release the scope unchanged
+ok 2 - synchronous host callback source: callback and inspection failures release the scope unchanged
+  ---
+  duration_ms: 0.87767
+  type: 'test'
+  ...
+# Subtest: synchronous host callback source: explicit stop keeps the boundary until callback completion
+ok 3 - synchronous host callback source: explicit stop keeps the boundary until callback completion
+  ---
+  duration_ms: 0.586382
+  type: 'test'
+  ...
+# Subtest: synchronous host callback cil: receiver, nested scopes and result inspection retain the boundary
+ok 4 - synchronous host callback cil: receiver, nested scopes and result inspection retain the boundary
+  ---
+  duration_ms: 9.963194
+  type: 'test'
+  ...
+# Subtest: synchronous host callback cil: callback and inspection failures release the scope unchanged
+ok 5 - synchronous host callback cil: callback and inspection failures release the scope unchanged
+  ---
+  duration_ms: 1.722782
+  type: 'test'
+  ...
+# Subtest: synchronous host callback cil: explicit stop keeps the boundary until callback completion
+ok 6 - synchronous host callback cil: explicit stop keeps the boundary until callback completion
+  ---
+  duration_ms: 1.208016
+  type: 'test'
+  ...
+# Subtest: framework Object.ToString: pinned source hash and exact override opt-ins
+ok 7 - framework Object.ToString: pinned source hash and exact override opt-ins
+  ---
+  duration_ms: 2.281784
+  type: 'test'
+  ...
+# Subtest: framework Object.ToString bound: emitted calls and profile round trip keep Convert distinct
+ok 8 - framework Object.ToString bound: emitted calls and profile round trip keep Convert distinct
+  ---
+  duration_ms: 153.525764
+  type: 'test'
+  ...
+# Subtest: framework Object.ToString bound: null faults after the emitted profile round trip
+ok 9 - framework Object.ToString bound: null faults after the emitted profile round trip
+  ---
+  duration_ms: 15.448686
+  type: 'test'
+  ...
+# Subtest: framework Object.ToString legacy: emitted calls and profile round trip keep Convert distinct
+ok 10 - framework Object.ToString legacy: emitted calls and profile round trip keep Convert distinct
+  ---
+  duration_ms: 13.540921
+  type: 'test'
+  ...
+# Subtest: framework Object.ToString legacy: null faults after the emitted profile round trip
+ok 11 - framework Object.ToString legacy: null faults after the emitted profile round trip
+  ---
+  duration_ms: 5.475828
+  type: 'test'
+  ...
+# Subtest: framework Object.ToString source: object references invoke only opted-in framework overrides
+ok 12 - framework Object.ToString source: object references invoke only opted-in framework overrides
+  ---
+  duration_ms: 12.337503
+  type: 'test'
+  ...
+# Subtest: framework Object.ToString source: primitive, Convert and Console profiles remain unchanged
+ok 13 - framework Object.ToString source: primitive, Convert and Console profiles remain unchanged
+  ---
+  duration_ms: 10.964324
+  type: 'test'
+  ...
+# Subtest: framework Object.ToString source: null receiver faults
+ok 14 - framework Object.ToString source: null receiver faults
+  ---
+  duration_ms: 7.541885
+  type: 'test'
+  ...
+# Subtest: framework Object.ToString source: GC, snapshot and allocation faults preserve builder state
+ok 15 - framework Object.ToString source: GC, snapshot and allocation faults preserve builder state
+  ---
+  duration_ms: 9.232299
+  type: 'test'
+  ...
+# Subtest: framework Object.ToString source: unmarked framework methods stay on the fallback profile
+ok 16 - framework Object.ToString source: unmarked framework methods stay on the fallback profile
+  ---
+  duration_ms: 5.777011
+  type: 'test'
+  ...
+# Subtest: framework Object.ToString cil: object references invoke only opted-in framework overrides
+ok 17 - framework Object.ToString cil: object references invoke only opted-in framework overrides
+  ---
+  duration_ms: 16.285475
+  type: 'test'
+  ...
+# Subtest: framework Object.ToString cil: primitive, Convert and Console profiles remain unchanged
+ok 18 - framework Object.ToString cil: primitive, Convert and Console profiles remain unchanged
+  ---
+  duration_ms: 10.966408
+  type: 'test'
+  ...
+# Subtest: framework Object.ToString cil: null receiver faults
+ok 19 - framework Object.ToString cil: null receiver faults
+  ---
+  duration_ms: 4.805844
+  type: 'test'
+  ...
+# Subtest: framework Object.ToString cil: GC, snapshot and allocation faults preserve builder state
+ok 20 - framework Object.ToString cil: GC, snapshot and allocation faults preserve builder state
+  ---
+  duration_ms: 9.425723
+  type: 'test'
+  ...
+# Subtest: framework Object.ToString cil: unmarked framework methods stay on the fallback profile
+ok 21 - framework Object.ToString cil: unmarked framework methods stay on the fallback profile
+  ---
+  duration_ms: 4.583106
+  type: 'test'
+  ...
+# Subtest: framework Object.ToString CIL: call empty-builder matches native
+ok 22 - framework Object.ToString CIL: call empty-builder matches native
+  ---
+  duration_ms: 2.008992
+  type: 'test'
+  ...
+# Subtest: framework Object.ToString CIL: callvirt empty-builder matches native
+ok 23 - framework Object.ToString CIL: callvirt empty-builder matches native
+  ---
+  duration_ms: 3.797501
+  type: 'test'
+  ...
+# Subtest: framework Object.ToString CIL: call builder matches native
+ok 24 - framework Object.ToString CIL: call builder matches native
+  ---
+  duration_ms: 1.657346
+  type: 'test'
+  ...
+# Subtest: framework Object.ToString CIL: callvirt builder matches native
+ok 25 - framework Object.ToString CIL: callvirt builder matches native
+  ---
+  duration_ms: 4.825482
+  type: 'test'
+  ...
+# Subtest: framework Object.ToString CIL: call mutated-builder matches native
+ok 26 - framework Object.ToString CIL: call mutated-builder matches native
+  ---
+  duration_ms: 1.486936
+  type: 'test'
+  ...
+# Subtest: framework Object.ToString CIL: callvirt mutated-builder matches native
+ok 27 - framework Object.ToString CIL: callvirt mutated-builder matches native
+  ---
+  duration_ms: 1.867555
+  type: 'test'
+  ...
+# Subtest: framework Object.ToString CIL: call uri matches native
+ok 28 - framework Object.ToString CIL: call uri matches native
+  ---
+  duration_ms: 1.248655
+  type: 'test'
+  ...
+# Subtest: framework Object.ToString CIL: callvirt uri matches native
+ok 29 - framework Object.ToString CIL: callvirt uri matches native
+  ---
+  duration_ms: 1.197029
+  type: 'test'
+  ...
+# Subtest: framework Object.ToString CIL: call null matches native
+ok 30 - framework Object.ToString CIL: call null matches native
+  ---
+  duration_ms: 1.268153
+  type: 'test'
+  ...
+# Subtest: framework Object.ToString CIL: callvirt null matches native
+ok 31 - framework Object.ToString CIL: callvirt null matches native
+  ---
+  duration_ms: 2.068921
+  type: 'test'
+  ...
+# Subtest: framework Object.ToString CIL: hidden user method is not an override
+ok 32 - framework Object.ToString CIL: hidden user method is not an override
+  ---
+  duration_ms: 4.06117
+  type: 'test'
+  ...
+# Subtest: framework Object.ToString CIL: call retains released primitive formatting
+ok 33 - framework Object.ToString CIL: call retains released primitive formatting
+  ---
+  duration_ms: 1.335253
+  type: 'test'
+  ...
+# Subtest: framework Object.ToString CIL: callvirt retains released primitive formatting
+ok 34 - framework Object.ToString CIL: callvirt retains released primitive formatting
+  ---
+  duration_ms: 1.066056
+  type: 'test'
+  ...
+# Subtest: framework Object.ToString metadata rejects invalid override opt-ins
+ok 35 - framework Object.ToString metadata rejects invalid override opt-ins
+  ---
+  duration_ms: 0.702151
+  type: 'test'
+  ...
+# Subtest: Stopwatch clock boundary source/Stop: a caught snapshot rejection preserves the live continuation
+ok 36 - Stopwatch clock boundary source/Stop: a caught snapshot rejection preserves the live continuation
+  ---
+  duration_ms: 75.594035
+  type: 'test'
+  ...
+# Subtest: Stopwatch clock boundary source/GetTimestamp: a caught snapshot rejection preserves the live continuation
+ok 37 - Stopwatch clock boundary source/GetTimestamp: a caught snapshot rejection preserves the live continuation
+  ---
+  duration_ms: 0.976345
+  type: 'test'
+  ...
+# Subtest: Stopwatch clock boundary source/Stop: a caught restore rejection preserves the live continuation
+ok 38 - Stopwatch clock boundary source/Stop: a caught restore rejection preserves the live continuation
+  ---
+  duration_ms: 0.649895
+  type: 'test'
+  ...
+# Subtest: Stopwatch clock boundary source/GetTimestamp: a caught restore rejection preserves the live continuation
+ok 39 - Stopwatch clock boundary source/GetTimestamp: a caught restore rejection preserves the live continuation
+  ---
+  duration_ms: 0.573753
+  type: 'test'
+  ...
+# Subtest: Stopwatch clock boundary source: callback failure, reentry and explicit stop release the boundary
+ok 40 - Stopwatch clock boundary source: callback failure, reentry and explicit stop release the boundary
+  ---
+  duration_ms: 2.071845
+  type: 'test'
+  ...
+# Subtest: Stopwatch clock boundary cil/Stop: a caught snapshot rejection preserves the live continuation
+ok 41 - Stopwatch clock boundary cil/Stop: a caught snapshot rejection preserves the live continuation
+  ---
+  duration_ms: 9.203547
+  type: 'test'
+  ...
+# Subtest: Stopwatch clock boundary cil/GetTimestamp: a caught snapshot rejection preserves the live continuation
+ok 42 - Stopwatch clock boundary cil/GetTimestamp: a caught snapshot rejection preserves the live continuation
+  ---
+  duration_ms: 1.747659
+  type: 'test'
+  ...
+# Subtest: Stopwatch clock boundary cil/Stop: a caught restore rejection preserves the live continuation
+ok 43 - Stopwatch clock boundary cil/Stop: a caught restore rejection preserves the live continuation
+  ---
+  duration_ms: 1.502037
+  type: 'test'
+  ...
+# Subtest: Stopwatch clock boundary cil/GetTimestamp: a caught restore rejection preserves the live continuation
+ok 44 - Stopwatch clock boundary cil/GetTimestamp: a caught restore rejection preserves the live continuation
+  ---
+  duration_ms: 1.516919
+  type: 'test'
+  ...
+# Subtest: Stopwatch clock boundary cil: callback failure, reentry and explicit stop release the boundary
+ok 45 - Stopwatch clock boundary cil: callback failure, reentry and explicit stop release the boundary
+  ---
+  duration_ms: 6.333889
+  type: 'test'
+  ...
+# Subtest: Stopwatch Object.ToString bound/source: running and stopped overrides preserve Convert and Console formatting
+ok 46 - Stopwatch Object.ToString bound/source: running and stopped overrides preserve Convert and Console formatting
+  ---
+  duration_ms: 107.289298
+  type: 'test'
+  ...
+# Subtest: Stopwatch Object.ToString bound/reload: running and stopped overrides preserve Convert and Console formatting
+ok 47 - Stopwatch Object.ToString bound/reload: running and stopped overrides preserve Convert and Console formatting
+  ---
+  duration_ms: 28.622167
+  type: 'test'
+  ...
+# Subtest: Stopwatch Object.ToString bound/cil: running and stopped overrides preserve Convert and Console formatting
+ok 48 - Stopwatch Object.ToString bound/cil: running and stopped overrides preserve Convert and Console formatting
+  ---
+  duration_ms: 26.034975
+  type: 'test'
+  ...
+# Subtest: Stopwatch Object.ToString legacy/source: running and stopped overrides preserve Convert and Console formatting
+ok 49 - Stopwatch Object.ToString legacy/source: running and stopped overrides preserve Convert and Console formatting
+  ---
+  duration_ms: 9.10344
+  type: 'test'
+  ...
+# Subtest: Stopwatch Object.ToString legacy/reload: running and stopped overrides preserve Convert and Console formatting
+ok 50 - Stopwatch Object.ToString legacy/reload: running and stopped overrides preserve Convert and Console formatting
+  ---
+  duration_ms: 12.381308
+  type: 'test'
+  ...
+# Subtest: Stopwatch Object.ToString legacy/cil: running and stopped overrides preserve Convert and Console formatting
+ok 51 - Stopwatch Object.ToString legacy/cil: running and stopped overrides preserve Convert and Console formatting
+  ---
+  duration_ms: 12.090149
+  type: 'test'
+  ...
+# Subtest: Stopwatch Object.ToString independent CIL: only virtual Object calls dispatch while Convert and Console retain type names
+ok 52 - Stopwatch Object.ToString independent CIL: only virtual Object calls dispatch while Convert and Console retain type names
+  ---
+  duration_ms: 6.510899
+  type: 'test'
+  ...
+# Subtest: A09 source: default escaping matches native scalar, array and dictionary cases
+ok 53 - A09 source: default escaping matches native scalar, array and dictionary cases
+  ---
+  duration_ms: 153.506091
+  type: 'test'
+  ...
+# Subtest: A09 source: compiled serializer calls retain UTF-16 string escaping
+ok 54 - A09 source: compiled serializer calls retain UTF-16 string escaping
+  ---
+  duration_ms: 24.078818
+  type: 'test'
+  ...
+# Subtest: A09 source: registered string collections use the same default escaping
+ok 55 - A09 source: registered string collections use the same default escaping
+  ---
+  duration_ms: 9.777484
+  type: 'test'
+  ...
+# Subtest: A09 source: escape expansion enforces the existing JSON output budget
+ok 56 - A09 source: escape expansion enforces the existing JSON output budget
+  ---
+  duration_ms: 56.618709
+  type: 'test'
+  ...
+# Subtest: A09 source: serializer retains cycle and unsupported-object failures
+ok 57 - A09 source: serializer retains cycle and unsupported-object failures
+  ---
+  duration_ms: 7.397776
+  type: 'test'
+  ...
+# Subtest: A09 cil: default escaping matches native scalar, array and dictionary cases
+ok 58 - A09 cil: default escaping matches native scalar, array and dictionary cases
+  ---
+  duration_ms: 34.787642
+  type: 'test'
+  ...
+# Subtest: A09 cil: compiled serializer calls retain UTF-16 string escaping
+ok 59 - A09 cil: compiled serializer calls retain UTF-16 string escaping
+  ---
+  duration_ms: 34.503537
+  type: 'test'
+  ...
+# Subtest: A09 cil: registered string collections use the same default escaping
+ok 60 - A09 cil: registered string collections use the same default escaping
+  ---
+  duration_ms: 15.36658
+  type: 'test'
+  ...
+# Subtest: A09 cil: escape expansion enforces the existing JSON output budget
+ok 61 - A09 cil: escape expansion enforces the existing JSON output budget
+  ---
+  duration_ms: 56.716814
+  type: 'test'
+  ...
+# Subtest: A09 cil: serializer retains cycle and unsupported-object failures
+ok 62 - A09 cil: serializer retains cycle and unsupported-object failures
+  ---
+  duration_ms: 5.908976
+  type: 'test'
+  ...
+# Subtest: A09 default escaping reference pins its source, SDK, runtime and complete ASCII coverage
+ok 63 - A09 default escaping reference pins its source, SDK, runtime and complete ASCII coverage
+  ---
+  duration_ms: 8.728111
+  type: 'test'
+  ...
+# Subtest: SF-A09-B02 source bytecode GetInt64 matches all 63 native lines and managed types
+ok 64 - SF-A09-B02 source bytecode GetInt64 matches all 63 native lines and managed types
+  ---
+  duration_ms: 51.992247
+  type: 'test'
+  ...
+# Subtest: SF-A09-B02 source exact Int64 access retains existing Int32 and approximate Double behavior
+ok 65 - SF-A09-B02 source exact Int64 access retains existing Int32 and approximate Double behavior
+  ---
+  duration_ms: 1.803718
+  type: 'test'
+  ...
+# Subtest: SF-A09-B02 cil bytecode GetInt64 matches all 63 native lines and managed types
+ok 66 - SF-A09-B02 cil bytecode GetInt64 matches all 63 native lines and managed types
+  ---
+  duration_ms: 165.26181
+  type: 'test'
+  ...
+# Subtest: SF-A09-B02 cil exact Int64 access retains existing Int32 and approximate Double behavior
+ok 67 - SF-A09-B02 cil exact Int64 access retains existing Int32 and approximate Double behavior
+  ---
+  duration_ms: 5.437283
+  type: 'test'
+  ...
+# Subtest: SF-A09-B02 bound source compiler retains Int64 and typed-catch profile diagnostics
+ok 68 - SF-A09-B02 bound source compiler retains Int64 and typed-catch profile diagnostics
+  ---
+  duration_ms: 119.772449
+  type: 'test'
+  ...
+# Subtest: SF-A09-B02 legacy source compiler retains Int64 and typed-catch profile diagnostics
+ok 69 - SF-A09-B02 legacy source compiler retains Int64 and typed-catch profile diagnostics
+  ---
+  duration_ms: 20.745199
+  type: 'test'
+  ...
+# Subtest: SF-A09-B02 GetInt64 uses the A09 reservation and an actual managed Int64 return
+ok 70 - SF-A09-B02 GetInt64 uses the A09 reservation and an actual managed Int64 return
+  ---
+  duration_ms: 0.223959
+  type: 'test'
+  ...
+# Subtest: SF-A09-B02 Int64 reference pins source bytes, SDK, runtime and precision boundaries
+ok 71 - SF-A09-B02 Int64 reference pins source bytes, SDK, runtime and precision boundaries
+  ---
+  duration_ms: 0.61282
+  type: 'test'
+  ...
+# Subtest: SF-A09-B02 source supported source profile matches native JSON with explicit Char/catch profile adaptations
+ok 72 - SF-A09-B02 source supported source profile matches native JSON with explicit Char/catch profile adaptations
+  ---
+  duration_ms: 181.767283
+  type: 'test'
+  ...
+# Subtest: SF-A09-B02 source integer dictionary retains nonfinite and unsupported-object faults
+ok 73 - SF-A09-B02 source integer dictionary retains nonfinite and unsupported-object faults
+  ---
+  duration_ms: 21.977518
+  type: 'test'
+  ...
+# Subtest: SF-A09-B02 cil supported source profile matches native JSON with explicit Char/catch profile adaptations
+ok 74 - SF-A09-B02 cil supported source profile matches native JSON with explicit Char/catch profile adaptations
+  ---
+  duration_ms: 64.905151
+  type: 'test'
+  ...
+# Subtest: SF-A09-B02 cil integer dictionary retains nonfinite and unsupported-object faults
+ok 75 - SF-A09-B02 cil integer dictionary retains nonfinite and unsupported-object faults
+  ---
+  duration_ms: 28.402282
+  type: 'test'
+  ...
+# Subtest: SF-A09-B02 independently assembled CIL serializes signed dictionary keys in entry order
+ok 76 - SF-A09-B02 independently assembled CIL serializes signed dictionary keys in entry order
+  ---
+  duration_ms: 10.104195
+  type: 'test'
+  ...
+# Subtest: SF-A09-B02 independently assembled CIL preserves genuine boxed Char and Boolean JSON values
+ok 77 - SF-A09-B02 independently assembled CIL preserves genuine boxed Char and Boolean JSON values
+  ---
+  duration_ms: 21.451496
+  type: 'test'
+  ...
+# Subtest: SF-A09-B02 bound source Char remains an explicit unsupported-profile diagnostic
+not ok 78 - SF-A09-B02 bound source Char remains an explicit unsupported-profile diagnostic
+  ---
+  duration_ms: 29.447025
+  type: 'test'
+  location: '/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/tests/a09-json-integer-keys.test.js:128:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert(result.diagnostics.some(item => item.code === 'SF2003' && item.severity === 'error'))
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/tests/a09-json-integer-keys.test.js:130:5)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: SF-A09-B02 legacy source Char remains an explicit unsupported-profile diagnostic
+not ok 79 - SF-A09-B02 legacy source Char remains an explicit unsupported-profile diagnostic
+  ---
+  duration_ms: 4.080231
+  type: 'test'
+  location: '/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/tests/a09-json-integer-keys.test.js:128:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    The expression evaluated to a falsy value:
+    
+      assert(result.diagnostics.some(item => item.code === 'SF2003' && item.severity === 'error'))
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/tests/a09-json-integer-keys.test.js:130:5)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: SF-A09-B02 integer dictionary oracle pins source, SDK, runtime and all eighteen cases
+ok 80 - SF-A09-B02 integer dictionary oracle pins source, SDK, runtime and all eighteen cases
+  ---
+  duration_ms: 0.487476
+  type: 'test'
+  ...
+# Subtest: SF-A09-B01 source binary64 JSON tokens match all pinned finite native values
+ok 81 - SF-A09-B01 source binary64 JSON tokens match all pinned finite native values
+  ---
+  duration_ms: 54.810693
+  type: 'test'
+  ...
+# Subtest: SF-A09-B01 source compiled mixed arrays and dictionary values retain native numeric spelling
+ok 82 - SF-A09-B01 source compiled mixed arrays and dictionary values retain native numeric spelling
+  ---
+  duration_ms: 186.467765
+  type: 'test'
+  ...
+# Subtest: SF-A09-B01 source numeric token expansion respects the existing output budget
+ok 83 - SF-A09-B01 source numeric token expansion respects the existing output budget
+  ---
+  duration_ms: 41.893465
+  type: 'test'
+  ...
+# Subtest: SF-A09-B01 cil binary64 JSON tokens match all pinned finite native values
+ok 84 - SF-A09-B01 cil binary64 JSON tokens match all pinned finite native values
+  ---
+  duration_ms: 63.637629
+  type: 'test'
+  ...
+# Subtest: SF-A09-B01 cil compiled mixed arrays and dictionary values retain native numeric spelling
+ok 85 - SF-A09-B01 cil compiled mixed arrays and dictionary values retain native numeric spelling
+  ---
+  duration_ms: 66.428221
+  type: 'test'
+  ...
+# Subtest: SF-A09-B01 cil numeric token expansion respects the existing output budget
+ok 86 - SF-A09-B01 cil numeric token expansion respects the existing output budget
+  ---
+  duration_ms: 28.118174
+  type: 'test'
+  ...
+# Subtest: SF-A09-B01 numeric oracle pins fifty values, source, SDK and runtime
+ok 87 - SF-A09-B01 numeric oracle pins fifty values, source, SDK and runtime
+  ---
+  duration_ms: 1.17004
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03 buffer source: all 56 native slice results execute through real bytecode
+ok 88 - SF-A09-T03 buffer source: all 56 native slice results execute through real bytecode
+  ---
+  duration_ms: 75.387271
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03 buffer source: slice writes retain storage and allocate no managed values
+ok 89 - SF-A09-T03 buffer source: slice writes retain storage and allocate no managed values
+  ---
+  duration_ms: 92.921957
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03 buffer source: read and read-block share cursor state and restore with the buffer
+ok 90 - SF-A09-T03 buffer source: read and read-block share cursor state and restore with the buffer
+  ---
+  duration_ms: 1.348813
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03 buffer source: buffer and input stay rooted across write observers
+ok 91 - SF-A09-T03 buffer source: buffer and input stay rooted across write observers
+  ---
+  duration_ms: 1.614563
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03 buffer source: observer failure releases roots and leaves the cursor uncommitted
+ok 92 - SF-A09-T03 buffer source: observer failure releases roots and leaves the cursor uncommitted
+  ---
+  duration_ms: 0.797011
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03 buffer source: invalid platform array shapes and numeric arguments do not consume input
+ok 93 - SF-A09-T03 buffer source: invalid platform array shapes and numeric arguments do not consume input
+  ---
+  duration_ms: 0.930628
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03 buffer cil: all 56 native slice results execute through real bytecode
+ok 94 - SF-A09-T03 buffer cil: all 56 native slice results execute through real bytecode
+  ---
+  duration_ms: 151.597721
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03 buffer cil: slice writes retain storage and allocate no managed values
+ok 95 - SF-A09-T03 buffer cil: slice writes retain storage and allocate no managed values
+  ---
+  duration_ms: 1.188196
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03 buffer cil: read and read-block share cursor state and restore with the buffer
+ok 96 - SF-A09-T03 buffer cil: read and read-block share cursor state and restore with the buffer
+  ---
+  duration_ms: 1.008903
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03 buffer cil: buffer and input stay rooted across write observers
+ok 97 - SF-A09-T03 buffer cil: buffer and input stay rooted across write observers
+  ---
+  duration_ms: 1.712687
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03 buffer cil: observer failure releases roots and leaves the cursor uncommitted
+ok 98 - SF-A09-T03 buffer cil: observer failure releases roots and leaves the cursor uncommitted
+  ---
+  duration_ms: 0.845924
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03 buffer cil: invalid platform array shapes and numeric arguments do not consume input
+ok 99 - SF-A09-T03 buffer cil: invalid platform array shapes and numeric arguments do not consume input
+  ---
+  duration_ms: 1.253702
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03 buffer: registration appends after all reader and writer base IDs
+ok 100 - SF-A09-T03 buffer: registration appends after all reader and writer base IDs
+  ---
+  duration_ms: 0.393439
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03 buffer: native capture pins exact source bytes and UTF-16 boundary data
+ok 101 - SF-A09-T03 buffer: native capture pins exact source bytes and UTF-16 boundary data
+  ---
+  duration_ms: 1.012078
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03 buffer bound source: source character arrays preserve destination slices
+ok 102 - SF-A09-T03 buffer bound source: source character arrays preserve destination slices
+  ---
+  duration_ms: 48.695674
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03 buffer bound cil: source character arrays preserve destination slices
+ok 103 - SF-A09-T03 buffer bound cil: source character arrays preserve destination slices
+  ---
+  duration_ms: 17.527325
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03 buffer legacy source: source character arrays preserve destination slices
+ok 104 - SF-A09-T03 buffer legacy source: source character arrays preserve destination slices
+  ---
+  duration_ms: 12.447838
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03 buffer legacy cil: source character arrays preserve destination slices
+ok 105 - SF-A09-T03 buffer legacy cil: source character arrays preserve destination slices
+  ---
+  duration_ms: 10.355242
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03.1 source: unchanged StringReader fixture matches .NET 10.0.5
+ok 106 - SF-A09-T03.1 source: unchanged StringReader fixture matches .NET 10.0.5
+  ---
+  duration_ms: 130.213337
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03.1 source: using calls inherited Dispose through existing lowering
+ok 107 - SF-A09-T03.1 source: using calls inherited Dispose through existing lowering
+  ---
+  duration_ms: 18.558692
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03.1 source: native faults and disposed-before-EOF precedence
+ok 108 - SF-A09-T03.1 source: native faults and disposed-before-EOF precedence
+  ---
+  duration_ms: 8.06064
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03.1 source: reader roots source, releases it on disposal, and restores its cursor
+ok 109 - SF-A09-T03.1 source: reader roots source, releases it on disposal, and restores its cursor
+  ---
+  duration_ms: 1.5241
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03.1 source: returned text survives a collection during cursor notification
+ok 110 - SF-A09-T03.1 source: returned text survives a collection during cursor notification
+  ---
+  duration_ms: 0.754609
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03.1 source: failed output allocation leaves the cursor unchanged
+ok 111 - SF-A09-T03.1 source: failed output allocation leaves the cursor unchanged
+  ---
+  duration_ms: 7.03985
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03.1 source: invalid constructor values and unknown TextReader implementations fail explicitly
+ok 112 - SF-A09-T03.1 source: invalid constructor values and unknown TextReader implementations fail explicitly
+  ---
+  duration_ms: 0.668623
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03.1 cil: unchanged StringReader fixture matches .NET 10.0.5
+ok 113 - SF-A09-T03.1 cil: unchanged StringReader fixture matches .NET 10.0.5
+  ---
+  duration_ms: 27.605341
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03.1 cil: using calls inherited Dispose through existing lowering
+ok 114 - SF-A09-T03.1 cil: using calls inherited Dispose through existing lowering
+  ---
+  duration_ms: 13.380019
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03.1 cil: native faults and disposed-before-EOF precedence
+ok 115 - SF-A09-T03.1 cil: native faults and disposed-before-EOF precedence
+  ---
+  duration_ms: 1.778675
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03.1 cil: reader roots source, releases it on disposal, and restores its cursor
+ok 116 - SF-A09-T03.1 cil: reader roots source, releases it on disposal, and restores its cursor
+  ---
+  duration_ms: 1.848347
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03.1 cil: returned text survives a collection during cursor notification
+ok 117 - SF-A09-T03.1 cil: returned text survives a collection during cursor notification
+  ---
+  duration_ms: 2.212042
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03.1 cil: failed output allocation leaves the cursor unchanged
+ok 118 - SF-A09-T03.1 cil: failed output allocation leaves the cursor unchanged
+  ---
+  duration_ms: 1.623076
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03.1 cil: invalid constructor values and unknown TextReader implementations fail explicitly
+ok 119 - SF-A09-T03.1 cil: invalid constructor values and unknown TextReader implementations fail explicitly
+  ---
+  duration_ms: 1.322134
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03.1 ordinary CIL base dispatch and interface assignability match native observations
+ok 120 - SF-A09-T03.1 ordinary CIL base dispatch and interface assignability match native observations
+  ---
+  duration_ms: 16.031256
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03.1 abstract metadata and A09 IDs preserve existing JSON contracts
+ok 121 - SF-A09-T03.1 abstract metadata and A09 IDs preserve existing JSON contracts
+  ---
+  duration_ms: 34.184953
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03.1 deferred async APIs and abstract construction remain compile-time errors
+ok 122 - SF-A09-T03.1 deferred async APIs and abstract construction remain compile-time errors
+  ---
+  duration_ms: 35.395882
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03.1 public IO registration uses the shared module protocol
+ok 123 - SF-A09-T03.1 public IO registration uses the shared module protocol
+  ---
+  duration_ms: 0.380569
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03.1 external IDisposable.Dispose invocation remains outside the verified CIL profile
+ok 124 - SF-A09-T03.1 external IDisposable.Dispose invocation remains outside the verified CIL profile
+  ---
+  duration_ms: 1.434959
+  type: 'test'
+  ...
+# Subtest: StringWriter buffer source: all native full/slice calls preserve text, input and faults
+ok 125 - StringWriter buffer source: all native full/slice calls preserve text, input and faults
+  ---
+  duration_ms: 92.278732
+  type: 'test'
+  ...
+# Subtest: StringWriter buffer source: one bulk chunk preserves storage, input copy and observer GC
+ok 126 - StringWriter buffer source: one bulk chunk preserves storage, input copy and observer GC
+  ---
+  duration_ms: 159.623625
+  type: 'test'
+  ...
+# Subtest: StringWriter buffer source: zero/null writes, snapshots and disposed overload rules
+ok 127 - StringWriter buffer source: zero/null writes, snapshots and disposed overload rules
+  ---
+  duration_ms: 9.786476
+  type: 'test'
+  ...
+# Subtest: StringWriter buffer source: invalid host arrays and numeric slices retain writer content
+ok 128 - StringWriter buffer source: invalid host arrays and numeric slices retain writer content
+  ---
+  duration_ms: 1.451343
+  type: 'test'
+  ...
+# Subtest: StringWriter buffer source: host text limit and managed OOM leave prior text intact
+ok 129 - StringWriter buffer source: host text limit and managed OOM leave prior text intact
+  ---
+  duration_ms: 2.120167
+  type: 'test'
+  ...
+# Subtest: StringWriter buffer source: a throwing observer releases roots without consuming a partial character prefix
+ok 130 - StringWriter buffer source: a throwing observer releases roots without consuming a partial character prefix
+  ---
+  duration_ms: 1.332649
+  type: 'test'
+  ...
+# Subtest: StringWriter buffer cil: all native full/slice calls preserve text, input and faults
+ok 131 - StringWriter buffer cil: all native full/slice calls preserve text, input and faults
+  ---
+  duration_ms: 246.883744
+  type: 'test'
+  ...
+# Subtest: StringWriter buffer cil: one bulk chunk preserves storage, input copy and observer GC
+ok 132 - StringWriter buffer cil: one bulk chunk preserves storage, input copy and observer GC
+  ---
+  duration_ms: 15.190871
+  type: 'test'
+  ...
+# Subtest: StringWriter buffer cil: zero/null writes, snapshots and disposed overload rules
+ok 133 - StringWriter buffer cil: zero/null writes, snapshots and disposed overload rules
+  ---
+  duration_ms: 2.566743
+  type: 'test'
+  ...
+# Subtest: StringWriter buffer cil: invalid host arrays and numeric slices retain writer content
+ok 134 - StringWriter buffer cil: invalid host arrays and numeric slices retain writer content
+  ---
+  duration_ms: 2.420038
+  type: 'test'
+  ...
+# Subtest: StringWriter buffer cil: host text limit and managed OOM leave prior text intact
+ok 135 - StringWriter buffer cil: host text limit and managed OOM leave prior text intact
+  ---
+  duration_ms: 2.57857
+  type: 'test'
+  ...
+# Subtest: StringWriter buffer cil: a throwing observer releases roots without consuming a partial character prefix
+ok 136 - StringWriter buffer cil: a throwing observer releases roots without consuming a partial character prefix
+  ---
+  duration_ms: 1.914254
+  type: 'test'
+  ...
+# Subtest: StringWriter buffer bound source: compiled overloads and base references use character arrays
+ok 137 - StringWriter buffer bound source: compiled overloads and base references use character arrays
+  ---
+  duration_ms: 70.857182
+  type: 'test'
+  ...
+# Subtest: StringWriter buffer bound cil: compiled overloads and base references use character arrays
+ok 138 - StringWriter buffer bound cil: compiled overloads and base references use character arrays
+  ---
+  duration_ms: 24.38023
+  type: 'test'
+  ...
+# Subtest: StringWriter buffer legacy source: compiled overloads and base references use character arrays
+ok 139 - StringWriter buffer legacy source: compiled overloads and base references use character arrays
+  ---
+  duration_ms: 20.845553
+  type: 'test'
+  ...
+# Subtest: StringWriter buffer legacy cil: compiled overloads and base references use character arrays
+ok 140 - StringWriter buffer legacy cil: compiled overloads and base references use character arrays
+  ---
+  duration_ms: 22.522188
+  type: 'test'
+  ...
+# Subtest: StringWriter buffer contracts append after reader buffers and native capture pins source
+ok 141 - StringWriter buffer contracts append after reader buffers and native capture pins source
+  ---
+  duration_ms: 1.544461
+  type: 'test'
+  ...
+# Subtest: StringWriter character line source: real platform dispatch matches all native character/null/disposal rows
+ok 142 - StringWriter character line source: real platform dispatch matches all native character/null/disposal rows
+  ---
+  duration_ms: 133.694656
+  type: 'test'
+  ...
+# Subtest: StringWriter character line CIL: independent concrete/base callvirt matches all native rows
+ok 143 - StringWriter character line CIL: independent concrete/base callvirt matches all native rows
+  ---
+  duration_ms: 149.461876
+  type: 'test'
+  ...
+# Subtest: StringWriter character line source: observer NewLine/disposal changes match the native sequencing boundary
+ok 144 - StringWriter character line source: observer NewLine/disposal changes match the native sequencing boundary
+  ---
+  duration_ms: 6.651927
+  type: 'test'
+  ...
+# Subtest: StringWriter character line source: two chunks survive GC and snapshot restoration
+ok 145 - StringWriter character line source: two chunks survive GC and snapshot restoration
+  ---
+  duration_ms: 10.127265
+  type: 'test'
+  ...
+# Subtest: StringWriter character line source: receiver/disposal precedence and existing character range guards remain
+ok 146 - StringWriter character line source: receiver/disposal precedence and existing character range guards remain
+  ---
+  duration_ms: 1.14941
+  type: 'test'
+  ...
+# Subtest: StringWriter character line source: host-limit failures distinguish character and newline progress
+ok 147 - StringWriter character line source: host-limit failures distinguish character and newline progress
+  ---
+  duration_ms: 7.612199
+  type: 'test'
+  ...
+# Subtest: StringWriter character line source: managed OOM before/between appends preserves completed text
+ok 148 - StringWriter character line source: managed OOM before/between appends preserves completed text
+  ---
+  duration_ms: 1.690094
+  type: 'test'
+  ...
+# Subtest: StringWriter character line source: throwing value/newline observers release roots without rollback claims
+ok 149 - StringWriter character line source: throwing value/newline observers release roots without rollback claims
+  ---
+  duration_ms: 1.549677
+  type: 'test'
+  ...
+# Subtest: StringWriter character line source: released Write(char) keeps its single disposal check
+ok 150 - StringWriter character line source: released Write(char) keeps its single disposal check
+  ---
+  duration_ms: 0.958318
+  type: 'test'
+  ...
+# Subtest: StringWriter character line cil: observer NewLine/disposal changes match the native sequencing boundary
+ok 151 - StringWriter character line cil: observer NewLine/disposal changes match the native sequencing boundary
+  ---
+  duration_ms: 6.972548
+  type: 'test'
+  ...
+# Subtest: StringWriter character line cil: two chunks survive GC and snapshot restoration
+ok 152 - StringWriter character line cil: two chunks survive GC and snapshot restoration
+  ---
+  duration_ms: 1.548206
+  type: 'test'
+  ...
+# Subtest: StringWriter character line cil: receiver/disposal precedence and existing character range guards remain
+ok 153 - StringWriter character line cil: receiver/disposal precedence and existing character range guards remain
+  ---
+  duration_ms: 1.205311
+  type: 'test'
+  ...
+# Subtest: StringWriter character line cil: host-limit failures distinguish character and newline progress
+ok 154 - StringWriter character line cil: host-limit failures distinguish character and newline progress
+  ---
+  duration_ms: 6.845532
+  type: 'test'
+  ...
+# Subtest: StringWriter character line cil: managed OOM before/between appends preserves completed text
+ok 155 - StringWriter character line cil: managed OOM before/between appends preserves completed text
+  ---
+  duration_ms: 2.757042
+  type: 'test'
+  ...
+# Subtest: StringWriter character line cil: throwing value/newline observers release roots without rollback claims
+ok 156 - StringWriter character line cil: throwing value/newline observers release roots without rollback claims
+  ---
+  duration_ms: 3.541145
+  type: 'test'
+  ...
+# Subtest: StringWriter character line cil: released Write(char) keeps its single disposal check
+ok 157 - StringWriter character line cil: released Write(char) keeps its single disposal check
+  ---
+  duration_ms: 1.238921
+  type: 'test'
+  ...
+# Subtest: StringWriter character line bound/source: compiled literals and base references preserve UTF-16
+ok 158 - StringWriter character line bound/source: compiled literals and base references preserve UTF-16
+  ---
+  duration_ms: 75.124624
+  type: 'test'
+  ...
+# Subtest: StringWriter character line bound/cil: compiled literals and base references preserve UTF-16
+ok 159 - StringWriter character line bound/cil: compiled literals and base references preserve UTF-16
+  ---
+  duration_ms: 33.668155
+  type: 'test'
+  ...
+# Subtest: StringWriter character line legacy/source: compiled literals and base references preserve UTF-16
+ok 160 - StringWriter character line legacy/source: compiled literals and base references preserve UTF-16
+  ---
+  duration_ms: 27.901229
+  type: 'test'
+  ...
+# Subtest: StringWriter character line legacy/cil: compiled literals and base references preserve UTF-16
+ok 161 - StringWriter character line legacy/cil: compiled literals and base references preserve UTF-16
+  ---
+  duration_ms: 19.398562
+  type: 'test'
+  ...
+# Subtest: StringWriter character line appends one ID after buffers and pins the unchanged native fixture
+ok 162 - StringWriter character line appends one ID after buffers and pins the unchanged native fixture
+  ---
+  duration_ms: 1.198772
+  type: 'test'
+  ...
+# Subtest: StringWriter buffer line source: native concrete/base calls preserve text, input and faults
+ok 163 - StringWriter buffer line source: native concrete/base calls preserve text, input and faults
+  ---
+  duration_ms: 93.273789
+  type: 'test'
+  ...
+# Subtest: StringWriter buffer line source: native value/newline sequencing survives observer GC
+ok 164 - StringWriter buffer line source: native value/newline sequencing survives observer GC
+  ---
+  duration_ms: 78.068802
+  type: 'test'
+  ...
+# Subtest: StringWriter buffer line source: bulk value and newline use two managed chunks without retaining input
+ok 165 - StringWriter buffer line source: bulk value and newline use two managed chunks without retaining input
+  ---
+  duration_ms: 9.548775
+  type: 'test'
+  ...
+# Subtest: StringWriter buffer line source: snapshots preserve writer state and null/empty disposal rules
+ok 166 - StringWriter buffer line source: snapshots preserve writer state and null/empty disposal rules
+  ---
+  duration_ms: 1.560534
+  type: 'test'
+  ...
+# Subtest: StringWriter buffer line source: the string overload rechecks disposal before its newline
+ok 167 - StringWriter buffer line source: the string overload rechecks disposal before its newline
+  ---
+  duration_ms: 0.931059
+  type: 'test'
+  ...
+# Subtest: StringWriter buffer line source: host text limit preserves a completed value before newline failure
+ok 168 - StringWriter buffer line source: host text limit preserves a completed value before newline failure
+  ---
+  duration_ms: 1.654872
+  type: 'test'
+  ...
+# Subtest: StringWriter buffer line source: managed OOM between appends retains the completed value
+ok 169 - StringWriter buffer line source: managed OOM between appends retains the completed value
+  ---
+  duration_ms: 0.989284
+  type: 'test'
+  ...
+# Subtest: StringWriter buffer line source: throwing newline observer releases roots and preserves completed value
+ok 170 - StringWriter buffer line source: throwing newline observer releases roots and preserves completed value
+  ---
+  duration_ms: 0.889718
+  type: 'test'
+  ...
+# Subtest: StringWriter buffer line cil: native concrete/base calls preserve text, input and faults
+ok 171 - StringWriter buffer line cil: native concrete/base calls preserve text, input and faults
+  ---
+  duration_ms: 220.717337
+  type: 'test'
+  ...
+# Subtest: StringWriter buffer line cil: native value/newline sequencing survives observer GC
+ok 172 - StringWriter buffer line cil: native value/newline sequencing survives observer GC
+  ---
+  duration_ms: 8.86533
+  type: 'test'
+  ...
+# Subtest: StringWriter buffer line cil: bulk value and newline use two managed chunks without retaining input
+ok 173 - StringWriter buffer line cil: bulk value and newline use two managed chunks without retaining input
+  ---
+  duration_ms: 12.905649
+  type: 'test'
+  ...
+# Subtest: StringWriter buffer line cil: snapshots preserve writer state and null/empty disposal rules
+ok 174 - StringWriter buffer line cil: snapshots preserve writer state and null/empty disposal rules
+  ---
+  duration_ms: 2.025878
+  type: 'test'
+  ...
+# Subtest: StringWriter buffer line cil: the string overload rechecks disposal before its newline
+ok 175 - StringWriter buffer line cil: the string overload rechecks disposal before its newline
+  ---
+  duration_ms: 1.548756
+  type: 'test'
+  ...
+# Subtest: StringWriter buffer line cil: host text limit preserves a completed value before newline failure
+ok 176 - StringWriter buffer line cil: host text limit preserves a completed value before newline failure
+  ---
+  duration_ms: 1.975613
+  type: 'test'
+  ...
+# Subtest: StringWriter buffer line cil: managed OOM between appends retains the completed value
+ok 177 - StringWriter buffer line cil: managed OOM between appends retains the completed value
+  ---
+  duration_ms: 1.443472
+  type: 'test'
+  ...
+# Subtest: StringWriter buffer line cil: throwing newline observer releases roots and preserves completed value
+ok 178 - StringWriter buffer line cil: throwing newline observer releases roots and preserves completed value
+  ---
+  duration_ms: 1.586903
+  type: 'test'
+  ...
+# Subtest: StringWriter buffer line bound/source: compiled whole/slice calls retain real base references
+ok 179 - StringWriter buffer line bound/source: compiled whole/slice calls retain real base references
+  ---
+  duration_ms: 85.07928
+  type: 'test'
+  ...
+# Subtest: StringWriter buffer line bound/cil: compiled whole/slice calls retain real base references
+ok 180 - StringWriter buffer line bound/cil: compiled whole/slice calls retain real base references
+  ---
+  duration_ms: 31.949049
+  type: 'test'
+  ...
+# Subtest: StringWriter buffer line legacy/source: compiled whole/slice calls retain real base references
+ok 181 - StringWriter buffer line legacy/source: compiled whole/slice calls retain real base references
+  ---
+  duration_ms: 24.614549
+  type: 'test'
+  ...
+# Subtest: StringWriter buffer line legacy/cil: compiled whole/slice calls retain real base references
+ok 182 - StringWriter buffer line legacy/cil: compiled whole/slice calls retain real base references
+  ---
+  duration_ms: 31.377359
+  type: 'test'
+  ...
+# Subtest: StringWriter buffer line contracts append without changing released slots or the pinned native fixture
+ok 183 - StringWriter buffer line contracts append without changing released slots or the pinned native fixture
+  ---
+  duration_ms: 0.823971
+  type: 'test'
+  ...
+# Subtest: StringWriter Object.ToString: pinned source and existing contract identity
+ok 184 - StringWriter Object.ToString: pinned source and existing contract identity
+  ---
+  duration_ms: 1.636375
+  type: 'test'
+  ...
+# Subtest: StringWriter Object.ToString source: actual object locals retain current and disposed builder text
+ok 185 - StringWriter Object.ToString source: actual object locals retain current and disposed builder text
+  ---
+  duration_ms: 87.508671
+  type: 'test'
+  ...
+# Subtest: StringWriter Object.ToString cil: actual object locals retain current and disposed builder text
+ok 186 - StringWriter Object.ToString cil: actual object locals retain current and disposed builder text
+  ---
+  duration_ms: 31.245805
+  type: 'test'
+  ...
+# Subtest: StringWriter Object.ToString roundtrip: actual object locals retain current and disposed builder text
+ok 187 - StringWriter Object.ToString roundtrip: actual object locals retain current and disposed builder text
+  ---
+  duration_ms: 11.881333
+  type: 'test'
+  ...
+# Subtest: StringWriter Object.ToString independent CIL: call empty
+ok 188 - StringWriter Object.ToString independent CIL: call empty
+  ---
+  duration_ms: 2.602425
+  type: 'test'
+  ...
+# Subtest: StringWriter Object.ToString independent CIL: callvirt empty
+ok 189 - StringWriter Object.ToString independent CIL: callvirt empty
+  ---
+  duration_ms: 1.719207
+  type: 'test'
+  ...
+# Subtest: StringWriter Object.ToString independent CIL: call written
+ok 190 - StringWriter Object.ToString independent CIL: call written
+  ---
+  duration_ms: 2.175498
+  type: 'test'
+  ...
+# Subtest: StringWriter Object.ToString independent CIL: callvirt written
+ok 191 - StringWriter Object.ToString independent CIL: callvirt written
+  ---
+  duration_ms: 2.116601
+  type: 'test'
+  ...
+# Subtest: StringWriter Object.ToString independent CIL: call disposed
+ok 192 - StringWriter Object.ToString independent CIL: call disposed
+  ---
+  duration_ms: 2.191571
+  type: 'test'
+  ...
+# Subtest: StringWriter Object.ToString independent CIL: callvirt disposed
+ok 193 - StringWriter Object.ToString independent CIL: callvirt disposed
+  ---
+  duration_ms: 2.146735
+  type: 'test'
+  ...
+# Subtest: StringWriter Object.ToString independent CIL: call mutated-after-disposal
+ok 194 - StringWriter Object.ToString independent CIL: call mutated-after-disposal
+  ---
+  duration_ms: 2.885971
+  type: 'test'
+  ...
+# Subtest: StringWriter Object.ToString independent CIL: callvirt mutated-after-disposal
+ok 195 - StringWriter Object.ToString independent CIL: callvirt mutated-after-disposal
+  ---
+  duration_ms: 2.736051
+  type: 'test'
+  ...
+# Subtest: StringWriter Object.ToString independent CIL: call null
+ok 196 - StringWriter Object.ToString independent CIL: call null
+  ---
+  duration_ms: 2.323675
+  type: 'test'
+  ...
+# Subtest: StringWriter Object.ToString independent CIL: callvirt null
+ok 197 - StringWriter Object.ToString independent CIL: callvirt null
+  ---
+  duration_ms: 1.355091
+  type: 'test'
+  ...
+# Subtest: StringWriter Object.ToString source: observer GC, disposal faults and snapshot restoration retain the builder
+ok 198 - StringWriter Object.ToString source: observer GC, disposal faults and snapshot restoration retain the builder
+  ---
+  duration_ms: 8.634441
+  type: 'test'
+  ...
+# Subtest: StringWriter Object.ToString source: allocation fault leaves text reachable and releases roots
+ok 199 - StringWriter Object.ToString source: allocation fault leaves text reachable and releases roots
+  ---
+  duration_ms: 0.896908
+  type: 'test'
+  ...
+# Subtest: StringWriter Object.ToString cil: observer GC, disposal faults and snapshot restoration retain the builder
+ok 200 - StringWriter Object.ToString cil: observer GC, disposal faults and snapshot restoration retain the builder
+  ---
+  duration_ms: 2.415761
+  type: 'test'
+  ...
+# Subtest: StringWriter Object.ToString cil: allocation fault leaves text reachable and releases roots
+ok 201 - StringWriter Object.ToString cil: allocation fault leaves text reachable and releases roots
+  ---
+  duration_ms: 1.448809
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars source: native subclass transitions match host-observer sequencing
+ok 202 - StringWriter scalars source: native subclass transitions match host-observer sequencing
+  ---
+  duration_ms: 102.37357
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars source: receiver validation and disposal precede writing for every scalar type
+ok 203 - StringWriter scalars source: receiver validation and disposal precede writing for every scalar type
+  ---
+  duration_ms: 1.517671
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars source: two rooted chunks preserve storage, exact carriers and snapshot state
+ok 204 - StringWriter scalars source: two rooted chunks preserve storage, exact carriers and snapshot state
+  ---
+  duration_ms: 5.849457
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars source: value/newline boundary observes NewLine, disposal and callback faults
+ok 205 - StringWriter scalars source: value/newline boundary observes NewLine, disposal and callback faults
+  ---
+  duration_ms: 13.971756
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars source: Write has one disposal gate and newline reset preserves the LF profile
+ok 206 - StringWriter scalars source: Write has one disposal gate and newline reset preserves the LF profile
+  ---
+  duration_ms: 4.65334
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars source: text-limit failure preserves precisely the completed value
+ok 207 - StringWriter scalars source: text-limit failure preserves precisely the completed value
+  ---
+  duration_ms: 15.200843
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars source: managed OOM before or after value append retains committed text
+ok 208 - StringWriter scalars source: managed OOM before or after value append retains committed text
+  ---
+  duration_ms: 15.839711
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars source: throwing chunk observers preserve prior committed chunks and release roots
+ok 209 - StringWriter scalars source: throwing chunk observers preserve prior committed chunks and release roots
+  ---
+  duration_ms: 14.600935
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars cil: native subclass transitions match host-observer sequencing
+ok 210 - StringWriter scalars cil: native subclass transitions match host-observer sequencing
+  ---
+  duration_ms: 39.820719
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars cil: receiver validation and disposal precede writing for every scalar type
+ok 211 - StringWriter scalars cil: receiver validation and disposal precede writing for every scalar type
+  ---
+  duration_ms: 1.543889
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars cil: two rooted chunks preserve storage, exact carriers and snapshot state
+ok 212 - StringWriter scalars cil: two rooted chunks preserve storage, exact carriers and snapshot state
+  ---
+  duration_ms: 9.386597
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars cil: value/newline boundary observes NewLine, disposal and callback faults
+ok 213 - StringWriter scalars cil: value/newline boundary observes NewLine, disposal and callback faults
+  ---
+  duration_ms: 25.641148
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars cil: Write has one disposal gate and newline reset preserves the LF profile
+ok 214 - StringWriter scalars cil: Write has one disposal gate and newline reset preserves the LF profile
+  ---
+  duration_ms: 9.32808
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars cil: text-limit failure preserves precisely the completed value
+ok 215 - StringWriter scalars cil: text-limit failure preserves precisely the completed value
+  ---
+  duration_ms: 21.896494
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars cil: managed OOM before or after value append retains committed text
+ok 216 - StringWriter scalars cil: managed OOM before or after value append retains committed text
+  ---
+  duration_ms: 14.960439
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars cil: throwing chunk observers preserve prior committed chunks and release roots
+ok 217 - StringWriter scalars cil: throwing chunk observers preserve prior committed chunks and release roots
+  ---
+  duration_ms: 26.905506
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars independent CIL: null and disposed receivers fault for every scalar signature
+ok 218 - StringWriter scalars independent CIL: null and disposed receivers fault for every scalar signature
+  ---
+  duration_ms: 70.155946
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars append sixteen exact IDs after all released IO contracts
+ok 219 - StringWriter scalars append sixteen exact IDs after all released IO contracts
+  ---
+  duration_ms: 2.161527
+  type: 'test'
+  ...
+# Subtest: StringWriter scalar expected text retains existing core .NET capture provenance
+ok 220 - StringWriter scalar expected text retains existing core .NET capture provenance
+  ---
+  duration_ms: 1.415741
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars independent native capture pins exact input, UTF-16 output and source provenance
+ok 221 - StringWriter scalars independent native capture pins exact input, UTF-16 output and source provenance
+  ---
+  duration_ms: 1.500606
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars source platform: captured writer values and faults
+ok 222 - StringWriter scalars source platform: captured writer values and faults
+  ---
+  duration_ms: 240.658137
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars independent CIL: captured writer values and faults
+ok 223 - StringWriter scalars independent CIL: captured writer values and faults
+  ---
+  duration_ms: 521.154173
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars source/Write: typed dispatch preserves reused native scalar text
+ok 224 - StringWriter scalars source/Write: typed dispatch preserves reused native scalar text
+  ---
+  duration_ms: 3.393538
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars source/WriteLine: typed dispatch preserves reused native scalar text
+ok 225 - StringWriter scalars source/WriteLine: typed dispatch preserves reused native scalar text
+  ---
+  duration_ms: 3.434618
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars cil/Write: typed dispatch preserves reused native scalar text
+ok 226 - StringWriter scalars cil/Write: typed dispatch preserves reused native scalar text
+  ---
+  duration_ms: 3.704674
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars cil/WriteLine: typed dispatch preserves reused native scalar text
+ok 227 - StringWriter scalars cil/WriteLine: typed dispatch preserves reused native scalar text
+  ---
+  duration_ms: 4.094148
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars independent CIL concrete/Write: exact stack widths and scalar text
+ok 228 - StringWriter scalars independent CIL concrete/Write: exact stack widths and scalar text
+  ---
+  duration_ms: 21.535093
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars independent CIL concrete/WriteLine: exact stack widths and scalar text
+ok 229 - StringWriter scalars independent CIL concrete/WriteLine: exact stack widths and scalar text
+  ---
+  duration_ms: 27.827301
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars independent CIL base/Write: exact stack widths and scalar text
+ok 230 - StringWriter scalars independent CIL base/Write: exact stack widths and scalar text
+  ---
+  duration_ms: 17.358423
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars independent CIL base/WriteLine: exact stack widths and scalar text
+ok 231 - StringWriter scalars independent CIL base/WriteLine: exact stack widths and scalar text
+  ---
+  duration_ms: 17.740876
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars bound/source: typed locals select all sixteen concrete/base overloads
+ok 232 - StringWriter scalars bound/source: typed locals select all sixteen concrete/base overloads
+  ---
+  duration_ms: 175.842681
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars bound/source: narrow numeric widening leaves character and string overloads intact
+ok 233 - StringWriter scalars bound/source: narrow numeric widening leaves character and string overloads intact
+  ---
+  duration_ms: 20.081466
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars bound/source: compiled null/disposed calls keep managed faults
+ok 234 - StringWriter scalars bound/source: compiled null/disposed calls keep managed faults
+  ---
+  duration_ms: 48.20993
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars bound/cil: typed locals select all sixteen concrete/base overloads
+ok 235 - StringWriter scalars bound/cil: typed locals select all sixteen concrete/base overloads
+  ---
+  duration_ms: 124.661499
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars bound/cil: narrow numeric widening leaves character and string overloads intact
+ok 236 - StringWriter scalars bound/cil: narrow numeric widening leaves character and string overloads intact
+  ---
+  duration_ms: 15.138511
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars bound/cil: compiled null/disposed calls keep managed faults
+ok 237 - StringWriter scalars bound/cil: compiled null/disposed calls keep managed faults
+  ---
+  duration_ms: 44.821119
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars bound: object, composite formatting and provider constructors remain unsupported
+ok 238 - StringWriter scalars bound: object, composite formatting and provider constructors remain unsupported
+  ---
+  duration_ms: 7.858921
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars legacy/source: typed locals select all sixteen concrete/base overloads
+ok 239 - StringWriter scalars legacy/source: typed locals select all sixteen concrete/base overloads
+  ---
+  duration_ms: 75.405903
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars legacy/source: narrow numeric widening leaves character and string overloads intact
+ok 240 - StringWriter scalars legacy/source: narrow numeric widening leaves character and string overloads intact
+  ---
+  duration_ms: 12.480644
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars legacy/source: compiled null/disposed calls keep managed faults
+ok 241 - StringWriter scalars legacy/source: compiled null/disposed calls keep managed faults
+  ---
+  duration_ms: 30.366714
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars legacy/cil: typed locals select all sixteen concrete/base overloads
+ok 242 - StringWriter scalars legacy/cil: typed locals select all sixteen concrete/base overloads
+  ---
+  duration_ms: 72.835995
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars legacy/cil: narrow numeric widening leaves character and string overloads intact
+ok 243 - StringWriter scalars legacy/cil: narrow numeric widening leaves character and string overloads intact
+  ---
+  duration_ms: 8.503569
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars legacy/cil: compiled null/disposed calls keep managed faults
+ok 244 - StringWriter scalars legacy/cil: compiled null/disposed calls keep managed faults
+  ---
+  duration_ms: 29.136405
+  type: 'test'
+  ...
+# Subtest: StringWriter scalars legacy: object, composite formatting and provider constructors remain unsupported
+ok 245 - StringWriter scalars legacy: object, composite formatting and provider constructors remain unsupported
+  ---
+  duration_ms: 3.83087
+  type: 'test'
+  ...
+# Subtest: StringWriter string line source: captured ordinary null/empty/disposal precedence is preserved
+ok 246 - StringWriter string line source: captured ordinary null/empty/disposal precedence is preserved
+  ---
+  duration_ms: 172.515976
+  type: 'test'
+  ...
+# Subtest: StringWriter string line source: captured value/newline callbacks preserve progress and roots
+ok 247 - StringWriter string line source: captured value/newline callbacks preserve progress and roots
+  ---
+  duration_ms: 20.720486
+  type: 'test'
+  ...
+# Subtest: StringWriter string line source: disposal after text also prevents an empty newline
+ok 248 - StringWriter string line source: disposal after text also prevents an empty newline
+  ---
+  duration_ms: 0.773246
+  type: 'test'
+  ...
+# Subtest: StringWriter string line cil: captured ordinary null/empty/disposal precedence is preserved
+ok 249 - StringWriter string line cil: captured ordinary null/empty/disposal precedence is preserved
+  ---
+  duration_ms: 168.307891
+  type: 'test'
+  ...
+# Subtest: StringWriter string line cil: captured value/newline callbacks preserve progress and roots
+ok 250 - StringWriter string line cil: captured value/newline callbacks preserve progress and roots
+  ---
+  duration_ms: 51.177501
+  type: 'test'
+  ...
+# Subtest: StringWriter string line cil: disposal after text also prevents an empty newline
+ok 251 - StringWriter string line cil: disposal after text also prevents an empty newline
+  ---
+  duration_ms: 1.035632
+  type: 'test'
+  ...
+# Subtest: StringWriter string line CIL: independent concrete/base string calls match every native ordinary row
+ok 252 - StringWriter string line CIL: independent concrete/base string calls match every native ordinary row
+  ---
+  duration_ms: 285.786483
+  type: 'test'
+  ...
+# Subtest: StringWriter string line bound/source: compiled string overloads preserve captured null/disposal behavior
+ok 253 - StringWriter string line bound/source: compiled string overloads preserve captured null/disposal behavior
+  ---
+  duration_ms: 62.549165
+  type: 'test'
+  ...
+# Subtest: StringWriter string line bound/cil: compiled string overloads preserve captured null/disposal behavior
+ok 254 - StringWriter string line bound/cil: compiled string overloads preserve captured null/disposal behavior
+  ---
+  duration_ms: 44.673933
+  type: 'test'
+  ...
+# Subtest: StringWriter string line legacy/source: compiled string overloads preserve captured null/disposal behavior
+ok 255 - StringWriter string line legacy/source: compiled string overloads preserve captured null/disposal behavior
+  ---
+  duration_ms: 17.68935
+  type: 'test'
+  ...
+# Subtest: StringWriter string line legacy/cil: compiled string overloads preserve captured null/disposal behavior
+ok 256 - StringWriter string line legacy/cil: compiled string overloads preserve captured null/disposal behavior
+  ---
+  duration_ms: 30.143795
+  type: 'test'
+  ...
+# Subtest: StringWriter string line correction preserves contracts and pins separate native capture provenance
+ok 257 - StringWriter string line correction preserves contracts and pins separate native capture provenance
+  ---
+  duration_ms: 1.43606
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03.2 bound source: source character writes use the registered overload
+ok 258 - SF-A09-T03.2 bound source: source character writes use the registered overload
+  ---
+  duration_ms: 119.532956
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03.2 bound cil: source character writes use the registered overload
+ok 259 - SF-A09-T03.2 bound cil: source character writes use the registered overload
+  ---
+  duration_ms: 34.823658
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03.2 legacy source: source character writes use the registered overload
+ok 260 - SF-A09-T03.2 legacy source: source character writes use the registered overload
+  ---
+  duration_ms: 12.231439
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03.2 legacy cil: source character writes use the registered overload
+ok 261 - SF-A09-T03.2 legacy cil: source character writes use the registered overload
+  ---
+  duration_ms: 12.062241
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03.2 source: unchanged StringWriter source matches .NET 10.0.5
+ok 262 - SF-A09-T03.2 source: unchanged StringWriter source matches .NET 10.0.5
+  ---
+  duration_ms: 71.469123
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03.2 source: top-level using calls inherited Dispose through the supported lowering
+ok 263 - SF-A09-T03.2 source: top-level using calls inherited Dispose through the supported lowering
+  ---
+  duration_ms: 9.086426
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03.2 source: native disposal faults precede null and empty writes
+ok 264 - SF-A09-T03.2 source: native disposal faults precede null and empty writes
+  ---
+  duration_ms: 5.788038
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03.2 source: managed builder identity survives disposal, GC and snapshot restore
+ok 265 - SF-A09-T03.2 source: managed builder identity survives disposal, GC and snapshot restore
+  ---
+  duration_ms: 2.157311
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03.2 source: UTF-16 units and newline storage survive write-observer collection
+ok 266 - SF-A09-T03.2 source: UTF-16 units and newline storage survive write-observer collection
+  ---
+  duration_ms: 2.154326
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03.2 source: writes retain StringBuilder bounds and WriteLine partial progress
+ok 267 - SF-A09-T03.2 source: writes retain StringBuilder bounds and WriteLine partial progress
+  ---
+  duration_ms: 6.735231
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03.2 source: unsupported receiver and invalid primitive inputs fail explicitly
+ok 268 - SF-A09-T03.2 source: unsupported receiver and invalid primitive inputs fail explicitly
+  ---
+  duration_ms: 1.004677
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03.2 cil: unchanged StringWriter source matches .NET 10.0.5
+ok 269 - SF-A09-T03.2 cil: unchanged StringWriter source matches .NET 10.0.5
+  ---
+  duration_ms: 22.754927
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03.2 cil: top-level using calls inherited Dispose through the supported lowering
+ok 270 - SF-A09-T03.2 cil: top-level using calls inherited Dispose through the supported lowering
+  ---
+  duration_ms: 22.970564
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03.2 cil: native disposal faults precede null and empty writes
+ok 271 - SF-A09-T03.2 cil: native disposal faults precede null and empty writes
+  ---
+  duration_ms: 7.99398
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03.2 cil: managed builder identity survives disposal, GC and snapshot restore
+ok 272 - SF-A09-T03.2 cil: managed builder identity survives disposal, GC and snapshot restore
+  ---
+  duration_ms: 4.120246
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03.2 cil: UTF-16 units and newline storage survive write-observer collection
+ok 273 - SF-A09-T03.2 cil: UTF-16 units and newline storage survive write-observer collection
+  ---
+  duration_ms: 5.948114
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03.2 cil: writes retain StringBuilder bounds and WriteLine partial progress
+ok 274 - SF-A09-T03.2 cil: writes retain StringBuilder bounds and WriteLine partial progress
+  ---
+  duration_ms: 7.828166
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03.2 cil: unsupported receiver and invalid primitive inputs fail explicitly
+ok 275 - SF-A09-T03.2 cil: unsupported receiver and invalid primitive inputs fail explicitly
+  ---
+  duration_ms: 1.719047
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03.2 independent CIL TextWriter dispatch matches native UTF-16 and disposal observations
+ok 276 - SF-A09-T03.2 independent CIL TextWriter dispatch matches native UTF-16 and disposal observations
+  ---
+  duration_ms: 42.528062
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03.2 writer contracts append after released reader and JSON IDs
+ok 277 - SF-A09-T03.2 writer contracts append after released reader and JSON IDs
+  ---
+  duration_ms: 0.478193
+  type: 'test'
+  ...
+# Subtest: SF-A09-T03.2 deferred writer surfaces retain compiler errors
+ok 278 - SF-A09-T03.2 deferred writer surfaces retain compiler errors
+  ---
+  duration_ms: 11.080147
+  type: 'test'
+  ...
+1..278
+# tests 278
+# suites 0
+# pass 276
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 22738.885066

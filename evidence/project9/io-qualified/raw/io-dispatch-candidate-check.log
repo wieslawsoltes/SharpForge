@@ -1,0 +1,19 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> sharpforge@0.14.0 check
+> node scripts/run.js check
+
+{
+  "areas": 30,
+  "nodeFiles": 1127,
+  "browserScripts": 37,
+  "unassigned": 0,
+  "duplicate": 0
+}
+Checked 4072 JavaScript modules; 0 syntax errors.
+{
+  "passed": true,
+  "inspected": 4068,
+  "modules": 4068,
+  "errors": []
+}

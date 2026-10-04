@@ -1,0 +1,116 @@
+{
+  "status": "prepared locally; no evidence branch or PR metadata published by this review lane",
+  "repository": "wieslawsoltes/SharpForge",
+  "plannedEvidenceBranch": "codex/project9-io-qualified-evidence",
+  "plannedEvidenceDirectory": "evidence/project9/io-qualified",
+  "sourceFinalCommit": "fe8288772be85395909d5de582c444db3d605ca3",
+  "sourceFinalTree": "541c835f876aefd506ec55ee30511929f131accd",
+  "stack": [
+    {
+      "pr": 4509,
+      "branch": "codex/a09-string-reader",
+      "original": "408cae030fcf2738c38e13ad33a3efe5ecade0e2",
+      "head": "cb3806f9b637aa5fdf7934d399ad1d059783ac5c",
+      "tree": "9404357709535f7a645947bec0cac09f39ef7e64",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4509",
+      "bodyDraft": "pr-4509-body.md",
+      "remoteMutationPerformedByReviewer": false
+    },
+    {
+      "pr": 4510,
+      "branch": "codex/a09-string-writer",
+      "original": "3ffe7b9b7dd65475429d797b8825a81b2b33b1e3",
+      "head": "e7ccdca8d6c2cea6bf628d377fb02fa46c202565",
+      "tree": "49e0b9f01fc4e9c3da605de08ce8b7040cb5a824",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4510",
+      "bodyDraft": "pr-4510-body.md",
+      "remoteMutationPerformedByReviewer": false
+    },
+    {
+      "pr": 4513,
+      "branch": "codex/a09-string-reader-buffer",
+      "original": "6f1e0c1dd89d8dc9129f10446ad548cb82a8fd37",
+      "head": "b9fb955e4aab9fa2464fd7afe17c1a6d23563c08",
+      "tree": "725b722d373cf79253f52a3cbfad5a3eaf42acd3",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4513",
+      "bodyDraft": "pr-4513-body.md",
+      "remoteMutationPerformedByReviewer": false
+    },
+    {
+      "pr": 4514,
+      "branch": "codex/a09-string-writer-object",
+      "original": "376c1955474d04a5386e22352a8f27a18a46f2c5",
+      "head": "42e745b5878774245d7b9dc63385731f8576834e",
+      "tree": "bf2d16ec64a00cc587d336a2dab6525a6154a4ff",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4514",
+      "bodyDraft": "pr-4514-body.md",
+      "remoteMutationPerformedByReviewer": false
+    },
+    {
+      "pr": 4515,
+      "branch": "codex/a09-string-writer-buffer",
+      "original": "955da4bb7197d027c5471034ed01e6e4dcd60a31",
+      "head": "3472e24862e5ae36954230a16b75d4a6b9e2f9ec",
+      "tree": "bbe2cb04eb78f45a427a99963d96523ffa7e3709",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4515",
+      "bodyDraft": "pr-4515-body.md",
+      "remoteMutationPerformedByReviewer": false
+    },
+    {
+      "pr": 4516,
+      "branch": "codex/a09-string-writer-line-buffer",
+      "original": "cbeffbae0b2968f82c5fefa2ca6b9bae8c67f82c",
+      "head": "59c078a6a6fea5d5c99c06148a871ad5fb46dc98",
+      "tree": "3602a3677baaf0e68afaadc3cd2ab2244b7061ff",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4516",
+      "bodyDraft": "pr-4516-body.md",
+      "remoteMutationPerformedByReviewer": false
+    },
+    {
+      "pr": 4517,
+      "branch": "codex/a09-string-writer-char-line",
+      "original": "bac87e4fcb3264886d6eeb6fff4c8089c29865c4",
+      "head": "726fbd8303042c7634a057807b51adeaddffa9a8",
+      "tree": "ddd94ac0868ecf995463b8af0d1c97a2fcb2e8a4",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4517",
+      "bodyDraft": "pr-4517-body.md",
+      "remoteMutationPerformedByReviewer": false
+    },
+    {
+      "pr": 4542,
+      "branch": "codex/a09-string-writer-scalars",
+      "original": "c01f8b5bede834b067a270a105edd2e059355157",
+      "head": "fe8288772be85395909d5de582c444db3d605ca3",
+      "tree": "541c835f876aefd506ec55ee30511929f131accd",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4542",
+      "bodyDraft": "pr-4542-body.md",
+      "remoteMutationPerformedByReviewer": false,
+      "measuredProductHead": "f8414bfcadbab039280d580a8152ac21f9fe6452"
+    }
+  ],
+  "optionalTitleCorrection": {
+    "pr": 4514,
+    "title": "SF-A09-T03.1: support StringWriter.ToString through object references",
+    "reason": "The original title suggests Write(object), which remains unsupported."
+  },
+  "sequence": [
+    "Review all eight replacement bodies and original metadata snapshots; re-read remote heads and draft states.",
+    "Refresh the authoritative package-json claim. No expiry, stale paths or absent locks[] implies authorization to take over.",
+    "Publish product updates serially, preserving ancestry with merge commits. Verify each published full tree against the local intended tree; record any new connector commit identity.",
+    "Create the evidence branch only through root-authorized publication. Copy the manifest-listed artifact bytes to their publication paths and verify SHA256 plus the resulting Git tree.",
+    "Publish README.md, manifest.json, qualification-review.md, files.sha256 and publication-plan.json under the planned directory; no claim of publication exists until root verifies it.",
+    "Replace pending-evidence paragraphs in the eight bodies with immutable blob/tree URLs using the verified evidence commit. Do not leave placeholder links or claim local SHA equals connector-published SHA without proof.",
+    "Update PR metadata serially. Keep drafts and the failed clean-install status explicit until the four lock entries are coordinated and applied on the oldest IO branch, propagated by merges, and npm ci plus each required core check pass.",
+    "After those gates pass, merge #4509, #4510, #4513, #4514, #4515, #4516, #4517, #4542 with merge commits. Keep #2723 open for unimplemented surfaces."
+  ],
+  "immutableLinkTemplateAfterPublication": "https://github.com/wieslawsoltes/SharpForge/blob/<VERIFIED_EVIDENCE_COMMIT>/evidence/project9/io-qualified/manifest.json",
+  "notPerformed": [
+    "remote publication",
+    "PR body updates",
+    "draft promotion",
+    "merge",
+    "lease takeover",
+    "lockfile edit",
+    "additional tests or benchmarks"
+  ]
+}

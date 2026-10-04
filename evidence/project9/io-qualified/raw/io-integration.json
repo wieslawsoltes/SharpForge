@@ -1,0 +1,130 @@
+{
+  "main": "00c2489e659cbeaa29e9c5dfa4a3137fae4bd4ad",
+  "steps": [
+    {
+      "pr": 4509,
+      "branch": "codex/a09-string-reader",
+      "original": "408cae030fcf2738c38e13ad33a3efe5ecade0e2",
+      "head": "cb3806f9b637aa5fdf7934d399ad1d059783ac5c",
+      "tree": "9404357709535f7a645947bec0cac09f39ef7e64"
+    },
+    {
+      "pr": 4510,
+      "branch": "codex/a09-string-writer",
+      "original": "3ffe7b9b7dd65475429d797b8825a81b2b33b1e3",
+      "parent": "cb3806f9b637aa5fdf7934d399ad1d059783ac5c",
+      "head": "e7ccdca8d6c2cea6bf628d377fb02fa46c202565",
+      "tree": "49e0b9f01fc4e9c3da605de08ce8b7040cb5a824"
+    },
+    {
+      "pr": 4513,
+      "branch": "codex/a09-string-reader-buffer",
+      "original": "6f1e0c1dd89d8dc9129f10446ad548cb82a8fd37",
+      "parent": "e7ccdca8d6c2cea6bf628d377fb02fa46c202565",
+      "head": "b9fb955e4aab9fa2464fd7afe17c1a6d23563c08",
+      "tree": "725b722d373cf79253f52a3cbfad5a3eaf42acd3"
+    },
+    {
+      "pr": 4514,
+      "branch": "codex/a09-string-writer-object",
+      "original": "376c1955474d04a5386e22352a8f27a18a46f2c5",
+      "parent": "b9fb955e4aab9fa2464fd7afe17c1a6d23563c08",
+      "head": "42e745b5878774245d7b9dc63385731f8576834e",
+      "tree": "bf2d16ec64a00cc587d336a2dab6525a6154a4ff",
+      "resolution": "Retain all four registered framework Object.ToString owners, including both Stopwatch and StringWriter."
+    },
+    {
+      "pr": 4515,
+      "branch": "codex/a09-string-writer-buffer",
+      "original": "955da4bb7197d027c5471034ed01e6e4dcd60a31",
+      "parent": "42e745b5878774245d7b9dc63385731f8576834e",
+      "head": "3472e24862e5ae36954230a16b75d4a6b9e2f9ec",
+      "tree": "bbe2cb04eb78f45a427a99963d96523ffa7e3709"
+    },
+    {
+      "pr": 4516,
+      "branch": "codex/a09-string-writer-line-buffer",
+      "original": "cbeffbae0b2968f82c5fefa2ca6b9bae8c67f82c",
+      "parent": "3472e24862e5ae36954230a16b75d4a6b9e2f9ec",
+      "head": "59c078a6a6fea5d5c99c06148a871ad5fb46dc98",
+      "tree": "3602a3677baaf0e68afaadc3cd2ab2244b7061ff"
+    },
+    {
+      "pr": 4517,
+      "branch": "codex/a09-string-writer-char-line",
+      "original": "bac87e4fcb3264886d6eeb6fff4c8089c29865c4",
+      "parent": "59c078a6a6fea5d5c99c06148a871ad5fb46dc98",
+      "head": "726fbd8303042c7634a057807b51adeaddffa9a8",
+      "tree": "ddd94ac0868ecf995463b8af0d1c97a2fcb2e8a4"
+    },
+    {
+      "pr": 4542,
+      "branch": "codex/a09-string-writer-scalars",
+      "original": "c01f8b5bede834b067a270a105edd2e059355157",
+      "localRunnerHead": "2ad30f33c7cdbb6e27178ebc874bd3b166a1fe0b",
+      "preservedRemoteMerge": "6c49380180c0f3949b963ac370eef17d7ff15d09",
+      "parent": "726fbd8303042c7634a057807b51adeaddffa9a8",
+      "head": "fe8288772be85395909d5de582c444db3d605ca3",
+      "tree": "541c835f876aefd506ec55ee30511929f131accd",
+      "resolution": "Retain corrected benchmark runner and README from 2ad when preserving the published c01 scalar head.",
+      "integratedProductHead": "7c8ddde425f7e2369c952be04b1fe562e8f77e8d",
+      "headBeforeJsonFixtureCorrection": "9b18416e8153f15a51b4cc9368bfe4dda9214590",
+      "headBeforeDispatchRefactor": "211db93e66b6b539540291c208ff6fdb971cc93f"
+    }
+  ],
+  "baseline": "726fbd8303042c7634a057807b51adeaddffa9a8",
+  "candidate": "fe8288772be85395909d5de582c444db3d605ca3",
+  "benchmarkRunnerSha256": "a2cbf021f0c215a7963aa8ecbe24997bb6445220e8e4a40f0807a0e8a9cbd327",
+  "rootLockUnchanged": true,
+  "scalarDeltaPaths": [
+    "docs/runtime14-api.md",
+    "packages/bcl-io/README.md",
+    "packages/bcl-io/benchmarks/README.md",
+    "packages/bcl-io/benchmarks/string-writer-scalars.mjs",
+    "packages/bcl-io/reference/string-writer-scalars-net10.json",
+    "packages/bcl-io/reference/string-writer-scalars/.gitignore",
+    "packages/bcl-io/reference/string-writer-scalars/Program.cs",
+    "packages/bcl-io/reference/string-writer-scalars/README.md",
+    "packages/bcl-io/reference/string-writer-scalars/StringWriterScalars.csproj",
+    "packages/bcl-io/reference/string-writer-scalars/global.json",
+    "packages/bcl-io/reference/string-writer-string-line-net10.json",
+    "packages/bcl-io/reference/string-writer-string-line/.gitignore",
+    "packages/bcl-io/reference/string-writer-string-line/Program.cs",
+    "packages/bcl-io/reference/string-writer-string-line/README.md",
+    "packages/bcl-io/reference/string-writer-string-line/StringWriterStringLine.csproj",
+    "packages/bcl-io/reference/string-writer-string-line/global.json",
+    "packages/bcl-io/smoke.mjs",
+    "packages/bcl-io/src/string-writer-builder.js",
+    "packages/bcl-io/src/string-writer-scalars.js",
+    "packages/bcl-io/src/string-writer.js",
+    "packages/bcl-io/src/text-writer.js",
+    "tests/a09-json-integer-keys.test.js",
+    "tests/a09-string-reader-buffer.test.js",
+    "tests/a09-string-writer-line-buffer.test.js",
+    "tests/a09-string-writer-scalars-state.test.js",
+    "tests/a09-string-writer-scalars.test.js",
+    "tests/a09-string-writer-string-line.test.js",
+    "tests/fixtures/json-integer-keys/README.md",
+    "tests/fixtures/text-writer/scalars.js",
+    "tests/fixtures/text-writer/string-line.js",
+    "tests/manifests/A09.json"
+  ],
+  "candidateBeforeJsonFixtureCorrection": "9b18416e8153f15a51b4cc9368bfe4dda9214590",
+  "jsonFixtureCorrection": {
+    "paths": [
+      "docs/runtime14-api.md",
+      "tests/a09-json-integer-keys.test.js",
+      "tests/fixtures/json-integer-keys/README.md"
+    ],
+    "reason": "Merged scalar lowering/Char boxing supports source Char; old SF2003 assertions are obsolete. Preserve native source/oracle; run both pipelines and both engines with genuine Char."
+  },
+  "candidateBeforeDispatchRefactor": "211db93e66b6b539540291c208ff6fdb971cc93f",
+  "dispatchRefactor": {
+    "path": "packages/bcl-io/src/string-writer.js",
+    "reason": "Remove parameterless scalar lookup and repeated descriptor checks while retaining native second write gate for all parameterized WriteLine values, including null and empty strings."
+  },
+  "measuredProductHead": "f8414bfcadbab039280d580a8152ac21f9fe6452",
+  "measuredProductTree": "c1d4f09b463487532fe04af9b0d1da348162aead",
+  "finalTree": "541c835f876aefd506ec55ee30511929f131accd",
+  "finalQualificationDocumentationOnly": true
+}

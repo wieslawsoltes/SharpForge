@@ -1,0 +1,14 @@
+{
+  "revision": "fe8288772be85395909d5de582c444db3d605ca3",
+  "command": [
+    "npm",
+    "ci",
+    "--ignore-scripts",
+    "--no-audit",
+    "--no-fund"
+  ],
+  "exitCode": 1,
+  "rootLockSha256": "0795c3e9cb2007594de2fa207c2a97d80bb927f146f68d8566934485cbddf0cd",
+  "rootLockUnchanged": true,
+  "log": "/workspace/scratch/f5d98b1de49e/SharpForge-p9-writer-scalars/artifacts/project9-resume/io-clean-install-gate.log"
+}

@@ -1,0 +1,148 @@
+{
+  "finalRevision": "fe8288772be85395909d5de582c444db3d605ca3",
+  "measuredProductRevision": "f8414bfcadbab039280d580a8152ac21f9fe6452",
+  "onlyChangeSinceProduct": "packages/bcl-io/README.md",
+  "baseline": {
+    "revision": "726fbd8303042c7634a057807b51adeaddffa9a8",
+    "filename": "sharpforge-bcl-io-0.14.0.tgz",
+    "size": 9439,
+    "unpackedSize": 29892,
+    "fileCount": 12,
+    "sha256": "e5c9dfff6ba06cf0832be51aa7084241fde20809727a8aa653c81ebe79c56143",
+    "writerSourceSha256": "13a986e5123b942bd3139697e86512c218d4dde07e1b92df78114880da0fc6ce",
+    "files": [
+      {
+        "path": "package/LICENSE",
+        "bytes": 1080
+      },
+      {
+        "path": "package/src/character-buffer.js",
+        "bytes": 1192
+      },
+      {
+        "path": "package/src/index.js",
+        "bytes": 770
+      },
+      {
+        "path": "package/src/string-reader-buffer.js",
+        "bytes": 1494
+      },
+      {
+        "path": "package/src/string-reader.js",
+        "bytes": 3086
+      },
+      {
+        "path": "package/src/string-writer-buffer.js",
+        "bytes": 1821
+      },
+      {
+        "path": "package/src/string-writer-builder.js",
+        "bytes": 1730
+      },
+      {
+        "path": "package/src/string-writer.js",
+        "bytes": 4252
+      },
+      {
+        "path": "package/src/text-reader-writer.js",
+        "bytes": 1494
+      },
+      {
+        "path": "package/src/text-writer.js",
+        "bytes": 1821
+      },
+      {
+        "path": "package/package.json",
+        "bytes": 379
+      },
+      {
+        "path": "package/README.md",
+        "bytes": 10773
+      }
+    ]
+  },
+  "candidate": {
+    "id": "@sharpforge/bcl-io@0.14.0",
+    "name": "@sharpforge/bcl-io",
+    "version": "0.14.0",
+    "size": 11460,
+    "unpackedSize": 36133,
+    "shasum": "d4e29efe1c6b0fe8c8bee3bf4d8d2b0b36bc2292",
+    "integrity": "sha512-/w4VgFrZdbJZ1fhbN8prrEEdH3JRp1Uqg0DLijAU20bBj8ogjkw4XP9Xq19rLbQAzQxtAG257hXOaMsycgdZEw==",
+    "filename": "sharpforge-bcl-io-0.14.0.tgz",
+    "files": [
+      {
+        "path": "LICENSE",
+        "size": 1080,
+        "mode": 420
+      },
+      {
+        "path": "README.md",
+        "size": 15135,
+        "mode": 420
+      },
+      {
+        "path": "package.json",
+        "size": 379,
+        "mode": 420
+      },
+      {
+        "path": "src/character-buffer.js",
+        "size": 1192,
+        "mode": 420
+      },
+      {
+        "path": "src/index.js",
+        "size": 770,
+        "mode": 420
+      },
+      {
+        "path": "src/string-reader-buffer.js",
+        "size": 1494,
+        "mode": 420
+      },
+      {
+        "path": "src/string-reader.js",
+        "size": 3086,
+        "mode": 420
+      },
+      {
+        "path": "src/string-writer-buffer.js",
+        "size": 1821,
+        "mode": 420
+      },
+      {
+        "path": "src/string-writer-builder.js",
+        "size": 2348,
+        "mode": 420
+      },
+      {
+        "path": "src/string-writer-scalars.js",
+        "size": 719,
+        "mode": 420
+      },
+      {
+        "path": "src/string-writer.js",
+        "size": 4693,
+        "mode": 420
+      },
+      {
+        "path": "src/text-reader-writer.js",
+        "size": 1494,
+        "mode": 420
+      },
+      {
+        "path": "src/text-writer.js",
+        "size": 1922,
+        "mode": 420
+      }
+    ],
+    "entryCount": 13,
+    "bundled": []
+  },
+  "sha256": "bf9615f0da254b2d6cc58054475e4362a8d56c9a2c7ace0c0d4a6c851ced9973",
+  "compressedDelta": 2021,
+  "compressedPercent": 21.411166437122574,
+  "unpackedDelta": 6241,
+  "sourceAndInventoryMatchCommitted": true
+}

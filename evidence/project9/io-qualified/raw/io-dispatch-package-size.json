@@ -1,0 +1,180 @@
+{
+  "baseline": {
+    "revision": "726fbd8303042c7634a057807b51adeaddffa9a8",
+    "filename": "sharpforge-bcl-io-0.14.0.tgz",
+    "size": 9439,
+    "unpackedSize": 29892,
+    "fileCount": 12,
+    "sha256": "e5c9dfff6ba06cf0832be51aa7084241fde20809727a8aa653c81ebe79c56143",
+    "writerSourceSha256": "13a986e5123b942bd3139697e86512c218d4dde07e1b92df78114880da0fc6ce",
+    "files": [
+      {
+        "path": "package/LICENSE",
+        "bytes": 1080
+      },
+      {
+        "path": "package/src/character-buffer.js",
+        "bytes": 1192
+      },
+      {
+        "path": "package/src/index.js",
+        "bytes": 770
+      },
+      {
+        "path": "package/src/string-reader-buffer.js",
+        "bytes": 1494
+      },
+      {
+        "path": "package/src/string-reader.js",
+        "bytes": 3086
+      },
+      {
+        "path": "package/src/string-writer-buffer.js",
+        "bytes": 1821
+      },
+      {
+        "path": "package/src/string-writer-builder.js",
+        "bytes": 1730
+      },
+      {
+        "path": "package/src/string-writer.js",
+        "bytes": 4252
+      },
+      {
+        "path": "package/src/text-reader-writer.js",
+        "bytes": 1494
+      },
+      {
+        "path": "package/src/text-writer.js",
+        "bytes": 1821
+      },
+      {
+        "path": "package/package.json",
+        "bytes": 379
+      },
+      {
+        "path": "package/README.md",
+        "bytes": 10773
+      }
+    ]
+  },
+  "candidate": {
+    "revision": "f8414bfcadbab039280d580a8152ac21f9fe6452",
+    "filename": "sharpforge-bcl-io-0.14.0.tgz",
+    "size": 11112,
+    "unpackedSize": 35345,
+    "fileCount": 13,
+    "sha256": "dfc51b7929ff3ab85356d4d2e5923d0635915bf50abc5ed0d5672fef17d69704",
+    "writerSourceSha256": "faac5d137964074527a621914e9aa78da8961fe55f48c28a731ceaebca22ad5e",
+    "files": [
+      {
+        "path": "package/LICENSE",
+        "bytes": 1080
+      },
+      {
+        "path": "package/src/character-buffer.js",
+        "bytes": 1192
+      },
+      {
+        "path": "package/src/index.js",
+        "bytes": 770
+      },
+      {
+        "path": "package/src/string-reader-buffer.js",
+        "bytes": 1494
+      },
+      {
+        "path": "package/src/string-reader.js",
+        "bytes": 3086
+      },
+      {
+        "path": "package/src/string-writer-buffer.js",
+        "bytes": 1821
+      },
+      {
+        "path": "package/src/string-writer-builder.js",
+        "bytes": 2348
+      },
+      {
+        "path": "package/src/string-writer-scalars.js",
+        "bytes": 719
+      },
+      {
+        "path": "package/src/string-writer.js",
+        "bytes": 4693
+      },
+      {
+        "path": "package/src/text-reader-writer.js",
+        "bytes": 1494
+      },
+      {
+        "path": "package/src/text-writer.js",
+        "bytes": 1922
+      },
+      {
+        "path": "package/package.json",
+        "bytes": 379
+      },
+      {
+        "path": "package/README.md",
+        "bytes": 14347
+      }
+    ]
+  },
+  "sizeDelta": 1673,
+  "sizePercent": 17.724335205000518,
+  "unpackedDelta": 5453,
+  "smoke": {
+    "passed": true,
+    "mode": "All 29 workspace tarballs installed offline in an isolated project, without source workspace links",
+    "packages": 29,
+    "steps": [
+      "compiler:compile",
+      "runtime:source-vm",
+      "cil:ordinary-roundtrip",
+      "workspace:workspace-apis",
+      "extensions:build-info",
+      "refactoring:explicit-type",
+      "project-system:project-load",
+      "docking:layout-undo",
+      "text:unicode-search",
+      "compiler:library-invocation",
+      "debugger:cil-step",
+      "protocol:unicode-framing",
+      "editor:stylesheet",
+      "compiler:finally-checked-dispose",
+      "debugger:reverse-replay",
+      "editor:viewport-navigation",
+      "extensions:immutable-schema",
+      "project-system:overflow-options",
+      "controls:tree-commands",
+      "editor:keymaps-classic-css",
+      "controls:stylesheet",
+      "project-system:solution-membership",
+      "debugger:remap-breakpoints",
+      "msbuild:native-api",
+      "debugger:source-cil-breakpoints",
+      "protocol:configuration-done",
+      "symbols:source-checksum",
+      "framework:manifest-contracts",
+      "winui:host-apis",
+      "runtime:async-delay",
+      "winui:code-first-scene",
+      "debugger:set-next-statement",
+      "templates:solution-plan",
+      "archive:zip-roundtrip",
+      "project-system:restored-solution",
+      "designer:scene-patch",
+      "debugger:structural-enc",
+      "designer:source-sync",
+      "runtime:closed-bcl",
+      "winui:animation",
+      "compute:simd-workers",
+      "compiler:preview-collections",
+      "runtime:json-serialization",
+      "network:http-transports",
+      "compiler:execution-report"
+    ],
+    "node": "v24.19.0"
+  }
+}

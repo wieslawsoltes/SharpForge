@@ -1,0 +1,88 @@
+TAP version 13
+# Subtest: SF-A09-B02 bound/source boxes Char at object arguments, arrays and params boundaries
+ok 1 - SF-A09-B02 bound/source boxes Char at object arguments, arrays and params boundaries
+  ---
+  duration_ms: 151.283574
+  type: 'test'
+  ...
+# Subtest: SF-A09-B02 bound/cil boxes Char at object arguments, arrays and params boundaries
+ok 2 - SF-A09-B02 bound/cil boxes Char at object arguments, arrays and params boundaries
+  ---
+  duration_ms: 77.013493
+  type: 'test'
+  ...
+# Subtest: SF-A09-B02 legacy/source boxes Char at object arguments, arrays and params boundaries
+ok 3 - SF-A09-B02 legacy/source boxes Char at object arguments, arrays and params boundaries
+  ---
+  duration_ms: 21.33783
+  type: 'test'
+  ...
+# Subtest: SF-A09-B02 legacy/cil boxes Char at object arguments, arrays and params boundaries
+ok 4 - SF-A09-B02 legacy/cil boxes Char at object arguments, arrays and params boundaries
+  ---
+  duration_ms: 66.618155
+  type: 'test'
+  ...
+# Subtest: SF-A09-B02 bound/source native JSON retains source Char with only the typed-catch adaptation
+ok 5 - SF-A09-B02 bound/source native JSON retains source Char with only the typed-catch adaptation
+  ---
+  duration_ms: 238.949182
+  type: 'test'
+  ...
+# Subtest: SF-A09-B02 bound/cil native JSON retains source Char with only the typed-catch adaptation
+ok 6 - SF-A09-B02 bound/cil native JSON retains source Char with only the typed-catch adaptation
+  ---
+  duration_ms: 91.652597
+  type: 'test'
+  ...
+# Subtest: SF-A09-B02 legacy/source native JSON retains source Char with only the typed-catch adaptation
+ok 7 - SF-A09-B02 legacy/source native JSON retains source Char with only the typed-catch adaptation
+  ---
+  duration_ms: 83.751475
+  type: 'test'
+  ...
+# Subtest: SF-A09-B02 legacy/cil native JSON retains source Char with only the typed-catch adaptation
+ok 8 - SF-A09-B02 legacy/cil native JSON retains source Char with only the typed-catch adaptation
+  ---
+  duration_ms: 23.589949
+  type: 'test'
+  ...
+# Subtest: SF-A09-B02 source integer dictionary retains nonfinite and unsupported-object faults
+ok 9 - SF-A09-B02 source integer dictionary retains nonfinite and unsupported-object faults
+  ---
+  duration_ms: 25.441941
+  type: 'test'
+  ...
+# Subtest: SF-A09-B02 cil integer dictionary retains nonfinite and unsupported-object faults
+ok 10 - SF-A09-B02 cil integer dictionary retains nonfinite and unsupported-object faults
+  ---
+  duration_ms: 21.357413
+  type: 'test'
+  ...
+# Subtest: SF-A09-B02 independently assembled CIL serializes signed dictionary keys in entry order
+ok 11 - SF-A09-B02 independently assembled CIL serializes signed dictionary keys in entry order
+  ---
+  duration_ms: 4.139483
+  type: 'test'
+  ...
+# Subtest: SF-A09-B02 independently assembled CIL preserves genuine boxed Char and Boolean JSON values
+ok 12 - SF-A09-B02 independently assembled CIL preserves genuine boxed Char and Boolean JSON values
+  ---
+  duration_ms: 3.548525
+  type: 'test'
+  ...
+# Subtest: SF-A09-B02 integer dictionary oracle pins source, SDK, runtime and all eighteen cases
+ok 13 - SF-A09-B02 integer dictionary oracle pins source, SDK, runtime and all eighteen cases
+  ---
+  duration_ms: 0.703644
+  type: 'test'
+  ...
+1..13
+# tests 13
+# suites 0
+# pass 13
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2939.93086
