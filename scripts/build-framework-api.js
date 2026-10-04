@@ -1,7 +1,6 @@
-/** Documentation from actual supported registry, not from a native WinUI promise. */
-import {writeFile,readFile} from 'node:fs/promises';
-import {frameworkManifest,propertiesFor,eventsFor} from '@sharpforge/framework';
-const root=new URL('../',import.meta.url),version=JSON.parse(await readFile(new URL('package.json',root))).version;
-const lines=[`# Supported framework API inventory — ${version}`,'',`Generated from the closed framework registry: **${frameworkManifest.types.length} named types and ${frameworkManifest.members.length} ABI members**. Counts include task/thread/delegate/value/enum/helper types, not just controls. Inherited properties/events are expanded. This is a managed/browser compatibility profile, not the complete native WinUI or Windows App SDK API.`, '', 'See [Edit and Continue / Designer](edit-continue-designer.md) and [advanced debugger / WinUI](advanced-debugging-winui.md) for behavior, deviations and qualification. In particular TargetTypeName, template VisualTree/Bind, string Date/Time and ContentDialog Show/Hide are profile contracts.',''];
-for(const type of frameworkManifest.types){lines.push('## '+type.name,'',`Kind: ${type.kind??'class'}; base: ${type.base??'none'}.`,'');if(type.values)lines.push('Enum values: '+Object.entries(type.values).map(([k,v])=>`${k}=${v}`).join(', ')+'.','');const props=Object.entries(propertiesFor(type.name));if(props.length){lines.push('### Properties','','| Name | Type | Access |','|---|---|---|');for(const [name,p]of props)lines.push(`| ${name} | ${p.type} | ${p.isStatic?'static ':''}${p.readOnly?'get':'get/set'} |`);lines.push('');}const events=Object.keys(eventsFor(type.name));if(events.length)lines.push('Events: '+events.map(e=>'`'+e+'`').join(', ')+'.','');const methods=frameworkManifest.members.filter(m=>m.owner===type.name&&!['get','set','add','remove'].includes(m.kind));if(methods.length){lines.push('### Declared methods','');for(const m of methods)lines.push('- `'+(m.isStatic?'static ':'')+m.result+' '+m.name+'('+m.parameters.join(', ')+')`');lines.push('');}}
-await writeFile(new URL('docs/winui-api.md',root),lines.join('\n')+'\n');console.log('Generated registry API inventory.');
+/** WinUI reference coverage excludes unrelated BCL/helper types and keeps behavior evidence separate. */
+import { writeParityInventory } from '../packages/winui-controls/parity/generate-matrix.js';
+
+const matrix = await writeParityInventory({ writeDoc: 'docs/winui-api.md', check: true });
+console.log(`Generated WinUI reference coverage: ${matrix.totals.api.present}/${matrix.totals.denominator} exact signatures; `
+  + `${matrix.totals.behaviorVerified} behavior-qualified rows.`);
