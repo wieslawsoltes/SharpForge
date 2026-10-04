@@ -1,0 +1,15 @@
+{
+  "workIds": [
+    "SF-A23-T28"
+  ],
+  "productSource": "c1a662d18d31e202a6b420bce1e9177b0b1a50ba",
+  "test": "tests/a23-project-stack-provenance.test.js",
+  "cases": 3,
+  "qualification": {
+    "initialNode22": "All three selected cases passed in root 794-test scope; aggregate 788 passed, 6 failures retained",
+    "correctedNode22": "Affected upstream correction scope 77/77 passed",
+    "earlierNode26": "Complete joint graph scope 415/415 passed"
+  },
+  "scope": "Stack serialization only; legacy debugger entries shrink; no VM dispatch edits.",
+  "remaining": "Studio navigation consumes the separately published debugger UI contracts; protected entry remains a root-owned integration patch."
+}

@@ -65,8 +65,10 @@ export function nativeConfiguration(context) {
       renderTree();
       refreshEngineIndicators();
     },
-    onJob(job) {
-      state.nativeJob = job;
+    onJob(job, ownership = {}) {
+      if (ownership.selected !== false) state.nativeJob = job;
+      context.onNativeJob?.(job, ownership);
+      if (ownership.selected === false || state.nativeJob !== job) return;
       refreshEngineIndicators();
       if (!state.nativeMode || !['succeeded', 'failed', 'cancelled'].includes(job.status)) return;
       state.result = { success: job.status === 'succeeded', symbols: [],
@@ -77,6 +79,7 @@ export function nativeConfiguration(context) {
       renderPanel('problems');
       status('Native MSBuild ' + job.status, job.status === 'failed' ? 'error' : 'ready');
     },
+    onJobFailure(id, error, ownership) { context.onNativeJobFailure?.(id, error, ownership); },
     onWorkspace(workspace) { if (state.nativeMode) { state.nativeWorkspace = workspace; renderTree(); } },
     onAssembly: openDecompilerFile, onSelectPanel: setPanel, onError: error => toast(error.message, 'error')
   };

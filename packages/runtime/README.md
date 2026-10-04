@@ -1,5 +1,39 @@
 # @sharpforge/runtime
 
+## Managed launch context compatibility
+
+The released `programArguments` option remains the normal VM launch interface.
+`withSourceLaunchArguments(image, args)` additionally creates an immutable source
+image overlay for compiler-owned startup methods. It accepts the current forwarded
+string-array bootstrap and the older empty-array bootstrap, preserving source/IL
+offset mappings, static initialization and async Main. Empty arguments or a Main
+without parameters return the existing image; unsupported/custom startup shapes
+fail explicitly. It also works on a canonical image decoded from an emitted PE.
+
+The overlay's compatibility limit is 4096 strings and 131072 total UTF-16 units,
+with NUL rejected. This is distinct from the released VM `programArguments`
+limits (1024 arguments and 1048576 total units). The helper does not mutate shared
+image arrays or alter the VM dispatcher. Custom direct-CIL method invocation keeps
+its separate `arguments` option.
+
+`environment` remains canonical; legacy `environmentVariables` is validated and
+accepted only when `environment` is absent. Explicit malformed canonical values
+still fail before execution with `RuntimeLaunchError`, including when a valid
+alias is present. The same released launch bounds apply to both forms. Environments
+are copied per VM, use ordinal case-sensitive lookup and never inherit host state.
+
+`System.Environment.GetEnvironmentVariables()` returns a separate mutable managed
+`IDictionary` snapshot. `CurrentDirectory` reads `workingDirectory`, with
+`currentDirectory` as an alias and `/` as the deterministic default. Dictionary
+mutation changes only that returned dictionary. No operating-system environment or
+current-directory mutation is enabled. The BCL core README documents exact bounds,
+faults and collection behavior for both source and direct-CIL platforms.
+
+New environment contracts append after the released comparer slots: existing
+`GetEnvironmentVariable` remains 524289; `GetEnvironmentVariables` and
+`CurrentDirectory` use 524311 and 524312. Existing runtime builtin reservations
+remain fixed, and duplicate/overlapping reservations now fail explicitly.
+
 Two standalone interpreters: `VirtualMachine` for the original source-debugging profile and `CilVirtualMachine` for bounded direct managed CIL without #SF. Both share the explicit non-moving mark-and-sweep heap. The direct engine is a constrained allowlisted subset, not a complete CLR loader/type verifier or full BCL.
 
 Version 0.9.0 · MIT · ES modules.
@@ -89,3 +123,54 @@ The behavior follows the single-string process lookup contract documented by
 [Microsoft](https://learn.microsoft.com/en-us/dotnet/api/system.environment.getenvironmentvariable?view=net-10.0).
 The focused source, emitted CIL, independent CIL and production-worker tests are
 `tests/a19-runtime-*.test.js`; they do not claim native CLR execution parity.
+
+[Assembly-aware type identity](TYPE-IDENTITY.md) documents opaque project type
+registration, pre-execution admission, closed field context and performance review.
+
+Verified separate-PE execution is documented in [PROJECT-ASSEMBLIES.md](./PROJECT-ASSEMBLIES.md).
+## Isolated managed invocation
+
+`ManagedInvocationSession(artifact, {backend: 'source' | 'cil', ...runtimeOptions})`
+creates an independent VM, heap, static state and cooperative scheduler. Supply a
+source image for `source` or PE assembly bytes for `cil`. The default bootstrap is
+the compiled entry point, including a compiler-owned `string[]` startup using the
+ordinary `programArguments` option. A named source `entryPoint` must be a
+parameterless static method. Explicit CIL entry methods retain the VM's raw
+argument-vector rules.
+
+```js
+import {ManagedInvocationSession} from '@sharpforge/runtime';
+
+const session = new ManagedInvocationSession(compiled.image, {backend: 'source'});
+try {
+  const result = await session.invoke('Checks.Add', {arguments: [19, 23]});
+  if (result.fault) throw result.fault;
+  console.log(result.value);
+} finally {
+  session.dispose();
+}
+```
+
+`initialize({signal, onSlice})` runs the bootstrap once; `invoke` does this
+implicitly before the first call. `invoke(nameOrToken, {arguments, signal,
+onSlice})` then calls a static method and awaits cooperative completion. Results
+contain `state`, `fault`, converted `value`, per-call `stdout`, `durationMs`, runtime
+`statistics` and the available source location. Names must resolve unambiguously;
+argument counts and supported host conversions are checked. Supported scalar and array arguments use the existing runtime representation. Conversion of managed
+results has a 32-level nesting limit; arbitrary managed objects are rejected.
+
+Sequential calls retain that session's static fields and managed heap. A new call
+requires the previous scheduler to have no unfinished tasks. The CIL path verifies
+each selected method's closure before invoking it. A caught managed test failure
+can be returned as a fault without retiring the session; cancellation and fatal
+runtime faults make the session unusable. `dispose()` stops its VM and rejects
+future calls. Overlapping calls are rejected. Instruction, heap, output and frame
+limits remain the underlying VM's explicit options.
+
+This is a bounded host invocation seam for adapters, not CLR reflection or an
+assembly search service. It adds no instruction-dispatch hooks or prototype
+patches. The public-entry regressions in `tests/a23-39-managed-invocation.test.js`
+cover both JavaScript engines, repeated/static-state isolation, async success and
+failure, disposal, missing methods, argument counts, instruction limits and
+compiler startup compatibility. Native CLR, Rust/Wasm and external test-framework
+package qualification remain separate work.

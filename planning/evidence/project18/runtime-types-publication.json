@@ -1,0 +1,161 @@
+{
+  "schemaVersion": 1,
+  "productSource": "c1a662d18d31e202a6b420bce1e9177b0b1a50ba",
+  "productBlobs": {
+    "packages/runtime/src/project-assemblies/admission.js": "aeb74a1deb636aba35b73089168c27c70bbff6cb",
+    "packages/runtime/src/execution/type-qualification.js": "dd7a6d3cadaac3734c2648a442ef1e7577985a36",
+    "packages/runtime/src/execution/type-names.js": "4ddfa744b816bd45b88eedcff92af21e471ec3c2",
+    "packages/runtime/src/execution/method-table.js": "60793bc4f1f4f2dc59ab43f600cb2a3d293f7c55",
+    "packages/runtime/src/execution/type-system.js": "79280cb34d5647429794dc4df774675548985fcf",
+    "packages/runtime/src/execution/type-display.js": "b70b713d93fc0c164fbeeb3639740fc214cde7a7",
+    "packages/runtime/src/execution/tokens.js": "294684defa61a75dde6a75f19431d72f9a6ee6d5",
+    "packages/runtime/src/execution/field-resolution-cache.js": "a4c5f3962d4783edc7f3700c95bdf15e4c4a48de"
+  },
+  "qualification": {
+    "node": "22.23.3",
+    "initial": {
+      "source": "4a49a23b773b62088057d83e3e6ac6e573390578",
+      "total": 794,
+      "passed": 788,
+      "failed": 6,
+      "skipped": 0,
+      "selectedTypeIdentityPassed": 4,
+      "captureSha256": "0542e0eb3da4b9cee8057f74d45dbbf59322e6fbdb4f345293ef2583b5409a7b"
+    },
+    "correction": {
+      "source": "d1c791a7ad83773738b2d725a0891065c52ae2cd",
+      "total": 77,
+      "passed": 77,
+      "failed": 0,
+      "skipped": 0,
+      "selectedFiles": [
+        "tests/a05-token-cache.test.js",
+        "tests/a05-seams-cil-types.test.js"
+      ],
+      "captureSha256": "6f849ee2c32740385f94a21154a1c662110112225cfa8cddda4948bca07da192"
+    },
+    "changedAssertions": "No assertion weakened; existing CIL type-system fixture is now a real CLI assembly supplying the full inspector contract"
+  },
+  "performance": {
+    "reference": "scripts/benchmark-release14.js",
+    "node": "v22.23.3",
+    "baseline": "b34fa27b7812a62f8c10cf81c83d2cbfdd0b347a",
+    "final": "c1a662d18d31e202a6b420bce1e9177b0b1a50ba",
+    "pairs": 2,
+    "warmSamplesPerCell": 8,
+    "p95Method": "nearest rank",
+    "report": "planning/evidence/project18/integration/upstream-performance/benchmark.json",
+    "reportSha256": "7471199d7a177e07165a2a7eb06be8f974999d47d6a6da64d292bf3939341536",
+    "cells": [
+      {
+        "workload": "dictionary",
+        "engine": "source",
+        "baselineMedianMs": 36.923602500000015,
+        "finalMedianMs": 40.85984549999995,
+        "baselineP95Ms": 53.9875330000001,
+        "finalP95Ms": 51.349061000000006,
+        "medianChangePercent": 10.660506379354317
+      },
+      {
+        "workload": "dictionary",
+        "engine": "cil",
+        "baselineMedianMs": 126.62305749999996,
+        "finalMedianMs": 170.18532400000004,
+        "baselineP95Ms": 150.21425399999998,
+        "finalP95Ms": 226.73704099999986,
+        "medianChangePercent": 34.403107427729026
+      },
+      {
+        "workload": "list",
+        "engine": "source",
+        "baselineMedianMs": 52.845522500000015,
+        "finalMedianMs": 53.52597750000007,
+        "baselineP95Ms": 70.07981600000016,
+        "finalP95Ms": 61.35626200000024,
+        "medianChangePercent": 1.2876303758753593
+      },
+      {
+        "workload": "list",
+        "engine": "cil",
+        "baselineMedianMs": 368.3493094999999,
+        "finalMedianMs": 377.524576,
+        "baselineP95Ms": 404.9033260000001,
+        "finalP95Ms": 394.9359140000006,
+        "medianChangePercent": 2.49091453773993
+      },
+      {
+        "workload": "queue",
+        "engine": "source",
+        "baselineMedianMs": 22.253629500000216,
+        "finalMedianMs": 23.24746750000031,
+        "baselineP95Ms": 28.29368899999963,
+        "finalP95Ms": 28.979169999999613,
+        "medianChangePercent": 4.465959137137987
+      },
+      {
+        "workload": "queue",
+        "engine": "cil",
+        "baselineMedianMs": 141.74449899999945,
+        "finalMedianMs": 153.6864174999996,
+        "baselineP95Ms": 204.99417200000062,
+        "finalP95Ms": 184.00940700000046,
+        "medianChangePercent": 8.42496081629256
+      },
+      {
+        "workload": "builder",
+        "engine": "source",
+        "baselineMedianMs": 25.069653000000017,
+        "finalMedianMs": 23.51738299999988,
+        "baselineP95Ms": 30.948703000000023,
+        "finalP95Ms": 40.25557200000003,
+        "medianChangePercent": -6.1918288218833055
+      },
+      {
+        "workload": "builder",
+        "engine": "cil",
+        "baselineMedianMs": 66.40346550000004,
+        "finalMedianMs": 62.5392425,
+        "baselineP95Ms": 81.23271099999965,
+        "finalP95Ms": 73.85492799999975,
+        "medianChangePercent": -5.819309234696545
+      }
+    ],
+    "status": "Three above-5% regressions retain explicit performance review and causal profiling obligations; no speedup claim",
+    "cpuProfileFollowup": {
+      "procedure": "One unprofiled dictionary warmup and four run-only V8 profiles at100microseconds; compiler and VM construction outside sampling",
+      "profiles": [
+        {
+          "label": "baseline",
+          "source": "b34fa27b7812a62f8c10cf81c83d2cbfdd0b347a",
+          "correctness": {
+            "passed": true
+          },
+          "summarySha256": "58949c0dfc845ea784b852583e5e3e9e81dc0fa80d03b68c991a38b26aa55ebd",
+          "runCilSliceInclusiveMicroseconds": 591242,
+          "runtimeTypeNameInclusiveMicroseconds": 49568
+        },
+        {
+          "label": "integrated",
+          "source": "760e5f1a5e35e1437d2d554f05ecfd74565a06d2",
+          "correctness": {
+            "passed": true
+          },
+          "summarySha256": "cfa91d6d9ceb8299f7c86b0c985fb820e042d00ed30eea08b79735c23a571cc2",
+          "runCilSliceInclusiveMicroseconds": 503544,
+          "runtimeTypeNameInclusiveMicroseconds": 41140
+        }
+      ],
+      "conclusion": "Instrumented samples do not reproduce slower integrated execution or normalization. They do not replace uninstrumented benchmark results or establish causality; no code correction is justified by these samples."
+    }
+  },
+  "dependencies": {
+    "bytecode": "https://github.com/wieslawsoltes/SharpForge/pull/3719",
+    "cilTypeHandles": "https://github.com/wieslawsoltes/SharpForge/pull/3846",
+    "actualJoin": "d2dfefea4673aac13caa50eed35ccffdaf782a48"
+  },
+  "pending": [
+    "Required core",
+    "Performance review for source/CIL dictionary and CIL queue",
+    "No separate projection test run"
+  ]
+}

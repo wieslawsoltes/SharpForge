@@ -1,0 +1,100 @@
+{
+  "workIds": [
+    "SF-A23-T28",
+    "SF-A23-T29"
+  ],
+  "productSource": "c1a662d18d31e202a6b420bce1e9177b0b1a50ba",
+  "tests": {
+    "tests/a23-project-runtime-worker.test.js": 9,
+    "tests/a23-runtime-source-records.test.js": 1
+  },
+  "qualification": {
+    "node22": "Selected cases passed in initial upstream-composed runtime scope: 794 total, 788 pass, 6 failures retained. Affected correction scope then passed 77/77.",
+    "earlierNode26": "415/415 complete graph scope passed before canonical launch compatibility addition."
+  },
+  "sourceAssertionExtraction": "Original a23-project-debug-sources worker source publication assertion (lines 102\u2013108, initial TAP case 575) retained unchanged in the focused source-record test.",
+  "limits": [
+    "Protected Studio entry remains a root-owned unapplied integration patch",
+    "No arbitrary external CLR loader or Rust/Wasm project graph implementation",
+    "Related runtime performance budget exceptions remain open; no causal correction established by CPU profiles"
+  ],
+  "pinnedMainForwardSync": {
+    "pinnedMain": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+    "preservedFeatureHead": "339ad2e7e630b0f2bb307e08eeba24d3f2bbb4ae",
+    "dependencyHead": "8a768af2a6bd9fe38514053b73901d56d2a23023",
+    "dependencyTree": "e8df3ac90abbbf1ca63925619c30b205591c6435",
+    "sourcePreparation": {
+      "rootParent": "1ae5efc3a69a54f3f2836091b65c018a6660d92a",
+      "incomingMain": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+      "rootMergeCommit": "pending",
+      "files": [
+        {
+          "path": "apps/studio/runtime.worker.js",
+          "matchesPrepared": true,
+          "sha256": "270c133c51cd4c695e143dfe4bee17a38f2f3fc8a9e68c2bd193b8ca9993fb0d"
+        },
+        {
+          "path": "apps/studio/workers/runtime-launch.js",
+          "matchesPrepared": true,
+          "sha256": "f84f46a30a45b8614af5bd2be8b8e204eb8150e404addb8249f35dbc9053b1e4"
+        },
+        {
+          "path": "apps/studio/workers/runtime-inputs.js",
+          "matchesPrepared": true,
+          "sha256": "b64b545899a4338e0b24be99d90d3c04f6601bccede822afbcd68f41a42adad7"
+        },
+        {
+          "path": "apps/studio/workers/runtime-sources.js",
+          "matchesPrepared": true,
+          "sha256": "0cf18372761de881b91a9d3585bd7f6d50097f3400352e1163b5dfbdfc9071fb"
+        },
+        {
+          "path": "apps/studio/workers/protocol.js",
+          "matchesPrepared": true,
+          "sha256": "09e61a608b84d1d43cca38d552583e0cfdc65b2a82ca59569e5b26c15216e683"
+        },
+        {
+          "path": "tests/a00-03-studio-registries.test.js",
+          "matchesPrepared": true,
+          "sha256": "569e621fa1ffddcfbbceb1a1d4c35edc654a6856ffa584239042abc1b944066c"
+        }
+      ]
+    },
+    "retainedBehavior": [
+      "Upstream RuntimeActivity owns scheduling, animation clocks, execution metrics and command timing.",
+      "Candidate construction completes before the active session is replaced.",
+      "Explicit dependency artifacts retain bounded canonical graph verification and isolated launch options.",
+      "All four source publication replies retain assemblyKey, originalUri, project and contextId.",
+      "Graph hot reload and independent symbol replacement remain explicitly rejected.",
+      "The actual compiler-worker prerequisite supplies the exact 43 compiler / 47 runtime protocol and name assertions."
+    ],
+    "conflictResolution": "One worker conflict uses the exact reviewed integrated composition; existing launch/input/source helpers are unchanged.",
+    "previousRequiredCore": {
+      "runId": 37173546899,
+      "jobId": 111351330018,
+      "conclusion": "failure",
+      "reason": "An inherited exact A05 test selector duplicated the existing wildcard; corrected dependencies retain all assertions."
+    },
+    "validation": {
+      "localTestsRun": false,
+      "localBuildRun": false,
+      "status": "Pending the coordinator complete final pinned-main scope.",
+      "selectedUpstreamFiles": [
+        "tests/a19-execution-worker.test.js",
+        "tests/a19-execution-occupancy.test.js"
+      ],
+      "selectedExistingFiles": [
+        "tests/a23-project-runtime-worker.test.js",
+        "tests/a23-project-debug-sources.test.js"
+      ]
+    },
+    "performance": "Existing measured >5% dictionary/queue regressions remain an explicit review obligation; this merge makes no new performance claim.",
+    "retainedReviewedPolicy": {
+      "path": "tests/support/runtime-project-worker.mjs",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "4161af84e673e3d284522f96d56318fc9417b1bc31938462c6b4a28428071a97",
+      "reason": "Node test transport installs self.postMessage then loads only the fixed checked-in production runtime worker; no user-selected executable input."
+    }
+  }
+}

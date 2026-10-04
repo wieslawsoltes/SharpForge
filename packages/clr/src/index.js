@@ -18,3 +18,5 @@ export { ParameterDesc } from './type-system/parameter-desc.js';
 export { resolveArrayMethod } from './type-system/constructed-types.js';
 export { substituteSignature, substituteTypeSignature } from './generics/substitution.js';
 export { FieldDesc } from './type-system/field-desc.js';
+export { PropertyDesc } from './type-system/property-desc.js';
+export { EventDesc } from './type-system/event-desc.js';

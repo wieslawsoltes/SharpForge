@@ -1,6 +1,9 @@
 export * from './heap.js';
 export * from './vm.js';
 export * from './cil-vm.js';
+export {ManagedInvocationSession} from './invocation-session.js';
+export {withSourceLaunchArguments} from './launch-arguments.js';
+export {createProjectAssemblyInspector} from './project-assemblies/inspector.js';
 export {runtimeLaunchLimits, runtimeLaunchCapabilities, RuntimeLaunchError, validateProgramArguments,
   validateLaunchEnvironment, normalizeRuntimeLaunchOptions} from './launch-options.js';
 
@@ -9,3 +12,9 @@ export {executionCodeStatistics, invalidateExecutionCode} from './execution/code
 export {RuntimeEventLog, RuntimeEventName} from './execution/runtime-events.js';
 export {framePoolStatistics} from './execution/frame-pool.js';
 export {instructionProfile} from './execution/profiler.js';
+export {wasmEligibility, lowerWasmIR} from './execution/wasm/eligibility.js';
+export {exportSpeedscope} from './execution/profile-export.js';
+export {encodeWasmIR} from './execution/wasm/encoder.js';
+export {instantiateWasmIR} from './execution/wasm/compile.js';
+export {prepareWasmMethod, runWasmSlice, disposeWasmMethod} from './execution/wasm/manual-runtime.js';
+export {wasmTieringStatistics, disposeWasmTiering} from './execution/wasm/tiering.js';

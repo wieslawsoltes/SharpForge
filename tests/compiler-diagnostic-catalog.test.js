@@ -75,6 +75,8 @@ test('A02-T36 compiler diagnostics carry Roslyn message text',()=>{
   assert.deepEqual(messages('int x="a";'),["CS0029: Cannot implicitly convert type 'string' to 'int'"]);
   assert.deepEqual(messages('Console.WriteLine(y);'),["CS0103: The name 'y' does not exist in the current context"]);
   assert.deepEqual(messages('Foo f=null;'),["CS0246: The type or namespace name 'Foo' could not be found (are you missing a using directive or an assembly reference?)"]);
-  assert.deepEqual(messages('Console.WriteLine(1); class C{int X;int X;}'),["CS0102: The type 'C' already contains a definition for 'X'"]);
+  // Roslyn 5.3.0 reports the duplicate once and each of the two unused fields (warning CS0169), in source order.
+  assert.deepEqual(messages('Console.WriteLine(1); class C{int X;int X;}'),["CS0169: The field 'C.X' is never used","CS0102: The type 'C' already contains a definition for 'X'","CS0169: The field 'C.X' is never used"]);
+  assert.deepEqual(compile('Console.WriteLine(1); class C{int X;int X;}').diagnostics.map(d=>[d.severity,d.start,d.length]),[['warning',34,1],['error',40,1],['warning',40,1]]);
   const w=compile('int x=1;Console.WriteLine(x switch{1=>2});').diagnostics.find(d=>d.code==='CS8509');assert.equal(w.severity,'warning');
 });

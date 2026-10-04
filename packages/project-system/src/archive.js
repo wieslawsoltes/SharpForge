@@ -1,4 +1,5 @@
 import {readZip,writeZip,portablePath,decodeWorkspaceFile,encodeWorkspaceFile,ZIP_LIMITS} from '@sharpforge/archive';
+import {extractWorkspaceRecords} from './workspace-paths.js';
 export const WORKSPACE_MANIFEST='.sharpforge/workspace.json';
 import {validateWorkspaceSettings, workspaceSettingsManifest} from './workspace-settings.js';
 export {validateWorkspaceSettings} from './workspace-settings.js';
@@ -21,12 +22,12 @@ export function importWorkspaceZip(bytes,options={}){
  settings=validateWorkspaceSettings(settings,records.map(f=>f.path));return {records,folders,settings,manifest:!!manifestEntry,entryCandidates:workspaceCandidates(records),summary:{files:records.length,folders:folders.length,bytes:records.reduce((n,f)=>n+f.bytes.length,0)}};
 }
 export function workspaceCandidates(records){return records.filter(f=>/\.(slnx|sln|csproj)$/i.test(f.path??f.uri)).map(f=>f.path??f.uri).sort((a,b)=>{const rank=p=>/\.slnx$/i.test(p)?0:/\.sln$/i.test(p)?1:2;return rank(a)-rank(b)||a.localeCompare(b);});}
-export function prefixWorkspace(records,folders,prefix=''){if(prefix)portablePath(prefix);return {records:records.map(r=>({...r,path:prefix?prefix+'/'+r.path:r.path})),folders:folders.map(p=>prefix?prefix+'/'+p:p)};}
+export {prefixWorkspace} from './workspace-paths.js';
 export {writeNewDirectory} from './destination-writer.js';
 export {preflightDestination,DestinationError} from './destination-preflight.js';
 export {rollbackDestination} from './destination-rollback.js';
-/** Read the same bounded settings manifest from an extracted workspace folder. No network or trust state. */
-export function importWorkspaceRecords(records,folders=[]){
- const candidates=records.filter(r=>r.path===WORKSPACE_MANIFEST||r.path.endsWith('/'+WORKSPACE_MANIFEST));if(!candidates.length)return {records,folders,settings:{},manifest:false};if(candidates.length!==1)throw new Error('Multiple workspace manifests in selected folder');const file=candidates[0],prefix=file.path.slice(0,-WORKSPACE_MANIFEST.length),source=typeof file.text==='string'?file.text:new TextDecoder('utf-8',{fatal:true}).decode(file.bytes);if(source.length>4*1024*1024)throw new Error('Workspace manifest limit exceeded');const value=JSON.parse(source);if(value.format!=='sharpforge-workspace'||value.version!==1)throw new Error('Unsupported workspace settings manifest');if(prefix&&records.some(r=>!r.path.startsWith(prefix)))throw new Error('Manifest root excludes other selected files');const result=records.filter(r=>r!==file).map(r=>({...r,path:r.path.slice(prefix.length)})),dirs=folders.filter(p=>(!prefix||p.startsWith(prefix))&&!p.endsWith('/.sharpforge')&&p!=='.sharpforge').map(p=>p.slice(prefix.length)).filter(Boolean);return {records:result,folders:dirs,settings:validateWorkspaceSettings(value,result.map(r=>r.path)),manifest:true};
+/** Preserve prepared sources while extracting the bounded settings manifest. */
+export function importWorkspaceRecords(records,folders=[],options={}){
+ return extractWorkspaceRecords(records,folders,{...options,manifestPath:WORKSPACE_MANIFEST,validateSettings:validateWorkspaceSettings});
 }
 export function workspaceManifestRecord(settings,records){const validated=validateWorkspaceSettings(settings,records.map(r=>r.path));return {path:WORKSPACE_MANIFEST,text:workspaceSettingsManifest(validated)};}

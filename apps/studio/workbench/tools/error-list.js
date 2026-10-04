@@ -63,8 +63,9 @@ export function mountErrorList(host, {model, navigate, dialogs, onError}) {
   }
   model.scope.mount(toolbar, refresh);
   toolbar.append(select(document, 'Diagnostic source', [
-    {value: 'all', label: 'Build + IntelliSense'}, {value: 'build', label: 'Build Only'},
-    {value: 'analysis', label: 'IntelliSense Only'}
+    {value: 'all', label: 'All Sources'}, {value: 'build', label: 'Build Only'},
+    {value: 'analysis', label: 'IntelliSense Only'}, {value: 'project', label: 'Project Loading'},
+    {value: 'designer', label: 'Designer'}
   ], model.source, value => { model.source = value; refresh(); }));
   toolbar.append(input(document, 'Search diagnostics', model.search, value => { model.search = value; refresh(); }));
   toolbar.append(select(document, 'Sort diagnostics by', errorColumns.map(column => ({value: column.id, label: column.title})),

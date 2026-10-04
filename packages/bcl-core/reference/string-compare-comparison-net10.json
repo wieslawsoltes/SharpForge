@@ -1,0 +1,2389 @@
+{
+  "schemaVersion": 1,
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "os": "macOS 26.6.0",
+  "architecture": "Arm64",
+  "culture": "",
+  "sourceSha256": "dce52c0a72287361af03d4816b315731165c74e05c054ee990f28663f7121e32",
+  "rows": [
+    {
+      "id": "ordinal/nulls/4",
+      "group": "ordinal",
+      "left": null,
+      "right": null,
+      "mode": 4,
+      "copyRight": false,
+      "sameReference": true,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/nulls/5",
+      "group": "ordinal",
+      "left": null,
+      "right": null,
+      "mode": 5,
+      "copyRight": false,
+      "sameReference": true,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/null-left/4",
+      "group": "ordinal",
+      "left": null,
+      "right": [],
+      "mode": 4,
+      "copyRight": false,
+      "sameReference": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/null-left/5",
+      "group": "ordinal",
+      "left": null,
+      "right": [],
+      "mode": 5,
+      "copyRight": false,
+      "sameReference": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/null-right/4",
+      "group": "ordinal",
+      "left": [],
+      "right": null,
+      "mode": 4,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 1,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/null-right/5",
+      "group": "ordinal",
+      "left": [],
+      "right": null,
+      "mode": 5,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 1,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/empty/4",
+      "group": "ordinal",
+      "left": [],
+      "right": [],
+      "mode": 4,
+      "copyRight": false,
+      "sameReference": true,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/empty/5",
+      "group": "ordinal",
+      "left": [],
+      "right": [],
+      "mode": 5,
+      "copyRight": false,
+      "sameReference": true,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/identity/4",
+      "group": "ordinal",
+      "left": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "right": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": 4,
+      "copyRight": false,
+      "sameReference": true,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/identity/5",
+      "group": "ordinal",
+      "left": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "right": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": 5,
+      "copyRight": false,
+      "sameReference": true,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/allocated-equal/4",
+      "group": "ordinal",
+      "left": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "right": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": 4,
+      "copyRight": true,
+      "sameReference": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/allocated-equal/5",
+      "group": "ordinal",
+      "left": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "right": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": 5,
+      "copyRight": true,
+      "sameReference": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/ascii-case/4",
+      "group": "ordinal",
+      "left": [
+        65,
+        98,
+        67
+      ],
+      "right": [
+        97,
+        66,
+        99
+      ],
+      "mode": 4,
+      "copyRight": false,
+      "sameReference": false,
+      "result": -32,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/ascii-case/5",
+      "group": "ordinal",
+      "left": [
+        65,
+        98,
+        67
+      ],
+      "right": [
+        97,
+        66,
+        99
+      ],
+      "mode": 5,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/ascii-different/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "right": [
+        97,
+        98,
+        100
+      ],
+      "mode": 4,
+      "copyRight": false,
+      "sameReference": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/ascii-different/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "right": [
+        97,
+        98,
+        100
+      ],
+      "mode": 5,
+      "copyRight": false,
+      "sameReference": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/different-length/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "right": [
+        97,
+        98,
+        99,
+        100
+      ],
+      "mode": 4,
+      "copyRight": false,
+      "sameReference": false,
+      "result": -100,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/different-length/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "right": [
+        97,
+        98,
+        99,
+        100
+      ],
+      "mode": 5,
+      "copyRight": false,
+      "sameReference": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/nul-case/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        0,
+        66
+      ],
+      "right": [
+        65,
+        0,
+        98
+      ],
+      "mode": 4,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 32,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/nul-case/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        0,
+        66
+      ],
+      "right": [
+        65,
+        0,
+        98
+      ],
+      "mode": 5,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/nul-significant/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        0,
+        98
+      ],
+      "right": [
+        97,
+        98
+      ],
+      "mode": 4,
+      "copyRight": false,
+      "sameReference": false,
+      "result": -98,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/nul-significant/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        0,
+        98
+      ],
+      "right": [
+        97,
+        98
+      ],
+      "mode": 5,
+      "copyRight": false,
+      "sameReference": false,
+      "result": -66,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/normalization/4",
+      "group": "ordinal",
+      "left": [
+        233
+      ],
+      "right": [
+        101,
+        769
+      ],
+      "mode": 4,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 132,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/normalization/5",
+      "group": "ordinal",
+      "left": [
+        233
+      ],
+      "right": [
+        101,
+        769
+      ],
+      "mode": 5,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 132,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/latin-case/4",
+      "group": "ordinal",
+      "left": [
+        233
+      ],
+      "right": [
+        201
+      ],
+      "mode": 4,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 32,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/latin-case/5",
+      "group": "ordinal",
+      "left": [
+        233
+      ],
+      "right": [
+        201
+      ],
+      "mode": 5,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/long-s/4",
+      "group": "ordinal",
+      "left": [
+        383
+      ],
+      "right": [
+        83
+      ],
+      "mode": 4,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 300,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/long-s/5",
+      "group": "ordinal",
+      "left": [
+        383
+      ],
+      "right": [
+        83
+      ],
+      "mode": 5,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 300,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/sigma/4",
+      "group": "ordinal",
+      "left": [
+        962
+      ],
+      "right": [
+        963
+      ],
+      "mode": 4,
+      "copyRight": false,
+      "sameReference": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/sigma/5",
+      "group": "ordinal",
+      "left": [
+        962
+      ],
+      "right": [
+        963
+      ],
+      "mode": 5,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/turkish-dotless/4",
+      "group": "ordinal",
+      "left": [
+        305
+      ],
+      "right": [
+        73
+      ],
+      "mode": 4,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 232,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/turkish-dotless/5",
+      "group": "ordinal",
+      "left": [
+        305
+      ],
+      "right": [
+        73
+      ],
+      "mode": 5,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 232,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/turkish-dotted/4",
+      "group": "ordinal",
+      "left": [
+        304
+      ],
+      "right": [
+        105
+      ],
+      "mode": 4,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 199,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/turkish-dotted/5",
+      "group": "ordinal",
+      "left": [
+        304
+      ],
+      "right": [
+        105
+      ],
+      "mode": 5,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 231,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/sharp-s-expansion/4",
+      "group": "ordinal",
+      "left": [
+        223
+      ],
+      "right": [
+        83,
+        83
+      ],
+      "mode": 4,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 140,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/sharp-s-expansion/5",
+      "group": "ordinal",
+      "left": [
+        223
+      ],
+      "right": [
+        83,
+        83
+      ],
+      "mode": 5,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 140,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/sharp-s-capital/4",
+      "group": "ordinal",
+      "left": [
+        223
+      ],
+      "right": [
+        7838
+      ],
+      "mode": 4,
+      "copyRight": false,
+      "sameReference": false,
+      "result": -7615,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/sharp-s-capital/5",
+      "group": "ordinal",
+      "left": [
+        223
+      ],
+      "right": [
+        7838
+      ],
+      "mode": 5,
+      "copyRight": false,
+      "sameReference": false,
+      "result": -7615,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/kelvin/4",
+      "group": "ordinal",
+      "left": [
+        8490
+      ],
+      "right": [
+        107
+      ],
+      "mode": 4,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 8383,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/kelvin/5",
+      "group": "ordinal",
+      "left": [
+        8490
+      ],
+      "right": [
+        107
+      ],
+      "mode": 5,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 8415,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/deseret/4",
+      "group": "ordinal",
+      "left": [
+        55297,
+        56360
+      ],
+      "right": [
+        55297,
+        56320
+      ],
+      "mode": 4,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 40,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/deseret/5",
+      "group": "ordinal",
+      "left": [
+        55297,
+        56360
+      ],
+      "right": [
+        55297,
+        56320
+      ],
+      "mode": 5,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/osage/4",
+      "group": "ordinal",
+      "left": [
+        55297,
+        56536
+      ],
+      "right": [
+        55297,
+        56496
+      ],
+      "mode": 4,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 40,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/osage/5",
+      "group": "ordinal",
+      "left": [
+        55297,
+        56536
+      ],
+      "right": [
+        55297,
+        56496
+      ],
+      "mode": 5,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/garay/4",
+      "group": "ordinal",
+      "left": [
+        55323,
+        57019
+      ],
+      "right": [
+        55323,
+        56992
+      ],
+      "mode": 4,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 27,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/garay/5",
+      "group": "ordinal",
+      "left": [
+        55323,
+        57019
+      ],
+      "right": [
+        55323,
+        56992
+      ],
+      "mode": 5,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 27,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/supplementary-different/4",
+      "group": "ordinal",
+      "left": [
+        55357,
+        56832
+      ],
+      "right": [
+        55357,
+        56833
+      ],
+      "mode": 4,
+      "copyRight": false,
+      "sameReference": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/supplementary-different/5",
+      "group": "ordinal",
+      "left": [
+        55357,
+        56832
+      ],
+      "right": [
+        55357,
+        56833
+      ],
+      "mode": 5,
+      "copyRight": false,
+      "sameReference": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/lone-high-equal/4",
+      "group": "ordinal",
+      "left": [
+        55296
+      ],
+      "right": [
+        55296
+      ],
+      "mode": 4,
+      "copyRight": true,
+      "sameReference": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/lone-high-equal/5",
+      "group": "ordinal",
+      "left": [
+        55296
+      ],
+      "right": [
+        55296
+      ],
+      "mode": 5,
+      "copyRight": true,
+      "sameReference": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/lone-high-different/4",
+      "group": "ordinal",
+      "left": [
+        55296
+      ],
+      "right": [
+        55297
+      ],
+      "mode": 4,
+      "copyRight": false,
+      "sameReference": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/lone-high-different/5",
+      "group": "ordinal",
+      "left": [
+        55296
+      ],
+      "right": [
+        55297
+      ],
+      "mode": 5,
+      "copyRight": false,
+      "sameReference": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/lone-low-case/4",
+      "group": "ordinal",
+      "left": [
+        56320,
+        97
+      ],
+      "right": [
+        56320,
+        65
+      ],
+      "mode": 4,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 32,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/lone-low-case/5",
+      "group": "ordinal",
+      "left": [
+        56320,
+        97
+      ],
+      "right": [
+        56320,
+        65
+      ],
+      "mode": 5,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/split-surrogates/4",
+      "group": "ordinal",
+      "left": [
+        55296,
+        97,
+        56320
+      ],
+      "right": [
+        55296,
+        65,
+        56320
+      ],
+      "mode": 4,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 32,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/split-surrogates/5",
+      "group": "ordinal",
+      "left": [
+        55296,
+        97,
+        56320
+      ],
+      "right": [
+        55296,
+        65,
+        56320
+      ],
+      "mode": 5,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/pair-versus-split/4",
+      "group": "ordinal",
+      "left": [
+        55296,
+        56320
+      ],
+      "right": [
+        55296,
+        120,
+        56320
+      ],
+      "mode": 4,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 56200,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/pair-versus-split/5",
+      "group": "ordinal",
+      "left": [
+        55296,
+        56320
+      ],
+      "right": [
+        55296,
+        120,
+        56320
+      ],
+      "mode": 5,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 1,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/vector-prefix/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        81
+      ],
+      "right": [
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        113
+      ],
+      "mode": 4,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 32,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/vector-prefix/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        81
+      ],
+      "right": [
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        113
+      ],
+      "mode": 5,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/vector-different/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        81
+      ],
+      "right": [
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        120
+      ],
+      "mode": 4,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 32,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/vector-different/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        81
+      ],
+      "right": [
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        120
+      ],
+      "mode": 5,
+      "copyRight": false,
+      "sameReference": false,
+      "result": -7,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/ascii-reverse/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        100
+      ],
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "mode": 4,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 1,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/ascii-reverse/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        100
+      ],
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "mode": 5,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 1,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/prefix-reverse/4",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99,
+        100
+      ],
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "mode": 4,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 100,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/prefix-reverse/5",
+      "group": "ordinal",
+      "left": [
+        97,
+        98,
+        99,
+        100
+      ],
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "mode": 5,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 1,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/bmp-versus-pair/4",
+      "group": "ordinal",
+      "left": [
+        57344
+      ],
+      "right": [
+        55296,
+        56320
+      ],
+      "mode": 4,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 2048,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/bmp-versus-pair/5",
+      "group": "ordinal",
+      "left": [
+        57344
+      ],
+      "right": [
+        55296,
+        56320
+      ],
+      "mode": 5,
+      "copyRight": false,
+      "sameReference": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/pair-versus-bmp/4",
+      "group": "ordinal",
+      "left": [
+        55296,
+        56320
+      ],
+      "right": [
+        57344
+      ],
+      "mode": 4,
+      "copyRight": false,
+      "sameReference": false,
+      "result": -2048,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/pair-versus-bmp/5",
+      "group": "ordinal",
+      "left": [
+        55296,
+        56320
+      ],
+      "right": [
+        57344
+      ],
+      "mode": 5,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 1,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/pair-versus-high/4",
+      "group": "ordinal",
+      "left": [
+        55296,
+        56320
+      ],
+      "right": [
+        55297
+      ],
+      "mode": 4,
+      "copyRight": false,
+      "sameReference": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/pair-versus-high/5",
+      "group": "ordinal",
+      "left": [
+        55296,
+        56320
+      ],
+      "right": [
+        55297
+      ],
+      "mode": 5,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 1,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/high-versus-pair/4",
+      "group": "ordinal",
+      "left": [
+        55297
+      ],
+      "right": [
+        55296,
+        56320
+      ],
+      "mode": 4,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 1,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "ordinal/high-versus-pair/5",
+      "group": "ordinal",
+      "left": [
+        55297
+      ],
+      "right": [
+        55296,
+        56320
+      ],
+      "mode": 5,
+      "copyRight": false,
+      "sameReference": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "invalid/nulls/-1",
+      "group": "invalid",
+      "left": null,
+      "right": null,
+      "mode": -1,
+      "copyRight": false,
+      "sameReference": true,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/nulls/6",
+      "group": "invalid",
+      "left": null,
+      "right": null,
+      "mode": 6,
+      "copyRight": false,
+      "sameReference": true,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/nulls/-2147483648",
+      "group": "invalid",
+      "left": null,
+      "right": null,
+      "mode": -2147483648,
+      "copyRight": false,
+      "sameReference": true,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/nulls/2147483647",
+      "group": "invalid",
+      "left": null,
+      "right": null,
+      "mode": 2147483647,
+      "copyRight": false,
+      "sameReference": true,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/null-left/-1",
+      "group": "invalid",
+      "left": null,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "mode": -1,
+      "copyRight": false,
+      "sameReference": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/null-left/6",
+      "group": "invalid",
+      "left": null,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "mode": 6,
+      "copyRight": false,
+      "sameReference": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/null-left/-2147483648",
+      "group": "invalid",
+      "left": null,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "mode": -2147483648,
+      "copyRight": false,
+      "sameReference": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/null-left/2147483647",
+      "group": "invalid",
+      "left": null,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "mode": 2147483647,
+      "copyRight": false,
+      "sameReference": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/null-right/-1",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "right": null,
+      "mode": -1,
+      "copyRight": false,
+      "sameReference": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/null-right/6",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "right": null,
+      "mode": 6,
+      "copyRight": false,
+      "sameReference": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/null-right/-2147483648",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "right": null,
+      "mode": -2147483648,
+      "copyRight": false,
+      "sameReference": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/null-right/2147483647",
+      "group": "invalid",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "right": null,
+      "mode": 2147483647,
+      "copyRight": false,
+      "sameReference": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/identity/-1",
+      "group": "invalid",
+      "left": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "right": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": -1,
+      "copyRight": false,
+      "sameReference": true,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/identity/6",
+      "group": "invalid",
+      "left": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "right": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": 6,
+      "copyRight": false,
+      "sameReference": true,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/identity/-2147483648",
+      "group": "invalid",
+      "left": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "right": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": -2147483648,
+      "copyRight": false,
+      "sameReference": true,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/identity/2147483647",
+      "group": "invalid",
+      "left": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "right": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": 2147483647,
+      "copyRight": false,
+      "sameReference": true,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/allocated-equal/-1",
+      "group": "invalid",
+      "left": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "right": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": -1,
+      "copyRight": true,
+      "sameReference": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/allocated-equal/6",
+      "group": "invalid",
+      "left": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "right": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": 6,
+      "copyRight": true,
+      "sameReference": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/allocated-equal/-2147483648",
+      "group": "invalid",
+      "left": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "right": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": -2147483648,
+      "copyRight": true,
+      "sameReference": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/allocated-equal/2147483647",
+      "group": "invalid",
+      "left": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "right": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": 2147483647,
+      "copyRight": true,
+      "sameReference": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/different-length/-1",
+      "group": "invalid",
+      "left": [
+        97
+      ],
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "mode": -1,
+      "copyRight": false,
+      "sameReference": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/different-length/6",
+      "group": "invalid",
+      "left": [
+        97
+      ],
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "mode": 6,
+      "copyRight": false,
+      "sameReference": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/different-length/-2147483648",
+      "group": "invalid",
+      "left": [
+        97
+      ],
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "mode": -2147483648,
+      "copyRight": false,
+      "sameReference": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "invalid/different-length/2147483647",
+      "group": "invalid",
+      "left": [
+        97
+      ],
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "mode": 2147483647,
+      "copyRight": false,
+      "sameReference": false,
+      "result": null,
+      "sign": null,
+      "fault": "ArgumentException",
+      "parameter": "comparisonType"
+    },
+    {
+      "id": "culture/nulls/0",
+      "group": "culture",
+      "left": null,
+      "right": null,
+      "mode": 0,
+      "copyRight": false,
+      "sameReference": true,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/nulls/1",
+      "group": "culture",
+      "left": null,
+      "right": null,
+      "mode": 1,
+      "copyRight": false,
+      "sameReference": true,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/nulls/2",
+      "group": "culture",
+      "left": null,
+      "right": null,
+      "mode": 2,
+      "copyRight": false,
+      "sameReference": true,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/nulls/3",
+      "group": "culture",
+      "left": null,
+      "right": null,
+      "mode": 3,
+      "copyRight": false,
+      "sameReference": true,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/null-left/0",
+      "group": "culture",
+      "left": null,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "mode": 0,
+      "copyRight": false,
+      "sameReference": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/null-left/1",
+      "group": "culture",
+      "left": null,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "mode": 1,
+      "copyRight": false,
+      "sameReference": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/null-left/2",
+      "group": "culture",
+      "left": null,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "mode": 2,
+      "copyRight": false,
+      "sameReference": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/null-left/3",
+      "group": "culture",
+      "left": null,
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "mode": 3,
+      "copyRight": false,
+      "sameReference": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/null-right/0",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "right": null,
+      "mode": 0,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 1,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/null-right/1",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "right": null,
+      "mode": 1,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 1,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/null-right/2",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "right": null,
+      "mode": 2,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 1,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/null-right/3",
+      "group": "culture",
+      "left": [
+        97,
+        98,
+        99
+      ],
+      "right": null,
+      "mode": 3,
+      "copyRight": false,
+      "sameReference": false,
+      "result": 1,
+      "sign": 1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/identity/0",
+      "group": "culture",
+      "left": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "right": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": 0,
+      "copyRight": false,
+      "sameReference": true,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/identity/1",
+      "group": "culture",
+      "left": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "right": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": 1,
+      "copyRight": false,
+      "sameReference": true,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/identity/2",
+      "group": "culture",
+      "left": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "right": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": 2,
+      "copyRight": false,
+      "sameReference": true,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/identity/3",
+      "group": "culture",
+      "left": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "right": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": 3,
+      "copyRight": false,
+      "sameReference": true,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/allocated-equal/0",
+      "group": "culture",
+      "left": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "right": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": 0,
+      "copyRight": true,
+      "sameReference": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/allocated-equal/1",
+      "group": "culture",
+      "left": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "right": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": 1,
+      "copyRight": true,
+      "sameReference": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/allocated-equal/2",
+      "group": "culture",
+      "left": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "right": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": 2,
+      "copyRight": true,
+      "sameReference": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/allocated-equal/3",
+      "group": "culture",
+      "left": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "right": [
+        115,
+        97,
+        109,
+        101
+      ],
+      "mode": 3,
+      "copyRight": true,
+      "sameReference": false,
+      "result": 0,
+      "sign": 0,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/different-length/0",
+      "group": "culture",
+      "left": [
+        97
+      ],
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "mode": 0,
+      "copyRight": false,
+      "sameReference": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/different-length/1",
+      "group": "culture",
+      "left": [
+        97
+      ],
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "mode": 1,
+      "copyRight": false,
+      "sameReference": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/different-length/2",
+      "group": "culture",
+      "left": [
+        97
+      ],
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "mode": 2,
+      "copyRight": false,
+      "sameReference": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    },
+    {
+      "id": "culture/different-length/3",
+      "group": "culture",
+      "left": [
+        97
+      ],
+      "right": [
+        97,
+        98,
+        99
+      ],
+      "mode": 3,
+      "copyRight": false,
+      "sameReference": false,
+      "result": -1,
+      "sign": -1,
+      "fault": null,
+      "parameter": null
+    }
+  ]
+}

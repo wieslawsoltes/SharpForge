@@ -8,6 +8,7 @@ import { prepareEmission } from './emit/emission-context.js';
 import {applyMemberDefinitions} from './emit/member-definitions.js';
 import { finishEmittedPE } from './emit/pe-options.js';
 import { EmitterSignatures } from './emitter-signatures.js';
+import { emitObjectBuiltin } from './object-builtin-mapping.js';
 import { emitPropertyMetadata } from './emitter-properties.js';
 import {frameworkType,enumTypes} from '@sharpforge/framework';
 import { EnumConvertBase, Op, BinaryName, UnaryName, Builtins, numericTypeId } from '@sharpforge/bytecode';
@@ -108,18 +109,16 @@ function emitMethod(c,d) {
 }
 function emitBuiltin(c,w,id,count,types,adapt) {
   const name=Builtins[id].name;let owner,member,result,params,instance=false,newObject=false,extra=false;
+  if(emitObjectBuiltin(c,w,name,types,adapt))return;
   if(name.startsWith('Console.')){owner='System.Console';member=name.slice(8);result='void';params=count?[types[0]==='null'?'string':frameworkType(types[0])?.kind==='enum'?'object':isValue(types[0])||types[0]==='string'?types[0]:'object']:[];}
   else if(name.startsWith('Math.')||name==='$Math.Abs.Int32'){owner='System.Math';member=name==='$Math.Abs.Int32'?'Abs':name.slice(5);const intResult=['Abs','Min','Max'].includes(member)&&types.every(t=>t==='int');result=intResult?'int':'double';params=types.map(()=>result);}
   else if(name.startsWith('GC.')){owner='System.GC';member=name.slice(3);result=member==='Collect'?'void':member==='GetTotalMemory'?'long':'int';params=member==='Collect'?[]:member==='GetTotalMemory'?['bool']:['int'];if(member==='GetTotalMemory'&&!count){w.integer(0);extra=true;}}
   else if(name==='int.Parse'||name==='double.Parse'){owner=name.startsWith('int')?'int':'double';member='Parse';result=owner;params=['string'];}
   else if(name.startsWith('Convert.')){owner='System.Convert';member=name.slice(8);result={ToInt32:'int',ToDouble:'double',ToString:'string'}[member];params=[types[0]==='null'?'object':isValue(types[0])||types[0]==='string'?types[0]:'object'];}
   else if(name.startsWith('Array.')){owner='Array';member=name.slice(6);result='void';params=['Array'];}
-  else if(name==='object.GetType'||name.startsWith('$type.')){owner='object';member='GetType';result='System.Type';params=[];instance=true;}
   else if(name==='Type.Name'||name==='Type.FullName'){owner=name==='Type.Name'?'System.Reflection.MemberInfo':'System.Type';member='get_'+name.slice(5);result='string';params=[];instance=true;}
-  else if(name==='object.ReferenceEquals'){owner='System.Object';member='ReferenceEquals';result='bool';params=['object','object'];}
   else if(name==='Enum.HasFlag'){adapt(types,['object','object']);w.op('callvirt',c.external('System.Enum','HasFlag','bool',['System.Enum'],false));return;}
   else if(name==='string.get_Chars'){adapt(types,['string','int']);w.op('callvirt',c.external('string','get_Chars','char',['int'],false)).op('conv.i4');return;}
-  else if(name==='object.ToString'){owner='System.Convert';member='ToString';result='string';params=['object'];}
   else if(name==='Exception.new'){owner='Exception';member='.ctor';result='void';params=['string'];instance=true;newObject=true;}
   else if(name==='Exception.Message'){owner='Exception';member='get_Message';result='string';params=[];instance=true;}
   else if(name==='Debug.Assert'){if(count===1)w.op('ldstr',0x70000000|c.metadata.userString('Assertion failed'));w.op('call',c.helperToken).op('ldnull');return;}
