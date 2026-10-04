@@ -9,6 +9,8 @@
   "requiredServices": [],
   "timeout": 300000,
   "tags": [
-    "legacy"
+    "legacy",
+    "drawing",
+    "composition"
   ]
 }
