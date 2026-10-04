@@ -1,0 +1,65 @@
+{
+  "startedAt": "2026-10-04T04:49:44.230496+00:00",
+  "sharedHost": true,
+  "order": [
+    "baseline",
+    "candidate"
+  ],
+  "samples": 101,
+  "warmups": 10,
+  "sizes": [
+    1024,
+    1048576
+  ],
+  "captures": [
+    {
+      "label": "baseline",
+      "sourceSha": "8d1be9cffa04b0fd7390e5cb6fe5f6c03b997557",
+      "sourceTree": "dc9d4e337b91c6e878e7c6c7d65f013667b5ec6b",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "scripts/benchmark-editor.js",
+        "--backend",
+        "model",
+        "--sizes",
+        "1024,1048576",
+        "--samples",
+        "101",
+        "--warmups",
+        "10",
+        "--output",
+        "/workspace/scratch/6b99131ca908/p16-integration/artifacts/results/p16-followup-model/baseline.json"
+      ],
+      "startedAt": "2026-10-04T04:49:44.234255+00:00",
+      "exitCode": 0,
+      "finishedAt": "2026-10-04T04:49:46.521915+00:00"
+    },
+    {
+      "label": "candidate",
+      "sourceSha": "80dfe3f5a7d18731915bf9b6b770f816911b4f0f",
+      "sourceTree": "b105d155bff6efd72967652fd340634f6444b8a9",
+      "command": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "scripts/benchmark-editor.js",
+        "--backend",
+        "model",
+        "--sizes",
+        "1024,1048576",
+        "--samples",
+        "101",
+        "--warmups",
+        "10",
+        "--output",
+        "/workspace/scratch/6b99131ca908/p16-integration/artifacts/results/p16-followup-model/candidate.json"
+      ],
+      "startedAt": "2026-10-04T04:49:46.526065+00:00",
+      "exitCode": 0,
+      "finishedAt": "2026-10-04T04:49:48.980819+00:00"
+    }
+  ],
+  "finishedAt": "2026-10-04T04:49:48.981119+00:00"
+}
