@@ -14,6 +14,10 @@ Application-owned retained drawing services for SharpForge. The package register
 
 `prepareValueAnimation` and `sampleValueAnimation` implement typed interpolation and discrete keyframes. Easing bounds and complete property-path validation fail before mutation. `buildTimelineDefinition` accepts explicit adapters, including endpoint-presence checks for omitted values.
 
+## Composition animation definitions
+
+Keyframe definitions capture values and validated easing plans. Expressions read only supplied parameters and documented typed members through a bounded interpreter. Definitions, groups, implicit collections and batches have explicit owner and snapshot contracts.
+
 ## Validation
 
 The publication manifest lists authored fixtures and the prior completed-scope evidence separately. Repairs and newly authored cases await the consolidated rerun; required core is pending on this exact branch tree. Browser pixels, native WinUI comparisons and physical GPU qualification remain separate gates.
