@@ -4,7 +4,9 @@ import { studioDiskLimits } from './workbench/workspace-limits.js';
 
 export const withinExplorerPath = (path, root) => path === root || path.startsWith(root + '/');
 
-export function explorerSource(record) { return record?.model?.snapshot() ?? recordSource(record); }
+export function explorerSource(record) {
+  return record?.model?.publishedSnapshot?.() ?? record?.model?.snapshot() ?? recordSource(record);
+}
 
 /** Snapshots capture current model state. History deliberately omits mutable models and retains only immutable source roots. */
 export function captureExplorerRecord(record, { models = false, copyBytes = true } = {}) {
@@ -52,7 +54,8 @@ export function preparedExplorerModel(record, model) {
     source: { value: source, configurable: true }, model: { value: model, configurable: true },
     originalSource: { value: source, configurable: true }, length: { value: source.length, configurable: true },
     version: { value: source.version, configurable: true, enumerable: true },
-    text: { configurable: true, enumerable: true, get: () => model.text, set: text => model.setValue(text) }
+    text: { configurable: true, enumerable: true,
+      get: () => (model.publishedSnapshot?.() ?? model.snapshot()).text, set: text => model.setValue(text) }
   });
   return Object.defineProperties({}, descriptors);
 }

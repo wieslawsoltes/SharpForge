@@ -7,6 +7,8 @@ import { ConstantEmission } from './emit-constants.js';
 import { VariableEmission } from './emit-variables.js';
 import { ArithmeticEmission } from './emit-arithmetic.js';
 import { ConversionEmission } from './emit-conversions.js';
+import { SpanConversionEmission } from './emit-span-conversions.js';
+import { DecimalConversionEmission } from './emit-decimal-conversions.js';
 import { AssignmentEmission } from './emit-assignments.js';
 import { BranchEmission } from './emit-branches.js';
 import { LoopEmission } from './emit-loops.js';
@@ -47,6 +49,8 @@ const families = [
   VariableEmission,
   ArithmeticEmission,
   ConversionEmission,
+  SpanConversionEmission,
+  DecimalConversionEmission,
   AssignmentEmission,
   BranchEmission,
   LoopEmission,

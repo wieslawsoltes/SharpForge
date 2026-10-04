@@ -1,4 +1,5 @@
 import { fail } from './contracts.js';
+import { hasLocalAnnotations, copyLocalAnnotations } from './local-annotations.js';
 
 function snapshot(scope) {
   return {
@@ -6,17 +7,28 @@ function snapshot(scope) {
     start: scope.start,
     end: scope.end,
     importScope: scope.importScope,
-    locals: scope.variables.map(({ id, index, name, attributes, hidden }) => ({
-      id,
-      index,
-      name,
-      attributes,
-      compilerGenerated: hidden,
-      type: null,
-      typeName: null,
-      typeReason: 'type-metadata-required',
-    })),
+    locals: scope.variables.map((local) => {
+      const { id, index, name, attributes, hidden } = local;
+      return {
+        id,
+        index,
+        name,
+        attributes,
+        compilerGenerated: hidden,
+        type: null,
+        typeName: null,
+        typeReason: 'type-metadata-required',
+        ...(hasLocalAnnotations(local) ? copyLocalAnnotations(local) : null),
+      };
+    }),
     constantIds: scope.constants.map(({ id }) => id),
+    ...(scope.constants.some(hasLocalAnnotations)
+      ? {
+          constantAnnotations: scope.constants
+            .filter(hasLocalAnnotations)
+            .map((value) => ({ id: value.id, name: value.name, ...copyLocalAnnotations(value) })),
+        }
+      : null),
     children: [],
   };
 }

@@ -37,3 +37,4 @@ export { validateTypePrefixes, typePrefixDiagnosticCatalog } from './verify/pref
 export {isByrefStructForwarder} from './generic-struct-forwarder.js';
 export { createMetadataVerificationTypeSystem, verificationTypeSystemDiagnosticCatalog } from './verify/type-system.js';
 export {ConstrainedObjectProfile} from './constrained-object-profile.js';
+export { createMetadataVerificationContext, verificationMemberDiagnosticCatalog } from './verify/member-system.js';
