@@ -1,26 +1,35 @@
 import {VirtualMachine} from '../vm.js';
 import {CilVirtualMachine} from '../cil-vm.js';
 import {getDecodePlan} from './decode-plan.js';
-import {getSourceFusionPlan} from './source-fusion.js';
 import {executionCodeStatistics} from './code-version.js';
+import {prepareSourceExecution} from './source-fusion.js';
 
-/** Prepare derived interpreter plans without executing IL, starting tasks, or compiling the optional Wasm tier. */
+const sourceReason = 'Source fusion preparation is disabled by the sourceFusion:false option';
+
+/** Phase availability describes actual work, never a zero-duration substitute for an absent phase. */
+export const executionPreparationCapabilities = Object.freeze({
+  source: Object.freeze({status: 'available'}),
+  cil: Object.freeze({status: 'available'}),
+});
+
+/** Prepare verified interpreter plans without advancing guest instructions, tasks, or optional Wasm compilation. */
 export function prepareExecution(vm) {
-  if (!['ready', 'running', 'paused'].includes(vm?.state)) throw new TypeError('Preparation requires a live verified VM');
-  let count = 0;
-  if (vm instanceof CilVirtualMachine) {
-    if (vm.report?.success !== true || !Array.isArray(vm.report.methods)) throw new TypeError('Missing successful CIL verification');
-    for (const token of vm.report.methods) {
-      getDecodePlan(vm, vm.inspector.getMethod(token));
-      count++;
-    }
-  } else if (vm instanceof VirtualMachine) {
-    if (vm.options.sourceFusion === false) return {status: 'unsupported', reason: 'Source fusion preparation is disabled'};
-    for (const method of vm.image.methods) {
-      getSourceFusionPlan(vm, method);
-      count++;
-    }
-  } else throw new TypeError('Preparation requires a SharpForge VM');
-  return {status: 'prepared', engine: vm instanceof CilVirtualMachine ? 'cil' : 'source', methods: count,
-    statistics: executionCodeStatistics(vm)};
+  if (!(vm instanceof VirtualMachine) && !(vm instanceof CilVirtualMachine)) {
+    throw new TypeError('Preparation requires a SharpForge VM');
+  }
+  if (!['ready', 'running', 'paused', 'waiting'].includes(vm.state)) {
+    throw new TypeError('Preparation requires a live verified VM');
+  }
+  if (vm instanceof VirtualMachine) {
+    if (!Array.isArray(vm.image?.methods)) throw new TypeError('Missing verified source image');
+    const preparation = prepareSourceExecution(vm);
+    return Object.freeze({...preparation, engine: 'source',
+      ...(preparation.status === 'disabled' ? {reason: sourceReason} : {}), statistics: executionCodeStatistics(vm)});
+  }
+  if (vm.report?.success !== true || !Array.isArray(vm.report.methods)) {
+    throw new TypeError('Missing successful CIL verification');
+  }
+  for (const token of vm.report.methods) getDecodePlan(vm, vm.inspector.getMethod(token));
+  return Object.freeze({status: 'prepared', engine: 'cil', methods: vm.report.methods.length,
+    statistics: executionCodeStatistics(vm)});
 }

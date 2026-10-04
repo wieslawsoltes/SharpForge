@@ -1,0 +1,30 @@
+{
+  "qualifiedHead": "b79c8b9aec47f549d513f1b1afe88bdc36c63669",
+  "productHead": "4ffe1d87d",
+  "baselineHead": "594085da988a5b9439625f0577b958a166121666",
+  "focused": {
+    "tests": 127,
+    "passed": 127,
+    "initialPassed": 126
+  },
+  "checks": {
+    "syntaxModules": 3667,
+    "staticImportModules": 3663,
+    "errors": 0,
+    "manifestUnassigned": 0,
+    "manifestDuplicates": 0,
+    "structureExistingFindings": 272,
+    "ownStructureFindings": []
+  },
+  "environment": {
+    "PATH_prefix": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin",
+    "SHARPFORGE_MAX_PARALLEL_RUNS": "1",
+    "SHARPFORGE_TEST_CONCURRENCY": "1",
+    "SHARPFORGE_MAX_OLD_SPACE_MB": "1024",
+    "SHARPFORGE_ILASM": "/tmp/sharpforge-verifier-tools/ilasm",
+    "SHARPFORGE_ILVERIFY": "/tmp/sharpforge-verifier-tools/ilverify/ILVerify.dll",
+    "SHARPFORGE_ORACLE_DOTNET": "/Users/wieslawsoltes/.dotnet/dotnet"
+  },
+  "allLocalHandlesTerminal": true,
+  "newFieldBaselineMeasurements": false
+}

@@ -30,6 +30,6 @@ export const startupApps = Object.freeze([
 ]);
 export const snapshotCase = Object.freeze({id: 'snapshot-copy',
   source: program('int[] values=new int[4096];for(int i=0;i<values.Length;i++){values[i]=i;}' +
-    'Console.WriteLine("snapshot");int sum=0;for(int i=0;i<values.Length;i++){sum+=values[i];}Console.WriteLine(sum);'),
-  expected: 'snapshot\n8386560\n'});
+    'Console.WriteLine("snapshot");values[0]=1;int sum=0;for(int i=0;i<values.Length;i++){sum+=values[i];}Console.WriteLine(sum);'),
+  boundaryOutput: 'snapshot\n', expected: 'snapshot\n8386561\n'});
 export const engines = Object.freeze(['source', 'reloaded', 'cil']);

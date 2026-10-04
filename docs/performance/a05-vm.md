@@ -1,15 +1,45 @@
-# A05 interpreter performance qualification (T12)
+# A05 VM performance evidence
 
-Implementation is staged; performance qualification is **unmeasured**. The checked-in baseline deliberately fails the gate until two complete, stable runs replace it. No baseline numbers, 5% repeatability result, native .NET comparison, or browser qualification are claimed.
+The T12 harness measures actual source, reloaded-source and direct-CIL execution, checks every guest result, and retains raw observations. It covers arithmetic, calls, virtual calls, fields, arrays, strings, exceptions, allocation, three startup applications and populated-heap snapshot replay. Measurement and report formats are version 2.
 
-## Run, in the sole validation queue
+The checked-in `a05-baseline.json` is deliberately **unqualified** until two complete, stable runs have been recorded. An empty baseline, synthetic unit-test data, skipped tests or an unsupported platform can never pass the production gate. This document defines the runnable protocol; it does not claim a measured speedup or completed platform qualification.
 
-Wait until all E02 changes are assembled. Commit them before measurement. Use one otherwise idle, fixed runner, a fixed power mode, Node 24 with a 512 MB old-space cap, the same executable and flags, and no browser, native oracle, test, build, benchmark, or other validation process alongside this schedule. The harness creates at most one cold worker; it awaits that worker's exit before starting another. Warm cases are serial in the parent. Do not run two harness commands concurrently.
+## Preparation API
 
-1. The queue owner runs correctness tests first, including `tests/a05-12-*.test.js`, with the repository's single-worker test configuration. Stop on failures.
-2. Commit any corrections, then run the two commands below sequentially on that exact commit. These are complete interpreter runs; each includes 8 micro cases, 3 startup apps, and populated-heap snapshot copying, independently for source, reloaded source, and direct CIL.
-3. Qualify the baseline only if every corresponding median differs by at most 5%. A noisy runner fails qualification; do not discard inconvenient samples or choose the faster repeat. Retain both complete JSON files. `--qualify` embeds the first report in the second.
-4. Run the candidate on the same runner/options and compare. A different Node/V8 version, OS, CPU description, memory capacity, GC mode, locale, harness, fixture catalog, engine set, ABI, or measurement protocol requires a fresh baseline.
+`prepareExecution(vm)` and `executionPreparationCapabilities` are public exports of `@sharpforge/runtime`.
+
+```js
+import {VirtualMachine, prepareExecution} from '@sharpforge/runtime';
+
+const vm = new VirtualMachine(image, {sourceFusion: true});
+try {
+  const preparation = prepareExecution(vm);
+  // {status: 'prepared', engine: 'source', methods, fusedInstructions, statistics}
+  const result = vm.run();
+} finally {
+  vm.stop();
+}
+```
+
+The source path calls the real source-fusion planner. It scans verified methods and counts covered instructions, including a valid zero count when no instruction groups qualify. `sourceFusion:false` returns `status:'disabled'`, zero methods and a reason; it does not pretend to have prepared work. The CIL path caches decode plans for verified reachable methods and returns `{status:'prepared', engine:'cil', methods, statistics}`. Repeating preparation in the same code epoch reuses those plans. Invalidation rebuilds them in the next epoch.
+
+Preparation never advances the guest instruction counter or program counter, emits output, creates guest tasks, allocates managed objects, or compiles the optional Wasm tier. Foreign instances, stopped/faulted VMs and missing verified image/report state are rejected. Host plan allocations and planning time remain part of preparation. Ready, running, paused and waiting VM states can be prepared.
+
+The capability object reports phase availability independently of a particular VM's disabled option. A future runtime without an independent preparation phase must label it `not-required` with a reason; the harness omits its `predecodeMs` metric and records an unavailable phase. It never substitutes a zero-duration measurement.
+
+## Serial validation and measurement
+
+The queue owner runs the focused tests on the final integrated revision, using the repository's limited runner and one test worker:
+
+```sh
+SHARPFORGE_TEST_CONCURRENCY=1 SHARPFORGE_MAX_PARALLEL_RUNS=1 SHARPFORGE_MAX_OLD_SPACE_MB=512 node scripts/limited.js node --test --test-concurrency=1 tests/a05-12-gate.test.js tests/a05-12-harness.test.js tests/a05-12-startup.test.js tests/a05-12-snapshot.test.js
+```
+
+Correctness runs include all three startup applications on all three engines, local and available portable snapshot replay after a heap write, invalid evidence, cancellation, disposal and an actually delayed interpreter arithmetic handler. Statistical unit tests use explicitly synthetic reports; production qualification refuses those reports. The measured-handler test uses the same `compareMetric` decision function as the report gate. No synthetic report is native or benchmark qualification evidence.
+
+Commit corrections before measurement. Use the same otherwise idle runner, Node executable, flags, CPU/power mode and operating-system configuration. Do not overlap browser/native checks, builds, tests or other benchmarks. The harness creates at most one cold child and awaits its exit; warm observations run serially in the parent.
+
+Run these commands sequentially:
 
 ```sh
 node --max-old-space-size=512 --expose-gc bench/vm/harness.js --runner dedicated-node24-01 --samples 100 --warmup 10 --out artifacts/a05-vm-first.json
@@ -19,47 +49,60 @@ node --max-old-space-size=512 --expose-gc bench/vm/harness.js --runner dedicated
 node scripts/perf-gate.js --baseline docs/performance/a05-baseline.json --candidate artifacts/a05-vm-candidate.json --out artifacts/a05-vm-gate.json
 ```
 
-These are commands to execute later, not recorded execution evidence. The report records the real commit, full command, runtime versions, host fingerprint, harness hash, options, timestamps, every raw first/warmup/measured sample, correctness result and error. A dirty tree is rejected. Failed/cancelled reports cannot qualify or pass the gate. No automatic baseline replacement occurs during comparisons.
+Qualification requires every corresponding median to differ by no more than 5% across two distinct serial runs of the same commit. Both complete reports are retained: the qualified baseline embeds the first run. Median absolute deviation, interquartile range, p95 and p99 are retained alongside each median, so stable medians do not conceal broad sample noise. Failed qualification reports retain the failing stability comparisons. Do not discard inconvenient observations or select the faster repeat.
 
-`--suite micro|startup|snapshot`, `--engine source|reloaded|cil`, and `--native-bits 32|64` select independent qualification sets. Defaults are all cases/engines and ABI32. ABI64 requires its own baseline JSON and the same sequential schedule. `--samples` accepts 20–10000; default 100 gives more tail information than the minimum, but p99 uncertainty is still reported statistically, not promised away. `--warmup` accepts 1–1000; default 10. The explicit runner name is required. All files under `bench/vm/` are harness contributions; changes invalidate its fingerprint.
+Reports record the exact command, beginning and ending commit, clean-tree status at both boundaries, timestamps, Node/V8 versions, executable, operating system, CPU models/count, host identity hash, memory capacity, GC mode, locale, compiled-assembly hashes, fixture hash, all harness-file hashes and VM options. A changed revision during the run fails the report. Output writes replace the destination atomically. Gate comparisons never overwrite either input file.
 
-## What is timed
+`--suite micro|startup|snapshot`, `--engine source|reloaded|cil` and `--native-bits 32|64` create independent qualification sets. Defaults are all cases/engines and ABI32. Samples accept 20–10000; warmups accept 1–1000. The default 100 observations provides more tail information than the minimum, but it is not a guarantee of narrow p99 uncertainty. The stable `--runner` identifier is required. A different runner fingerprint, harness, fixture catalog, engine set, phase availability, ABI or protocol requires a new baseline.
 
-| Case | Measurement boundary |
+## Measurement boundaries
+
+| Case or phase | What is timed and checked |
 |---|---|
-| Arithmetic, direct calls, fields, arrays, strings, exceptions, allocation | Prepared VM, restored initial snapshot and rebuilt invalidated plans outside the timer, complete guest execution inside it; raw first run and warmups retained alongside warmed median/p95/p99 |
-| Virtual calls | Actual direct-CIL `callvirt` with a derived override, constructed through the public metadata/IL API; asserted override return value |
-| Invoice, grid, text-report startup | A new Node child process for every observation; no warmup cache carried between observations |
-| Load | CIL inspector parse; canonical source reload for reloaded engine; independent compiler-image copy for source |
-| Verification | Explicit `verifyCilAssembly` or `verifyImage`; required constructor verification is also included in the separately measured construction interval |
-| Predecode | `prepareExecution(vm)`: verified reachable CIL method plans, or source fusion-plan construction; no guest instruction executes |
-| First output | Both execution-to-first-output and load-start-to-first-output, plus process-uptime-to-first-output and full child process wall time |
-| Snapshot/copy | Populated 4096-element array at its first output; COW capture, same-VM restore, portable export, structured clone, fresh VM construction, and portable restore timed separately; replay output asserted |
+| Seven ordinary microbenchmarks | One prepared VM per case; the initial snapshot is restored and plans are prepared outside each execution timer. First execution, warmups and measured observations are retained separately. |
+| Virtual calls | Real direct-CIL `callvirt` to a derived override, built through public metadata/IL APIs; the expected override result is asserted. Source and reloaded-source fixture entries remain explicitly unsupported. |
+| Invoice, grid, text-report startup | A fresh Node process for every observation, with no cache carried between observations. Parent compilation is separately recorded. |
+| Load | CIL inspector parsing, canonical source reload, or an independent compiler-image clone. |
+| Verify | Explicit `verifyCilAssembly` or `verifyImage`; constructor verification is additionally included in construction time. No verification cost is subtracted. |
+| Predecode / preparation | Actual verified CIL decode planning or actual source-fusion planning. The phase remains labeled with its execution engine. |
+| First output | Execution-to-first-output, load-start-to-first-output, process-uptime-to-first-output, and complete child wall time. Input read/deserialization is reported separately. |
+| Snapshot capture and restore | A live initialized array is captured and restored in the same VM. Replay includes a guest array write, then checks the complete expected output for every observation. |
+| Snapshot transfer | When portable APIs exist: export, `structuredClone`, fresh-VM construction and fresh-VM import/restore are timed independently. Portable replay output is independently asserted. Missing APIs produce explicit unavailable metrics. |
+| Snapshot replay | Guest execution after capture is timed separately from restore/copy. Replay allocation deltas are recorded only between two observations of that same execution interval. |
 
-Startup compilation occurs in the parent and is reported separately. Reading/deserializing the worker's artifact is recorded separately. Node/module loading is excluded from the four managed phases but included in process first-output and child wall time. Verification costs are not subtracted or hidden by a cache. The source engine's preparation is fusion planning over existing IR, not CIL decoding; the engine label must remain attached to the result.
+Source restore intentionally pauses for debugger inspection. `restoreForReplay` explicitly resumes this known replay boundary; normal debugger pauses still fail an unexpectedly paused benchmark. No pause is silently skipped in ordinary execution.
 
-Instructions/sec uses actual VM instruction counters and measured wall time. Bounded cooperative slices include `setImmediate` scheduling between nonterminal slices. Managed allocation counts/bytes are exact VM counter deltas during execution; they exclude host graph and V8 allocations. Host RSS, heap-used/total, external and ArrayBuffer observations are separately labeled process gauges and are not called allocation totals or gated as such. Snapshot restore rewinds managed counters, so capture/restore does not report a bogus allocation delta. Fresh portable destination initialization allocations are retained separately. Exposed host GC, when available, runs before warm/snapshot samples outside their timers; VM managed GC remains part of execution.
+Instructions/sec uses the actual guest instruction counter and measured execution time. The gate recomputes that relationship and rejects mismatched throughput. Cooperative slices use an instruction budget of 10000 and an 8 ms requested time budget, yielding with `setImmediate` between nonterminal slices. These requested budgets are not a claim that every native intrinsic meets a hard 8 ms latency limit.
 
-## Gate definition
+Managed allocations and allocated bytes are exact VM counter deltas for timed micro execution; startup records constructor-plus-execution totals. They exclude V8 objects and other host graphs. RSS, heap-used/total, external and ArrayBuffer values are separately labeled host-memory gauges, never allocation totals. Exposed host GC runs before warm/snapshot observations outside their timers; managed GC remains inside guest execution. Snapshot restore rewinds managed counters, so no allocation delta is computed across a restore.
 
-The gate recomputes statistics from raw measurements and rejects missing/duplicate cases, missing metrics, non-finite/negative samples, incomplete counts, failed correctness, incompatible environments/options, or unqualified baselines. Matching case status includes explicit unsupported entries. It preserves unsupported coverage instead of dropping it from a favorable result.
+Capture diagnostics are reported only if the runtime exposes them. Their absence does not imply COW support. Portable phase availability is detected from the real `serializeSnapshot` and `restoreSerializedSnapshot` exports, retained in the protocol and rechecked at measurement time.
 
-For each latency or managed-allocation metric (higher is worse) and throughput metric (lower is worse), the point degradation must exceed 5%, and the lower endpoint of a 95% two-sided bootstrap confidence interval must also exceed 5%. The baseline and candidate samples are resampled independently with replacement. The implementation uses a seeded percentile bootstrap of relative degradation, not a paired bootstrap and not SciPy's default BCa method. The method and independent-resampling semantics follow the [SciPy bootstrap documentation](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.bootstrap.html). Seed defaults to 12012 and resamples to 10000; both are included in results. Confidence is per metric, with no family-wise error claim. Comparisons below the point threshold are recorded without unnecessary resampling.
+## Statistical decision
 
-A zero allocation baseline uses an absolute increase without inventing an epsilon denominator; a positive increase must have a strictly positive interval lower endpoint. Zero throughput is invalid. The percentile method handles equal-valued samples without fabricating variance; noisy or small tail samples can leave a change inconclusive. Reports retain median/p95/p99 even when a gate outcome is inconclusive. Exit codes: 0 comparison passed or baseline qualified; 1 significant regression; 2 malformed/incompatible/unqualified evidence.
+The report gate validates the complete expected case set, metric contracts, unavailable-phase declarations, strict first/warmup/measured ordering, unique sample indices, raw counts, correctness, compiled-artifact provenance and recomputed summaries. It rejects non-finite/negative samples, zero latency or throughput, fractional allocation counters and incompatible or unqualified evidence. Baseline qualification is reconstructed from its retained raw repeat before comparison.
 
-## Capability and limits
+For each metric and each declared statistic (latency median/p95/p99, allocation median and throughput median), a degradation must exceed the 5% budget before resampling is needed. The baseline and candidate samples are independently resampled with replacement. A seeded percentile bootstrap then estimates excess over the budget:
 
-| Capability / target | Status |
+- Higher-is-worse metrics: `candidate / (1 + budget) - baseline`.
+- Lower-is-worse throughput: `baseline * (1 - budget) - candidate`.
+
+A regression is confirmed only when both the observed excess and the lower endpoint of its 95% two-sided confidence interval exceed zero. Intervals are expressed in metric units over the budget; the observed relative change is reported separately. This tests the requested relative budget while avoiding division by zero when allocation bootstrap samples contain zeros. At an originally zero allocation median, any statistically confirmed positive increase is an absolute regression. Zero throughput is invalid.
+
+The algorithm is an independent percentile bootstrap, not a paired bootstrap or a BCa interval. Default seed is 12012 and default resamples is 10000; both are retained in gate output. Confidence is per metric and no family-wise error guarantee is claimed. A point estimate beyond the budget whose interval still overlaps zero is explicitly `inconclusive`; it contributes to the report's inconclusive count. `passed` means no statistically confirmed regression under this protocol, not proof of equivalence or an achieved performance target.
+
+Exit codes are 0 for qualification/comparison without a confirmed regression, 1 for a confirmed regression, and 2 for malformed, incompatible, unqualified or synthetic evidence.
+
+## Coverage boundaries
+
+| Target or capability | Qualification meaning |
 |---|---|
-| Public `prepareExecution(vm)` from `@sharpforge/runtime` | Staged API; prepares plans without advancing guest instructions; returns engine/method count/cache statistics. Rejects foreign/stopped/malformed VMs. Source fusion disabled returns explicit unsupported. |
-| Source / reloaded / direct-CIL benchmark execution | Implemented, qualification deferred until full E02 integration |
-| Source/reloaded virtual dispatch | Unsupported in this fixture: source IR cannot represent its polymorphic `callvirt`; ordinary calls are measured separately |
-| Portable copy and replay | Implemented across the three engines; positive replay checks, qualification deferred |
-| Browser / native .NET measurements | Unsupported by this Node harness; existing browser/native acceptance runs are separate evidence |
-| Optional Wasm tier | Explicitly disabled in this interpreter baseline; `prepareWasmTier` and native/bridge counters require a separate qualification protocol |
-| Cancellation / failure | SIGINT/SIGTERM abort serial work, stop VMs, terminate the sole child, remove temporary input, write a failed/cancelled report; never qualifies |
+| Source, reloaded-source and direct CIL | Independently measured and output-checked by this Node harness. Each ABI uses its own baseline. |
+| Rectangular-array grid app | Included in all three startup paths; direct CIL requires the rectangular-array runtime/admission integration. A runtime failure remains a failure. |
+| Portable snapshots | Measured only when the corresponding runtime APIs exist; fresh destination replay is mandatory when available. |
+| Browser / native .NET | Not measured by this Node harness; separate browser and native reference evidence is required. |
+| Optional Wasm tier | Explicitly disabled in this interpreter protocol. Wasm validation, bridge counts and native execution require their own qualification. |
+| Source fusion target | The paired comparison in `bench/vm/source-fusion.js` reports the actual result and a 1.5× target predicate separately. This T12 gate does not convert a missed optimization target into a pass. |
+| Cancellation / failure | Abort stops the current VM, terminates the sole child, removes temporary input and retains a failed/cancelled report. Such reports cannot qualify or pass. |
 
-The runnable examples are the fixture programs in `bench/vm/fixtures.js` and the actual CIL virtual assembly in `bench/vm/virtual.js`. Focused regression tests cover deliberately slowed interpreter execution, noise, zero-allocation boundaries, malformed or mismatched reports, unsupported cases, cancellation and disposal. They are prepared, not run in this implementation slice.
-
-The deliberately slowed-handler integration test is queued with `node --max-old-space-size=512 --test --test-concurrency=1 --test-name-pattern="deliberately slowed arithmetic" tests/a05-12-harness.test.js`. It measures the actual source interpreter with a test-only arithmetic-handler delay and applies the bootstrap to measured samples. Synthetic report tests only exercise gate/schema behavior and are never native or performance evidence. Run this command only in the sole validation queue.
+Runnable example programs are in `bench/vm/fixtures.js`; the actual virtual CIL assembly is in `bench/vm/virtual.js`. Performance acceptance remains attached to actual measured JSON and the exact tested revision.

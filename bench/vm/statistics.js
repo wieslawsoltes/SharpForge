@@ -1,4 +1,4 @@
-/** Deterministic PRNG for resampling; independent draws for baseline and candidate. */
+/** Deterministic Mulberry32 draws; independent baseline/candidate resampling, no host randomness. */
 export function randomGenerator(seed) {
   if (!Number.isInteger(seed) || seed < 0 || seed > 0xffffffff) throw new RangeError('Seed must be UInt32');
   let state = seed;
@@ -11,56 +11,87 @@ export function randomGenerator(seed) {
 }
 
 export function requireSamples(values, minimum = 1) {
-  if (!Array.isArray(values) || values.length < minimum || values.some(value => !Number.isFinite(value) || value < 0)) {
-    throw new TypeError(`Expected at least ${minimum} finite nonnegative observations`);
+  if (!Array.isArray(values) || values.length < minimum || values.length > 11001 ||
+      values.some(value => !Number.isFinite(value) || value < 0)) {
+    throw new TypeError(`Expected ${minimum}–10000 finite nonnegative observations`);
   }
 }
 
-/** Linear-interpolated quantiles, including the average of the middle pair for the median. */
+function percentile(sorted, probability) {
+  const position = (sorted.length - 1) * probability;
+  const lower = Math.floor(position);
+  return sorted[lower] + (sorted[Math.ceil(position)] - sorted[lower]) * (position - lower);
+}
+
+/** Linear-interpolated quantiles, including the mean of the middle pair for an even-sized median. */
 export function quantile(values, probability) {
   requireSamples(values);
   if (!(probability >= 0 && probability <= 1)) throw new RangeError('Invalid quantile');
-  const sorted = [...values].sort((a, b) => a - b), position = (sorted.length - 1) * probability;
-  const lower = Math.floor(position), fraction = position - lower;
-  return sorted[lower] + (sorted[Math.ceil(position)] - sorted[lower]) * fraction;
+  return percentile([...values].sort((left, right) => left - right), probability);
 }
+
 export const median = values => quantile(values, 0.5);
-export const exceeds = (value, boundary) => value - boundary > Number.EPSILON * 8 * Math.max(1, Math.abs(value), Math.abs(boundary));
+export const exceeds = (value, boundary) => value - boundary >
+  Number.EPSILON * 8 * Math.max(1, Math.abs(value), Math.abs(boundary));
+
 export function distribution(values) {
   requireSamples(values);
-  return {count: values.length, minimum: Math.min(...values), median: median(values), p95: quantile(values, 0.95),
-    p99: quantile(values, 0.99), maximum: Math.max(...values)};
+  const sorted = [...values].sort((left, right) => left - right);
+  const middle = percentile(sorted, 0.5);
+  return {count: values.length, minimum: sorted[0], median: middle, p95: percentile(sorted, 0.95),
+    p99: percentile(sorted, 0.99), maximum: sorted.at(-1),
+    interquartileRange: percentile(sorted, 0.75) - percentile(sorted, 0.25),
+    medianAbsoluteDeviation: median(values.map(value => Math.abs(value - middle)))};
+}
+
+export function validateBootstrapOptions(options = {}) {
+  const {probability = 0.5, direction = 'higher', threshold = 0.05, confidence = 0.95,
+    resamples = 10000, seed = 12012} = options;
+  if (!['higher', 'lower'].includes(direction) || !(probability >= 0 && probability <= 1) ||
+      !(threshold >= 0 && threshold < 1) || !(confidence > 0.5 && confidence < 1) ||
+      !Number.isInteger(resamples) || resamples < 1000 || resamples > 1000000) {
+    throw new RangeError('Invalid bootstrap configuration');
+  }
+  randomGenerator(seed);
+  return {probability, direction, threshold, confidence, resamples, seed};
 }
 
 /**
- * Independent two-sample percentile bootstrap, following SciPy bootstrap(paired=False, method='percentile').
- * The statistic is relative degradation; at a zero baseline it is an absolute increase, without epsilon imputation.
+ * Independent two-sample percentile bootstrap of excess over the regression budget.
+ * Latency: candidate/(1+budget) - baseline; throughput: baseline*(1-budget) - candidate.
+ * Testing the interval against zero avoids undefined ratios when allocation resamples contain zero.
  */
 export function bootstrapRegression(baseline, candidate, options = {}) {
-  const {probability = 0.5, direction = 'higher', threshold = 0.05, confidence = 0.95, resamples = 10000, seed = 12012} = options;
   requireSamples(baseline, 20);
   requireSamples(candidate, 20);
-  if (!['higher', 'lower'].includes(direction) || !(threshold >= 0 && threshold < 1) || !(confidence > 0.5 && confidence < 1) ||
-      !Number.isInteger(resamples) || resamples < 1000 || resamples > 1000000) throw new RangeError('Invalid bootstrap configuration');
-  const random = randomGenerator(seed), before = quantile(baseline, probability), after = quantile(candidate, probability);
-  const absolute = before === 0;
-  if (absolute && direction === 'lower') throw new RangeError('Zero baseline for a throughput metric is unmeasured');
-  const effect = (left, right) => absolute ? right - left : direction === 'higher' ? right / left - 1 : 1 - right / left;
-  const observed = effect(before, after), bootstrap = [];
-  const draw = values => Array.from({length: values.length}, () => values[Math.floor(random() * values.length)]);
-  for (let index = 0; index < resamples; index++) {
-    const left = quantile(draw(baseline), probability), right = quantile(draw(candidate), probability);
-    if (!absolute && left === 0) throw new RangeError('Relative bootstrap sample has a zero denominator');
-    bootstrap.push(effect(left, right));
+  const {probability, direction, threshold, confidence, resamples, seed} = validateBootstrapOptions(options);
+  if (direction === 'lower' && [...baseline, ...candidate].some(value => value <= 0)) {
+    throw new RangeError('Zero throughput is unmeasured');
   }
-  // Effects can be negative; quantile() intentionally accepts only nonnegative raw observations.
-  bootstrap.sort((a, b) => a - b);
-  const percentile = fraction => {
-    const at = (bootstrap.length - 1) * fraction, low = Math.floor(at);
-    return bootstrap[low] + (bootstrap[Math.ceil(at)] - bootstrap[low]) * (at - low);
+  const random = randomGenerator(seed);
+  const before = quantile(baseline, probability);
+  const after = quantile(candidate, probability);
+  const absolute = before === 0;
+  const observed = absolute ? after - before : direction === 'higher' ? after / before - 1 : 1 - after / before;
+  const excess = (left, right) => direction === 'higher' ? right / (1 + threshold) - left : left * (1 - threshold) - right;
+  const draws = Array(resamples);
+  const leftSample = Array(baseline.length);
+  const rightSample = Array(candidate.length);
+  const draw = (values, sample) => {
+    for (let index = 0; index < sample.length; index++) sample[index] = values[Math.floor(random() * values.length)];
+    sample.sort((left, right) => left - right);
+    return percentile(sample, probability);
   };
-  const alpha = (1 - confidence) / 2, interval = [percentile(alpha), percentile(1 - alpha)];
-  const boundary = absolute ? 0 : threshold;
-  return {before, after, observed, interval, threshold: boundary, unit: absolute ? 'absolute' : 'fraction',
-    confidence, resamples, seed, method: 'independent-percentile', regression: exceeds(observed, boundary) && exceeds(interval[0], boundary)};
+  for (let index = 0; index < resamples; index++) {
+    draws[index] = excess(draw(baseline, leftSample), draw(candidate, rightSample));
+  }
+  draws.sort((left, right) => left - right);
+  const alpha = (1 - confidence) / 2;
+  const interval = [percentile(draws, alpha), percentile(draws, 1 - alpha)];
+  const budgetExcess = excess(before, after);
+  const regression = exceeds(budgetExcess, 0) && exceeds(interval[0], 0);
+  return {before, after, observed, threshold: absolute ? 0 : threshold, unit: absolute ? 'absolute' : 'fraction',
+    budgetExcess, interval, intervalUnit: 'metric-units-over-budget', confidence, resamples, seed,
+    method: 'independent-percentile-budget-excess', regression,
+    decision: regression ? 'regression' : exceeds(budgetExcess, 0) ? 'inconclusive' : 'within-budget'};
 }

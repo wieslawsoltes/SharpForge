@@ -2,8 +2,10 @@ import {microbenchmarks, startupApps, snapshotCase, engines} from './fixtures.js
 import {compileFixture, abortIfNeeded} from './operations.js';
 import {measureMicro} from './micro.js';
 import {measureStartup} from './startup.js';
-import {measureSnapshot} from './snapshot.js';
-import {createReport, hash, stable, writeReport, recordError, isMain} from './evidence.js';
+import {measureSnapshot, portableSnapshotsAvailable} from './snapshot.js';
+import {executionPreparationCapabilities} from '@sharpforge/runtime';
+import {validateReport} from './report-validation.js';
+import {createReport, hash, stable, writeReport, recordError, completeReport, isMain} from './evidence.js';
 
 export function parseOptions(args) {
   const values = {out: 'artifacts/a05-vm-performance.json', runner: '', samples: 100, warmup: 10,
@@ -12,6 +14,7 @@ export function parseOptions(args) {
     '--suite': 'suite', '--engine': 'engine', '--native-bits': 'nativeBits'};
   for (let index = 0; index < args.length; index += 2) {
     const key = keys[args[index]], value = args[index + 1];
+    if (args.slice(0, index).includes(args[index])) throw new TypeError('Duplicate benchmark option: ' + args[index]);
     if (!key || value === undefined || value.startsWith('--')) throw new TypeError('Unknown or missing option: ' + args[index]);
     values[key] = ['samples', 'warmup', 'nativeBits'].includes(key) ? Number(value) : value;
   }
@@ -23,18 +26,21 @@ export function parseOptions(args) {
 }
 
 export function protocolFor(options) {
-  return {version: 1, samples: options.samples, warmup: options.warmup, suite: options.suite,
+  return {version: 2, samples: options.samples, warmup: options.warmup, suite: options.suite,
     engines: options.engine === 'all' ? [...engines] : [options.engine],
     fixtureHash: hash(stable({microbenchmarks, startupApps, snapshotCase})),
     vmOptions: {nativeIntBits: options.nativeBits, maxInstructions: 20000000, sourceFusion: true,
-      specializeNumericHandlers: true, typedNumericStack: false, smallLongFastPath: false, wasmTiering: false},
+      specializeNumericHandlers: true, typedNumericStack: false, smallLongs: true, wasmTiering: false},
+    preparation: {source: executionPreparationCapabilities.source, reloaded: executionPreparationCapabilities.source,
+      cil: executionPreparationCapabilities.cil}, portableSnapshots: portableSnapshotsAvailable(),
     scheduling: {workers: 1, sliceInstructions: 10000, sliceMs: 8, yield: 'setImmediate-between-nonterminal-slices'},
     gcPolicy: 'Exposed host GC before warm/snapshot observations, outside their timers; managed GC stays inside execution',
-    warmPolicy: 'One prepared VM per micro case, initial snapshot restored and invalidated plans rebuilt outside the execution timer; first/warmup samples retained',
+    warmPolicy: 'One prepared VM per micro case; initial snapshot restored and plans rebuilt outside execution timing. ' +
+      'First execution and warmup samples are retained.',
     startupPolicy: 'Fresh Node process per observation. load is inspector parse, canonical reload, or source-image copy. ' +
       'Constructor includes its own required verification; verification is also reported separately. No subtraction.',
     memoryPolicy: 'Managed allocation counters exclude host graphs; hostBefore/hostAfter are process gauges, not allocation totals',
-    snapshotPolicy: 'Populated 4096-element live array; same-VM COW and portable export/copy/fresh-VM restore timed independently'};
+    snapshotPolicy: 'Populated 4096-element live array with a post-capture write; capture/local replay and available portable phases timed independently'};
 }
 
 export async function runHarness(options, signal) {
@@ -55,6 +61,7 @@ export async function runHarness(options, signal) {
           abortIfNeeded(signal);
           const row = await measure(fixture, engine, artifact, protocol, signal, onRow);
           row.compilationMs = compilationMs;
+          row.assemblyHash = hash(artifact.assembly);
           writeReport(report, options.out);
         }
       }
@@ -64,7 +71,14 @@ export async function runHarness(options, signal) {
     report.status = signal?.aborted ? 'cancelled' : 'failed';
     report.errors.push(recordError(error));
   } finally {
-    report.completedAt = new Date().toISOString();
+    completeReport(report);
+    if (report.status === 'measured') {
+      try { validateReport(report); }
+      catch (error) {
+        report.status = 'failed';
+        report.errors.push(recordError(error));
+      }
+    }
     writeReport(report, options.out);
   }
   return report;

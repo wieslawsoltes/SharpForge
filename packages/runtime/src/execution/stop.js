@@ -9,7 +9,7 @@ import {stopSourceRuntimeEvents} from './source-runtime-events.js';
 export function stopExecution(vm) {
   const hadGuestFault = vm.fault || vm.pendingFault;
   vm.profiler?.closeSlice();
-  if (vm.inspector) invalidateExecutionCode(vm, 'stop');
+  invalidateExecutionCode(vm, 'stop');
   clearStrings(vm);
   clearRuntimeTypes(vm);
   vm.scheduler.cancelAll();

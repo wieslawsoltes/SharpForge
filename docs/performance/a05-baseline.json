@@ -1,8 +1,8 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "suite": "SF-A05-T12",
   "status": "unqualified",
-  "reason": "No T12 measurement has been run. Full E02 integration and the sole validation queue owner must authorize measurement first.",
+  "reason": "No qualified T12 measurement is checked in. The final integrated revision requires two complete serial same-runner measurements before this baseline can qualify.",
   "rows": [],
   "refreshCommands": [
     "node --max-old-space-size=512 --expose-gc bench/vm/harness.js --runner REPLACE_WITH_STABLE_RUNNER_ID --samples 100 --warmup 10 --out artifacts/a05-vm-first.json",

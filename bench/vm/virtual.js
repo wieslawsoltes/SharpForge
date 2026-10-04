@@ -3,6 +3,9 @@ import {MetadataBuilder, Writer, CilWriter, methodSignature, localSignature, cod
 
 /** Genuine override dispatch, assembled through the public CIL API; not a native .NET qualification artifact. */
 export function virtualAssembly(iterations) {
+  if (!Number.isInteger(iterations) || iterations < 1 || iterations > 1000000) {
+    throw new RangeError('Virtual dispatch iterations must be between 1 and 1000000');
+  }
   const metadata = new MetadataBuilder('VirtualBenchmark');
   const object = metadata.typeRef('System.Object');
   const base = token(2, 2), derived = token(2, 3);
