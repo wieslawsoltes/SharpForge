@@ -171,3 +171,32 @@ cases for scale, signed zero, close large values, typed result arrays and boxes,
 branching, named-argument effects and rejected operand/result signatures.
 Execution and platform/performance qualification remain deferred; no new native
 evidence or completion of #1350/#1351 is claimed.
+
+## Static sign methods
+
+`decimal.Negate(decimal d)` and `decimal.Abs(decimal value)` append after the
+comparison entries as `decimal.Negate#1` and `decimal.Abs#1`. Registration retains
+the distinct parameter names, allowing `Negate(d: amount)` and
+`Abs(value: amount)` without accepting the other method's argument name.
+
+Both methods reuse existing Decimal operations. Negate toggles the sign and Abs
+clears it; coefficient and scale remain unchanged, including for zero. Decimal's
+range is symmetric, so both methods accept `decimal.MinValue` without an overflow.
+These contracts and parameter names follow the pinned .NET 10.0.5
+[Negate](https://github.com/dotnet/runtime/blob/v10.0.5/src/libraries/System.Private.CoreLib/src/System/Decimal.cs#L608-L614)
+and [Abs](https://github.com/dotnet/runtime/blob/v10.0.5/src/libraries/System.Private.CoreLib/src/System/Decimal.cs#L1200-L1204)
+implementations. No numeric policy changes accompany the source registrations.
+
+```csharp
+using System;
+decimal amount = -1.2300m;
+Console.WriteLine(decimal.Negate(d: amount)); // 1.2300
+Console.WriteLine(decimal.Abs(value: decimal.MinValue)); // 79228162514264337593543950335
+```
+
+`tests/a05-source-decimal-sign.test.js` authors source/reloaded/direct-CIL cases
+for scale, full coefficient range, signed-zero carrier bits and Double conversion,
+named-argument evaluation, arrays, boxing, integral widening and rejected
+signatures. Math overloads, additional Decimal library APIs and generic numeric
+interfaces are not admitted by this registration. Tests and platform/performance
+qualification remain pending in the serial queue; #1350/#1351 remain open.

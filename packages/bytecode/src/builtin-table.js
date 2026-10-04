@@ -10,7 +10,8 @@ const sourceDecimals = [
   ...['Add', 'Subtract', 'Multiply', 'Divide', 'Remainder'].map(name =>
     [name, ['System.Decimal', 'System.Decimal'], ['d1', 'd2']]),
   ['Compare', ['System.Decimal', 'System.Decimal'], ['d1', 'd2'], 'int'],
-  ['Equals', ['System.Decimal', 'System.Decimal'], ['d1', 'd2'], 'bool']
+  ['Equals', ['System.Decimal', 'System.Decimal'], ['d1', 'd2'], 'bool'],
+  ['Negate', ['System.Decimal'], ['d']], ['Abs', ['System.Decimal'], ['value']]
 ].map(([name, parameters, parameterNames, returnType = 'System.Decimal']) => {
   const descriptor = decimalIntrinsicDefinitions.find(candidate => candidate.owner === 'System.Decimal' &&
     candidate.isStatic && candidate.name === name && candidate.returnType === returnType &&
