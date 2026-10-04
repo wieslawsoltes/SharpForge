@@ -1,11 +1,13 @@
 {
-  "collections/collection-expression": ["diagnostics", "warnings", "bytecode", "cil"],
+  "collections/collection-expression": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "collections/cs0029-element-assignment": ["diagnostics", "warnings"],
   "collections/cs1501-count-as-method-without-linq": ["diagnostics", "warnings"],
   "collections/cs1503-add-wrong-type": ["warnings"],
   "collections/cs1503-dictionary-key-type": ["warnings"],
-  "collections/hashset": ["diagnostics", "warnings", "bytecode", "cil"],
+  "collections/hashset": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "collections/list-basics": ["warnings"],
+  "collections/list-index-out-of-range": ["directCil"],
   "collections/list-of-objects": ["diagnostics", "warnings", "bytecode", "cil"],
-  "collections/list-sort-and-search": ["warnings"]
+  "collections/list-sort-and-search": ["warnings"],
+  "collections/stack-and-queue": ["directCil"]
 }

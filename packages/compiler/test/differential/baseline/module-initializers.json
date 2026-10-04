@@ -1,5 +1,5 @@
 {
-  "module-initializers/before-top-level-statements": ["diagnostics", "warnings", "bytecode", "cil"],
+  "module-initializers/before-top-level-statements": ["diagnostics", "warnings", "bytecode", "cil", "directCil"],
   "module-initializers/cs0227-skip-locals-init-needs-unsafe": ["diagnostics", "warnings"],
   "module-initializers/declaration-rules": ["diagnostics", "warnings"],
   "module-initializers/module-initializer-in-csharp-8": ["diagnostics", "warnings"],
