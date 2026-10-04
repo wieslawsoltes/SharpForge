@@ -70,6 +70,18 @@ Solid, linear and radial brushes share explicit color, opacity, transform, inter
 
 `PortableGlyphRasterizer` uses actual loaded glyph outlines or OpenType color assets. It retains phase-adjusted DIP bounds, intrinsic colors and bounded pending-image ownership. Whole-run paint and atlas consumers share these glyphs; neither path reconstructs text from character codes.
 
+## Line opportunities
+
+Pinned Unicode17 UAX14 rules preserve nonbreaking spaces, word joiners, explicit opportunities, CJK behavior and mandatory breaks. A caller-selected finite work budget bounds adversarial lookahead; cancellation is observed before even a short input is processed.
+
+## Text layout services
+
+`TextLayoutService` caches actual provider results and shares them with measurement and drawing. The browser provider retains shaped native runs with explicit opaque glyph access. Cluster maps drive caret, hit testing and selection; rich spans, trimming and ink bounds remain separate from raster policy. Numeric portable shaping is supplied by a separate provider.
+
+## Portable text provider
+
+`createPortableTextProvider` loads only caller-authorized assets and verifies declared hashes. `HarfBuzzTextProvider` performs contextual line shaping, visual bidi placement, wrapping/trimming and exact UTF-16 cluster maps with bounded work. Actual font metrics and glyph ink bounds drive measurement; asynchronous color assets invalidate retained drawing resources when ready.
+
 ## Validation
 
 Focused cases were authored and included in the completed A17 scope gate. The publication manifest records its exact prior evidence and any subsequent repair. Required core is pending on this exact branch tree. Browser pixels, native WinUI comparisons and physical GPU qualification are separate gates.

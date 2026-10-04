@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {segmentGraphemes, unicodeTextVersions} from '../packages/rendering/src/text/unicode.js';
 import {textBidi, lineBidiTail, visualTextItems} from '../packages/rendering/src/text/bidi.js';
+import {lineOpportunities} from '../packages/rendering/src/text/line-opportunities.js';
 
 test('pinned extended graphemes preserve marks, Indic conjuncts, emoji, Hangul and UTF-16 boundaries', () => {
   const fixtures = [
@@ -29,4 +30,20 @@ test('line bidi reset applies at a nonzero soft-line start and scalar levels cov
   const brackets = textBidi('(אבג)', 'auto');
   assert.equal(brackets.paragraphs[0].level, 1);
   assert.ok([...brackets.levels].every(level => level & 1));
+});
+
+test('pinned UAX14 recognizes nonbreaking spaces, joiners, explicit opportunities and CJK breaks', () => {
+  const fixtures = [
+    ['hello world', [6, 11]], ['a\u00a0b', [3]], ['a\u2060b', [3]],
+    ['ab\u200bcd', [3, 5]], ['中文测试', [1, 2, 3, 4]], ['a\r\nb', [3, 4]]
+  ];
+  for (const [text, expected] of fixtures) assert.deepEqual([...lineOpportunities(text).keys()], expected, JSON.stringify(text));
+  assert.equal(lineOpportunities('a\nb').get(2), true);
+  assert.throws(() => lineOpportunities('a'.repeat(1000), {maxSteps: 10}), error => error.code === 'SFRENDER082');
+  const canceled = new AbortController(); canceled.abort();
+  assert.throws(() => segmentGraphemes('text', {signal: canceled.signal}), {name: 'AbortError'});
+  assert.throws(() => lineOpportunities('text', {signal: canceled.signal}), {name: 'AbortError'});
+  const marks = 'a' + '\u0301'.repeat(10000);
+  assert.equal(segmentGraphemes(marks).length, 1);
+  assert.throws(() => lineOpportunities(marks, {maxSteps: 100}), error => error.code === 'SFRENDER082');
 });
