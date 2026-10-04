@@ -14,7 +14,7 @@ function header(inspector, options = {}) {
   const { metadata, pe } = inspector;
   const row = metadata.rows[32]?.[0];
   const name = row ? metadata.string(row[7]) : metadata.string(metadata.rows[0]?.[0]?.[1] ?? 0);
-  return {
+  const result = {
     name,
     version: row ? row.slice(1, 5).join('.') : null,
     entryPoint: pe.entryPoint,
@@ -24,18 +24,24 @@ function header(inspector, options = {}) {
     machine: pe.machine,
     cliFlags: pe.flags,
     imageKind: pe.imageKind,
-    ...(options.includePE ? { pe: inspectPEHeaders(pe, peOptions(options)) } : {}),
   };
+  if (options.includePE) result.pe = inspectPEHeaders(pe, peOptions(options));
+  return result;
 }
 
 function methodSummary(inspector, definition, includeMethods) {
-  if (!includeMethods) return { ...definition, ...methodCodeFacts(definition) };
+  if (!includeMethods) return methodCodeFacts(definition, { ...definition });
   try {
     return inspector.getMethod(definition.token);
   } catch (error) {
-    const facts = methodCodeFacts(definition);
-    if (facts.codeKind === 'CIL' && definition.hasBody) facts.disassembly = { status: 'unavailable', reason: error.message };
-    return { ...definition, ...facts, error: error.message, instructions: [], locals: [], handlers: [], codeSize: 0 };
+    const method = methodCodeFacts(definition, { ...definition });
+    if (method.codeKind === 'CIL' && definition.hasBody) method.disassembly = { status: 'unavailable', reason: error.message };
+    method.error = error.message;
+    method.instructions = [];
+    method.locals = [];
+    method.handlers = [];
+    method.codeSize = 0;
+    return method;
   }
 }
 

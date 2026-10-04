@@ -30,13 +30,15 @@ export function readOptionalHeader(bytes, optionalStart, optionalSize) {
   if (directoryCount < 15) throw new CilError('Missing CLI data directory');
   if (directoryCount > 64) throw new CilError('Too many PE data directories');
   reader.need(directoryCount * 8);
-  const dataDirectories = PEDirectoryNames.map(name => ({ name, rva: 0, size: 0 }));
+  const dataDirectories = new Array(16);
   const additionalDataDirectories = [];
   for (let index = 0; index < directoryCount; index++) {
     const directory = { name: PEDirectoryNames[index] ?? `directory${index}`, rva: reader.u32(), size: reader.u32() };
     if (index < 16) dataDirectories[index] = directory;
     else additionalDataDirectories.push(directory);
   }
+  for (let index = directoryCount; index < 16; index++)
+    dataDirectories[index] = { name: PEDirectoryNames[index], rva: 0, size: 0 };
   const directories = Object.fromEntries(dataDirectories.map(directory => [directory.name, directory]));
   return { optionalStart, optionalSize, magic, pe32Plus, majorLinkerVersion, minorLinkerVersion, sizeOfCode,
     sizeOfInitializedData, sizeOfUninitializedData, addressOfEntryPoint, baseOfCode, baseOfData, imageBase,

@@ -12,13 +12,15 @@ export function inspectorMethodDefinition(metadata, token, owner, pe) {
     isEntryPoint: !pe.nativeEntryPoint && token === pe.entryPoint };
 }
 
-/** Scalar implementation facts are available even when a metadata-only summary omits method bodies. */
-export function methodCodeFacts(definition) {
+/** Populate a fresh caller-owned result, validating implementation kind and creating owned disassembly facts. */
+export function methodCodeFacts(definition, result = {}) {
   const codeKind = methodCodeKind(definition.implFlags);
-  return { codeKind, disassembly: {
+  result.codeKind = codeKind;
+  result.disassembly = {
     status: definition.hasBody ? 'available' : codeKind === 'CIL' ? 'absent' : 'not-disassembled',
     reason: codeKind === 'CIL' ? null : `${codeKind} implementation is not CIL`,
-  } };
+  };
+  return result;
 }
 
 function operandText(instruction, inspector) {
@@ -41,8 +43,12 @@ function decodeMethod(inspector, token, describeOperands = false) {
   const info = inspector.debug?.methods?.find(method => method.token === token);
   const points = new Map((inspector.debug?.sequencePoints ?? []).filter(point => point.methodToken === token)
     .map(point => [point.ilOffset, point]));
-  const method = { ...definition, signature, parameters, id: info?.id ?? null, ...methodCodeFacts(definition),
-    locals: [], instructions: [], handlers: [], codeSize: 0, maxStack: 0 };
+  const method = methodCodeFacts(definition, { ...definition, signature, parameters, id: info?.id ?? null });
+  method.locals = [];
+  method.instructions = [];
+  method.handlers = [];
+  method.codeSize = 0;
+  method.maxStack = 0;
   if (!definition.hasBody) return method;
   const body = inspector.pe.methodBody(token);
   const locals = body.localSignature ? inspector.signature(body.localSignature).types : [];
