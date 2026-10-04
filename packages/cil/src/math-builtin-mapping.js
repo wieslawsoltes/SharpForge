@@ -19,6 +19,6 @@ export function decodeMathBuiltin(target, span) {
   if (span.at(-1)?.name !== 'nop' || span.at(-2)?.name !== 'call' || span.at(-2).operand !== target.token ||
       span.filter(instruction => ['call', 'callvirt', 'newobj'].includes(instruction.name)).length !== 1) return null;
   return mathBuiltins.find(builtin => target.name === builtin.math.name &&
-    numericTypeName(signature.returnType) === builtin.result && signature.parameters.length === 2 &&
+    numericTypeName(signature.returnType) === builtin.result && signature.parameters.length === builtin.params.length &&
     signature.parameters.every((type, index) => numericTypeName(type) === builtin.params[index])) ?? null;
 }

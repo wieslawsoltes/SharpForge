@@ -16,3 +16,17 @@ export const sourceMathBuiltins = Object.freeze(widths.flatMap(([type, suffix]) 
 
 /** Appended separately after all intervening released numeric families. */
 export const sourceSingleMathBuiltins = Object.freeze(extrema('float', 'Single'));
+
+const signWidths = [['sbyte', 'SByte'], ['short', 'Int16'], ['int', 'Int32'],
+  ['long', 'Int64'], ['float', 'Single'], ['double', 'Double']];
+const signParameterNames = Object.freeze(['value']);
+
+/** Exact unary overloads append after Single extrema; every result is Int32. */
+export const sourceSignMathBuiltins = Object.freeze(signWidths.map(([type, suffix]) => {
+  const params = Object.freeze([type]);
+  const signature = Object.freeze({kind: 'method', parameters: params, returnType: 'int',
+    isStatic: true, genericArity: 0, callingConvention: 0});
+  const math = Object.freeze({kind: 'method', owner: 'System.Math', name: 'Sign', signature});
+  return Object.freeze({name: `Math.Sign#1:${suffix}`, min: 1, max: 1, result: 'int',
+    params, math, parameterNames: signParameterNames});
+}));
