@@ -1,0 +1,34 @@
+requestfailed: file:///Users/runner/work/SharpForge/SharpForge/artifacts/SharpForge-standalone.html WebKit encountered an internal error
+console.error: Failed to load resource: WebKit encountered an internal error
+failure: Traceback (most recent call last):
+  File "/Users/runner/work/SharpForge/SharpForge/tests/conformance/browser/launch.py", line 193, in launch_browser
+    yield session
+  File "/Users/runner/work/SharpForge/SharpForge/tests/browser_vs_workflows_test.py", line 131, in run
+    exercise(page, report)
+  File "/Users/runner/work/SharpForge/SharpForge/tests/browser_vs_workflows_test.py", line 93, in exercise
+    load_workflow(page, report['mode'], report['navigation'])
+  File "/Users/runner/work/SharpForge/SharpForge/tests/conformance/browser/workflow_loading.py", line 58, in load_workflow
+    page.goto(path.as_uri(), wait_until='domcontentloaded')
+  File "/Users/runner/work/SharpForge/SharpForge/tests/conformance/browser/launch.py", line 168, in checked
+    result = value(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/playwright/sync_api/_generated.py", line 9903, in goto
+    self._sync(
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+           ^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/playwright/_impl/_page.py", line 562, in goto
+    return await self._main_frame.goto(**locals_to_params(locals()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/playwright/_impl/_frame.py", line 157, in goto
+    await self._channel.send(
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/playwright/_impl/_connection.py", line 76, in send
+    return await self._connection.wrap_api_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/playwright/_impl/_connection.py", line 632, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.Error: Page.goto: WebKit encountered an internal error
+Call log:
+  - navigating to "file:///Users/runner/work/SharpForge/SharpForge/artifacts/SharpForge-standalone.html", waiting until "domcontentloaded"
+
+

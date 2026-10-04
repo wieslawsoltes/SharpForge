@@ -32,7 +32,8 @@ test('A02-T29 every example program compiles identically as a library and with o
   for(const {name,text} of examples){verify([{uri:name,text}],{outputKind:'library'});verify([{uri:name,text}],{checkOverflow:true});}
 });
 test('A02-T29 the differential and binder fixture corpora compile to byte-identical images',()=>{
-  const fixtures=loadFixtures();assert(fixtures.length>400);
+  // Both image pipelines bind against the framework registry; `referencesOnly` fixtures are not image programs.
+  const fixtures=loadFixtures().filter(fixture=>!fixture.referencesOnly);assert(fixtures.length>400);
   // A few fixtures crash the current parser (packages/syntax, outside this epic); only pipeline disagreements fail here.
   let parserCrashes=0;for(const f of fixtures){try{verify([{uri:'Program.cs',text:f.source}],f.langVersion?{langVersion:f.langVersion}:{});}catch(error){if(/Pipeline mismatch/.test(error.message))throw error;parserCrashes++;}}
   assert(parserCrashes<10,'parser crashes: '+parserCrashes);

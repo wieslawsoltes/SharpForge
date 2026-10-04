@@ -22,7 +22,9 @@ export function typeSystemBudget(options) {
   if (!options || typeof options !== 'object') rejectTypeSystem('CILVT0002', 'options');
   const signal = options.signal;
   const limits = {};
-  for (const [name, maximum] of Object.entries({ maxTypes: 65535, maxEdges: 65535, maxQueryNodes: 4096, maxDepth: 256 })) {
+  const maxima = { maxTypes: 65535, maxEdges: 65535, maxQueryNodes: 4096, maxDepth: 256,
+    maxTypeReferences: 65535, maxTypeNameBytes: 1048576 };
+  for (const [name, maximum] of Object.entries(maxima)) {
     const value = options[name] ?? maximum;
     if (!Number.isInteger(value) || value < 0 || value > maximum) rejectTypeSystem('CILVT0002', name);
     limits[name] = value;

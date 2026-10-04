@@ -31,6 +31,7 @@ const inConstructorOf = (context, field) => {
     ? m.methodKind === MethodKind.StaticConstructor
     : m.methodKind === MethodKind.Constructor || (m.isInitOnly && m.methodKind === MethodKind.PropertySet);
 };
+const isRefFieldKind = refKind => refKind === RefKind.Ref || refKind === RefKind.RefReadOnly;
 /**
  * @param expression a bound expression  @param {{method,containingType,isFieldInitializer?,isStatic?,inObjectInitializer?}} context
  * @returns {{isVariable:boolean,isWritable:boolean,reason?:string,symbol?:object,detail?:string}}
@@ -44,7 +45,12 @@ export function classifyVariable(expression, context = {}) {
     case 'Local': {
       const l = expression.local;
       if (l.isConst) return no('constant', { symbol: l });
-      if (l.readOnlyReason) return { isVariable: true, isWritable: false, reason: 'readonlyLocal', symbol: l, detail: l.readOnlyReason };
+      // `foreach (ref var x in ...)`: the variable cannot be made to denote another element, but the element it
+      // denotes is written through it.
+      const isRefIteration = l.isForEach && l.refKind === RefKind.Ref;
+      if (l.readOnlyReason && !isRefIteration) {
+        return { isVariable: true, isWritable: false, reason: 'readonlyLocal', symbol: l, detail: l.readOnlyReason };
+      }
       if (l.refKind === RefKind.RefReadOnly)
         return { isVariable: true, isWritable: false, reason: 'readonlyRef', symbol: l, detail: 'variable' };
       return yes;
@@ -68,14 +74,24 @@ export function classifyVariable(expression, context = {}) {
     case 'This': {
       const t = context.containingType;
       if (!t || t.typeKind !== TypeKind.Struct) return { isVariable: false, isWritable: false, reason: 'this' };
-      // `readonly` on a constructor is an error of its own (CS0106); the constructor still assigns the fields.
-      const inReadOnlyMember = !!context.method?.isReadOnly && !context.method.isConstructor;
-      if (t.isReadOnly || inReadOnlyMember) return { isVariable: true, isWritable: false, reason: 'this' };
+      // `readonly` on a constructor is an error of its own (CS0106); the constructor still assigns the fields, and
+      // so does the constructor (and an `init` accessor) of a `readonly struct`: there `this` is being built.
+      const method = context.method,
+        builds = !!method && (method.isConstructor || method.isInitOnly),
+        inReadOnlyMember = !!method?.isReadOnly && !method.isConstructor;
+      if ((t.isReadOnly && !builds) || inReadOnlyMember) return { isVariable: true, isWritable: false, reason: 'this' };
       return yes;
     }
     case 'FieldAccess': {
       const f = expression.field;
       if (f.isConst) return no('constant', { symbol: f });
+      // A `ref` field (C# 11) denotes the variable it refers to: `readonly ref int` fixes the reference, not that
+      // variable, and `ref readonly int` the variable, not the reference. `f = ref x` re-targets the reference, which
+      // is what `readonly` on the field forbids, so a ref assignment follows the rules of an ordinary field below.
+      if (isRefFieldKind(f.refKind) && !context.isRefAssignment) {
+        if (f.refKind === RefKind.Ref) return yes;
+        return { isVariable: true, isWritable: false, reason: 'readonlyRef', symbol: { name: f.toDisplayString?.() ?? f.name }, detail: 'field' };
+      }
       if (f.isReadOnly && !inConstructorOf(context, f)) return { isVariable: true, isWritable: false, reason: 'readonlyField', symbol: f };
       if (f.isStatic || !expression.receiver || expression.receiver.type?.isValueType !== true) return yes;
       // An instance field of a struct is a variable exactly when the struct expression is.

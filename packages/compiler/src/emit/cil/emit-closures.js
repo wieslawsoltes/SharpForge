@@ -62,6 +62,17 @@ export const ClosureEmission = Base =>
       }
       return slot;
     }
+    /**
+     * A captured using resource is disposed from a copy: the variable is read-only, so the copy stays equal, and the
+     * variable's own slot holds its cell, which is not the resource.
+     */
+    resourceSlot(local) {
+      if (!this.cellOf(local)) return super.resourceSlot(local);
+      const slot = this.temp(local.type);
+      this.localLocation(local).load();
+      this.il.emit('stloc', slot);
+      return slot;
+    }
     localLocation(local) {
       const cell = this.cellOf(local);
       return cell ? this.cellLocation(local, cell) : super.localLocation(local);

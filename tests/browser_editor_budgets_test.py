@@ -197,7 +197,8 @@ def capture_stage(playwright, trace, output, name, capture):
                 raise AssertionError('Browser page errors during ' + name)
             # Only a diagnostic precheck: the strict aggregate validator still owns the final verdict.
             limit = {'definition': 300, 'overview': 16}[name]
-            if any(sample['durationMs'] > limit for sample in stage['samples']):
+            observations = stage['samples'] + stage.get('boundaries', {}).get('observations', [])
+            if any(sample['durationMs'] > limit for sample in observations):
                 raise StageBudgetFailure(name + ' has raw observations over ' + str(limit) + ' ms')
     except StageBudgetFailure as error:
         stage['diagnosticFailure'] = str(error)

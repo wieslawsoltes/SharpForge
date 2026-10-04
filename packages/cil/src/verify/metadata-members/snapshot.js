@@ -1,5 +1,6 @@
 import { decodeCoded } from '../../metadata/indices.js';
 import { rejectMember, requireMemberToken, metadataOperation } from './budget.js';
+import { snapshotNesting } from './nesting.js';
 
 function heapCopies(metadata, budget) {
   const names = new Map();
@@ -41,16 +42,17 @@ function indexMember(index, record) {
 }
 
 /** Snapshot bounded definition/reference facts and unique blobs; no inspector or PE views escape. */
-export function snapshotMembers(inspector, budget) {
+export function snapshotMembers(inspector, budget, lexical = null) {
   return metadataOperation(() => {
     budget.check();
     const metadata = inspector.metadata;
     const counts = Object.fromEntries([1, 2, 3, 4, 5, 6, 10, 26, 27, 43].map(table => [table, metadata.rows[table]?.length ?? 0]));
     if (counts[4] + counts[6] + counts[10] > budget.maxMembers ||
         counts[3] > budget.maxMembers || counts[5] > budget.maxMembers) rejectMember('CILVM0002', 'member rows');
+    if (!lexical && (metadata.rows[41]?.length ?? 0) > counts[2]) rejectMember('CILVM0002', 'nested type rows');
     const copies = heapCopies(metadata, budget);
     // The composed type adapter preflights TypeDef count before this bounded allocation.
-    const visibility = new Uint8Array(counts[2]);
+    const visibility = lexical?.visibility ?? new Uint8Array(counts[2]);
     const definitions = new Map();
     const references = new Map();
     const index = new Map();
@@ -81,6 +83,7 @@ export function snapshotMembers(inspector, budget) {
       const ownerToken = requireMemberToken(decodeCoded('MemberRefParent', data[0]), counts, [1, 2, 6, 26, 27]);
       references.set(token, { token, ownerToken, name: copies.name(data[1]), signature: copies.signature(data[2]) });
     }
-    return { counts, definitions, references, index, visibility };
+    const nesting = lexical ? lexical.parents : snapshotNesting(metadata.rows[41] ?? [], visibility, budget);
+    return { counts, definitions, references, index, visibility, nesting };
   });
 }

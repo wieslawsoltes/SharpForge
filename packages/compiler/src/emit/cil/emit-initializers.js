@@ -31,7 +31,11 @@ export const InitializerEmission = Base =>
       this.implicitReceiver = created;
       try {
         for (const initializer of list.initializers ?? []) this.memberInitializer(initializer, created);
-        for (const element of list.collectionInitializers ?? []) this.effect(element);
+        // (A spread of a collection expression into a type without `AddRange` is a `foreach` that adds each item.)
+        for (const element of list.collectionInitializers ?? []) {
+          if (element.kind === 'ForEach') this.statement(element);
+          else this.effect(element);
+        }
       } finally {
         this.implicitReceiver = outer;
       }

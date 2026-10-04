@@ -1,9 +1,30 @@
 # Bounded runtime events
 
 `@sharpforge/runtime` exports `RuntimeEventLog` and the frozen `RuntimeEventName`
-catalog. This independent T10.2 prerequisite supplies event storage and host
-subscription. Automatic VM call, exception, allocation, GC and tiering hooks are
-separate integration work; creating a log does not enable profiling on a VM.
+catalog. Construct a source, reloaded-source or direct-CIL VM with
+`runtimeEvents: true` (or event-log options) to attach its automatic producers
+and access the bounded log through `vm.runtimeEvents`. Creating a standalone
+log provides manual storage/subscription only. Instruction profiling is a
+separate option.
+
+| Automatic event family | Source / reloaded source | Direct CIL |
+| --- | --- | --- |
+| MethodLoad, MethodEnter, MethodLeave | Implemented | Implemented |
+| ExceptionThrown | Implemented | Implemented |
+| AllocationTick, GCStart, GCEnd | Implemented | Implemented |
+| Suspend, Resume | Implemented | Implemented |
+| TierUp | No source tier producer | Implemented for actual Wasm tier entry / OSR |
+
+The engine adapters preserve their documented admission and fault boundaries.
+See [source method events](runtime-source-method-events.md),
+[source method loads](runtime-source-method-load-events.md),
+[CIL method events](runtime-cil-method-events.md),
+[source exceptions](runtime-source-exception-events.md),
+[CIL exceptions](runtime-exception-events.md),
+[source heap events](runtime-source-heap-events.md),
+[GC events](runtime-gc-events.md), [allocation events](runtime-allocation-events.md)
+and [scheduler transitions](runtime-context-events.md).
+Host observers remain outside guest snapshots and flush at host boundaries.
 
 ```js
 import {RuntimeEventLog, RuntimeEventName} from '@sharpforge/runtime';
@@ -30,22 +51,42 @@ events by default; `{replay: true}` includes retained history. The returned
 unsubscribe function is idempotent, and an optional AbortSignal removes the
 subscription. The subscriber limit is 1–4096, default 128.
 
-Callbacks run only during `flush()`. Each flush snapshots the retained events
-and current subscribers. Callback emission or new subscriptions wait until the
-next flush; unsubscription prevents further delivery immediately. Recursive
+Callbacks run only during `flush()`. When delivery is needed, a flush snapshots
+the current subscribers and the retained suffix after their oldest cursor.
+Events already seen by every subscriber remain available to `read()` and replay,
+but are not copied for that flush. Callback emission or new subscriptions wait
+until the next flush; unsubscription prevents further delivery immediately. Recursive
 flushes return without invoking callbacks again. Callback errors propagate to
 the host, and a later flush can continue. Guest execution must invoke flush only
 at a host boundary, outside managed exception dispatch.
 
-`export()` produces structured-cloneable `SharpForge.RuntimeEvents/1` JSON with
+`export({after, limit})` produces structured-cloneable `SharpForge.RuntimeEvents/1` JSON with
 instruction timestamps, ordered sequences and a drop count. The provider/name
 vocabulary follows the planned EventPipe-shaped runtime stream; this is not the
 binary EventPipe or `.nettrace` container and includes no measured wall-clock
-time. Emission is O(1) in ring capacity with a bounded payload; flush is bounded
-by retained events times current subscribers. None of these costs has been
-measured in this implementation slice.
+time. Emission is O(1) in ring capacity with a bounded payload. A flush with no
+subscribers or an empty ring returns without copying either collection. A flush
+with caught-up subscribers scans their cursors but creates neither an event
+snapshot nor a subscriber snapshot. For S subscribers and U unread retained
+events, delivery uses O(S + U) temporary references and O(S + S × U) work; U is
+at most the ring capacity. Callback mutations still cannot change the event
+snapshot being delivered. This avoids copying already-consumed history at host
+boundaries; no throughput, latency or allocation-byte improvement is claimed
+without measurement.
 
-Serial validation passed 22 event-log and value-ABI tests at `f3edb587`, including
+`tests/a05-runtime-event-flush.test.js` adds behavioral coverage for idle and
+unread-suffix work, replay after overflow, callback overwrite, reentrancy, abort,
+subscription changes and failure retries. These new cases are authored; serial
+validation remains pending. The earlier validation evidence below predates this
+flush optimization.
+
+Export cursor options use the existing `read()` rules; omitting them preserves
+the full retained window. The named
+[`exportRuntimeTrace(log, options)` helper](runtime-trace-export.md) exposes the
+same bounded operation without flushing subscribers. Whole-log sequence/drop
+metadata is preserved even when only a smaller event window is returned.
+
+The original event-log prerequisite passed 22 event-log and value-ABI tests at `f3edb587`, including
 a host adapter around real direct-CIL execution, ring overflow, immutable
 payloads, cancellation/disposal, reentrant callbacks and malformed inputs:
 
@@ -57,5 +98,9 @@ SHARPFORGE_MAX_PARALLEL_RUNS=1 SHARPFORGE_TEST_CONCURRENCY=1 SHARPFORGE_MAX_OLD_
 
 `npm run check` passed with 1,729 syntax-checked modules and no import errors.
 The non-strict structure report completed with 264 repository warnings. Browser
-runs and benchmarks remain staged. Automatic hooks, profile totals, speedscope
-export and profiler overhead remain in the original E02 acceptance scope.
+runs and benchmarks remain staged. Automatic producers, the
+[instruction profiler](instruction-profiler.md) and [Speedscope export](profile-export.md)
+now have separate implementations and focused evidence in their linked docs.
+Full E02 browser/platform, export-application and profiler-overhead qualification
+remains open. The event ring is bounded history; cumulative suspension totals
+come from the independent profiler counter.

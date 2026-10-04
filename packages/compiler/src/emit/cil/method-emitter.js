@@ -23,6 +23,7 @@ import { LockEmission } from './emit-lock.js';
 import { AccessorEmission } from './emit-accessors.js';
 import { JumpEmission } from './emit-jumps.js';
 import { NullableEmission } from './emit-nullable.js';
+import { LiftedUserOperatorEmission } from './emit-lifted-user-operators.js';
 import { InitializerEmission } from './emit-initializers.js';
 import { TypeOperatorEmission } from './emit-type-operators.js';
 import { ClosureEmission } from './emit-closures.js';
@@ -43,6 +44,11 @@ import { AsyncEmission } from './emit-async.js';
 import { AsyncTryEmission } from './emit-async-try.js';
 import { AsyncIteratorEmission } from './emit-async-iterators.js';
 import { ExpressionTreeEmission } from './emit-expression-trees.js';
+import { StackAllocEmission } from './emit-stackalloc.js';
+import { AnonymousTypeEmission } from './emit-anonymous-types.js';
+import { InterpolatedHandlerEmission } from './emit-interpolated-handlers.js';
+import { PointerEmission } from './emit-pointers.js';
+import { FixedEmission } from './emit-fixed.js';
 
 const families = [
   ConstantEmission,
@@ -65,6 +71,7 @@ const families = [
   AccessorEmission,
   JumpEmission,
   NullableEmission,
+  LiftedUserOperatorEmission,
   InitializerEmission,
   TypeOperatorEmission,
   ClosureEmission,
@@ -85,6 +92,11 @@ const families = [
   AsyncTryEmission,
   AsyncIteratorEmission,
   ExpressionTreeEmission,
+  StackAllocEmission,
+  AnonymousTypeEmission,
+  InterpolatedHandlerEmission,
+  PointerEmission,
+  FixedEmission,
 ];
 
 export class MethodEmitter extends families.reduce((composed, family) => family(composed), EmitterCore) {}

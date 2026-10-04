@@ -1,5 +1,6 @@
 import { Reader, text, decodeCoded } from '@sharpforge/cil';
 import { fail } from './contracts.js';
+import { defaultParseBudgets } from './budgets.js';
 export function readImports(bytes, md, budget = { entries: 0, bytes: 0 }) {
   const r = new Reader(bytes),
     result = [];
@@ -10,7 +11,9 @@ export function readImports(bytes, md, budget = { entries: 0, bytes: 0 }) {
     return text(bytes);
   };
   while (r.position < r.end) {
-    if (++budget.entries > 100000) fail('Import definition count limit exceeded');
+    if ((budget.entries & 255) === 0) budget.check?.();
+    if (++budget.entries > (budget.maxEntries ?? defaultParseBudgets.imports))
+      fail('Import definition count limit exceeded');
     const kind = r.compressed(),
       d = { kind };
     switch (kind) {

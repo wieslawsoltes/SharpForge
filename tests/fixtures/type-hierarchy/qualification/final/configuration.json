@@ -1,0 +1,26 @@
+{
+  "variants": {
+    "before": {
+      "directory": "/tmp/sharpforge-a13-hierarchy-qualification/baseline",
+      "sourceRevision": "440c4ade9b3dd5de527faa5d686eec4d697449fc"
+    },
+    "after": {
+      "directory": "/Users/wieslawsoltes/GitHub/SharpForge-a13-type-hierarchy",
+      "sourceRevision": "0de8c5f9ad8c925f89bbee4f8132c6cd9c728c92"
+    }
+  },
+  "parent": {
+    "directory": "/Users/wieslawsoltes/GitHub/SharpForge-a13-hierarchy-sha1",
+    "revision": "80adafc3d92fc50e3e49f6bc5554b92c1013e897"
+  },
+  "previousHierarchy": "d1fc86688bd1175d4d008fa723209b33b011bc88",
+  "sharedHashes": {
+    "package.json": "118c0a9af4dc292d5df8f7c5e02121f8309957fe",
+    "package-lock.json": "61aa0aad42fe8ccb71ab679100a14237544c5f7f",
+    "otherPackageTrees": "040000 tree 6451aced45878f841bb3343d46f19abb6ade87fb\tarchive\n040000 tree 71e38278536a6e9cbf19f12ac991cef100f7c82d\tbcl-collections\n040000 tree a60436110fed5effbcd23d43b7d79b04105cffaa\tbcl-core\n040000 tree a5272c86aac71fbfa274f45e093901858a21e794\tbytecode\n040000 tree 002bcc02120d57ece7db777e883117e2dfbd4c63\tclr\n040000 tree e1b4fa5f6c2549e6747137e6487b08d4d5850bc6\tcompiler\n040000 tree 0ba385b2754947d34e884b975fee619d6d2b71ec\tcompute\n040000 tree fe83d527755ba36794b73e0d34a90f94187055ba\tcontrols\n040000 tree fd17779feebc4ae7c9c202bdfad3e213a2c74d00\tdebugger\n040000 tree 0d1086a83afd08708b0537a1483ce2e17774a24d\tdesigner\n040000 tree aa39592ceb5254769301fe24a0ed64b48b221513\tdocking\n040000 tree 10f9244ea1843fb970479574725c7b78c7a1f964\teditor\n040000 tree 427b86e3d081c0895f4e7664111f21b4986df541\textensions\n040000 tree 108be42adb2197c11cb598c5e9257c030f172d40\tframework\n040000 tree 51eba0f53f80cf915307e84578a00e0f6632eea4\tlanguage\n040000 tree 3fb5a1ebc086c121907f2c6b2c76353630619783\tmsbuild\n040000 tree a0ff0f968d8fd9a04ede276e5a7c90f6317c22e5\tnetwork\n040000 tree bdfc9583047902789d8bedf0717e0e638582f3c0\tproject-system\n040000 tree 32463189d2d45a832d614d8e81b5924cac073965\tprotocol\n040000 tree 1ae684c57dba0709a30e4dcdbf78bf2815785f34\trefactoring\n040000 tree 1001e27e76a06ef54b8c07db72f3809ac8a5027b\truntime\n040000 tree 3795c80a55768bebce57209e360fed69420107fe\tsyntax\n040000 tree cd2c191bfb65843ea99448059521d44343b23552\ttemplates\n040000 tree e68012e1423ba4c7dcb5fcab453f22fa87ffda05\ttext\n040000 tree 6158f4499d0ed48e6780605ea05736a97ade3b29\twinui\n040000 tree 2ef61c563232e8ed2966421936e621d4d6466e82\tworkspace"
+  },
+  "dependencies": "Each variant owns changed CIL and symbols sources. Other packages/npm dependencies shared only after Git hash proof.",
+  "priorAttempt": "/tmp/sharpforge-a13-hierarchy-qualification/performance.json",
+  "change": "Cross-heap keys/lookup closure opt in only for the hierarchy binder; existing adapter default shape preserved.",
+  "native": "Replay captured eight identities/two images only; no native rebuild or install repeated."
+}

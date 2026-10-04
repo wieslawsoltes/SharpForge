@@ -52,6 +52,18 @@ export const ConversionBinding = Base =>
       this.reportConversionFailure(e, type, node, c);
       return this.bad(node, { operand: e });
     }
+    /**
+     * The operand of a user-defined conversion whose parameter is a tuple (`implicit operator Vec2((double X, double
+     * Y) t)` for `Vec2 v = (1.5, -2)`): the tuple conversion that precedes the operator is part of the bound tree,
+     * because it works element by element and cannot be done on the finished value like a numeric conversion.
+     */
+    tupleOperandOfUserConversion(e, c, node) {
+      const parameterType = c.method?.parameters?.[0]?.type;
+      if (!parameterType?.isTupleType || (e.type && e.type.equals(parameterType))) return e;
+      if (e.form !== 'tupleLiteral' && !e.type?.isTupleType) return e;
+      const standard = this.conversions.classifyFromExpression(e, parameterType);
+      return standard.exists && !standard.isUserDefined ? this.applyConversion(e, parameterType, standard, node) : e;
+    }
     applyConversion(e, type, c, node = e.syntax, isExplicit = false) {
       if (c.kind === ConversionKind.Identity && e.type && !e.constantValue?.isEnum && e.type.equals(type)) return e;
       if (
@@ -62,9 +74,19 @@ export const ConversionBinding = Base =>
           e.isTargetTypedSwitch)
       )
         return e.materialize(type);
+      if (e.form === 'tupleLiteral') this.finishTupleLiteralElements(e, type, c);
       if (e.form === 'lambda' && c.kind === ConversionKind.AnonymousFunction) {
         e.boundAs = type;
+        // The body is bound for the delegate type here, whoever converts the lambda (an initializer value, an operand
+        // of `?:`, an element of a tuple or a collection); a speculative conversion leaves it to the final one.
+        if (!this.quiet && !e.hasErrors) this.finishLambda(e, type);
         return this.node('Conversion', node, type, { operand: e, conversion: c, isExplicit });
+      }
+      e = this.tupleOperandOfUserConversion(e, c, node);
+      // `null` through a user-defined operator is first a value of the operator's parameter type.
+      if (e.literal === 'null' && c.isUserDefined && c.method) {
+        const parameterType = c.method.parameters[0].type;
+        e = this.applyConversion(e, parameterType, this.conversions.classifyFromExpression(e, parameterType), node);
       }
       const result = this.node('Conversion', node, type, {
         operand: e,
@@ -223,6 +245,11 @@ export const ConversionBinding = Base =>
     /** A field whose reference is taken (`ref o.f`) may be written through the alias: it counts as assigned (no CS0649). */
     markAliased(e) {
       if (e.kind === 'FieldAccess') this.markWrite(e, null);
+      else if (e.kind === 'RefConditional') {
+        // `ref (c ? ref a.Left : ref a.Right)` aliases either field.
+        this.markAliased(e.whenTrue);
+        this.markAliased(e.whenFalse);
+      } else if (e.kind === 'Ref' && e.operand) this.markAliased(e.operand);
       return e;
     }
     /** Binds and converts to bool (conditions), accepting `operator true`. */

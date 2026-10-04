@@ -1,11 +1,11 @@
 import { parseArgs } from 'node:util';
 import { git, readJSON, isMain } from './lib/io.js';
 import { environment, validateHandoff, summarizeCommands, cleanHead } from './lib/evidence.js';
-import { captureEvidence } from './capture-evidence.js';
+import { captureEvidence, isEvidenceTask } from './capture-evidence.js';
 import { GitHubProject } from './lib/github-project.js';
 
 export async function handoff({root=process.cwd(),task,agent,issue,client,details,wip=false,remote='origin'}) {
-  if (!/^SF-A\d{2}-[TB]\d+(?:\.\d+)?$/.test(task??'') || !agent || !Number.isSafeInteger(Number(issue)) || Number(issue)<1) throw new Error('Task, agent and issue are required');
+  if (!isEvidenceTask(task) || !agent || !Number.isSafeInteger(Number(issue)) || Number(issue)<1) throw new Error('Task, agent and issue are required');
   const branch=git(['symbolic-ref','--short','HEAD'],root).trim();
   if (['main','master'].includes(branch)) throw new Error('Handoff requires an implementation branch');
   const dirty=git(['status','--porcelain','--untracked-files=all'],root).trim();

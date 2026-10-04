@@ -1,0 +1,11 @@
+{
+  "suite": "browser_a20_language_providers_test",
+  "passed": true,
+  "engine": "firefox",
+  "cspViolations": [],
+  "browser": "155.0",
+  "executable": "playwright-managed",
+  "mode": "http",
+  "seconds": 27.453000000000088,
+  "diagnosticErrors": []
+}

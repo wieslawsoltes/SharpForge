@@ -14,6 +14,9 @@ import { checkWritable } from '../ref-kinds.js';
 const unknown = ErrorTypeSymbol.unknown;
 
 /** Class mixin: Casts, unary and binary operators (with constant folding), assignment in all its forms, increment, */
+/** A `default` or `null` operand gets its type from the operator's parameter. */
+const isTypelessValue = operand => operand.literal === 'default' || operand.literal === 'null';
+
 export const OperatorBinding = Base =>
   class extends Base {
     cast(syntax) {
@@ -70,7 +73,16 @@ export const OperatorBinding = Base =>
         if (!r.suppressed) this.report(r.atOperator ? syntax.operatorToken : syntax, r.code, r.args);
         return this.bad(syntax);
       }
-      if (r.kind === 'user') return this.node('Unary', syntax, r.resultType, { operator, operand, method: r.method, isLifted: r.isLifted });
+      if (r.kind === 'user') {
+        const node = this.node('Unary', syntax, r.resultType, { operator, operand, method: r.method, isLifted: r.isLifted }),
+          constant = operand.constantValue;
+        // `-Price` over a decimal constant is a constant, also when the operator is the method of System.Decimal.
+        if (r.method.containingType?.specialType === 'System_Decimal' && constant?.type === 'decimal' && !r.isLifted) {
+          const folded = foldUnary(operator, constant, { checked: !this.uncheckedContext });
+          if (folded && !isFoldError(folded)) node.constantValue = folded;
+        }
+        return node;
+      }
       const converted = operand.type && r.leftType && !operand.type.equals(r.leftType) ? this.convert(operand, r.leftType) : operand,
         n = this.node('Unary', syntax, r.resultType, { operator, operand: converted, isLifted: r.isLifted, isChecked: this.checked });
       if (converted.constantValue && !r.isLifted) {
@@ -115,9 +127,48 @@ export const OperatorBinding = Base =>
       if (operands.some(e => e.hasErrors)) return this.bad(syntax);
       return this.node('Binary', syntax, type, { operator, left: operands[0], right: operands[1], family: 'delegate' });
     }
+    /**
+     * `handler == Method` and `Method != handler`: a method group compared with a delegate converts to the delegate
+     * type, and the two delegates are compared. @returns {[object, object]} the operands, converted where that applies
+     */
+    delegateComparisonOperands(operator, left, right) {
+      if (operator !== '==' && operator !== '!=') return [left, right];
+      const group = [left, right].find(e => e.kind === 'MethodGroup'),
+        other = group === left ? right : left;
+      if (!group || other.type?.typeKind !== TypeKind.Delegate) return [left, right];
+      if (!this.conversions.classifyFromExpression(group, other.type).isImplicit) return [left, right];
+      const converted = this.convert(group, other.type, group.syntax);
+      return group === left ? [converted, right] : [left, converted];
+    }
+    /**
+     * An operand of a lifted user-defined operator that is not nullable itself is converted to the operator's
+     * parameter type (`money + 1` with `Money? money` converts `1` to `Money`); a nullable operand stays as it is.
+     */
+    liftedOperatorOperand(operand, parameterType) {
+      if (!operand.type || isNullableType(operand.type) || operand.type.equals(parameterType)) return operand;
+      const conversion = this.conversions.classifyFromExpression(operand, parameterType);
+      return conversion.exists && conversion.isImplicit ? this.applyConversion(operand, parameterType, conversion) : operand;
+    }
+    /**
+     * Against reference assemblies the operators of `decimal` are the methods `System.Decimal` declares; applied to
+     * constants they are still constant expressions (`const decimal Total = 19.99m * 3;`).
+     */
+    foldDecimalOperator(node, syntax) {
+      const { left, right, method } = node;
+      if (method.containingType?.specialType !== 'System_Decimal' || node.isLifted) return;
+      if (!left.constantValue || !right.constantValue || left.hasErrors || right.hasErrors) return;
+      if (left.constantValue.type !== 'decimal' || right.constantValue.type !== 'decimal') return;
+      const folded = foldBinary(node.operator, left.constantValue, right.constantValue, { checked: !this.uncheckedContext });
+      if (isFoldError(folded)) {
+        this.report(syntax, folded.error.code, folded.error.args);
+        node.hasErrors = true;
+      } else if (folded) node.constantValue = folded;
+    }
     binaryOperation(syntax, operator, left, right) {
       const delegate = this.delegateOperation(syntax, operator, left, right);
       if (delegate) return delegate;
+      [left, right] = this.delegateComparisonOperands(operator, left, right);
+      if (left.hasErrors || right.hasErrors) return this.bad(syntax);
       const tuple = this.tupleEquality(syntax, operator, left, right);
       if (tuple) return tuple;
       for (const e of [left, right])
@@ -132,9 +183,11 @@ export const OperatorBinding = Base =>
       }
       if (r.kind === 'user') {
         const args = r.conversions
-          ? [left, right].map((e, i) => (e.type ? this.applyConversion(e, r.method.parameters[i].type, r.conversions[i]) : e))
-          : [left, right];
-        return this.node('Binary', syntax, r.isLogical ? r.method.returnType : r.resultType, {
+          ? [left, right].map((e, i) => (e.type || isTypelessValue(e) ? this.applyConversion(e, r.method.parameters[i].type, r.conversions[i]) : e))
+          : r.isLifted
+            ? [left, right].map((e, i) => this.liftedOperatorOperand(e, r.method.parameters[i].type))
+            : [left, right];
+        const node = this.node('Binary', syntax, r.isLogical ? r.method.returnType : r.resultType, {
           operator,
           left: args[0],
           right: args[1],
@@ -143,6 +196,8 @@ export const OperatorBinding = Base =>
           isLogical: !!r.isLogical,
           shortCircuit: r.shortCircuitOperator ?? null,
         });
+        this.foldDecimalOperator(node, syntax);
+        return node;
       }
       const l = this.operand(left, r.leftType),
         rt = this.operand(right, r.rightType),
@@ -215,7 +270,15 @@ export const OperatorBinding = Base =>
         this.value(syntax.right);
         return this.bad(syntax);
       }
-      const writable = checkWritable(left, operator === '=' ? 'assignment' : 'compound', this.variableContext);
+      // `f = ref x` re-targets a ref field: `readonly` on the field decides, not the kind of reference it holds.
+      const variableContext = isRefAssign ? { ...this.variableContext, isRefAssignment: true } : this.variableContext,
+        writable = checkWritable(left, operator === '=' ? 'assignment' : 'compound', variableContext);
+      // A ref iteration variable of a foreach denotes the current element for the whole iteration (CS1656).
+      if (isRefAssign && left.kind === 'Local' && left.local.isForEach) {
+        this.report(syntax.left, DiagnosticId.CS1656, [left.local.name, left.local.readOnlyReason]);
+        this.value(syntax.right);
+        return this.bad(syntax);
+      }
       if (writable && !(isRefAssign && left.kind === 'Local' && left.local.refKind !== RefKind.None)) {
         // CS1612 points at the struct-valued expression whose member cannot be modified.
         const target = writable.code === DiagnosticId.CS1612 && left.receiver?.syntax ? left.receiver.syntax : syntax.left;

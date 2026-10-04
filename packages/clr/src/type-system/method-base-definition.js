@@ -1,6 +1,7 @@
 import { MethodDesc } from './method-desc.js';
 import { OverrideSignatures } from './override-signature.js';
 import { InterfaceMethodImplementations } from './interface-method-impl.js';
+import { checkStrictOverrideAccess } from './strict-override-access.js';
 import { checkCancellation, loadError, LoadErrorCode } from '../load-errors.js';
 
 const fail = message => loadError(LoadErrorCode.TypeLoad, message);
@@ -54,7 +55,9 @@ export class MethodBaseDefinitions {
       if (!match) continue;
       if (!match.isVirtual) throw fail('A nonvirtual method cannot be overridden');
       if (match.isFinal) throw fail('A final virtual method cannot be overridden');
-      if (match.flags & 0x200) throw fail('Strict override accessibility requires the reflection access service');
+      if (match.flags & 0x200) checkStrictOverrideAccess(root, match, this.#maxRows, this.#maxDepth);
+      const constraints = this.#signatures.checkConstraints(root, match, signal);
+      if (constraints) await constraints;
       root = match;
       if (match.flags & 0x100) break;
     }

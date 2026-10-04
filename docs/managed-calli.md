@@ -45,8 +45,10 @@ the existing in-memory snapshot/restore path. No frame or snapshot fields are
 added. Committed metadata edits still require code invalidation and verification
 under the existing execution-cache contract.
 
-Unmanaged conventions and instance `calli` are explicit `NotSupportedException`
-admission failures, with `member`, `callingConvention`, and verifier `issues`.
+Unmanaged conventions are explicit `NotSupportedException` admission failures,
+with `member`, `callingConvention`, and verifier `issues`. The separate
+[managed instance leaf](managed-instance-calli.md) admits ordinary HasThis calls
+through evaluation-stack/native-local pointers to internal reference-class bodies.
 Generic targets, open signatures, external targets, `ldvirtftn`, `tail.`, `jmp`,
 raw function-pointer dereferences, and source-compiler lowering remain outside
 this increment. These boundaries do not change existing delegate binding.

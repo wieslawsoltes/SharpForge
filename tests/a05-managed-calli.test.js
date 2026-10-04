@@ -48,14 +48,20 @@ test('signature mismatch and uninitialized provenance fail before guest executio
   }
 });
 
-test('unmanaged and instance calli admission produces a structured unsupported exception', () => {
-  for (const options of [{convention: 1}, {convention: 2}, {instance: true}]) {
+test('unmanaged calli admission produces a structured unsupported exception', () => {
+  for (const options of [{convention: 1}, {convention: 2}]) {
     const report = verifyCilAssembly(fixture(options));
     assert.equal(report.success, false);
     assert(report.issues.some(issue => issue.exceptionType === 'NotSupportedException'));
     assert.throws(() => new CilVirtualMachine(fixture(options)), error => error.name === 'NotSupportedException' &&
       error.member === 'Program::Main' && error.callingConvention === (options.convention ?? 0));
   }
+});
+
+test('HasThis calli cannot consume a static pointer signature', () => {
+  const report = verifyCilAssembly(fixture({instance: true}));
+  assert.equal(report.success, false);
+  assert(report.issues.some(issue => issue.code === 'IL_CALLI' && /signature/.test(issue.message)));
 });
 
 test('execution reads fnptr convention flags from the AST while inspection strings remain unchanged', () => {

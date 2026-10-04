@@ -1,0 +1,42 @@
+✔ definite local assignment handles every reachable path, loops, switches and word boundaries (11.502416ms)
+✔ portable default keeps the InitLocals requirement and the opt-in policy records unset local offsets (0.716542ms)
+✔ a failing store cannot initialize a local and argument stores do not alias local bits (0.481833ms)
+✔ successors own immutable facts and a join preserves only common assignments (0.443458ms)
+✔ assignment work has a lowering-only word budget and no allocation for initialized or unused locals (2.305833ms)
+✔ local assignment does not imply unsupported alias, instance or byref-return verification (0.477667ms)
+✔ native captures preserve exact fixtures and explicitly permitted definite-assignment differences (2.153792ms)
+✔ typed numeric corpus follows ECMA operand, storage and branch tables (17.531833ms)
+✔ type confusion is rejected independently of the existing height-only admission (1.707333ms)
+✔ slot, underflow, maxstack and return diagnostics are explicit (1.032459ms)
+✔ unsupported metadata, bodies and opcodes cannot produce a typed proof (0.973167ms)
+✔ a local signature token cannot name a method StandAloneSig (0.247167ms)
+✔ bounded typed propagation checks cancellation, state-copy work and all dataflow limits (1.476917ms)
+✔ bytecode after a reachable terminator remains unsupported when its policy is missing (0.204333ms)
+✔ unreachable branches still require an instruction-boundary target (0.216417ms)
+✔ primitive storage addresses retain declared element identity and reject double addresses (0.472916ms)
+✔ all native observations retain exact bytes and explicit predeclared ILVerify differences (7.793083ms)
+✔ all 144 verification category pairs follow the stack merge table in both directions (1.017584ms)
+✔ reference relation seam preserves class, interface, boxed and array covariance joins (0.162375ms)
+✔ controlled mutability is preserved and pointer relations never use reference covariance (1.174625ms)
+✔ nominal identity, constructor state and metadata-dependent unknowns are explicit (0.130125ms)
+✔ factories and metadata adapters reject malformed values without coercing nominal identities (3.45725ms)
+✔ stack merges enforce equal heights, own their results and bound work before allocation (4.488458ms)
+✔ pre-cancelled and interrupted merges produce the cancellation diagnostic (0.121291ms)
+✔ basic blocks split targets and fallthroughs while preserving decoded records and duplicate switch edges (4.6255ms)
+✔ EH boundaries are block entries and leave clears the outgoing state (0.542084ms)
+✔ typed joins reprocess previously visited successors and terminate stable backedges (0.254125ms)
+✔ queued joins are merged once per edge without duplicating pending block transfers (0.560834ms)
+✔ limits reject before propagation and exact empty-stack budgets succeed (0.998542ms)
+✔ cancellation is checked before graph allocation and after an interrupted transfer (0.370417ms)
+✔ empty bodies and reachable fallthroughs stay explicit invalid edges (0.104709ms)
+✔ height integration preserves successful runtime execution and emits precise stack diagnostic categories (14.566917ms)
+✔ exhausted dataflow budgets cannot issue runtime stack proofs (0.351334ms)
+✔ retained ILVerify observations cover height diagnostics, joins, loops and handler seeds (1.610209ms)
+ℹ tests 34
+ℹ suites 0
+ℹ pass 34
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 685.020292

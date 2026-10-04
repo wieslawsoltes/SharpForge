@@ -25,6 +25,10 @@ export const IndexRangeEmission = Base =>
     location(node) {
       return node.kind === 'ImplicitIndexerAccess' ? super.location(this.indexedAccess(node)) : super.location(node);
     }
+    /** `a[^1].Mutate()`, `ref a[^1]`: the element itself is the variable, as for `a[i]`. */
+    address(node) {
+      return node.kind === 'ImplicitIndexerAccess' ? super.address(this.indexedAccess(node)) : super.address(node);
+    }
     /**
      * Evaluates the receiver and the offsets into temporaries, binds the placeholders to them and returns the
      * `access` node, which can then be read or assigned like any element access or call.

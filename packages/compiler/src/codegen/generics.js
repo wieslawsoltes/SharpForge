@@ -90,17 +90,21 @@ export function typeParameterOrdinal(parameter) {
   return ordinal;
 }
 
-/** The type arguments of a constructed type including those of its enclosing constructed types, outermost first. */
-export function allTypeArguments(type) {
-  const container = type.containingType;
-  const outer = container && !container.isDefinition ? allTypeArguments(container) : [];
-  return [...outer, ...type.typeArguments.map(argument => argument.type)];
-}
-
 /** The type parameters a definition stands over in its own code: those of its enclosing types, then its own. */
 export function allTypeParameters(type) {
   const outer = type.containingType ? allTypeParameters(type.containingType.originalDefinition) : [];
   return [...outer, ...type.typeParameters];
+}
+
+/**
+ * The type arguments of a constructed type including those of its enclosing types, outermost first. An enclosing
+ * type that is not constructed stands for itself in its own code (`Cache<TValue>` named inside `Outer<TKey>` is
+ * `Outer<TKey>.Cache<TValue>`): its type parameters are the arguments.
+ */
+export function allTypeArguments(type) {
+  const container = type.containingType,
+    outer = !container ? [] : container.isDefinition ? allTypeParameters(container) : allTypeArguments(container);
+  return [...outer, ...type.typeArguments.map(argument => argument.type)];
 }
 
 /**
@@ -117,7 +121,11 @@ export function encodeTypeSignature(type, tokenOf) {
   }
   if (type instanceof ArrayTypeSymbol) return encodeArraySignature(type, tokenOf);
   if (type instanceof PointerTypeSymbol) return [ElementType.Ptr, ...encodeTypeSignature(type.pointedAtType, tokenOf)];
+  // `dynamic` is `object` in metadata; a `[Dynamic]` attribute on the declaration says which objects are dynamic.
+  if (type.typeKind === TypeKind.Dynamic) return [ElementType.Object];
   if (!(type instanceof NamedTypeSymbol)) throw new TypeError(`Cannot encode '${type.toDisplayString()}' in a signature`);
+  // An anonymous type is written as the construction of the generic class that declares it.
+  if (type.isAnonymousType) return encodeTypeSignature(type.metadataForm(), tokenOf);
 
   const primitive = primitiveElementTypes[type.specialType];
   if (primitive !== undefined && !type.typeArguments.length) return [primitive];
@@ -156,6 +164,7 @@ export function methodSpecBlob(method, tokenOf) {
 /** True when a type reference needs a TypeSpec row rather than a TypeDef/TypeRef token. */
 export function needsTypeSpec(type) {
   if (type.kind === SymbolKind.TypeParameter || type instanceof ArrayTypeSymbol || type instanceof PointerTypeSymbol) return true;
+  if (type.isAnonymousType) return needsTypeSpec(type.metadataForm());
   return type instanceof NamedTypeSymbol && !type.isDefinition && allTypeArguments(type).length > 0;
 }
 

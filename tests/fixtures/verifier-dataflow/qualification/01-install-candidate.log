@@ -1,0 +1,217 @@
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: 'sharpforge@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/bcl-collections@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/bcl-core@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/bytecode@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/cil@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/clr@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/compiler@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/compute@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/controls@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/debugger@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/editor@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/extensions@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/framework@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/language@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/msbuild@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/network@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/protocol@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/refactoring@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/runtime@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/syntax@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/text@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/workspace@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/bcl-collections@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/bcl-core@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/bytecode@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/cil@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/clr@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/compiler@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/compute@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/controls@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/debugger@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/editor@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/extensions@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/framework@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/language@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/msbuild@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/network@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/protocol@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/refactoring@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/runtime@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/syntax@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/text@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+npm WARN EBADENGINE Unsupported engine {
+npm WARN EBADENGINE   package: '@sharpforge/workspace@0.14.0',
+npm WARN EBADENGINE   required: { node: '>=22' },
+npm WARN EBADENGINE   current: { node: 'v16.17.1', npm: '8.15.0' }
+npm WARN EBADENGINE }
+
+added 28 packages in 165ms

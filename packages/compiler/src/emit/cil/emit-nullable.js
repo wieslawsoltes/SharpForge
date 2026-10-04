@@ -126,6 +126,9 @@ export const NullableEmission = Base =>
           value(rightSlot, right.type);
           this.underlyingOperator(node);
         };
+      if (node.method && (relational.has(operator) || operator === '==' || operator === '!=')) {
+        return this.liftedUserComparison(node, operands, () => has(leftSlot, left.type), () => has(rightSlot, right.type));
+      }
       if (operator === '==' || operator === '!=') {
         // Equal when both have the same value and the same presence (two absent values hold the same default).
         this.withOperator(node, '==', operands);
@@ -141,6 +144,10 @@ export const NullableEmission = Base =>
         has(rightSlot, right.type);
         return il.emit('and').emit('and');
       }
+      const isBool = node.type?.nullableUnderlyingType?.specialType === 'System_Boolean';
+      if ((operator === '&' || operator === '|') && isBool && !node.method) {
+        return this.liftedLogical(node, [leftSlot, rightSlot], { value, has });
+      }
       const absent = il.newLabel(),
         end = il.newLabel();
       has(leftSlot, left.type);
@@ -151,6 +158,44 @@ export const NullableEmission = Base =>
       il.emit('br', end);
       il.mark(absent);
       this.defaultValue(node.type);
+      il.mark(end);
+      return undefined;
+    }
+    /**
+     * `x & y` and `x | y` over `bool?` are three-valued (C# spec 12.13.5), not lifted: an operand that decides the
+     * result (`false` for `&`, `true` for `|`) wins over a null one. With D the deciding value:
+     *   left is D -> left;  right is D -> right;  left has a value -> right;  otherwise -> left (null)
+     * @param {number[]} slots the locals of the two operands  @param {{value, has}} read pushes an operand's value or presence
+     */
+    liftedLogical(node, slots, read) {
+      const il = this.il,
+        types = [node.left.type, node.right.type],
+        useLeft = il.newLabel(),
+        useRight = il.newLabel(),
+        end = il.newLabel(),
+        isDeciding = index => {
+          read.value(slots[index], types[index]);
+          if (node.operator === '|') return;
+          // `false` decides `&`: a value that is present and not true.
+          il.emit('ldc.i4', 0).emit('ceq');
+          read.has(slots[index], types[index]);
+          il.emit('and');
+        },
+        push = index => {
+          il.emit('ldloc', slots[index]);
+          if (!types[index]?.isNullableValueType) this.wrapNullable(node.type);
+        };
+      isDeciding(0);
+      il.emit('brtrue', useLeft);
+      isDeciding(1);
+      il.emit('brtrue', useRight);
+      read.has(slots[0], types[0]);
+      il.emit('brtrue', useRight);
+      il.mark(useLeft);
+      push(0);
+      il.emit('br', end);
+      il.mark(useRight);
+      push(1);
       il.mark(end);
       return undefined;
     }
@@ -205,6 +250,19 @@ export const NullableEmission = Base =>
       this.nullableCall(input.slot, input.type, 'GetValueOrDefault');
       this.constantValue(constant, pattern.syntax);
       return this.il.emit('ceq').emit('brfalse', fail);
+    }
+    /** `x is { } v`, `x is (a, b)` over a nullable value: it has a value, and the pattern is matched against that. */
+    matchRecursivePattern(pattern, input, fail) {
+      if (!input.type?.isNullableValueType || pattern.testedType) return super.matchRecursivePattern(pattern, input, fail);
+      return super.matchRecursivePattern(pattern, this.nullableValueInput(input, fail), fail);
+    }
+    /** The value of a nullable input as an input of its own (`{slot, type}`), or a branch to `fail`; read once per run. */
+    nullableValueInput(input, fail) {
+      const type = input.type.nullableUnderlyingType,
+        read = () => this.nullableCall(input.slot, input.type, 'GetValueOrDefault');
+      this.nullableCall(input.slot, input.type, 'get_HasValue');
+      this.il.emit('brfalse', fail);
+      return { slot: this.readOnce(input.slot, 'nullable:value', type, read), type };
     }
     unboxedInput(input, type, fail) {
       if (!input.type?.isNullableValueType) return super.unboxedInput(input, type, fail);

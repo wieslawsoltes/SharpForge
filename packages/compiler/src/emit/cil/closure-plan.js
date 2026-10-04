@@ -23,22 +23,12 @@ import { SynthesizedTypes } from './synthesized-types.js';
 import { MethodEmitter } from './method-emitter.js';
 import { UnsupportedInCil } from './unsupported.js';
 import { methodTypeParameterCopies, substitutionOver } from './generic-context.js';
+import { closureScopes } from './closure-scopes.js';
 import { expressionTreeDelegate } from '../../symbols/expression-tree-types.js';
 
 const CLOSURE_METHOD_FLAGS = MethodAttributes.Assembly | MethodAttributes.HideBySig;
 const OWNER_METHOD_FLAGS = MethodAttributes.Private | MethodAttributes.HideBySig;
 const THIS_FIELD_NAME = '<>4__this';
-const functionKinds = new Set(['Lambda', 'LocalFunction']);
-
-/** True when a body declares a lambda or a local function. */
-function declaresFunction(body) {
-  let found = false;
-  walk(body, node => {
-    if (node !== body && functionKinds.has(node.kind)) found = true;
-    return !found;
-  });
-  return found;
-}
 
 export class ClosurePlan extends SynthesizedTypes {
   /** @param analysis a SemanticAnalysis that has run without errors */
@@ -64,7 +54,8 @@ export class ClosurePlan extends SynthesizedTypes {
     const captures = analyzeCaptures(root, { byReferenceInCells: false });
     if (!captures.functions.size) return;
     context.typeParameters ??= [];
-    for (const variable of captures.captured) this.cells.set(variable, this.cellClass(context, variable.type));
+    const scopes = closureScopes(root, context, captures);
+    for (const variable of captures.captured) this.cells.set(variable, this.cellClass(scopes.ofVariable.get(variable) ?? context, variable.type));
     // A lambda converted to an expression tree is data, not code: neither it nor the lambdas inside it become methods.
     const insideTrees = new Set();
     for (const key of captures.functions.keys()) {
@@ -75,7 +66,9 @@ export class ClosurePlan extends SynthesizedTypes {
         return true;
       });
     }
-    for (const [key, functionCaptures] of captures.functions) if (!insideTrees.has(key)) this.planFunction(key, functionCaptures, context);
+    for (const [key, functionCaptures] of captures.functions) {
+      if (!insideTrees.has(key)) this.planFunction(key, functionCaptures, scopes.ofFunction.get(key) ?? context);
+    }
   }
   nextOrdinal(owner) {
     const ordinal = this.ordinals.get(owner) ?? 0;
@@ -109,12 +102,11 @@ export class ClosurePlan extends SynthesizedTypes {
       // `delegate { ... }` without a parameter list fits any signature: the method takes the delegate's parameters.
       takesDelegateParameters = isLambda && key.isAnonymousMethod && !key.parameterSyntax && !!invoke,
       parameters = (takesDelegateParameters ? invoke.parameters : isLambda ? key.parameters : symbol.parameters) ?? [],
-      returnType = isLambda ? invoke?.returnType : symbol.returnType;
+      returnType = isLambda ? invoke?.returnType : symbol.returnType,
+      // A lambda returns by reference when its delegate does (`delegate ref int Selector(int[] items)`).
+      returnRefKind = (isLambda ? invoke?.refKind : symbol.refKind) ?? null;
     const body = isLambda ? key.body : symbol.body,
       ownTypeParameters = symbol?.typeParameters ?? [];
-    if (ownTypeParameters.length && declaresFunction(body)) {
-      throw new UnsupportedInCil('lambdas and local functions inside a generic local function', symbol.locations?.[0] ?? null, uri);
-    }
     let closure = null;
     if (variables.length) {
       const { type, definition, constructor } = this.nestedClass(owner, `<>c__DisplayClass${ordinal}`, { typeParameters: context.typeParameters });
@@ -132,7 +124,7 @@ export class ClosurePlan extends SynthesizedTypes {
       scope = closure ? [] : context.typeParameters,
       declared = [...scope, ...ownTypeParameters],
       typeParameters = methodTypeParameterCopies(declared),
-      plan = { key, isLambda, symbol, owner, uri, variables, usesThis: captures.usesThis, closure, isStatic, parameters, returnType };
+      plan = { key, isLambda, symbol, owner, uri, variables, usesThis: captures.usesThis, closure, isStatic, parameters, returnType, returnRefKind };
     plan.body = body;
     /** The type the method is declared in, and the type arguments a use supplies before those of the function itself. */
     plan.declaringType = closure ? closure.definition : owner;
@@ -150,6 +142,7 @@ export class ClosurePlan extends SynthesizedTypes {
             isStatic,
             arity: typeParameters.length,
             returnType,
+            refKind: returnRefKind,
             parameters: parameters.map(parameter => ({ type: parameter.type, refKind: parameter.refKind })),
           }
         : null,

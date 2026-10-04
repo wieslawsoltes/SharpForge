@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "kind": "recorded-static-reinspection-invocation",
+  "sourceSha": "a5977d0e0713997766e2d16101f44bc2a776a114",
+  "sourceTree": "cf7a61b6964b794d1b0128cbaffafd180b643ef0",
+  "workingDirectory": "/workspace/scratch/6b99131ca908/p16-editor-view",
+  "shellCommand": "python docs/evidence/project16-a5-changed-source/reinspect.py > docs/evidence/project16-a5-changed-source/reinspection.log 2>&1",
+  "startedAt": "2026-10-04T06:17:08.138987+00:00",
+  "finishedAt": "2026-10-04T06:17:08.401459+00:00",
+  "exitCode": 0,
+  "timingScope": "Inside the script from its first pinned Git read through completion of the source and policy comparisons.",
+  "scriptSha256": "927ddb9b995a5cd1487d6d5f0dc9e2f6b37fd0e7205626652001ca31616e53d3",
+  "stdoutAndStderr": "reinspection.log",
+  "result": "no_introduced_file_dimension_violations"
+}

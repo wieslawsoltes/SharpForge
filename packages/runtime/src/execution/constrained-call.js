@@ -5,7 +5,10 @@ import {prepareValueReceiver} from './value-calls.js';
 import {requireValueInterfaceTarget} from './value-dispatch.js';
 import {cachedTypeName, verifiedMethod} from './token-cache.js';
 import {resolveCallType} from './generic-calls.js';
+import {constrainedPrimitivePlan, constrainedObjectPlan, constrainedReferenceObjectPlan,
+  requireConstrainedObjectBound, invokeConstrainedObject} from './constrained-object.js';
 import {requireGenericStructArgument} from './generic-constraints.js';
+import {invokeConstrainedPrimitive} from './constrained-primitive.js';
 
 function closedConstraint(vm, caller, token) {
   if (token >>> 24 === 2) return vm.typeSystem.table(token);
@@ -29,7 +32,20 @@ export function constrainedCallType(vm, caller, instruction, descriptor) {
   if (instruction.name !== 'callvirt') return null;
   const prefix = caller.method.instructions[caller.pc - 2];
   if (prefix?.name !== 'constrained.') return null;
+  const primitivePlan = constrainedPrimitivePlan(vm, prefix.operand, descriptor);
+  if (primitivePlan) {
+    const primitive = vm.typeSystem.table(prefix.operand);
+    if (!primitive.flags.primitive || primitive.name !== primitivePlan.name) {
+      throw new ManagedFault('NotSupportedException', 'Constrained integer ToString requires its builtin primitive type');
+    }
+    return primitive;
+  }
   const table = closedConstraint(vm, caller, prefix.operand);
+  if (prefix.operand >>> 24 === 2 && table.flags.valueType && constrainedObjectPlan(vm, table, descriptor)) return table;
+  if (constrainedReferenceObjectPlan(vm, table, descriptor)) {
+    if (prefix.operand >>> 24 === 27) requireConstrainedObjectBound(vm, caller, prefix.operand, table);
+    return table;
+  }
   const declaration = vm.typeSystem.table(descriptor.ownerInstance ?? descriptor.ownerToken ?? descriptor.owner);
   if (table.flags.interface || table.genericArity || table.typeArguments.length || table.containsGenericParameters ||
       !vm.typeSystem.types.has(table.definitionToken) || !vm.typeSystem.types.has(declaration.definitionToken) ||
@@ -75,11 +91,18 @@ export function requireConstrainedReferenceTarget(vm, target) {
   }
 }
 
-/** Dispatch an admitted interface call on its original owned value address without allocating a box. */
-export function invokeConstrainedInterface(vm, caller, descriptor, table) {
+/** Dispatch an admitted value call after validating its exact owned address. */
+export function invokeConstrainedValue(vm, caller, descriptor, table) {
   const count = descriptor.signature.parameters.length + 1;
   const receiver = caller.stack[caller.stack.length - count];
-  receiverStorage(vm, receiver, table);
+  const current = receiverStorage(vm, receiver, table);
+  if (table.flags.primitive) {
+    const prefix = caller.method.instructions[caller.pc - 2];
+    const primitive = constrainedPrimitivePlan(vm, prefix.operand, descriptor);
+    if (primitive) return invokeConstrainedPrimitive(vm, caller, receiver, current, primitive);
+  }
+  const plan = constrainedObjectPlan(vm, table, descriptor);
+  if (plan) return invokeConstrainedObject(vm, caller, descriptor, {table, plan, receiver, current});
   const declaredTarget = descriptor.resolvedToken ?? descriptor.token;
   const target = vm.typeSystem.dispatch.resolve(table.name, declaredTarget, descriptor.ownerInstance);
   requireValueInterfaceTarget(vm, descriptor, target, table);

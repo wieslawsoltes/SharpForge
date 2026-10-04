@@ -1,0 +1,11 @@
+{
+  "suite": "a03-fields-browser",
+  "passed": true,
+  "engine": "webkit",
+  "cspViolations": [],
+  "browser": "26.6",
+  "executable": "playwright-managed",
+  "mode": "A03 field transfers source modules",
+  "seconds": 1.0538271670011454,
+  "diagnosticErrors": []
+}

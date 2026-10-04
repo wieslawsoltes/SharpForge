@@ -9,7 +9,7 @@
 import {DiagnosticId} from '../../diagnostics/codes.js';
 import { RefKind } from '../../symbols/types.js';
 import { isRefLike } from '../../binder/ref-struct.js';
-import { EscapeScope, variableOf } from './contexts.js';
+import { EscapeScope, implicitIndexInvocation, variableOf } from './contexts.js';
 import { isRefField, isScopedParameter, isUnscopedRef, invokedSymbol, isByReference } from './symbols.js';
 
 const invocationKinds = new Set(['Call', 'ObjectCreation', 'PropertyAccess', 'IndexerAccess']);
@@ -87,6 +87,11 @@ export const EscapeChecks = Base =>
         case 'IndexerAccess':
           if (isByReference(e.method?.refKind ?? e.property?.refKind)) return this.invocationEscapeProblems(e, escapeTo, node);
           return isReturnable(escapeTo) ? [problem(node, DiagnosticId.CS8156)] : [];
+        case 'ImplicitIndexerAccess': {
+          const invocation = implicitIndexInvocation(e);
+          if (invocation) return this.invocationEscapeProblems(invocation, escapeTo, node);
+          return isReturnable(escapeTo) ? [problem(node, DiagnosticId.CS8156)] : [];
+        }
         default:
           // A value passed to an `in` parameter lives in a temporary of the current method.
           return valueKinds.has(e.kind) && isReturnable(escapeTo) ? [problem(node, DiagnosticId.CS8156)] : [];
@@ -158,7 +163,9 @@ export const EscapeChecks = Base =>
   };
 
 /** `out var x` and discards have no earlier value a callee could overwrite with something narrower. */
-const isAssignableTarget = argument => argument.kind !== 'DeclarationExpression' && argument.kind !== 'Discard';
+// An interpolated string handler passed by reference is a temporary made for the call: it is as narrow as its arguments.
+const isHandlerTemporary = argument => argument.kind === 'Conversion' && argument.conversion?.kind === 'InterpolatedStringHandler';
+const isAssignableTarget = argument => argument.kind !== 'DeclarationExpression' && argument.kind !== 'Discard' && !isHandlerTemporary(argument);
 
 function describe(expression) {
   const e = variableOf(expression);

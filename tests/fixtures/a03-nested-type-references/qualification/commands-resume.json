@@ -1,0 +1,27 @@
+[
+  {
+    "label": "focused-tests",
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "--test",
+      "--test-concurrency=1",
+      "tests/a03-07-nested-type-references.test.js",
+      "tests/a03-07-local-type-references.test.js",
+      "tests/a03-07-local-type-references-native.test.js",
+      "tests/a03-07-type-system.test.js",
+      "tests/a03-07-type-system-native.test.js",
+      "tests/a03-verification-types.test.js",
+      "tests/a03-07-members.test.js",
+      "tests/a03-07-members-inherited.test.js",
+      "tests/a03-07-type-access.test.js",
+      "tests/a03-07-nested-access.test.js",
+      "tests/a03-07-member-access.test.js",
+      "tests/a03-coded-index-bounds.test.js"
+    ],
+    "cwd": "/tmp/sharpforge-a03-nested-type-references",
+    "started": "2026-10-04T08:48:22.522Z",
+    "completed": "2026-10-04T08:48:24.370Z",
+    "exitCode": 1,
+    "signal": null
+  }
+]

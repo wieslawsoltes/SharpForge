@@ -11,6 +11,7 @@
  */
 import {DiagnosticId} from '../diagnostics/codes.js';
 import { SymbolKind, TypeKind, RefKind } from '../symbols/types.js';
+import { NamespaceExtent } from '../symbols/namespaces.js';
 import { ConversionKind } from '../conversions/classify.js';
 
 /** Static, non-generic, non-nested classes can declare extension methods. */
@@ -26,9 +27,21 @@ export function extensionMethodsOf(type, name) {
     ? type.getMembers(name).filter(m => m.kind === SymbolKind.Method && m.isExtensionMethod && m.isStatic && m.parameters.length > 0)
     : [];
 }
+/**
+ * The classes declared directly in a namespace that can declare extensions. A namespace read from metadata never
+ * changes, and a framework namespace has hundreds of types of which a handful declare extensions: its list is
+ * computed once and kept on the namespace symbol (it lives as long as the reference set does).
+ */
+export function extensionClassesIn(namespace) {
+  const parts = namespace.constituentNamespaces;
+  if (parts.length !== 1 || parts[0] !== namespace) return parts.flatMap(extensionClassesIn);
+  const declares = type => type.mightContainExtensionMethods !== false && canDeclareExtensions(type);
+  if (namespace.extent !== NamespaceExtent.Metadata) return namespace.getTypeMembers().filter(declares);
+  return (namespace.extensionClasses ??= Object.freeze(namespace.getTypeMembers().filter(declares)));
+}
 /** The extension methods named `name` declared directly in a namespace. */
 export function extensionMethodsInNamespace(namespace, name) {
-  return namespace.getTypeMembers().flatMap(t => extensionMethodsOf(t, name));
+  return extensionClassesIn(namespace).flatMap(type => extensionMethodsOf(type, name));
 }
 const receiverKinds = new Set([
   ConversionKind.Identity,
@@ -127,13 +140,16 @@ export function resolveExtensionInvocation(name, receiver, args, scopes, resolve
 }
 /**
  * The extension scopes of a call site, innermost first.
- * @param {{namespace:NamespaceSymbol|null,usings:{namespaces:NamespaceSymbol[],staticTypes:NamedTypeSymbol[]}}[]} chain
+ * @param {{namespace:NamespaceSymbol|null,usings:{namespaces:NamespaceSymbol[],staticTypes:NamedTypeSymbol[]},fileTypes?:NamedTypeSymbol[]}[]} chain
  *   the enclosing namespace declarations from innermost to the compilation unit, each with its own using directives
+ *   and the file-local types the calling file declares in that namespace
  */
 export function extensionScopes(chain, name) {
   const scopes = [];
   for (const level of chain) {
-    if (level.namespace) scopes.push({ methods: extensionMethodsInNamespace(level.namespace, name) });
+    // `file static class` types of the calling file belong to their namespace too (they are not members of it).
+    const fileLocal = (level.fileTypes ?? []).flatMap(type => extensionMethodsOf(type, name));
+    if (level.namespace) scopes.push({ methods: [...extensionMethodsInNamespace(level.namespace, name), ...fileLocal] });
     const imported = [
       ...(level.usings?.namespaces ?? []).flatMap(n => extensionMethodsInNamespace(n, name)),
       ...(level.usings?.staticTypes ?? []).flatMap(t => extensionMethodsOf(t, name)),

@@ -12,17 +12,19 @@ export function readiness(snapshot, id, contracts = {}) {
   const seen = new Set();
   function requirement(t) {
     if (seen.has(t.id)) return; seen.add(t.id);
-    for (const dependency of t.dependencies) {
+    for (const dependency of validation.edges[t.id]) {
       const dep = tasks.get(dependency);
       const merged = dep.state === 'CLOSED' && dep.pullRequests?.some(pr => pr.merged && pr.baseRefName === snapshot.defaultBranch && /^[0-9a-f]{40}$/.test(pr.mergeCommit ?? ''));
       if (!merged) blockers.add(`${dependency}: no closed issue with merged ${snapshot.defaultBranch} evidence`);
       requirement(dep);
     }
-    for (const contract of t.contracts ?? []) {
-      const actual = contracts[contract.name];
-      if (!actual || actual.fileExistsOnMain !== true || actual.commitOnMain !== true || String(actual.version) !== contract.version || actual.qualified !== true || !/^[0-9a-f]{40}$/.test(actual.commit ?? '')) blockers.add(`${contract.name}@${contract.version}: not qualified at a recorded commit`);
+    // Dependency scopes change inherited edges, never mandatory contracts.
+    for (let ancestor = t; ancestor; ancestor = tasks.get(ancestor.parent)) {
+      for (const contract of ancestor.contracts ?? []) {
+        const actual = contracts[contract.name];
+        if (!actual || actual.fileExistsOnMain !== true || actual.commitOnMain !== true || String(actual.version) !== contract.version || actual.qualified !== true || !/^[0-9a-f]{40}$/.test(actual.commit ?? '')) blockers.add(`${contract.name}@${contract.version}: not qualified at a recorded commit`);
+      }
     }
-    if (t.parent) requirement(tasks.get(t.parent));
   }
   requirement(task);
   return { id, ready: blockers.size === 0, errors: [], blockers: [...blockers].sort() };

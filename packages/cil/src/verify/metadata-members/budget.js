@@ -16,7 +16,8 @@ export function rejectMember(code, detail = '') {
 export function memberBudget(options) {
   const signal = options.signal;
   const limits = {};
-  for (const [name, maximum] of Object.entries({ maxMembers: 65535, maxMemberBytes: 1048576, maxMemberSignatureNodes: 65536 })) {
+  const maxima = { maxMembers: 65535, maxMemberBytes: 1048576, maxMemberSignatureNodes: 65536, maxDepth: 256, maxQueryNodes: 4096 };
+  for (const [name, maximum] of Object.entries(maxima)) {
     const value = options[name] ?? maximum;
     if (!Number.isInteger(value) || value < 0 || value > maximum) rejectMember('CILVM0002', name);
     limits[name] = value;

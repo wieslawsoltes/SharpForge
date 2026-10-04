@@ -9,8 +9,7 @@ import { TypeKind } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
 import { isReference } from './type-facts.js';
 
-const isVirtualSlot = method =>
-  !!(method.isVirtual || method.isAbstract || method.isOverride) || method.containingType?.typeKind === TypeKind.Interface;
+const isVirtualSlot = method => !!(method.isVirtual || method.isAbstract || method.isOverride) || method.containingType?.typeKind === TypeKind.Interface;
 
 /** Class mixin: delegates and events. */
 export const DelegateEmission = Base =>
@@ -42,9 +41,13 @@ export const DelegateEmission = Base =>
       if (method.methodKind === MethodKind.LocalFunction) {
         return this.functionDelegate(this.functionPlan(method.originalDefinition ?? method, node.syntax), node.type, method);
       }
-      if (method.isExtensionMethod && group.receiver && method.isStatic) return this.unsupported('a delegate over an extension method', node.syntax);
+      if (method.isExtensionMethod && group.receiver && method.isStatic) return this.extensionDelegate(node, method);
       if (method.isStatic) {
-        il.emit('ldnull').emit('ldftn', this.tokens.method(method));
+        il.emit('ldnull');
+        // `T.Create` as a delegate: a static abstract or virtual interface member is found on the type argument.
+        const typeParameter = group.viaType && group.receiverType?.typeKind === TypeKind.TypeParameter ? group.receiverType : null;
+        if (typeParameter && method.containingType?.typeKind === TypeKind.Interface) il.emit('constrained.', this.tokens.type(typeParameter));
+        il.emit('ldftn', this.tokens.method(method));
         return this.newDelegate(node.type);
       }
       const receiver = group.receiver;
@@ -54,6 +57,19 @@ export const DelegateEmission = Base =>
       } else this.exprThis(node);
       if (isVirtualSlot(method)) il.emit('dup').emit('ldvirtftn', this.tokens.method(method));
       else il.emit('ldftn', this.tokens.method(method));
+      return this.newDelegate(node.type);
+    }
+    /**
+     * `receiver.Extension` as a delegate: the receiver is evaluated once and becomes the delegate's target, which
+     * the runtime passes as the first argument of the static method (a delegate closed over its first argument).
+     * The receiver is a reference (CS1113 otherwise); a type parameter known to be a reference is boxed.
+     */
+    extensionDelegate(node, method) {
+      const receiver = node.operand.receiver;
+      this.expression(receiver);
+      if (receiver.type?.typeKind === TypeKind.TypeParameter) this.il.emit('box', this.tokens.type(receiver.type));
+      // The conversion selected the method in its reduced form (without the receiver parameter).
+      this.il.emit('ldftn', this.tokens.method(method.reducedFrom ?? method));
       return this.newDelegate(node.type);
     }
     /**
@@ -69,6 +85,25 @@ export const DelegateEmission = Base =>
       this.expression(operand);
       this.il.emit('ldftn', this.tokens.method(invoke));
       return this.newDelegate(node.type);
+    }
+    /**
+     * `a == b` and `a != b` over two values of delegate types compare invocation lists (`Delegate.op_Equality`: the
+     * same methods on the same targets), not references. A comparison with the `null` literal stays a reference
+     * comparison, and so does one with a value typed `System.Delegate` (Roslyn 5.0 prints False for two equal
+     * delegates compared that way).
+     */
+    binaryInstruction(node) {
+      const isEquality = node.operator === '==' || node.operator === '!=',
+        isNull = operand => !!operand.constantValue && (operand.constantValue.isNull || operand.constantValue.value === null),
+        // The binder compares the operands as objects: the delegate is under the reference conversion.
+        written = operand => (operand.kind === 'Conversion' && !operand.isExplicit && operand.operand?.type ? written(operand.operand) : operand),
+        isDelegate = operand => written(operand).type?.typeKind === TypeKind.Delegate;
+      if (!isEquality || node.method || isNull(written(node.left)) || isNull(written(node.right))) return super.binaryInstruction(node);
+      if (!isDelegate(node.left) || !isDelegate(node.right)) return super.binaryInstruction(node);
+      const delegate = this.core.delegate,
+        shape = { isStatic: true, returnType: this.core.bool, parameters: [{ type: delegate }, { type: delegate }] },
+        name = node.operator === '==' ? 'op_Equality' : 'op_Inequality';
+      return this.il.emit('call', this.tokens.external(delegate, name, shape), { pops: 2, pushes: 1 });
     }
     /** `a + b` and `a - b` over delegates: `Delegate.Combine` / `Delegate.Remove`, cast back to the delegate type. */
     delegateOperator(node) {

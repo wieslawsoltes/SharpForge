@@ -1,0 +1,332 @@
+{
+  "schemaVersion": 1,
+  "kind": "sharpforge-project16-hosted-browser-archive",
+  "attempt": "w1",
+  "sourceSha": "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e",
+  "sourceTree": "a0922a5f98e4ce38cd377d109a083a1da77df9a1",
+  "workflowRunId": 37184606471,
+  "jobId": 111383814564,
+  "workflowUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37184606471",
+  "jobUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37184606471/job/111383814564",
+  "runConclusion": "success",
+  "jobConclusion": "success",
+  "stage": "browser",
+  "engine": "firefox",
+  "runnerLabel": "windows-latest",
+  "startedAt": "2026-10-04T07:03:59.353Z",
+  "finishedAt": "2026-10-04T07:07:01.284Z",
+  "counts": {
+    "selected": 9,
+    "passed": 9,
+    "failed": 0
+  },
+  "captureOnly": true,
+  "baselineProfile": null,
+  "archiveIntegrity": {
+    "rawFileCount": 41,
+    "rawBytes": 136438,
+    "artifactMemberCount": 36,
+    "artifactMemberBytes": 23644,
+    "allZipMembersMatchExtractedFiles": true,
+    "allCopiesReadBackIdentical": true,
+    "originalLineEndingsAndEncodingPreserved": true,
+    "verification": "ZIP/member bytes and copied files matched; every staged Git blob also matched its original byte count and SHA256.",
+    "gitTextNormalization": false,
+    "stagedGitBlobsMatchOriginalSha256": true
+  },
+  "provenance": "Original downloaded artifact, extracted members, job log and supplied connector API responses are preserved byte for byte.",
+  "limits": [
+    "Browser functional scopes only; no Node-area or performance phases selected.",
+    "API jobs response is retained as supplied by the connector; omitted API fields are not reconstructed.",
+    "No test, build, browser, benchmark or workflow execution was performed to create this archive."
+  ],
+  "files": [
+    {
+      "path": "a19-multi-session-results.json",
+      "sourcePath": "p16-hosted-w1/a19-multi-session-results.json",
+      "kind": "artifact-member",
+      "bytes": 1437,
+      "sha256": "d243234c786ea344fd9d254a5ee8e93b64af1763b0a55c32b31f9e274a3bbba6"
+    },
+    {
+      "path": "a19-shell-results.json",
+      "sourcePath": "p16-hosted-w1/a19-shell-results.json",
+      "kind": "artifact-member",
+      "bytes": 3185,
+      "sha256": "88c65bdcaa69f93d49ad06502f5663ba5939d36922812068a4efa4e0a3d70209"
+    },
+    {
+      "path": "a20-editor-insights.json",
+      "sourcePath": "p16-hosted-w1/a20-editor-insights.json",
+      "kind": "artifact-member",
+      "bytes": 1020,
+      "sha256": "a5471c752b0075827164291b7565e4a33a3f4ac0a18dd2c12c772fc71e77a497"
+    },
+    {
+      "path": "a20-editor-view.json",
+      "sourcePath": "p16-hosted-w1/a20-editor-view.json",
+      "kind": "artifact-member",
+      "bytes": 923,
+      "sha256": "828f4f4ad656bd8dd18eab479fd4ff3f3720128325e7e81a1f41efe10f938358"
+    },
+    {
+      "path": "a20-language-providers.json",
+      "sourcePath": "p16-hosted-w1/a20-language-providers.json",
+      "kind": "artifact-member",
+      "bytes": 386,
+      "sha256": "978221de87b3faf22f44671763854ad2a299e4db0154997b459c304676709f79"
+    },
+    {
+      "path": "browser_a19_docking_test/console.log",
+      "sourcePath": "p16-hosted-w1/browser_a19_docking_test/console.log",
+      "kind": "artifact-member",
+      "bytes": 538,
+      "sha256": "850b3e8b07464aacf63851dda3c9f36b9a36a9f77f8f069f8cb8110a0290815f"
+    },
+    {
+      "path": "browser_a19_docking_test/session.json",
+      "sourcePath": "p16-hosted-w1/browser_a19_docking_test/session.json",
+      "kind": "artifact-member",
+      "bytes": 254,
+      "sha256": "e5ad18ad2d3f293e8f784ae0f699c0ad794e511f2e44c052e61d55ce4e9fc50c"
+    },
+    {
+      "path": "browser_a19_lazy_tools_test/console.log",
+      "sourcePath": "p16-hosted-w1/browser_a19_lazy_tools_test/console.log",
+      "kind": "artifact-member",
+      "bytes": 358,
+      "sha256": "249f94facda98c86584c08e3654afb9ab44e8afa27a92c2373ef4b9cb55ff7a2"
+    },
+    {
+      "path": "browser_a19_lazy_tools_test/session.json",
+      "sourcePath": "p16-hosted-w1/browser_a19_lazy_tools_test/session.json",
+      "kind": "artifact-member",
+      "bytes": 257,
+      "sha256": "0d0827bf1839c1cfe20e42fe2b5a93936ee37f3803005baac88366aa460b1808"
+    },
+    {
+      "path": "browser_a19_shell_test/console.log",
+      "sourcePath": "p16-hosted-w1/browser_a19_shell_test/console.log",
+      "kind": "artifact-member",
+      "bytes": 211,
+      "sha256": "8f9ac6d2095e3806e0b77c9a08810e52eac6155e3d5a50c1442fa847f3df8ac0"
+    },
+    {
+      "path": "browser_a19_shell_test/session.json",
+      "sourcePath": "p16-hosted-w1/browser_a19_shell_test/session.json",
+      "kind": "artifact-member",
+      "bytes": 252,
+      "sha256": "dde77ee0b7c038e816264cd079314f8fcf471a27374223d1b975f44d7ce11ef8"
+    },
+    {
+      "path": "browser_a20_insights_test/console.log",
+      "sourcePath": "p16-hosted-w1/browser_a20_insights_test/console.log",
+      "kind": "artifact-member",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "browser_a20_insights_test/session.json",
+      "sourcePath": "p16-hosted-w1/browser_a20_insights_test/session.json",
+      "kind": "artifact-member",
+      "bytes": 254,
+      "sha256": "2c63e0aba3c5be93ea5f3bfe55e0de58f3e1e24ecfdd7887b246b3cb92f3ecdf"
+    },
+    {
+      "path": "browser_a20_language_providers_test/console.log",
+      "sourcePath": "p16-hosted-w1/browser_a20_language_providers_test/console.log",
+      "kind": "artifact-member",
+      "bytes": 160,
+      "sha256": "7c25d6347085b8d84f9390c5edafa3fb26d68901d8002899e83dad8c4dd2bcf7"
+    },
+    {
+      "path": "browser_a20_language_providers_test/session.json",
+      "sourcePath": "p16-hosted-w1/browser_a20_language_providers_test/session.json",
+      "kind": "artifact-member",
+      "bytes": 265,
+      "sha256": "7ae1206777c815e732f1b095fef3e722c3b7b6b77a6ea589b3011e9f686994f7"
+    },
+    {
+      "path": "browser_a20_view_test/console.log",
+      "sourcePath": "p16-hosted-w1/browser_a20_view_test/console.log",
+      "kind": "artifact-member",
+      "bytes": 160,
+      "sha256": "4832c1dbd5c17d0a808b797fae0eb32135bd095b48328050c0c4fa57b101a137"
+    },
+    {
+      "path": "browser_a20_view_test/session.json",
+      "sourcePath": "p16-hosted-w1/browser_a20_view_test/session.json",
+      "kind": "artifact-member",
+      "bytes": 250,
+      "sha256": "5bb5a3981f8fa016698c75078ceb86c316d74a201e60fe3d706fc86f5d5d004c"
+    },
+    {
+      "path": "browser_multi_session_test/console.log",
+      "sourcePath": "p16-hosted-w1/browser_multi_session_test/console.log",
+      "kind": "artifact-member",
+      "bytes": 211,
+      "sha256": "885a2cb9677e0ba5b8eaee5d3fb28432b19538b226f27b7e34b446f7aa8ec660"
+    },
+    {
+      "path": "browser_multi_session_test/session.json",
+      "sourcePath": "p16-hosted-w1/browser_multi_session_test/session.json",
+      "kind": "artifact-member",
+      "bytes": 256,
+      "sha256": "356b6279229d68cad2b2679e70a11e1dc852dbf13a1d7d1dfba4dd85f703efda"
+    },
+    {
+      "path": "browser_vs_workflows_standalone_test/console.log",
+      "sourcePath": "p16-hosted-w1/browser_vs_workflows_standalone_test/console.log",
+      "kind": "artifact-member",
+      "bytes": 345,
+      "sha256": "3f1db34e454f7cb3938c7d7c669ddb369c65928307edf540b95789cd7d51d05c"
+    },
+    {
+      "path": "browser_vs_workflows_standalone_test/session.json",
+      "sourcePath": "p16-hosted-w1/browser_vs_workflows_standalone_test/session.json",
+      "kind": "artifact-member",
+      "bytes": 266,
+      "sha256": "50f6ab4e1bb4f22ae240ecb43489276e5a49dd5f015e4ed8636fc85aba419206"
+    },
+    {
+      "path": "browser_vs_workflows_test/console.log",
+      "sourcePath": "p16-hosted-w1/browser_vs_workflows_test/console.log",
+      "kind": "artifact-member",
+      "bytes": 358,
+      "sha256": "d842008de8c68044c9c29bd6eed38977280a5398ccb33e454bdfa733cf1354cd"
+    },
+    {
+      "path": "browser_vs_workflows_test/session.json",
+      "sourcePath": "p16-hosted-w1/browser_vs_workflows_test/session.json",
+      "kind": "artifact-member",
+      "bytes": 242,
+      "sha256": "cf7dc42a25adaca841a368470a40c352a27d72b5657cdf9bc276eea37f05a52b"
+    },
+    {
+      "path": "qualification-summary.json",
+      "sourcePath": "p16-hosted-w1/qualification-summary.json",
+      "kind": "artifact-member",
+      "bytes": 4234,
+      "sha256": "f5b5b67aaf11837408c31db44c4b27517d46741d26c576983c08a25cdb439198"
+    },
+    {
+      "path": "source.json",
+      "sourcePath": "p16-hosted-w1/source.json",
+      "kind": "artifact-member",
+      "bytes": 526,
+      "sha256": "401fe0d7d6f75a8d47c30b9cdf0f053ecca4b8695a7e57d5240f2cfc5687c976"
+    },
+    {
+      "path": "suite-editor-insights.json",
+      "sourcePath": "p16-hosted-w1/suite-editor-insights.json",
+      "kind": "artifact-member",
+      "bytes": 243,
+      "sha256": "9ccecbfeb0cba51a75e9ecf31970a4ece368fe0661335eacdaa2c22428926b63"
+    },
+    {
+      "path": "suite-editor-providers.json",
+      "sourcePath": "p16-hosted-w1/suite-editor-providers.json",
+      "kind": "artifact-member",
+      "bytes": 255,
+      "sha256": "24680653773e34f56066c397f3086b85d921ee3511f26d76844534813364c140"
+    },
+    {
+      "path": "suite-editor-view.json",
+      "sourcePath": "p16-hosted-w1/suite-editor-view.json",
+      "kind": "artifact-member",
+      "bytes": 224,
+      "sha256": "9ffe388edb7cd5d1a9d1bfcc0314f56557da56a7345c4d9caef936dd05fa7d04"
+    },
+    {
+      "path": "suite-workbench-docking.json",
+      "sourcePath": "p16-hosted-w1/suite-workbench-docking.json",
+      "kind": "artifact-member",
+      "bytes": 246,
+      "sha256": "6cb56a72e4d3641add9bc9477ca5b81a591d9f4b0f59a5d7d2bcf5f72473cd92"
+    },
+    {
+      "path": "suite-workbench-lazy.json",
+      "sourcePath": "p16-hosted-w1/suite-workbench-lazy.json",
+      "kind": "artifact-member",
+      "bytes": 246,
+      "sha256": "f6399ed4b1e36293bb4f542a44c5450a604eb85cb3c678a1c1d58889ad9bd1ac"
+    },
+    {
+      "path": "suite-workbench-sessions.json",
+      "sourcePath": "p16-hosted-w1/suite-workbench-sessions.json",
+      "kind": "artifact-member",
+      "bytes": 249,
+      "sha256": "2254347394f2a3918c95be88ec8e07eda0f29af3b5deff9925dc2b7b5c7812c2"
+    },
+    {
+      "path": "suite-workbench-shell.json",
+      "sourcePath": "p16-hosted-w1/suite-workbench-shell.json",
+      "kind": "artifact-member",
+      "bytes": 242,
+      "sha256": "255d5baa3e930df277cfe39bd919f332ced30f320370a874e1569bf5aeb36e79"
+    },
+    {
+      "path": "suite-workbench-workflows-standalone.json",
+      "sourcePath": "p16-hosted-w1/suite-workbench-workflows-standalone.json",
+      "kind": "artifact-member",
+      "bytes": 271,
+      "sha256": "da2d7b800d1b045f5f68c668aaeb8ee608ddb0a41595fe000ed6622a34f12afc"
+    },
+    {
+      "path": "suite-workbench-workflows.json",
+      "sourcePath": "p16-hosted-w1/suite-workbench-workflows.json",
+      "kind": "artifact-member",
+      "bytes": 249,
+      "sha256": "160cdaffb7963400cd87f5f986453b7ad01544443b4a1946e08db264436b7e21"
+    },
+    {
+      "path": "vs-workflow-results.json",
+      "sourcePath": "p16-hosted-w1/vs-workflow-results.json",
+      "kind": "artifact-member",
+      "bytes": 1834,
+      "sha256": "1b1608ded76d5a0dff5c50c8c2a04c093e765ddf0aaeb29af68dfeb9ca1ec235"
+    },
+    {
+      "path": "vs-workflow-standalone-results.json",
+      "sourcePath": "p16-hosted-w1/vs-workflow-standalone-results.json",
+      "kind": "artifact-member",
+      "bytes": 3237,
+      "sha256": "da449316c66f84b5affb61e3d09c671ee5399af21b80f3d40ec1c6965bbf7f03"
+    },
+    {
+      "path": "artifact.zip",
+      "sourcePath": "attachments/cf3ed38b-c772-48a9-a6e1-aa1c5ab9c9c1/p16-hosted-w1.zip",
+      "kind": "original-artifact-zip",
+      "bytes": 15322,
+      "sha256": "b79f4c7f36d8771896d6e35415718ba4f8511335a050c3323587f9a2c8804f2d"
+    },
+    {
+      "path": "job.log",
+      "sourcePath": "p16-hosted-w1-job.log",
+      "kind": "original-job-log",
+      "bytes": 78721,
+      "sha256": "8e3e5910bd5b5951aa87fcbf1e204aec022d6a4f8b7f9194aefe6573558f002c"
+    },
+    {
+      "path": "run.json",
+      "sourcePath": "p16-hosted-w1-run.json",
+      "kind": "connector-api-snapshot",
+      "bytes": 14487,
+      "sha256": "59db5f067e0ae3c10f63153146014316e5215f4ccef90d3c1cc2c07923d5210c"
+    },
+    {
+      "path": "jobs.json",
+      "sourcePath": "p16-hosted-w1-jobs.json",
+      "kind": "connector-api-snapshot",
+      "bytes": 3359,
+      "sha256": "24dbb317a389997cbbc45c591fe884cf5adfb515a248c7f0b7577ca6888463d1"
+    },
+    {
+      "path": "artifacts.json",
+      "sourcePath": "p16-hosted-w1-artifacts.json",
+      "kind": "connector-api-snapshot",
+      "bytes": 905,
+      "sha256": "dc1d32d96a66386d5100acaa7fef67e0821bf0222c0ee6f2c9fc5ea001ac342f"
+    }
+  ]
+}

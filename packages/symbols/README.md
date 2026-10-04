@@ -102,6 +102,38 @@ Types are snapshotted once per load, and a query clones each used slot's AST
 once even when the slot is declared in multiple scopes. Native nesting and
 local types are compared with SRM by `scripts/validate-pdb-scope-tree.mjs`.
 
+`symbols.localSlots(methodToken)` enumerates declared CLI storage slots, including
+slots with no LocalVariable row. Bound results are `{available: true, reason:
+null, slots}`; each slot has `index`, owned signature AST `type`, `typeName`,
+`unnamed`, `name` and `declarations`. A name is present only for one exact PDB
+declaration; no-row and reused-slot names are null. `unnamed` means no row,
+not an inference about source code or optimization. Declarations retain exact
+`id`, `scopeId`, IL `start`/exclusive `end`, name, attributes and hidden flag.
+No `V_0`-style identifier, lexical scope, runtime value or eliminated variable
+is invented. Existing scope/offset APIs still return only recorded declarations.
+
+Without a bound PE the result is `{available: false, reason:
+'type-metadata-required', slots: []}`. Missing bodies yield `no-method-body`;
+non-CIL bodies without a PDB local signature yield `unsupported-method-body`.
+An actual tiny body without a signature has an available empty slot list.
+The CLI header is authoritative: nonzero PDB local-signature handles must agree
+with it and cannot assign storage to a method without a CIL body.
+Invalid MethodDef/query/signature tokens, malformed signatures and out-of-range
+recorded slots reject. Distinct names for reused storage remain separate in
+`declarations`. Returned ASTs/declarations and public PDB rows cannot alter later
+queries. Source annotations remain on the existing scope-tree declaration API.
+
+Bound loads snapshot all declared local signatures using the shared CIL
+header-only reader, without allocating IL/EH views for slot discovery. Unique
+signature bytes are limited to 4 KiB each / 128 KiB total before AST decoding,
+with depth 32, 4,096 nodes per signature and 65,536 nodes total. Before slot
+projection, `maxLocalSlotMethods` caps method count at 65,536 and `maxLocalSlots`
+caps aggregate method-slot occurrences at 100,000; options may lower these
+limits. Existing per-type name/output limits apply. `signal` cancellation is
+checked during bound snapshots and slot queries. Construction is linear in
+method/header/signature/declaration data; queries copy only one method's slots.
+No PE, borrowed signature bytes or mutable metadata escape the load phase.
+
 LocalVariable/LocalConstant dynamic and tuple CDI is joined by its exact parent
 row. Annotated scope locals retain `dynamicFlags` and `tupleElementNames`, with
 `displayTypeName` such as `dynamic[]` or `(int a, string b)`; `type`/`typeName`
@@ -455,3 +487,43 @@ the bounded 3,072-byte/1,024-UTF-16-unit metadata scan used by hoisted locals.
 Relevant facts are owned at load, the query index is lazy, and results are fresh;
 input-byte and returned-record mutations cannot alter subsequent queries.
 Naming follows Roslyn's [GeneratedNames](https://github.com/dotnet/roslyn/blob/main/src/Compilers/CSharp/Portable/Symbols/Synthesized/GeneratedNames.cs).
+
+`readPortablePdb` preflights all debug-table row/heap handles before projecting
+names, scopes or custom records. MethodDebugInformation documents are checked
+even for empty sequence blobs; local-signature prefixes reference declared
+external StandAloneSig rows. CDI parents must select an existing declared
+external/local row, including unknown CDI kinds whose payloads stay opaque.
+Import and constant payload references continue through their existing decoders.
+Malformed CLI binary extents/coded indexes are reported as `SymbolError` by the
+PDB reader, including invalid heap handles and truncated constant signatures.
+This validates declared metadata extents without resolving external assemblies
+or claiming every semantic rule, delta generation or execution backend.
+
+`readPortablePdb(input, { budgets, signal })` and `loadSymbols` accept a
+`budgets` object of nonnegative integer limits. Each limit may be lowered from
+its hard default; unknown keys, fractional values and increases reject with
+`SymbolError`. Zero allows an empty category. Existing `maxBytes` (64 MiB file)
+and `maxSourceBytes` (16 MiB per embedded source) remain independent options.
+
+| Budget | Default/hard maximum | Charged work |
+| --- | ---: | --- |
+| `documents` | 100,000 | Document rows |
+| `methods` | 100,000 | Referenced MethodDef count and MethodDebugInformation rows, independently |
+| `scopes` | 100,000 | LocalScope rows |
+| `imports` | 100,000 | ImportScope rows and aggregate import definitions, independently |
+| `customRecords` | 100,000 | CDI rows, including empty payloads |
+| `cdiBytes` | 64 MiB | Sum of CDI payload bytes across row occurrences |
+| `embeddedSourceBytes` | 64 MiB | Sum of decoded embedded-source sizes across row occurrences |
+
+Counts are checked before symbol projection. All CDI and embedded-source sizes
+are checked before the first CDI copy or inflation, including repeated handles
+and repeated document parents. Compressed records charge their declared decoded
+size, subsequently checked by the existing bounded inflater; stored records
+charge their content length. Cancellation is checked before raw parsing and at
+bounded CDI/import intervals. No caller budget object is retained.
+
+The CIL metadata parser's independent one-million raw-row cap still precedes
+these symbol budgets; this API does not introduce a per-table limit on that
+raw metadata allocation. Existing fixed name, nesting, signature and combined
+scope-entry caps also remain active. Budget values count logical work/bytes,
+not measured process memory.

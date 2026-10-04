@@ -1,0 +1,12 @@
+{
+  "parent": "b79fbbb9e9b54cb77d2376765e290e9b0922b2d6",
+  "candidate": "c99aa097d7ac79651220725e8753f36b0f0d34f7",
+  "copied": {
+    "tests/fixtures/verifier-initialization/input.js": "72f44099e0252451b43b61a95644fd1b9eb5913daa574ba7bcf03497df6f16ee",
+    "tests/fixtures/verifier-initialization/baseline.mjs": "cfba943b871e0a3e9aa0cc95e91810a61bb91645c8016e9c81ba814ff258079e"
+  },
+  "controls": {
+    "packages/cil/tools/benchmark-numeric-verifier.mjs": "09bffe659bed2270867ddd3ec12816f1999fec0389ba95b013e46b838e582e13",
+    "tests/fixtures/verifier-numeric/input.js": "fa46dfdede333758ddb2bed413388e49e90d64c458ec5252ea883e4b944e386a"
+  }
+}

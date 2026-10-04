@@ -2,6 +2,7 @@ import {decodeCoded, methodGenericParameters, substituteCallType, primitiveSizes
 import {ManagedFault} from '../heap.js';
 import {executionCodeState} from './code-version.js';
 import {isAggregateType, requireValueStorage} from './value-types.js';
+import {valueLayout} from './value-layout.js';
 
 const forwarders = new WeakMap();
 
@@ -36,7 +37,7 @@ function supportsConstructor(vm, type) {
 
 /** Validate ECMA generic constraints against closed MethodTable identities. */
 export function validateGenericArguments(vm, owner, arguments_, context) {
-  const {typeArguments, methodArguments, arity = null} = context;
+  const {typeArguments, methodArguments, arity = null, layoutOnly = false} = context;
   const parameters = methodGenericParameters(vm.inspector, owner);
   if (arguments_.length !== parameters.length || arity !== null && parameters.length !== arity ||
       parameters.some((parameter, index) => parameter.index !== index)) {
@@ -51,7 +52,8 @@ export function validateGenericArguments(vm, owner, arguments_, context) {
       throw new ManagedFault('NotSupportedException', 'Unregistered external generic argument is inspection-only');
     }
     if (type.flags.valueType && !type.flags.primitive && !type.flags.enum && !primitiveSizes[type.name]) {
-      requireGenericStructArgument(vm, owner, type);
+      if (layoutOnly) valueLayout(vm, type);
+      else requireGenericStructArgument(vm, owner, type);
     }
     const badReference = parameter.flags & 4 && type.flags.valueType;
     const badValue = parameter.flags & 8 && (!type.flags.valueType || type.flags.nullable);

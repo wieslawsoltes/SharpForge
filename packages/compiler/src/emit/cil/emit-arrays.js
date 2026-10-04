@@ -8,6 +8,15 @@ import { isReference, primitiveOf } from './type-facts.js';
 /** Class mixin: arrays. */
 export const ArrayEmission = Base =>
   class extends Base {
+    /**
+     * `newarr` of a one-dimensional array whose length is on the stack. The array's type is recorded, so that an
+     * `await` in one of its initializers can save the array while the method is suspended (il-stack-types.js).
+     */
+    newArray(elementType) {
+      this.il.emit('newarr', this.tokens.type(elementType));
+      this.il.recordTop?.(this.core.arrayOf(elementType));
+      return this.il;
+    }
     exprArrayCreation(node) {
       const il = this.il,
         elementType = node.type.elementType;
@@ -15,9 +24,10 @@ export const ArrayEmission = Base =>
       if (!node.elements) {
         if (node.sizes?.length !== 1) return this.unsupported('this array creation form', node.syntax);
         this.expression(node.sizes[0]);
-        return il.emit('newarr', this.tokens.type(elementType));
+        return this.newArray(elementType);
       }
-      il.emit('ldc.i4', node.elements.length).emit('newarr', this.tokens.type(elementType));
+      il.emit('ldc.i4', node.elements.length);
+      this.newArray(elementType);
       node.elements.forEach((element, index) => {
         if (element.kind === 'ArrayInitializer' || Array.isArray(element)) return this.unsupported('nested array initializers', node.syntax);
         il.emit('dup').emit('ldc.i4', index);

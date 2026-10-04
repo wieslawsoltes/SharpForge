@@ -9,7 +9,7 @@ function relation(relations, name, source, target) {
   return result;
 }
 
-function assignable(source, target, relations) {
+export function isVerificationAssignable(source, target, relations) {
   if (sameVerificationType(source, target)) return true;
   // ECMA I.8.7.3 rule 4, carried into verifier assignment by III.1.8.1.2.3 rule 3.
   if (source.kind === VerificationKind.Int32 && target.kind === VerificationKind.NativeInt) return true;
@@ -26,13 +26,13 @@ function assignable(source, target, relations) {
 export function mergeVerificationTypes(incoming, stored, relations) {
   requireVerificationType(incoming);
   requireVerificationType(stored);
-  if (assignable(incoming, stored, relations)) return stored;
-  if (assignable(stored, incoming, relations)) return incoming;
+  if (isVerificationAssignable(incoming, stored, relations)) return stored;
+  if (isVerificationAssignable(stored, incoming, relations)) return incoming;
   if (!isReference(incoming) || !isReference(stored)) throw verificationError('CILV0002');
   if (typeof relations?.commonSupertype !== 'function') throw verificationError('CILV0003', 'Missing verification relation: commonSupertype');
   const merged = relations.commonSupertype(incoming, stored);
   requireVerificationType(merged, 'CILV0006');
-  if (!isReference(merged) || !assignable(incoming, merged, relations) || !assignable(stored, merged, relations)) {
+  if (!isReference(merged) || !isVerificationAssignable(incoming, merged, relations) || !isVerificationAssignable(stored, merged, relations)) {
     throw verificationError('CILV0006', 'Common supertype must accept both reference operands');
   }
   return merged;

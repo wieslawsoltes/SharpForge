@@ -5,7 +5,7 @@
       "path": "apps/cli/main.js",
       "operation": "dynamic-import",
       "count": 2,
-      "sha256": "d30c2510a65703c075e208ce16fede86fd4fa2158466b34a73a43cf837a5e353",
+      "sha256": "9a2e5912b0302ef41b3a0e0b7b06419b22fa0ecc862e84337f4a3ee894be2d68",
       "reason": "Trusted CLI lazily loads the fixed MSBuild and workspace command modules; no user-selected JavaScript."
     },
     {
@@ -294,6 +294,13 @@
       "count": 1,
       "sha256": "cedea79fa062454c4cc41d7b60c34aa6640897d98b03e39b7faa271082cddb06",
       "reason": "Benchmark explicitly loads the runtime from a trusted baseline checkout selected by the operator."
+    },
+    {
+      "path": "scripts/benchmarks/a19-correction-paths.mjs",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "87827deddeda04d6fdb6b055ff7448c3d8fe221759a5accf87ca6ab301ce5a3c",
+      "reason": "Trusted operator-selected checkout loads five fixed local modules via tracked package/host paths; no source-data or remote module selectors."
     },
     {
       "path": "scripts/build-managed-examples.js",

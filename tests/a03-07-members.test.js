@@ -32,7 +32,7 @@ test('local declaration references resolve overloads, instance methods and field
 
 test('missing declarations and unresolved signature/owner metadata never bind by spelling', () => {
   const { context, tokens } = fixture();
-  assert.equal(context.resolveMember(tokens.missing).reason, 'unresolved-member-declaration');
+  assert.equal(context.resolveMember(tokens.missing).reason, 'unresolved-type-reference');
   assert.equal(context.resolveMember(tokens.external).reason, 'unresolved-member-owner');
   assert.equal(context.resolveMember(tokens.unresolvedSignature).status, 'unknown');
 });

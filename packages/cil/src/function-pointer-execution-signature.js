@@ -1,6 +1,7 @@
 import {CilError} from './binary.js';
-import {decodeSignature} from './metadata/signatures.js';
+import {readExecutionSignatureAst} from './metadata/execution-signature.js';
 import {formatSignature} from './metadata/signature-format.js';
+import {instancePointerLocalSignature} from './instance-pointer-local.js';
 
 function unsupported(signature, message) {
   return Object.assign(new CilError(message), {code: signature.callingConvention ? 'IL_UNMANAGED' : 'IL_CALLI',
@@ -24,17 +25,22 @@ function validatePointers(node) {
 
 /** Execution-only projection; never changes the public inspection formatter or decoded metadata. */
 export function functionPointerExecutionSignature(inspector, token) {
-  const metadata = inspector.metadata, row = metadata.row(token), table = token >>> 24;
-  const column = table === 6 ? 4 : table === 4 || table === 10 ? 2 : table === 43 ? 1 : 0;
-  if (![4, 6, 10, 17, 43].includes(table)) throw new CilError('Token has no executable member signature');
-  const signature = decodeSignature(metadata.blob(row[column]));
-  validatePointers(signature);
+  const metadata = inspector.metadata;
+  const signature = readExecutionSignatureAst(metadata, token);
+  if (token >>> 24 === 17 && signature.kind === 'method' && signature.explicitThis) {
+    throw unsupported(signature, 'ExplicitThis calli signatures are not implemented');
+  }
+  if (signature.kind === 'locals') {
+    for (const type of signature.types) {
+      if (!instancePointerLocalSignature(metadata, type)) validatePointers(type);
+    }
+  } else validatePointers(signature);
   return formatSignature(signature, metadata);
 }
 
-export function requireStaticCalli(signature) {
+export function requireManagedCalli(signature) {
   if (signature.kind !== 'method') throw new CilError('calli requires a managed StandAloneSig');
-  if (signature.callingConvention || !signature.isStatic || signature.genericArity || signature.sentinel !== undefined) {
-    throw unsupported(signature, 'calli supports only managed static nongeneric signatures');
+  if (signature.callingConvention || signature.genericArity || signature.sentinel !== undefined) {
+    throw unsupported(signature, 'calli supports only default managed nongeneric signatures');
   }
 }

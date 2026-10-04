@@ -1,0 +1,1 @@
+[{"name":"Empty","accepted":true},{"name":"Balanced","accepted":true},{"name":"Underflow","accepted":false},{"name":"Overflow","accepted":false},{"name":"Join","accepted":false},{"name":"Diamond","accepted":true},{"name":"Loop","accepted":true},{"name":"Switch","accepted":true},{"name":"Catch","accepted":true},{"name":"Finally","accepted":true}]

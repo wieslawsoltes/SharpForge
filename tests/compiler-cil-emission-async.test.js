@@ -107,14 +107,15 @@ test('A02-T30 MoveNext runs the body in a try whose catch hands the exception to
   assert.equal(inspector.metadata.typeName(region.catchType), 'System.Exception');
   assert.equal(region.start, 0, 'the region starts with the dispatch on the state');
   assert.deepEqual(text.slice(0, 3), ['ldarg.0', `ldfld ${machine}::<>1__state`, 'switch']);
+  // Slot 0 is the local that caches the state (unused here: no finally block has a guard).
   assert.deepEqual(text.slice(at(region.target), at(region.handlerEnd)), [
-    'stloc.0',
+    'stloc.1',
     'ldarg.0',
     'ldc.i4.s',
     `stfld ${machine}::<>1__state`,
     'ldarg.0',
     `ldflda ${machine}::<>t__builder`,
-    'ldloc.0',
+    'ldloc.1',
     `call ${BUILDER}::SetException`,
     'leave.s',
   ]);
@@ -124,7 +125,7 @@ test('A02-T30 MoveNext runs the body in a try whose catch hands the exception to
     `stfld ${machine}::<>1__state`,
     'ldarg.0',
     `ldflda ${machine}::<>t__builder`,
-    'ldloc.1',
+    'ldloc.2',
     `call ${BUILDER}::SetResult`,
     'ret',
   ]);
@@ -138,7 +139,7 @@ test('A02-T30 an await suspends through the builder and resumes from the awaiter
     start = text.indexOf('callvirt System.Threading.Tasks.Task`1<int>::GetAwaiter');
   assert.deepEqual(text.slice(start, start + 23), [
     'callvirt System.Threading.Tasks.Task`1<int>::GetAwaiter',
-    'stloc.3',
+    'stloc.s',
     'ldloca.s',
     `call ${AWAITER}::get_IsCompleted`,
     'brtrue.s',
@@ -146,7 +147,7 @@ test('A02-T30 an await suspends through the builder and resumes from the awaiter
     'ldc.i4.0',
     `stfld ${machine}::<>1__state`,
     'ldarg.0',
-    'ldloc.3',
+    'ldloc.s',
     `stfld ${machine}::<>u__1`,
     'ldarg.0',
     'stloc.s',
@@ -163,7 +164,7 @@ test('A02-T30 an await suspends through the builder and resumes from the awaiter
   ]);
   assert.deepEqual(text.slice(start + 23, start + 30), [
     `ldfld ${machine}::<>u__1`,
-    'stloc.3',
+    'stloc.s',
     'ldarg.0',
     `ldflda ${machine}::<>u__1`,
     `initobj ${AWAITER}`,
@@ -278,8 +279,11 @@ test('A02-T30 async constructs the emitter has no shape for yet are SF2200', () 
   assert.match(
     refused(`using System.Threading.Tasks;
       struct Counter { public int Count; public void Add(int amount) { Count += amount; } }
+      class Holder { public Counter Inner; }
       class C {
-        static async Task Run(Task<int> source) { Counter counter = new Counter(); counter.Add(await source); }
+        // The address of a struct local is taken again after the await (tests/compiler-await-struct-receiver.test.js);
+        // the address of a field of another object is not saved yet.
+        static async Task Run(Task<int> source) { Holder holder = new Holder(); holder.Inner.Add(await source); }
         static void Main() { }
       }`)[0],
     /^SF2200 .*await while a value the emitter cannot save is on the evaluation stack/,

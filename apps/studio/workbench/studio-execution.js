@@ -1,4 +1,5 @@
 import { StudioReveals } from './studio-reveals.js';
+import { compilerSourceError } from './compiler-source-policy.js';
 
 /** Coordinates Studio actions without changing the selected project for background work. */
 export class StudioExecution {
@@ -13,6 +14,7 @@ export class StudioExecution {
     const state = this.state();
     if (state.nativeMode) return null;
     const service = this.projects.serviceFor(state.active);
+    if (!this.compilerAvailable(service.id, true)) return null;
     try {
       const result = await service.analyze();
       if (result && this.services.builds.activeId === service.id) this.ui.applyAnalysis(result, service.id);
@@ -25,16 +27,13 @@ export class StudioExecution {
 
   async build(silent = false, { revealIntent } = {}) {
     const state = this.state();
-    if (silent && [...this.services.documents.models.values()].some(model => model.buffer.length > 8 * 1024 * 1024)) {
-      this.ui.status('Large file mode — automatic build disabled');
-      return null;
-    }
     if (state.nativeMode) {
       if (silent) return null;
       this.services.reveal.request('msbuild', revealIntent ?? this.reveals.begin());
       return this.ui.nativeBuild().run('build');
     }
     const service = this.projects.serviceFor(null);
+    if (!this.compilerAvailable(service.id, silent)) return null;
     if (!this.projects.sourceUris(service.id).length) {
       this.ui.status('Ready — no source to build');
       return null;
@@ -63,6 +62,14 @@ export class StudioExecution {
       if (error.code !== 'BUILD_STALE' && error.name !== 'AbortError') this.ui.error(error);
       return null;
     }
+  }
+
+  compilerAvailable(projectId, silent) {
+    const availability = this.projects.sourceAvailability?.(projectId);
+    if (availability?.available !== false) return true;
+    this.ui.status?.(`${availability.code}: ${availability.reason}`);
+    if (!silent) this.ui.error(compilerSourceError(availability));
+    return false;
   }
 
   async launch(debug = true, options = {}) {

@@ -13,16 +13,20 @@
  */
 import { MethodAttributes } from '@sharpforge/cil';
 import { Accessibility, SymbolKind, TypeKind } from '../../symbols/types.js';
-import { MethodSymbol, ParameterSymbol, PropertySymbol, MethodKind, DeclarationModifiers } from '../../symbols/members.js';
+import { MethodSymbol, ParameterSymbol, MethodKind, DeclarationModifiers } from '../../symbols/members.js';
 import { baseRecordOf, isInheritedPositional } from '../../symbols/synthesized/records.js';
+import { RecordContractBody, recordContractMembers } from '../../symbols/synthesized/record-contract-members.js';
 import { plannedMethod } from './member-plan.js';
+import { memberOn } from './covariant-overrides.js';
+
+export { memberOn };
 
 export { baseRecordOf, isInheritedPositional };
 
 /** The kinds of record members synthesized here; the ones the symbol table declares are `RecordMember` (symbols/synthesized/records.js). */
 export const RecordBody = Object.freeze({
-  PrintMembers: 'PrintMembers',
-  EqualityContract: 'get_EqualityContract',
+  PrintMembers: RecordContractBody.PrintMembers,
+  EqualityContract: RecordContractBody.EqualityContract,
   Clone: '<Clone>$',
   EqualsBase: 'Equals(base)',
 });
@@ -35,12 +39,6 @@ function isTypedEquals(method, type) {
   return (parameterType.originalDefinition ?? parameterType) === type;
 }
 const isInstance = member => !member.isStatic && !member.isConst;
-
-/** A member of a constructed type that stands for `symbol` of its definition: what a call on that type names. */
-export function memberOn(owner, symbol) {
-  if ((owner.originalDefinition ?? owner) === owner) return symbol;
-  return Object.create(symbol, { containingType: { value: owner }, originalDefinition: { value: symbol } });
-}
 
 /** The instance fields of a record in declaration order, backing fields of auto-properties included. */
 export function storedFields(type) {
@@ -85,10 +83,7 @@ export class RecordPlan {
       isClass = type.typeKind === TypeKind.Class,
       base = baseRecordOf(type),
       inherited = base ? this.membersOf(base) : null,
-      synthesized = [],
-      // A virtual member is an override in a derived record, virtual in an unsealed root and plain in a sealed root.
-      slot = base ? DeclarationModifiers.Override : isClass && !type.isSealed ? DeclarationModifiers.Virtual : 0,
-      hidden = isClass && (base || !type.isSealed) ? Accessibility.Protected : Accessibility.Private;
+      synthesized = [];
     const method = (kind, init) => {
       const symbol = new MethodSymbol({ methodKind: MethodKind.Ordinary, containingSymbol: type, isImplicitlyDeclared: true, ...init });
       symbol.recordMember = kind;
@@ -97,19 +92,13 @@ export class RecordPlan {
       return symbol;
     };
     const declared = (name, count) => type.getMembers(name).find(member => isMethod(member) && member.parameters.length === count) ?? null;
-    const builder = core.bridge.coreType('System_Text_StringBuilder');
-    const printMembers =
-      declared('PrintMembers', 1) ??
-      method(RecordBody.PrintMembers, {
-        name: 'PrintMembers',
-        returnType: core.bool,
-        parameters: [new ParameterSymbol({ name: 'builder', type: builder })],
-        declaredAccessibility: hidden,
-        modifiers: slot,
-      });
+    const contract = recordContractMembers(type, core);
+    if (contract.printMembers) synthesized.push(contract.printMembers);
+    const printMembers = declared('PrintMembers', 1) ?? contract.printMembers;
     if (!isClass) return { printMembers, equalityContract: null, clone: null, equalsBase: null, synthesized };
     const declaredContract = type.getMembers('EqualityContract').find(member => member.kind === SymbolKind.Property),
-      equalityContract = declaredContract ?? this.contract(type, method, slot, hidden);
+      equalityContract = declaredContract ?? contract.equalityContract;
+    if (!declaredContract) synthesized.push(contract.equalityContract.getMethod);
     // A derived record's clone returns the derived type: a covariant override of the base's clone (C# 9), which
     // metadata states with a new slot and a MethodImpl row.
     const self = type.typeParameters?.length ? type.construct(type.typeParameters) : type,
@@ -133,29 +122,6 @@ export class RecordPlan {
         })
       : null;
     return { printMembers, equalityContract, clone, equalsBase, synthesized };
-  }
-  /** `EqualityContract`: the property and its getter. */
-  contract(type, method, slot, accessibility) {
-    const getter = method(RecordBody.EqualityContract, {
-      name: 'get_EqualityContract',
-      methodKind: MethodKind.PropertyGet,
-      returnType: this.core.type,
-      parameters: [],
-      declaredAccessibility: accessibility,
-      modifiers: slot,
-    });
-    const property = new PropertySymbol({
-      name: 'EqualityContract',
-      type: this.core.type,
-      getMethod: getter,
-      containingSymbol: type,
-      declaredAccessibility: accessibility,
-      modifiers: slot,
-      isImplicitlyDeclared: true,
-    });
-    getter.associatedSymbol = property;
-    property.isSynthesizedRecordMember = true;
-    return property;
   }
   /** Adds the synthesized record members of a source type to its member plan. */
   extend(type, plan) {

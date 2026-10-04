@@ -12,6 +12,7 @@ import {taskPlan, loadTasks} from '../scripts/run.js';
 import {loadBuildContributions, concatenateStyles} from '../scripts/build-contributions.js';
 import {discoverPackages, validatePacked} from '../scripts/verify-packages.js';
 import {serialTestArgs} from '../scripts/planning/run-tests.js';
+import {globPattern} from '../scripts/planning/lib/paths.js';
 const root=repositoryRoot;
 const json=async path=>JSON.parse(await readFile(path,'utf8'));
 async function write(root,path,value){const target=join(root,path);await mkdir(resolve(target,'..'),{recursive:true});await writeFile(target,typeof value==='string'?value:JSON.stringify(value));}
@@ -28,7 +29,12 @@ test('A00 T06 strict schema validates all thirty manifests and rejects unknown f
 test('A00 T06 discovery assigns files once and includes nested contract/conformance suites',async()=>{
  const manifests=await discoverManifests(),files=manifests.flatMap(m=>[...m.nodeFiles,...m.browserScripts]);
  assert.equal(new Set(files).size,files.length);assert(files.includes('planning/contracts/tests/value-abi.test.js'));assert(files.includes('tests/conformance/qualification.test.js'));assert(files.includes('tests/conformance/browser/test_launch.py'));
- const editor=selectManifests(manifests,'A20');assert.equal(editor.length,1);assert(editor[0].nodeFiles.every(path=>path.includes('editor')));assert.throws(()=>selectManifests(manifests,'A99'),/Unknown area/);
+ const editor=selectManifests(manifests,'A20'),declared=await json(join(root,'tests/manifests/A20.json'));
+ assert.deepEqual(editor.map(manifest=>manifest.area),['A20']);
+ assert.deepEqual(editor[0].nodeGlobs,declared.nodeGlobs);assert.deepEqual(editor[0].browserScripts,declared.browserScripts);
+ const patterns=declared.nodeGlobs.map(globPattern);
+ assert.deepEqual([...editor[0].nodeFiles].sort(),files.filter(path=>patterns.some(pattern=>pattern.test(path))).sort());
+ assert.throws(()=>selectManifests(manifests,'A99'),/Unknown area/);
 });
 test('A00 T06 missing, duplicate, stale, unsafe and mismatched manifest entries fail with offending paths',async t=>{
  const dir=await fixture(t);await write(dir,'tests/editor.test.js','');
@@ -97,11 +103,15 @@ test('A00 T06 new tasks need no root script edit and reject duplicate tasks, cyc
  await write(dir,'scripts/tasks/new.json',{schemaVersion:1,tasks:{bad:{steps:[{command:42,args:['invalid']}]}}});await assert.rejects(loadTasks(dir),/Invalid step/);
  await write(dir,'scripts/tasks/new.json',{schemaVersion:1,tasks:{bad:{steps:[{task:'missing'}]}}});await assert.rejects(loadTasks(dir),/Unknown task missing/);
 });
-test('A00 T06 contributed stylesheet bytes and worker order retain the original build exactly',async()=>{
+test('A00 T06 contributions retain reviewed CSS bytes and historical worker ordering',async()=>{
  const baseline=await json(join(root,'tests/manifests/fixtures/build-baseline.json')),contributions=await loadBuildContributions();
- assert.deepEqual(contributions.styles.map(item=>item.source),baseline.styles);assert.deepEqual(contributions.workers.map(item=>item.entry),baseline.workers);
+ // Keep the historical migration snapshot unchanged; approved stylesheet additions are tracked by T20's reviewed baseline.
+ const reviewed=await json(join(root,'planning/contracts/fixtures/css/studio-baseline.json'));
+ assert.equal(reviewed.schemaVersion,1);assert.match(reviewed.sha256,/^[a-f\d]{64}$/);
+ assert.deepEqual(contributions.workers.map(item=>item.entry).filter(entry=>baseline.workers.includes(entry)),baseline.workers);
  const css=await concatenateStyles(contributions.styles,root);
- assert.equal(createHash('sha256').update(css).digest('hex'),baseline.concatenationSha256);assert(contributions.assets.some(item=>item.source==='packages/compiler'));
+ assert.equal(createHash('sha256').update(css).digest('hex'),reviewed.sha256);assert.equal(Buffer.byteLength(css,'utf8'),reviewed.bytes);
+ assert(contributions.assets.some(item=>item.source==='packages/compiler'));
 });
 test('A00 T06 build contributions discover new styles/assets and reject duplicate and escaping paths',async t=>{
  const dir=await fixture(t),base={schemaVersion:1,styles:[],workers:[],assets:[]};

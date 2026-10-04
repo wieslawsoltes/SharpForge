@@ -6,7 +6,7 @@ on:
       stage:
         description: Completed scope to qualify serially
         type: choice
-        options: [all, node, browser, performance]
+        options: [all, node, browser, performance, standalone]
         default: all
       runner:
         description: Platform for this explicit qualification run
@@ -103,6 +103,7 @@ jobs:
               'triggerRef': os.environ['QUALIFICATION_TRIGGER_REF'],
               'triggerNonce': os.environ['QUALIFICATION_TRIGGER_NONCE'] or None,
               'captureOnly': os.environ['QUALIFICATION_CAPTURE_ONLY'] == 'true',
+              'baselineProfile': os.environ['QUALIFICATION_BASELINE_PROFILE'] or None,
               'workflowRunId': os.environ['GITHUB_RUN_ID'],
               'stage': os.environ['QUALIFICATION_STAGE'],
               'engine': os.environ['SHARPFORGE_BROWSER_ENGINE'],

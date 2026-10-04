@@ -142,10 +142,14 @@ test('A02-T30 an anonymous method without a parameter list takes the parameters 
   assert.deepEqual(inspector.getMethod(method.token).signature.parameters, ['int', 'string']);
 });
 
-test('A02-T30 closures the emitter cannot declare yet are refused, not miscompiled', () => {
-  assert.match(
-    refused(`using System;
-      class C { static void Main() { Func<T> Later<T>(T value) { return () => value; } Console.WriteLine(Later(1)()); } }`)[0],
-    /^SF2200 .*lambdas and local functions inside a generic local function/,
+test('A02-T30 a lambda inside a generic local function is declared, not refused', () => {
+  // This asserted SF2200 while such functions could not be declared (tests/compiler-generic-local-function-closures.test.js).
+  const source = `using System;
+      class C { static void Main() { Func<T> Later<T>(T value) { return () => value; } Console.WriteLine(Later(1)()); } }`;
+  const result = compileToAssembly(source, { name: 'Sample' });
+  assert.deepEqual(
+    result.diagnostics.filter(entry => entry.severity === 'error'),
+    [],
   );
+  assert.ok(result.assembly);
 });

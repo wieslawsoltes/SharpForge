@@ -28,6 +28,12 @@ Each target has one `first` observation, two retained warmups and fifteen measur
 display cannot falsely complete a new visit. `first` means the first visit to that target in this loaded workspace; it does
 **not** mean a cold compiler or uncached process. Workspace loading can already have built the source analysis. Separate
 checks cover neutral whitespace clearing and rapid caret movement ending at the latest source target.
+The setup proof records all four workspace files through `sharpforge.getWorkspace()`, the three C# documents through
+`DocumentService.list()`, and the registered project through `WorkbenchShell.projects()`. The project XML is a workspace
+record, not a source editor document. Exact paths, contents and project memberships must match the fixture; the captured
+caller source version must remain consistent through every visit and boundary observation.
+The aggregate validator inspects both raw boundary observations, including their text, selection, caller revision, caret
+offset and focus events; the two summary flags alone are insufficient. Boundary observations also retain the 300 ms limit.
 
 #1497 does not specify a number of milliseconds. This suite uses an explicit **16 ms main-thread threshold**, derived from
 [CONTRIBUTING.md](../CONTRIBUTING.md), section 4's responsiveness rule. This is an operational interpretation of “frame budget,”
@@ -58,6 +64,7 @@ Run one engine/job at a time through the repository limiter:
 ```sh
 SHARPFORGE_BROWSER_ENGINE=chromium node scripts/limited.js python tests/browser_editor_budgets_test.py
 node scripts/limited.js node --test tests/a19-a20-browser-budget-trace.test.js
+node scripts/limited.js node --test tests/a19-code-definition-budget-proof.test.js
 node tests/editor-budget-trace.mjs artifacts/results/editor-ui-budgets.json
 ```
 

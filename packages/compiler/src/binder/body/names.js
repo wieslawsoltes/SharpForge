@@ -8,13 +8,14 @@ import { isKnownMissingMember } from '../../symbols/predefined-member-names.js';
 import { spanElementType } from '../../conversions/span.js';
 import { ConstantValue } from '../../constants/constant-value.js';
 import { extensionScopes, isValidReceiverConversion, couldTakeReceiver } from '../../overload/extension-methods.js';
-import { findConstruction } from '../../symbols/substitution.js';
+import { findConstruction, memberTypeOf } from '../../symbols/substitution.js';
 import { lookupMembers } from '../inheritance.js';
 import { tupleElement, tupleElementProblem } from '../tuples.js';
 import { checkConstructedType } from '../constraints.js';
 import { staticMembersOfTypeParameter, staticVirtualAccess } from '../interface-members.js';
 import { accessorNamed, isOperatorMethod } from '../special-methods.js';
 import { staticImportsNamed } from '../csharp6.js';
+import { isAbstractBaseAccess } from '../../symbols/base-implementation.js';
 
 const unknown = ErrorTypeSymbol.unknown;
 /** A member that can be invoked: a method or event, or a field or property of a delegate type or `dynamic`. */
@@ -24,6 +25,8 @@ const isSource = symbol => {
   for (let s = symbol?.originalDefinition ?? symbol; s; s = s.containingSymbol) if (s.isSource || s.containingAssembly || s.isAnonymousType) return true;
   return false;
 };
+
+const nativeIntegerKeywords = new Set(['nint', 'nuint']);
 
 /** Class mixin: Simple names and member access: locals, parameters, members of enclosing types, types, namespaces, */
 export const NameBinding = Base =>
@@ -91,6 +94,10 @@ export const NameBinding = Base =>
         }
         if (members.length)
           return this.memberResult(members, syntax, null, members[0].containingType, name, typeArguments, options, false) ?? this.bad(syntax);
+      }
+      // `nint` and `nuint` are contextual keywords: types wherever nothing else has the name (`nint.Size`).
+      if (!symbol && !arity && nativeIntegerKeywords.has(name)) {
+        return this.node('TypeExpression', syntax, null, { referencedType: this.bindType(syntax).type });
       }
       if (!symbol && !arity) {
         const builtin = this.d.executionBuiltin?.(name);
@@ -214,6 +221,9 @@ export const NameBinding = Base =>
           if (!r && options.nameofOperand) {
             if (options.memberAccessLeft) this.d.gate(this.c.uri, syntax, 'InstanceMemberInNameof');
           } else if (!r) {
+            // `Color Color` where there is no instance (a static member, a field initializer): `Color.Red` names the type.
+            const asType = options.memberAccessLeft ? this.colorColorType(syntax, first) : null;
+            if (asType) return asType;
             used();
             this.report(syntax, this.c.isFieldInitializer && !this.c.isStatic && !outer ? DiagnosticId.CS0236 : DiagnosticId.CS0120, [first.toDisplayString()]);
             return this.bad(syntax);
@@ -239,6 +249,7 @@ export const NameBinding = Base =>
         }
         case SymbolKind.Property: {
           const n = this.node('PropertyAccess', syntax, first.type, { property: first, receiver: r });
+          if (r?.kind === 'Base' && isAbstractBaseAccess(first, r.type)) this.report(syntax, DiagnosticId.CS0205, [first.toDisplayString()]);
           if (virtualAccess?.constrainedTo) n.constrainedTo = virtualAccess.constrainedTo;
           if (first.type?.isErrorType?.()) n.hasErrors = true;
           return n;
@@ -247,6 +258,13 @@ export const NameBinding = Base =>
           return this.node('EventAccess', syntax, first.type, { event: first, receiver: r });
       }
       return this.lenient(syntax);
+    }
+    /** The type an identifier names when it binds to an instance member whose type has the member's name, or null. */
+    colorColorType(syntax, member) {
+      if (syntax.kind !== 'IdentifierName' || member.type?.name !== syntax.identifier.valueText) return null;
+      const found = this.d.typeBinder.lookup(member.type.name, 0, this.typeScope);
+      if (!found || found !== (member.type.originalDefinition ?? member.type)) return null;
+      return this.node('TypeExpression', syntax, null, { referencedType: member.type });
     }
     construct(definition, typeArguments, node) {
       if (definition.arity !== typeArguments.length) {
@@ -318,6 +336,9 @@ export const NameBinding = Base =>
             this.report(nameSyntax, DiagnosticId.CS0122, [found.inaccessible[0].toDisplayString()]);
             return this.bad(syntax);
           }
+          // A nested type of a constructed type (`Outer<string>.Cache<int>`) is not among the members of the construction.
+          const nested = memberTypeOf(type, name, typeArguments ?? []);
+          if (nested) return this.node('TypeExpression', syntax, null, { referencedType: nested });
           if (this.reportAccessorByName(type, name, nameSyntax)) return this.bad(syntax);
           const extension = this.staticExtensionMember(left, type, name, syntax, typeArguments, options);
           if (extension) return extension;
@@ -425,11 +446,18 @@ export const NameBinding = Base =>
     }
     /** The extension methods named `name` in scope, innermost namespace first. */
     extensionScopesNamed(name) {
-      const chain = this.typeScope.namespaceChain.map(level => ({
+      return extensionScopes(this.extensionChain(), name);
+    }
+    /**
+     * The namespace levels a call site looks for extension methods in, innermost first: each with its using
+     * directives and the `file` types the calling file declares at that level (they are not members of the namespace).
+     */
+    extensionChain() {
+      return this.typeScope.namespaceChain.map(level => ({
         namespace: level.namespace,
         usings: level.scope.usings ? this.d.typeBinder.usingsOf(level.scope) : null,
+        fileTypes: level.scope.fileTypes ? [...level.scope.fileTypes.values()] : null,
       }));
-      return extensionScopes(chain, name);
     }
     /** The method group of the extension methods named `name` on the receiver `left`, or null when none is in scope. */
     extensionGroup(left, type, name, { nameSyntax, syntax, typeArguments, scopes = this.extensionScopesNamed(name) }) {

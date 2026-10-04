@@ -1,21 +1,7 @@
-import { CilError } from '../../binary.js';
-import { decodeCoded } from '../../metadata/indices.js';
+import { hierarchyIndex, checkedToken } from './tokens.js';
 import { known, unknown, rejectTypeSystem } from './results.js';
-
-function hierarchyIndex(kind, value) {
-  try { return decodeCoded(kind, value); } catch (error) {
-    if (!(error instanceof CilError)) throw error;
-    rejectTypeSystem('CILVT0001', error.message);
-  }
-}
-
-function checkedToken(token, counts, tables = [1, 2, 27]) {
-  if (!Number.isInteger(token) || token < 0 || token > 0xffffffff) rejectTypeSystem('CILVT0001', 'type token');
-  const table = token >>> 24;
-  const row = token & 0xffffff;
-  if (!tables.includes(table) || !row || row > (counts[table] ?? 0)) rejectTypeSystem('CILVT0001', 'type token extent');
-  return token;
-}
+import { localTypeReferences } from './local-references.js';
+import { snapshotTypeCategories } from './categories.js';
 
 function checkCycles(records, budget) {
   const colors = new Map();
@@ -39,14 +25,14 @@ function checkCycles(records, budget) {
 }
 
 /** Own only bounded hierarchy facts; never retain inspector descriptors, PE bytes or signature ASTs. */
-export function snapshotTypes(inspector, budget) {
+export function snapshotTypes(inspector, budget, coreTypes) {
   budget.check();
   const rows = inspector?.metadata?.rows;
   if (!rows) rejectTypeSystem('CILVT0001', 'AssemblyInspector metadata is required');
   const counts = Object.fromEntries([1, 2, 27].map(table => [table, rows[table]?.length ?? 0]));
   const interfaces = rows[9] ?? [];
   const parameters = rows[42] ?? [];
-  if (counts[2] > budget.maxTypes || interfaces.length + counts[2] > budget.maxEdges ||
+  if (counts[2] > budget.maxTypes || counts[1] > budget.maxTypeReferences || interfaces.length + counts[2] > budget.maxEdges ||
       parameters.length > budget.maxEdges) rejectTypeSystem('CILVT0002', 'metadata rows');
   const records = new Map();
   const identities = new Map();
@@ -56,8 +42,15 @@ export function snapshotTypes(inspector, budget) {
     const token = 0x02000001 + index;
     const baseToken = hierarchyIndex('TypeDefOrRef', row[3]);
     if (baseToken) checkedToken(baseToken, counts);
-    const type = Object.freeze({ kind: 'definition', token, isInterface: !!(row[0] & 0x20) });
+    const flags = row[0];
+    if (!Number.isInteger(flags) || flags < 0 || flags > 0xffffffff) rejectTypeSystem('CILVT0001', 'type flags');
+    const type = Object.freeze({ kind: 'definition', token, isInterface: !!(flags & 0x20), flags });
     const record = { type, result: known(type), baseToken, interfaces: [], edges: baseToken ? [baseToken] : [], generic: false };
+    if (coreTypes !== undefined) {
+      record.category = null;
+      record.categoryDepth = 0;
+      record.closedExternalBase = false;
+    }
     records.set(token, record);
     identities.set(type, record);
   }
@@ -65,7 +58,6 @@ export function snapshotTypes(inspector, budget) {
     budget.check();
     const owner = records.get(checkedToken(0x02000000 + row[0], counts, [2]));
     const token = checkedToken(hierarchyIndex('TypeDefOrRef', row[1]), counts);
-    if (records.has(token) && !records.get(token).type.isInterface) rejectTypeSystem('CILVT0001', 'InterfaceImpl target');
     owner.interfaces.push(token);
     owner.edges.push(token);
   }
@@ -74,20 +66,37 @@ export function snapshotTypes(inspector, budget) {
     const owner = hierarchyIndex('TypeOrMethodDef', row[2]);
     if (owner >>> 24 === 2) records.get(checkedToken(owner, counts, [2])).generic = true;
   }
+  const { aliases, lexical } = localTypeReferences(inspector.metadata, records, budget);
   for (const record of records.values()) {
+    budget.check();
+    record.baseToken = aliases?.get(record.baseToken) ?? record.baseToken;
+    for (let index = 0; index < record.interfaces.length; index++) {
+      budget.check();
+      const token = aliases?.get(record.interfaces[index]) ?? record.interfaces[index];
+      record.interfaces[index] = token;
+      if (records.has(token) && !records.get(token).type.isInterface) rejectTypeSystem('CILVT0001', 'InterfaceImpl target');
+    }
+    for (let index = 0; index < record.edges.length; index++) {
+      budget.check();
+      record.edges[index] = aliases?.get(record.edges[index]) ?? record.edges[index];
+    }
     const base = records.get(record.baseToken);
     if (base?.type.isInterface) rejectTypeSystem('CILVT0001', 'class base is an interface');
     Object.freeze(record.interfaces);
     Object.freeze(record.edges);
-    Object.freeze(record);
+    if (coreTypes === undefined) Object.freeze(record);
   }
   checkCycles(records, budget);
-  return { records, identities, resolve(token) {
+  if (coreTypes !== undefined) {
+    snapshotTypeCategories(records, coreTypes, budget);
+    for (const record of records.values()) { budget.check(); Object.freeze(record); }
+  }
+  return { lexical, snapshot: { records, identities, resolve(token) {
     budget.check();
     checkedToken(token, counts);
-    const record = records.get(token);
+    const record = records.get(aliases?.get(token) ?? token);
     if (record?.generic) return unknown('generic-definition', token);
     if (record) return record.result;
     return unknown(token >>> 24 === 1 ? 'unresolved-type-reference' : 'type-specification', token);
-  } };
+  } } };
 }

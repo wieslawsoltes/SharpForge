@@ -19,6 +19,7 @@ import { walk } from '../../bound/semantic-walker.js';
 import { TypedIlBuilder } from './il-stack-types.js';
 import { AsyncBuilderMembers } from './async-builders.js';
 import { awaiterOf } from './awaitables.js';
+import { restorePendingOperands, savePendingOperands } from './pending-operands.js';
 import { isReference, isVoid } from './type-facts.js';
 
 const NOT_STARTED = -1;
@@ -26,6 +27,19 @@ const FINISHED = -2;
 const nestedFunctions = new Set(['Lambda', 'LocalFunction']);
 const variableTargets = new Set(['Local', 'Parameter']);
 const awaitPresence = new WeakMap();
+
+/** A target whose location can be found again without repeating a side effect: a variable, or a field reached from one, from `this` or statically. */
+function isRepeatableTarget(node) {
+  if (variableTargets.has(node.kind)) return true;
+  if (node.kind !== 'FieldAccess') return false;
+  const receiver = node.receiver;
+  return !receiver || receiver.kind === 'This' || isRepeatableTarget(receiver);
+}
+
+/** `variable.Field` (or deeper) of a struct variable: writing it needs the variable's address, which cannot be held across an await. */
+function isFieldOfStructVariable(node) {
+  return node.kind === 'FieldAccess' && !!node.receiver && node.receiver.type?.isValueType === true && isRepeatableTarget(node.receiver);
+}
 
 /** True when evaluating a node can suspend the method (an await in a nested function is that function's own). */
 export function containsAwait(node) {
@@ -178,22 +192,14 @@ export const AsyncEmission = Base =>
       }
       return field;
     }
-    /** Empties the evaluation stack into temporaries; returns their slots, bottom first. */
+    /** Empties the evaluation stack before a suspension; returns what `restorePending` takes. */
     savePending(syntax) {
-      const types = this.il.pendingTypes;
-      if (types.includes(null)) return this.unsupported('await while a value the emitter cannot save is on the evaluation stack', syntax);
-      const slots = types.map(type => this.temp(type));
-      for (let index = slots.length - 1; index >= 0; index--) this.il.emit('stloc', slots[index]);
-      return slots;
+      const saved = savePendingOperands(this);
+      return saved ?? this.unsupported('await while a value the emitter cannot save is on the evaluation stack', syntax);
     }
     /** Pushes the saved values back, below the result of the await when it has one. */
-    restorePending(slots, resultType) {
-      if (!slots.length) return;
-      const il = this.il,
-        result = isVoid(resultType) ? null : this.temp(resultType);
-      if (result !== null) il.emit('stloc', result);
-      for (const slot of slots) il.emit('ldloc', slot);
-      if (result !== null) il.emit('ldloc', result);
+    restorePending(saved, resultType) {
+      restorePendingOperands(this, saved, isVoid(resultType) ? null : resultType);
     }
     exprAwait(node) {
       if (!this.isAsyncBody) return this.unsupported('await outside an async method', node.syntax);
@@ -239,13 +245,39 @@ export const AsyncEmission = Base =>
     }
     /** An assignment to a variable whose value awaits: the value first, then the store (the variable may be a field). */
     exprAssignment(node, isUsed) {
-      if (!this.isAsyncBody || !variableTargets.has(node.left.kind) || !containsAwait(node.right)) return super.exprAssignment(node, isUsed);
+      const valueFirst = variableTargets.has(node.left.kind) || isFieldOfStructVariable(node.left);
+      if (!this.isAsyncBody || !valueFirst || !containsAwait(node.right)) return super.exprAssignment(node, isUsed);
       const value = this.temp(node.right.type ?? node.left.type),
         location = this.location(node.left);
       this.expression(node.right);
       this.il.emit('stloc', value);
       location.beginStore();
       this.il.emit('ldloc', value);
+      return this.finishStore(location, isUsed);
+    }
+    /**
+     * `target op= ... await ...`: the old value is read first (C# evaluates the target before the operand), kept in
+     * a temporary across the suspension, and the result is stored into the target, which is located again. That is
+     * only right for a target whose location has no side effect; any other keeps the general path.
+     */
+    exprCompoundAssignment(node, isUsed) {
+      if (!this.isAsyncBody || !isRepeatableTarget(node.left) || !containsAwait(node.operation)) return super.exprCompoundAssignment(node, isUsed);
+      const il = this.il,
+        old = this.temp(node.left.type),
+        result = this.temp(node.left.type);
+      this.location(node.left).load();
+      il.emit('stloc', old);
+      this.substitutions.set(node.left, { value: () => il.emit('ldloc', old) });
+      try {
+        this.expression(node.operation);
+      } finally {
+        this.substitutions.delete(node.left);
+      }
+      this.narrowResult(node.operation.type, node.left.type, node);
+      il.emit('stloc', result);
+      const location = this.location(node.left);
+      location.beginStore();
+      il.emit('ldloc', result);
       return this.finishStore(location, isUsed);
     }
   };

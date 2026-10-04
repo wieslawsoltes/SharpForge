@@ -1,0 +1,115 @@
+[
+  {
+    "label": "install",
+    "command": "npm",
+    "args": [
+      "ci",
+      "--ignore-scripts",
+      "--no-audit",
+      "--no-fund"
+    ],
+    "cwd": "/tmp/sharpforge-a03-nested-type-references",
+    "started": "2026-10-04T08:46:47.407Z",
+    "completed": "2026-10-04T08:46:47.836Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "baseline-install",
+    "command": "npm",
+    "args": [
+      "ci",
+      "--ignore-scripts",
+      "--no-audit",
+      "--no-fund"
+    ],
+    "cwd": "/tmp/sharpforge-a03-nested-type-reference-baseline",
+    "started": "2026-10-04T08:46:47.837Z",
+    "completed": "2026-10-04T08:46:48.051Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "baseline-red",
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "--test",
+      "--test-concurrency=1",
+      "--test-name-pattern=nested local TypeRefs share",
+      "tests/a03-07-nested-type-references.test.js"
+    ],
+    "cwd": "/tmp/sharpforge-a03-nested-type-reference-baseline",
+    "started": "2026-10-04T08:46:48.137Z",
+    "completed": "2026-10-04T08:46:48.343Z",
+    "exitCode": 1,
+    "signal": null
+  },
+  {
+    "label": "baseline-local-performance",
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "--expose-gc",
+      "packages/cil/tools/benchmark-nested-type-references.mjs",
+      "/tmp/a03-nested-type-references-validation/baseline-local-performance.json"
+    ],
+    "cwd": "/tmp/sharpforge-a03-nested-type-reference-baseline",
+    "started": "2026-10-04T08:46:48.343Z",
+    "completed": "2026-10-04T08:46:48.601Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "baseline-existing-performance",
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "--expose-gc",
+      "packages/cil/tools/benchmark-verifier-types.mjs",
+      "/tmp/a03-nested-type-references-validation/baseline-existing-performance.json"
+    ],
+    "cwd": "/tmp/sharpforge-a03-nested-type-reference-baseline",
+    "started": "2026-10-04T08:46:48.601Z",
+    "completed": "2026-10-04T08:46:48.864Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "baseline-local-alias-performance",
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "--expose-gc",
+      "packages/cil/tools/benchmark-local-type-references.mjs",
+      "/tmp/a03-nested-type-references-validation/baseline-local-alias-performance.json"
+    ],
+    "cwd": "/tmp/sharpforge-a03-nested-type-reference-baseline",
+    "started": "2026-10-04T08:46:48.865Z",
+    "completed": "2026-10-04T08:46:49.175Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "native",
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "tests/fixtures/a03-nested-type-references/capture.mjs",
+      "/tmp/a03-nested-type-references-validation/native.json"
+    ],
+    "cwd": "/tmp/sharpforge-a03-nested-type-references",
+    "started": "2026-10-04T08:46:49.175Z",
+    "completed": "2026-10-04T08:46:50.039Z",
+    "exitCode": 0,
+    "signal": null
+  },
+  {
+    "label": "member-native",
+    "command": "/Users/wieslawsoltes/.nvm/versions/node/v24.21.0/bin/node",
+    "args": [
+      "tests/fixtures/a03-nested-type-references/member-capture.mjs",
+      "/tmp/a03-nested-type-references-validation/member-native.json"
+    ],
+    "cwd": "/tmp/sharpforge-a03-nested-type-references",
+    "started": "2026-10-04T08:46:50.039Z",
+    "completed": "2026-10-04T08:46:50.827Z",
+    "exitCode": 1,
+    "signal": null
+  }
+]

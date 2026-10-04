@@ -1,0 +1,94 @@
+import assert from 'node:assert/strict';
+import { spawnSync } from 'node:child_process';
+import { mkdirSync, readFileSync, realpathSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import path from 'node:path';
+
+const root = '/tmp/sharpforge-a03-normal-instance-fields';
+const baselineRoot = '/tmp/sharpforge-a03-fields-baseline';
+const evidence = '/tmp/a03-fields-validation';
+const candidateHead = '7d65292a310fc0b397a04b3c0828d7a0f8b29dd6';
+const baselineHead = '594085da988a5b9439625f0577b958a166121666';
+assert.match(process.version, /^v24\./);
+assert.equal(process.env.SHARPFORGE_MAX_PARALLEL_RUNS, '1');
+assert.equal(process.env.SHARPFORGE_TEST_CONCURRENCY, '1');
+assert.equal(process.env.SHARPFORGE_MAX_OLD_SPACE_MB, '1024');
+mkdirSync(evidence, { recursive: true });
+const records = [];
+const hash = value => createHash('sha256').update(value).digest('hex');
+function run(label, command, args, expected = 0, cwd = root) {
+  const log = path.join(evidence, `native-resume-${label}.log`);
+  writeFileSync(log, '', { flag: 'wx' });
+  const started = new Date().toISOString();
+  const result = spawnSync(command, args, { cwd, env: process.env, encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });
+  writeFileSync(log, result.stdout + result.stderr);
+  records.push({ label, command, args, cwd, started, completed: new Date().toISOString(),
+    exitCode: result.status, signal: result.signal, error: result.error?.message });
+  writeFileSync(path.join(evidence, 'commands-native-resume.json'), JSON.stringify(records, null, 2) + '\n');
+  process.stdout.write(`${label}: ${result.status}\n${result.stdout}${result.stderr}`);
+  assert.equal(result.status, expected, `${label}: unexpected exit`);
+  assert.equal(result.signal, null, `${label}: signal`);
+  return (result.stdout + result.stderr).trim();
+}
+const node = (label, args, expected) => run(label, process.execPath, args, expected);
+assert.equal(run('candidate-head', 'git', ['rev-parse', 'HEAD']), candidateHead);
+assert.equal(run('candidate-clean', 'git', ['status', '--porcelain']), '');
+assert.equal(run('baseline-head', 'git', ['rev-parse', 'HEAD'], 0, baselineRoot), baselineHead);
+const proof = JSON.parse(readFileSync(path.join(evidence, 'source-proof.json')));
+const sourceFiles = Object.keys(proof.sourceBefore);
+const baselineFiles = Object.keys(proof.baselineSource);
+const allInputs = Object.keys(proof.candidateInputs);
+const hashFiles = (directory, files) => Object.fromEntries(files.map(file => [file, hash(readFileSync(path.join(directory, file)))]));
+const sourceBefore = hashFiles(root, sourceFiles);
+assert.deepEqual(sourceBefore, proof.sourceBefore);
+assert.deepEqual(hashFiles(baselineRoot, baselineFiles), proof.baselineSource);
+assert.deepEqual(hashFiles(root, allInputs), proof.candidateInputs);
+assert.deepEqual(hashFiles(baselineRoot, allInputs), proof.baselineInputs);
+for (const directory of [root, baselineRoot])
+  assert.equal(realpathSync(path.join(directory, 'node_modules/@sharpforge/cil')), realpathSync(path.join(directory, 'packages/cil')));
+const firstCommands = JSON.parse(readFileSync(path.join(evidence, 'commands.json')));
+assert.equal(firstCommands.find(value => value.label === 'baseline-red').exitCode, 1);
+const red = readFileSync(path.join(evidence, 'baseline-red.log'), 'utf8');
+assert.match(red, /A normal field load with canonical core identity must be typed/);
+assert.match(red, /unknown/);
+proof.resumeDriverSHA256 = hash(readFileSync('/tmp/a03-fields-native-resume.mjs'));
+writeFileSync(path.join(evidence, 'source-proof.json'), JSON.stringify(proof, null, 2) + '\n');
+proof.baselineBenchmarkSHA256 = Object.fromEntries(['numeric', 'fields'].map(mode => {
+  const file = `baseline-${mode}-performance.json`;
+  return [file, hash(readFileSync(path.join(evidence, file)))];
+}));
+writeFileSync(path.join(evidence, 'source-proof.json'), JSON.stringify(proof, null, 2) + '\n');
+node('native', ['tests/fixtures/verifier-fields/capture.mjs', path.join(evidence, 'native.json')]);
+writeFileSync(path.join(root, 'tests/fixtures/verifier-fields/native.json'),
+  readFileSync(path.join(evidence, 'native.json')), { flag: 'wx' });
+node('focused-tests', ['--test', '--test-concurrency=1',
+  'tests/a03-field-transfers.test.js', 'tests/a03-field-ancestry.test.js', 'tests/a03-field-native.test.js',
+  'tests/a03-numeric-transfers.test.js', 'tests/a03-local-initialization.test.js',
+  'tests/a03-type-categories.test.js', 'tests/a03-type-categories-native.test.js',
+  'tests/a03-07-nested-type-references.test.js', 'tests/a03-07-local-type-references.test.js',
+  'tests/a03-07-local-type-references-native.test.js', 'tests/a03-07-type-system.test.js',
+  'tests/a03-07-type-system-native.test.js', 'tests/a03-verification-types.test.js',
+  'tests/a03-07-members.test.js', 'tests/a03-07-members-inherited.test.js', 'tests/a03-07-type-access.test.js',
+  'tests/a03-07-nested-access.test.js', 'tests/a03-07-member-access.test.js', 'tests/a03-coded-index-bounds.test.js']);
+run('browser', '/tmp/sharpforge-bcl-browser-venv/bin/python',
+  ['/tmp/a03-fields-browser.py', root, path.join(evidence, 'browser')]);
+for (const [mode, script, extra] of [['numeric', 'benchmark-numeric-verifier.mjs', []],
+  ['fields', 'benchmark-field-verifier.mjs', ['candidate']]]) {
+  node(`candidate-${mode}-performance`, [`packages/cil/tools/${script}`, path.join(evidence, `candidate-${mode}-performance.json`), ...extra]);
+}
+node('manifests', ['scripts/planning/check-test-manifests.js']);
+node('syntax', ['scripts/check.js']);
+node('static-imports', ['scripts/conformance/static/check-imports.js', '--output', path.join(evidence, 'static-imports.json')]);
+node('structure', ['scripts/quality/check-structure.js']);
+run('diff-check', 'git', ['diff', '--check']);
+assert.deepEqual(hashFiles(root, sourceFiles), sourceBefore);
+proof.sourceAfter = hashFiles(root, sourceFiles);
+assert.deepEqual(hashFiles(baselineRoot, baselineFiles), proof.baselineSource);
+assert.deepEqual(hashFiles(root, allInputs), proof.candidateInputs);
+assert.deepEqual(hashFiles(baselineRoot, allInputs), proof.baselineInputs);
+for (const [file, expected] of Object.entries(proof.baselineBenchmarkSHA256))
+  assert.equal(hash(readFileSync(path.join(evidence, file))), expected);
+proof.finalHead = run('final-head', 'git', ['rev-parse', 'HEAD']);
+assert.equal(proof.finalHead, candidateHead);
+writeFileSync(path.join(evidence, 'source-proof.json'), JSON.stringify(proof, null, 2) + '\n');
+console.log(`Validation evidence: ${evidence}`);

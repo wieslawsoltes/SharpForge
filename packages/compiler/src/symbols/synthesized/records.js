@@ -64,7 +64,8 @@ export function synthesizeRecordMembers(type, members, core) {
   const takesObject = parameters => parameters.length === 1 && parameters[0].type === core.object;
   if (!declares('Equals', takesObject)) declare(RecordMember.EqualsObject, core.bool, [parameter('obj', core.object)], override);
   if (!declares('GetHashCode', parameters => !parameters.length)) declare(RecordMember.GetHashCode, core.int, [], override);
-  if (!declares('ToString', parameters => !parameters.length)) declare(RecordMember.ToString, core.string, [], override);
+  const declaresToString = declares('ToString', parameters => !parameters.length);
+  if (!declaresToString && !inheritsSealedToString(type)) declare(RecordMember.ToString, core.string, [], override);
   for (const kind of [RecordMember.Equality, RecordMember.Inequality]) {
     const operator = [parameter('left', self), parameter('right', self)];
     declare(kind, core.bool, operator, DeclarationModifiers.Static, MethodKind.UserDefinedOperator);
@@ -75,6 +76,18 @@ export function synthesizeRecordMembers(type, members, core) {
     const outs = positional.map(p => parameter(p.name, p.typeWithAnnotations ?? p.type, RefKind.Out));
     declare(RecordMember.Deconstruct, core.void, outs);
   }
+}
+
+/**
+ * True when the nearest `ToString()` of the base records is sealed (C# 10: `public sealed override string ToString()`):
+ * the derived record inherits it and synthesizes none.
+ */
+function inheritsSealedToString(type) {
+  for (let base = baseRecordOf(type); base; base = baseRecordOf(base.originalDefinition ?? base)) {
+    const declared = (base.originalDefinition ?? base).getMembers('ToString').find(member => isMethodNamed(member, 'ToString') && !member.parameters.length);
+    if (declared) return !!declared.isSealed;
+  }
+  return false;
 }
 
 /** The record a record class derives from (as written, possibly constructed), or null. */

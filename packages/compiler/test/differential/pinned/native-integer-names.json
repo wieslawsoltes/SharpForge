@@ -1,0 +1,4 @@
+{"roslyn":{"version":"5.3.0.0","informationalVersion":"5.3.0-2.26153.122+4d3023de605a78ba3e59e50c657eed70f125c68a","runtime":"10.0.5","references":"Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0","options":"OutputKind.ConsoleApplication, default warning level, nullable disabled, no implicit usings, invariant culture"},"shape":"diagnostics are [code, startOffset, length, severity]; output is stdout with \\n newlines","fixtures":{
+  "native-integer-names/nint-and-nuint-name-their-types-in-expressions":{"hash":"379222d4f9254044","kind":"output","langVersion":"14.0","diagnostics":[],"output":"True True 0 0\nTrue True 5 7\n3 True\n"},
+  "native-integer-names/a-declared-nint-wins-over-the-keyword":{"hash":"4b3a5eeefa14af2b","kind":"diagnostics","langVersion":"14.0","diagnostics":[["CS0841",166,5,"error"],["CS0117",210,7,"error"],["CS1061",275,4,"error"]]}
+}}

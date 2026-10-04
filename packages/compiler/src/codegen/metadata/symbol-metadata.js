@@ -21,7 +21,9 @@ import { assemblyResolverOf } from './reference-identities.js';
 import { planMembers, explicitInterfaceOf } from './member-plan.js';
 import { typeFlags, genericParameterFlags } from './attribute-flags.js';
 import { tupleElementNamesOf } from '../../binder/tuples.js';
+import { dynamicTransformFlags } from './dynamic-flags.js';
 import { staticVirtualImplementations } from './static-interface-implementations.js';
+import { interfaceReimplementations } from './interface-reimplementations.js';
 import { fieldSignature, methodSignature, methodSymbolSignature, propertySignature } from './member-signatures.js';
 
 const TABLE = Object.freeze({ TypeDef: 2, Field: 4, MethodDef: 6, Param: 8 });
@@ -33,6 +35,10 @@ const constantElementTypes = Object.freeze({
 const NULL_REFERENCE_CONSTANT = 28;
 const LITERAL_FLAGS = FieldAttributes.Literal | FieldAttributes.HasDefault;
 
+/** The value the Constant table takes: a `char` constant is a code unit in the compiler and one character there. */
+function constantRowValue(constant) {
+  return constant.type === 'char' && typeof constant.value !== 'string' ? String.fromCharCode(Number(constant.value)) : constant.value;
+}
 /** The Constant.Type of a compiler constant, or undefined when the table has no encoding for it. */
 function constantTypeOf(constant) {
   if (constant.value === null || constant.isNull) return NULL_REFERENCE_CONSTANT;
@@ -74,7 +80,8 @@ export class SymbolMetadataWriter {
    * @param builder a MetadataBuilder  @param analysis a SemanticAnalysis that has run
    * @param {{bodyRva: number | ((method: object) => number), synthesized?: object}} options `bodyRva` is the RVA every
    *   method with a body points at, or a function of the planned method; `synthesized` (emit/cil/synthesized-members.js)
-   *   adds what code generation declares: `types` appended after the source types and `extend(type, plan)`
+   *   adds what code generation declares: `types` appended after the source types, `extend(type, plan)` and
+   *   `moduleMethods`, the planned methods of the global `<Module>` type
    */
   constructor(builder, analysis, { bodyRva, synthesized = null }) {
     this.builder = builder;
@@ -84,6 +91,8 @@ export class SymbolMetadataWriter {
     this.tokens = new TypeTokens(builder, this.types, assemblyResolverOf(analysis));
     this.plans = new Map(this.types.map(type => [type, planMembers(type, this.core, field => analysis.constantOf(field))]));
     if (synthesized) for (const type of this.types) synthesized.extend(type, this.plans.get(type));
+    /** The methods of `<Module>`, the first TypeDef row: they take the first MethodDef rows. */
+    this.moduleMethods = synthesized?.moduleMethods ?? [];
     /** Definition tokens by symbol, for callers that add rows of their own (custom attributes, method bodies). */
     this.fieldTokens = new Map();
     this.methodTokens = new Map();
@@ -118,6 +127,7 @@ export class SymbolMetadataWriter {
   allocateTokens() {
     let nextField = 1,
       nextMethod = 1;
+    for (const method of this.moduleMethods) method.token = token(TABLE.MethodDef, nextMethod++);
     for (const type of this.types) {
       const plan = this.plans.get(type);
       plan.fieldStart = nextField;
@@ -158,9 +168,9 @@ export class SymbolMetadataWriter {
         // A constant the Constant table cannot hold (decimal) is a static readonly field set by its initializer.
         const unencodable = isLiteral && constantType === undefined,
           flags = unencodable ? (field.flags & ~LITERAL_FLAGS) | FieldAttributes.InitOnly : field.flags & ~FieldAttributes.HasDefault;
-        this.builder.addRow('Field', { Flags: flags, Name: field.name, Signature: fieldSignature(this.tokensOf(type), field.type) });
+        this.builder.addRow('Field', { Flags: flags, Name: field.name, Signature: fieldSignature(this.tokensOf(type), field.type, field.refKind) });
         if (constantType === undefined) continue;
-        const value = constantType === NULL_REFERENCE_CONSTANT ? null : field.constant.value;
+        const value = constantType === NULL_REFERENCE_CONSTANT ? null : constantRowValue(field.constant);
         // The writer marks the field HasDefault.
         this.builder.definitions.constantValue({ Parent: field.token, Type: constantType, Value: value });
       }
@@ -168,6 +178,17 @@ export class SymbolMetadataWriter {
   }
   writeMethods() {
     let nextParameter = 1;
+    for (const method of this.moduleMethods) {
+      // A method of `<Module>` has no parameters (the module's type initializer).
+      this.builder.addRow('MethodDef', {
+        RVA: this.bodyRvaOf(method),
+        ImplFlags: method.implFlags,
+        Flags: method.flags,
+        Name: method.name,
+        Signature: methodSignature(this.tokens, method.shape),
+        ParamList: nextParameter,
+      });
+    }
     for (const type of this.types) {
       for (const method of this.plans.get(type).methods) {
         const signature = method.symbol ? methodSymbolSignature(this.tokens, method.symbol) : methodSignature(this.tokensOf(type, method), method.shape);
@@ -179,7 +200,8 @@ export class SymbolMetadataWriter {
           Signature: signature,
           ParamList: nextParameter,
         });
-        if (method.symbol && tupleElementNamesOf(method.symbol.returnType)) {
+        const returned = method.symbol?.returnType;
+        if (returned && (tupleElementNamesOf(returned) || dynamicTransformFlags(returned))) {
           // The return value has a Param row (sequence 0) only when an attribute is written on it.
           this.returnParameterTokens.set(method.symbol, this.builder.addRow('Param', { Flags: 0, Sequence: 0, Name: '' }));
           nextParameter++;
@@ -204,7 +226,9 @@ export class SymbolMetadataWriter {
     }
     if (type.containingType) builder.addRow('NestedClass', { NestedClass: self, EnclosingClass: this.tokens.definitionToken(type.containingType) });
     const hasInstanceField = plan.fields.some(field => !(field.flags & FieldAttributes.Static));
-    if (type.typeKind === TypeKind.Struct && !hasInstanceField) builder.addRow('ClassLayout', { PackingSize: 0, ClassSize: 1, Parent: self });
+    // `plan.classSize`: the size code generation gives a struct (the buffer struct of a fixed-size buffer).
+    if (plan.classSize) builder.addRow('ClassLayout', { PackingSize: 0, ClassSize: plan.classSize, Parent: self });
+    else if (type.typeKind === TypeKind.Struct && !hasInstanceField) builder.addRow('ClassLayout', { PackingSize: 0, ClassSize: 1, Parent: self });
     this.writeGenericParameters(self, this.allTypeParameters(type), ownTokens);
     for (const method of plan.methods) {
       if (method.symbol?.typeParameters?.length) this.writeGenericParameters(method.token, method.symbol.typeParameters);
@@ -230,8 +254,9 @@ export class SymbolMetadataWriter {
   writeInterfaceImplementations(type, self, plan) {
     const planned = new Map(plan.methods.filter(method => method.symbol).map(method => [method.symbol, method])),
       written = new Map();
-    const implementations = [...(type.interfaceImplementations ?? []), ...staticVirtualImplementations(type)];
+    const implementations = [...(type.interfaceImplementations ?? []), ...staticVirtualImplementations(type), ...interfaceReimplementations(type)];
     for (const [declaration, implementation] of implementations) {
+      this.writeFieldLikeEventImplementation(self, declaration, implementation, planned);
       for (const [declared, implementing] of accessorPairs(declaration, implementation)) {
         const method = planned.get(implementing);
         if (!method) continue;
@@ -243,6 +268,29 @@ export class SymbolMetadataWriter {
         written.set(method, (written.get(method) ?? new Set()).add(declared.originalDefinition ?? declared));
         this.builder.addRow('MethodImpl', { Class: self, MethodBody: method.token, MethodDeclaration: this.methodReference(declared) });
       }
+    }
+  }
+  /**
+   * `event D I.Changed { add ... remove ... }` for a field-like event of a source interface: the accessors of the
+   * interface event are synthesized methods without symbols, so the rows name them by their planned tokens.
+   */
+  writeFieldLikeEventImplementation(self, declaration, implementation, planned) {
+    if (declaration.kind !== SymbolKind.Event || declaration.addMethod || !explicitInterfaceOf(implementation)) return;
+    const owner = declaration.containingType,
+      definition = declaration.originalDefinition ?? declaration,
+      event = this.plans.get(owner.originalDefinition ?? owner)?.events.find(entry => entry.symbol === definition);
+    if (!event) return;
+    const pairs = [
+      [event.adder, implementation.addMethod],
+      [event.remover, implementation.removeMethod],
+    ];
+    for (const [declared, implementing] of pairs) {
+      const body = planned.get(implementing);
+      if (!declared || !body) continue;
+      const reference = needsTypeSpec(owner)
+        ? this.builder.member(this.tokens.typeToken(owner), declared.name, methodSignature(this.tokens, declared.shape))
+        : declared.token;
+      this.builder.addRow('MethodImpl', { Class: self, MethodBody: body.token, MethodDeclaration: reference });
     }
   }
   /** MethodDefOrRef token of a method declared here or elsewhere (a MemberRef on its containing type). */

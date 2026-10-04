@@ -9,7 +9,7 @@
  * The symbol table types `Task.Yield()` as `Task` and lists no awaiter for the task types, so those members are
  * named by signature here; .NET resolves a member by its exact signature.
  */
-import { TypeKind } from '../../symbols/types.js';
+import { SymbolKind, TypeKind } from '../../symbols/types.js';
 import { implementsInterface } from '../../symbols/substitution.js';
 import { frameworkType } from './framework-types.js';
 import { isVoid } from './type-facts.js';
@@ -148,5 +148,38 @@ export function awaiterOfValue(emitter, type, pushValue, syntax) {
       il.emit('stloc', slot).emit('ldloca', slot);
     });
   }
-  return emitter.unsupported(`await of '${type?.toDisplayString()}' in await foreach or await using`, syntax);
+  return declaredAwaiter(emitter, type, pushValue) ?? emitter.unsupported(`await of '${type?.toDisplayString()}' in await foreach or await using`, syntax);
+}
+
+const isParameterless = member => member.kind === SymbolKind.Method && !member.isStatic && !member.parameters.length;
+
+/**
+ * The awaiter of a value of any other type that declares the awaitable pattern itself, such as the
+ * `ConfiguredValueTaskAwaitable<bool>` that `source.ConfigureAwait(false)` gives `await foreach`: its `GetAwaiter()`,
+ * and `IsCompleted` and `GetResult()` of what that returns.
+ * @returns the awaiter description, or null when the type does not declare the pattern
+ */
+function declaredAwaiter(emitter, type, pushValue) {
+  const { il, core } = emitter,
+    getAwaiter = type?.getMembers?.('GetAwaiter').find(isParameterless),
+    awaiterType = getAwaiter?.returnType,
+    isCompleted = awaiterType?.getMembers?.('IsCompleted').find(member => member.kind === SymbolKind.Property)?.getMethod,
+    getResult = awaiterType?.getMembers?.('GetResult').find(isParameterless);
+  if (!getAwaiter || !isCompleted || !getResult) return null;
+  const receiver = { kind: 'Temporary', type: awaiterType };
+  return {
+    awaiterType,
+    isCritical: !!core.icriticalNotifyCompletion && implementsInterface(awaiterType, core.icriticalNotifyCompletion, core),
+    getAwaiter: () => {
+      pushValue();
+      if (type.isValueType) {
+        // A method of a struct is called on the address of a variable that holds it.
+        const slot = emitter.temp(type);
+        il.emit('stloc', slot).emit('ldloca', slot);
+      }
+      return emitter.callMethod(getAwaiter, { receiver: { kind: 'Temporary', type } });
+    },
+    isCompleted: () => emitter.callMethod(isCompleted, { receiver }),
+    getResult: () => emitter.callMethod(getResult, { receiver }),
+  };
 }

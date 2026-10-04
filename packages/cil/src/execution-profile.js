@@ -12,8 +12,10 @@ import {verifyPrimitiveStorageOperand} from './memory-type-profile.js';
 import { AssemblyInspector } from './inspector.js';
 import { CilError } from './binary.js';
 import {CilDispatchTable} from './dispatch-profile.js';
+import {executionStackHeights} from './verify/stack-heights.js';
+import {executionHandlerOffsets} from './verify/execution-handlers.js';
 // Broad decoding is deliberately separate from this managed execution allowlist.
-const simple = new Set(('calli constrained. volatile. ldtoken ldftn nop break ldnull dup pop ret switch ldstr newobj call callvirt throw rethrow endfinally ldlen newarr ldfld stfld ldsfld stsfld ldflda ldsflda ldobj stobj initobj ldelema ldelem stelem box unbox unbox.any cpobj sizeof castclass isinst ckfinite').split(' '));
+const simple = new Set(('calli constrained. volatile. ldtoken ldftn ldvirtftn nop break ldnull dup pop ret switch ldstr newobj call callvirt throw rethrow endfinally ldlen newarr ldfld stfld ldsfld stsfld ldflda ldsflda ldobj stobj initobj ldelema ldelem stelem box unbox unbox.any cpobj sizeof castclass isinst ckfinite').split(' '));
 const arithmetic = /^(add|sub|mul)(\.ovf(\.un)?)?$|^(div|rem|shr)(\.un)?$|^(and|or|xor|shl|neg|not|ceq|cgt|clt)(\.un)?$/;
 const indexed = /^(ldarg|ldarga|starg|ldloc|ldloca|stloc)(\.[0-3s])?$/;
 const numeric = /^ldc\.(i4(\.(m1|[0-8]|s))?|i8|r4|r8)$/;
@@ -40,12 +42,12 @@ export function stackEffect(inspector,m,i){
   if(arithmetic.test(n)&&!['neg','not'].includes(n))return [2,1];
   return [1,1];
 }
-/** Whole reachable-method stack-height verification plus explicit unsupported-operation diagnostics.
- * This is a constrained runtime verifier, NOT an implementation of the CLR verifier/type system. */
+/** Bounded reachable stack heights and lexical EH admission; this runtime profile is not the CLR type verifier. */
 export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethods=10000,...options}={}){
   const inspector=input instanceof AssemblyInspector?input:new AssemblyInspector(input,options),issues=[],visited=new Set(),pending=[],stackHeights={},entry=selectMethod(inspector,methodToken,args);
-  const dispatch=new CilDispatchTable(inspector),verifiedStacks=new Map(),sizes=new SizeOfProfile(inspector),prefixes=new ExecutionPrefixProfile(inspector),pointers=new FunctionPointerProfile(inspector);
+  const dispatch=new CilDispatchTable(inspector),verifiedStacks=new Map(),sizes=new SizeOfProfile(inspector),prefixes=new ExecutionPrefixProfile(inspector,dispatch),pointers=new FunctionPointerProfile(inspector,dispatch);
   const issue=(m,i,code,message,details={})=>{if(issues.length<200)issues.push({methodToken:m?.token,method:m?m.owner+'::'+m.name:undefined,offset:i?.offset,code,message,...details});};
+  const stackContext={issue,issues,stackEffect,options};
   if(!(inspector.pe.flags&1)||inspector.pe.flags&0x10)issue(null,null,'IL_IMAGE','Only IL-only managed images are executable');pending.push(entry);
   // Static initializers can be reached by allocation, field access or method invocation.
   const enqueueType=t=>{const type=inspector.types.find(x=>x.token===t);for(const m of type?.methods??[])if(m.name==='.cctor')pending.push(m.token);};
@@ -62,12 +64,12 @@ export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethod
       if(m.signature.callingConvention)throw new CilError('Non-default calling conventions are inspection-only');
       for(const type of m.signature.parameters.concat(m.locals,m.signature.returnType))verifyGenericType(inspector,type,context);
     } catch(error) {issue(m,null,'IL_SIGNATURE',error.message);continue;}
-    const map=new Map(m.instructions.map((i,index)=>[i.offset,index]));
-    prefixes.verify(m,context,issue);
-    for(const h of m.handlers)if(h.flags===1)issue(m,null,'IL_FILTER','Exception filters are inspection-only');
+    const map = executionHandlerOffsets(m, options, issue);
+    if (!map) continue;
+    prefixes.verify(m,context,issue,pending);
     for(const i of m.instructions){
       if(!isExecutableOpcode(i.name)){issue(m,i,'IL_OPCODE',`Opcode '${i.name}' is inspection-only`);continue;}
-      const pointerTarget=pointers.verifyOperand(m,i,context,issue,verifyGenericType);if(pointerTarget)pending.push(pointerTarget);
+      for(const target of pointers.verifyOperand(m,i,context,issue,verifyGenericType)??[])pending.push(target);
       if(i.name==='sizeof')sizes.verify(m,i,context,issue);
       if(['cpobj','unbox'].includes(i.name))verifyPrimitiveStorageOperand(inspector,m,i,issue);
       if(['newarr','ldelema','ldelem','stelem','box','unbox.any','ldobj','stobj','initobj','castclass','isinst'].includes(i.name)){try{verifyGenericType(inspector,inspector.metadata.typeName(i.operand),context);}catch(error){issue(m,i,'IL_TYPE',error.message);}}
@@ -92,21 +94,7 @@ export function verifyCilAssembly(input,{methodToken,arguments:args=[],maxMethod
       if(['ldsfld','stsfld','ldsflda','newobj'].includes(i.name)){try{enqueueType((i.name==='newobj'?resolveExecutionMethod(inspector,i.operand,context):resolveExecutionField(inspector,i.operand,context.typeArguments,context.methodArguments)).ownerToken);}catch{/* Reported by token validation. */}}
       if(['ldfld','stfld','ldsfld','stsfld','ldflda','ldsflda'].includes(i.name)){try{const d=resolveExecutionField(inspector,i.operand,context.typeArguments,context.methodArguments);if(d.decimalConstant&&i.name==='stsfld')issue(m,i,'IL_FIELD','Decimal constants are readonly');if(d.kind!=='field'||d.token>>>24!==4&&!d.resolvedToken&&!d.decimalConstant)issue(m,i,'IL_FIELD','External fields are inspection-only');}catch(error){issue(m,i,'IL_TOKEN',error.message);}}
     }
-    let peak=0;
-    const queue=[[0,0]],heights=new Map();for(const h of m.handlers)if(h.flags!==1)queue.push([map.get(h.target),h.flags===0?1:0]);
-    while(queue.length&&issues.length<200){
-      const [index,height]=queue.pop(),i=m.instructions[index];if(!i){issue(m,null,'IL_FLOW','Control flow leaves the method');continue;}
-      peak=Math.max(peak,height);
-      if(height>m.maxStack){issue(m,i,'IL_STACK','Incoming evaluation stack exceeds maxstack');continue;}
-      if(heights.has(index)){if(heights.get(index)!==height)issue(m,i,'IL_STACK','Inconsistent evaluation stack height at join');continue;}heights.set(index,height);
-      let pop,push;try{[pop,push]=stackEffect(inspector,m,i);}catch(error){issue(m,i,'IL_STACK',error.message);continue;}
-      if(height<pop){issue(m,i,'IL_STACK','Evaluation stack underflow');continue;}const after=height-pop+push;peak=Math.max(peak,after);if(after>m.maxStack)issue(m,i,'IL_STACK','Evaluation stack exceeds maxstack');
-      if(i.name==='ret'){if(height!==pop)issue(m,i,'IL_STACK','Invalid return stack');continue;}
-      if(['throw','rethrow','endfinally'].includes(i.name)){if(i.name==='endfinally'&&height!==0)issue(m,i,'IL_STACK','endfinally requires an empty stack');continue;}
-      if(i.operandKind.startsWith('br'))queue.push([map.get(i.operand),i.name.startsWith('leave')?0:after]);
-      if(i.name==='switch')for(const target of i.operand)queue.push([map.get(target),after]);
-      if(!/^(br|leave)(\.s)?$/.test(i.name))queue.push([index+1,after]);
-    }
+    const {peak,heights}=executionStackHeights(inspector,m,map,stackContext);
     pointers.verify(m,issue,stackEffect,peak);
     stackHeights[t]=Object.fromEntries(heights);
     verifiedStacks.set(t,verifiedStackEntry(m,peak));

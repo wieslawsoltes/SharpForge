@@ -8,6 +8,8 @@
  */
 import { RefKind, SymbolKind, TypeKind } from '../../symbols/types.js';
 import { MethodKind } from '../../symbols/members.js';
+import { baseImplementationOf } from '../../symbols/base-implementation.js';
+import { defaultSourceOf } from '../../overload/override-parameters.js';
 import { PropertyLocation } from './locations.js';
 import { isReference, isVoid, primitiveOf } from './type-facts.js';
 
@@ -42,7 +44,7 @@ export const CallEmission = Base =>
       // A struct is sealed: a virtual method it overrides is called on the value itself, without a box.
       const structOverride = receiver.type?.typeKind === TypeKind.Struct ? this.sourceOverride(method, receiver.type) : null;
       if (structOverride) {
-        this.receiver(receiver);
+        this.callReceiver(node);
         this.arguments(node, method);
         return this.callMethod(structOverride, { receiver, syntax: node.syntax });
       }
@@ -62,9 +64,22 @@ export const CallEmission = Base =>
         this.arguments(node, method);
         return this.callMethod(boxedTarget, { receiver: { type: this.core.object }, syntax: node.syntax });
       }
-      this.receiver(receiver);
+      this.callReceiver(node);
       this.arguments(node, method);
       return this.callMethod(this.nearestOverride(method, receiver.type), { receiver, syntax: node.syntax });
+    }
+    /**
+     * The receiver of an instance call. A struct in a read-only variable (an `in` parameter, a readonly field, a
+     * `ref readonly` local) called through a member that may mutate it is copied first: the call acts on the copy.
+     */
+    callReceiver(node) {
+      const receiver = node.receiver,
+        // A `using` or `foreach` variable cannot be assigned, but it is a variable of its own: members act on it.
+        isOwnLocal = receiver.kind === 'Local' && (!receiver.local?.refKind || receiver.local.refKind === RefKind.None);
+      if (node.receiverPassing !== 'copy' || isOwnLocal) return this.receiver(receiver);
+      const copy = this.temp(receiver.type);
+      this.expression(receiver);
+      return this.il.emit('stloc', copy).emit('ldloca', copy);
     }
     /**
      * A virtual method of a framework class (`object.ToString`) called on a source class is named by the override
@@ -126,7 +141,8 @@ export const CallEmission = Base =>
       if (!method?.parameters || !method.containingType) return this.unsupported(`'${method?.name ?? 'a member'}' (no metadata signature)`, syntax);
       const il = this.il,
         effect = { pops: method.parameters.length + (method.isStatic ? 0 : 1), pushes: isVoid(method.returnType) ? 0 : 1 },
-        token = this.tokens.method(method);
+        // `base.M()` is not a virtual call: it names the implementation the base class has (its nearest override).
+        token = this.tokens.method(receiver?.kind === 'Base' ? baseImplementationOf(method, receiver.type) : method);
       if (method.isStatic) {
         // C# 11: a static abstract or virtual interface member is called on the type argument (`constrained. T call`).
         if (isStaticVirtual(method)) il.emit('constrained.', this.tokens.type(constrainedTo ?? this.typeParameterOf(method, syntax)));
@@ -180,7 +196,7 @@ export const CallEmission = Base =>
         last = parameters.length - 1;
       return parameters.map((parameter, index) => {
         const supplied = args.filter((_, argumentIndex) => positions[argumentIndex] === index);
-        let emit = () => this.defaultArgument(parameter, node, index);
+        let emit = () => this.defaultArgument(defaultSourceOf(node, parameter, index), node, index);
         if (isExpanded && index === last) emit = () => this.paramsArray(parameter.type, supplied, push);
         else if (supplied.length) emit = () => push(supplied[0], parameter);
         return { type: parameter.type, emit };
@@ -210,7 +226,8 @@ export const CallEmission = Base =>
       const il = this.il,
         elementType = arrayType.elementType;
       if (!elementType) return this.unsupported('params collections other than arrays');
-      il.emit('ldc.i4', supplied.length).emit('newarr', this.tokens.type(elementType));
+      il.emit('ldc.i4', supplied.length);
+      this.newArray(elementType);
       supplied.forEach((argument, index) => {
         il.emit('dup').emit('ldc.i4', index);
         push(argument, null);
@@ -271,8 +288,10 @@ export const CallEmission = Base =>
           constrainedTo: node.constrainedTo ?? null,
         };
       // A property of a C# 14 extension block: its accessors are static methods that take the receiver first.
+      // (A block with type parameters is constructed for the receiver: the block is known to the definition.)
       const accessor = property.getMethod ?? property.setMethod,
-        receiverParameter = accessor?.extensionBlock && accessor.extensionReceiver && node.receiver ? accessor.parameters[0] : null;
+        declared = accessor?.originalDefinition ?? accessor,
+        receiverParameter = declared?.extensionBlock && declared.extensionReceiver && node.receiver ? accessor.parameters[0] : null;
       if (receiverParameter) {
         access.receiver = null;
         access.args = [() => this.argument({ expression: node.receiver }, receiverParameter), ...access.args];

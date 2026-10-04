@@ -5,10 +5,10 @@
   "repository": "https://github.com/wieslawsoltes/SharpForge",
   "generatedAt": "2026-10-04T01:26:55.971234+00:00",
   "statusReconciledDate": "2026-10-04",
-  "currentStatusPolicy": "Latest publication and qualification supplement the historical audit below. sourceSnapshot, generatedAt, per-leaf statuses/bounds, historical counts and all closeIssue:false entries retain their original audit meaning; they are not a fresh audit of the follow-up branch.",
+  "currentStatusPolicy": "Current publication, observed scope results and issue-evidence associations supplement the historical audit. sourceSnapshot at 40bbdea7, generatedAt, all 194 leaf mappings, their 135/59 classes, fullyQualifiedLeaves:0 and every closeIssue:false retain their original audit meaning. A suite outcome does not qualify every associated leaf.",
   "latestPublishedSource": {
-    "pullRequest": 4105,
-    "pullRequestUrl": "https://github.com/wieslawsoltes/SharpForge/pull/4105",
+    "pullRequest": 4453,
+    "pullRequestUrl": "https://github.com/wieslawsoltes/SharpForge/pull/4453",
     "mergedPullRequests": [
       3451,
       3475,
@@ -17,54 +17,718 @@
       3843,
       3865,
       3904,
-      4105
+      4105,
+      4297,
+      4413,
+      4426,
+      4453
     ],
-    "localSource": "0858f721e8e737e6bcca1365748409cb6b0b5f35",
-    "publishedHead": "cce1aa2ceb6bce8247c4ab62c76a7d56d9518370",
-    "sourceTree": "543ac1fd0f99e60bd7be5319ecad1590ba1eeccd",
-    "mergeCommit": "8d1be9cffa04b0fd7390e5cb6fe5f6c03b997557",
-    "mergeTree": "dc9d4e337b91c6e878e7c6c7d65f013667b5ec6b",
+    "localSource": "553054623b08fd8c9f070378ab758d03af4cf38d",
+    "publishedHead": "353daec76089751f17a49c0319da82ea1bd1a1a9",
+    "sourceTree": "eac6e1b6756367581023f7135361a78be932e880",
+    "mergeCommit": "b8d68d417c792156dedb2ac2b98acf33cac3f141",
+    "mergeTree": "74021421e044947908f037bf34d00bcb258e25fc",
+    "parents": [
+      "293b7697e4e32bea0f5b281c0e1476046f6afaaa",
+      "353daec76089751f17a49c0319da82ea1bd1a1a9"
+    ],
     "ownCore": {
-      "runId": 37175219507,
-      "jobId": 111356347344,
+      "runId": 37186193332,
+      "jobId": 111388507391,
       "conclusion": "success"
     },
     "mainCore": {
-      "runId": 37175263470,
-      "jobId": 111356461984,
+      "runId": 37186282226,
+      "jobId": 111388761783,
       "conclusion": "success"
     },
-    "earlierSameHeadCore": {
-      "runId": 37175211209,
-      "conclusion": "cancelled",
-      "note": "Automatic cancellation; not a passing run."
+    "interpretation": "Twelve implementation, correction and profile PRs are merged. Passing core does not rerun or transfer browser qualification from an earlier source."
+  },
+  "currentFollowupSource": {
+    "pullRequest": 4453,
+    "publication": "merged",
+    "mergeCommit": "b8d68d417c792156dedb2ac2b98acf33cac3f141",
+    "mergeTree": "74021421e044947908f037bf34d00bcb258e25fc",
+    "implementation": "change_tracking_deletion_and_CRLF_geometry_corrected_standalone_stage_present",
+    "evidence": "docs/project16-final-followup-local.md",
+    "localQualification": {
+      "source": "20474bfed2c3c442ae50ae46d2dbcff02f155bc5",
+      "publishedEquivalent": "dbbc90a8b0db41858e93be5aa099aa8db1a38dbb",
+      "tree": "5c5d290f9c190cd4e5c1b5d8e7124f9c0980ec4a",
+      "tests": 69,
+      "passed": 69,
+      "failed": 0,
+      "skipped": 0
     },
-    "evidence": "docs/project16-hosted-qualification.json",
-    "interpretation": "Merged implementation and successful hosted core do not establish full browser, platform or acceptance qualification."
+    "oldSourceReproduction": {
+      "source": "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e",
+      "tests": 16,
+      "passed": 9,
+      "failed": 7,
+      "skipped": 0,
+      "intent": "Expected failing proof against unchanged old source with the new regression fixture."
+    },
+    "remainingQualification": "A7 completed four of five performance scopes successfully but failed the strict positive lazy-evaluation saving gate. M2 separately passed macOS/Chromium standalone. Functional correction, passing comparisons and remaining failed gate retain independent meanings."
   },
   "latestQualification": {
-    "attempt": "a4",
-    "runId": 37175293552,
-    "jobId": 111356550684,
-    "sourceCommit": "8d1be9cffa04b0fd7390e5cb6fe5f6c03b997557",
-    "sourceTree": "dc9d4e337b91c6e878e7c6c7d65f013667b5ec6b",
+    "attempt": "a7",
+    "runId": 37186353254,
+    "jobId": 111388977941,
+    "sourceCommit": "b8d68d417c792156dedb2ac2b98acf33cac3f141",
+    "sourceTree": "74021421e044947908f037bf34d00bcb258e25fc",
+    "runner": "ubuntu-latest",
+    "engine": "chromium",
+    "browserVersion": "153.0.8010.12",
+    "stage": "performance",
+    "baselineProfile": "a5",
+    "captureOnly": false,
+    "status": "failed",
+    "startedAt": "2026-10-04T07:38:52.098Z",
+    "finishedAt": "2026-10-04T07:47:57.627Z",
+    "selectedOutcomes": 5,
+    "passedOutcomes": 4,
+    "failedOutcomes": 1,
+    "failedScopes": [
+      "performance:lazy-evaluation"
+    ],
+    "scopes": [
+      {
+        "id": "performance",
+        "status": "passed",
+        "exitCode": 0
+      },
+      {
+        "id": "performance:editor-budgets",
+        "status": "passed",
+        "exitCode": 0
+      },
+      {
+        "id": "performance:studio-large-file",
+        "status": "passed",
+        "exitCode": 0
+      },
+      {
+        "id": "performance:instrumentation",
+        "status": "passed",
+        "exitCode": 0
+      },
+      {
+        "id": "performance:lazy-evaluation",
+        "status": "failed",
+        "exitCode": 1
+      }
+    ],
+    "performanceObservations": {
+      "generatedModel200MiBTypingP95Ms": 32.300000000046566,
+      "typingBudgetMs": 50,
+      "editorRelativeComparisonsPassed": 25,
+      "editorRelativeComparisonsTotal": 25,
+      "editorRelativeRegressionVerdict": true,
+      "workbenchAbsolutePassed": true,
+      "workbenchRelativeRegressionVerdict": true,
+      "editorBudgets": "passed",
+      "actualStudioFileIngress": "passed_synthetic_File_via_real_input_handler",
+      "instrumentationOverheadPercent": 0.30906745225383186,
+      "instrumentationBudgetPercent": 1,
+      "lazyEvaluation": {
+        "passed": false,
+        "gate": "paired aggregate eager ScriptDuration is strictly greater than lazy ScriptDuration",
+        "eagerMs": 1560.7779999999998,
+        "lazyMs": 1569.77,
+        "savedMs": -8.99200000000019,
+        "reductionPercent": -0.5761229335626329,
+        "pairs": 12,
+        "freshBrowserProcesses": 24,
+        "positivePairs": 5,
+        "negativePairs": 7,
+        "zeroPairs": 0
+      }
+    },
+    "evidence": "docs/project16-hosted-a7.json",
+    "summaryEvidence": "docs/evidence/project16-hosted/a7/qualification-summary.json",
+    "interpretation": "Completed performance-only failure. The strict positive lazy-saving gate failed; no noise dismissal, causal attribution, threshold waiver or aggregate pass is claimed. No Node or nine-browser-scope rerun occurred at this source."
+  },
+  "currentAcceptance": {
+    "reconciliationState": "current_evidence_reconciled_acceptance_incomplete",
+    "sourceReview": "Existing 194-leaf mapping review and the completed narrow follow-up source/harness reviews identified no additional mandatory product-source correction. This is not blanket acceptance qualification or a fresh audit of every leaf.",
+    "confirmedUnimplementedIssueIds": [],
+    "historicalLeafAudit": {
+      "sourceCommit": "40bbdea7b45ab64b24c9741046b897a35118814e",
+      "leaves": 194,
+      "source_present": 135,
+      "source_present_with_limits": 59,
+      "fullyQualifiedLeaves": 0
+    },
+    "issueEvidenceAssociations": [
+      {
+        "issues": [
+          1513,
+          1517,
+          1518,
+          1615
+        ],
+        "scope": "Actual 200 MiB ingress and owning-project compiler eligibility",
+        "sourceState": "correction_merged",
+        "acceptanceState": "a6_and_a7_actual_Studio_200MiB_File_workflow_passed",
+        "evidence": [
+          "docs/project16-a5-correction-local-qualification.md",
+          "docs/a20-studio-large-file-qualification.md",
+          "docs/evidence/project16-hosted/a6/a20-studio-large-file-results.json",
+          "docs/evidence/project16-hosted/a7/a20-studio-large-file-results.json"
+        ],
+        "boundary": "Oversized files remain editable and saveable; compiler/language services refuse unsupported source size or project count before lazy text capture. Actual ingress uses synthetic File/Blob input, not an OS picker or physical disk/permission measurement."
+      },
+      {
+        "issues": [
+          1462,
+          1519,
+          1522,
+          1524,
+          1528,
+          1530,
+          1583
+        ],
+        "scope": "Runtime timers, two-app isolation and HTTP/standalone debug workflows",
+        "sourceState": "correction_merged",
+        "acceptanceState": "a6_w1_workflows_and_m2_macOS_Chromium_standalone_passed_m1_file_blocked",
+        "evidence": [
+          "docs/project16-browser-runtime-timers.md",
+          "docs/project16-a5-correction-local-qualification.md",
+          "docs/project16-hosted-a6.md",
+          "docs/project16-cross-platform-browser.md",
+          "docs/evidence/project16-hosted/m2/vs-workflow-standalone-results.json"
+        ],
+        "boundary": "Actual multi-session and HTTP scenarios passed at 25ef on three OS/engine combinations. Full standalone passed on Linux/Chromium and Windows/Firefox at 25ef and separately macOS/Chromium at b8. M1 WebKit failed before initialization; native capabilities remain distinct."
+      },
+      {
+        "issues": [
+          1479,
+          1550,
+          1620,
+          1622
+        ],
+        "scope": "Default keymap host timer receivers, cancellation and disposal",
+        "sourceState": "correction_merged",
+        "acceptanceState": "local_timer_cases_and_exercised_three_platform_browser_keys_passed_physical_delivery_unqualified",
+        "evidence": [
+          "docs/project16-keymap-timer-receiver.md",
+          "docs/project16-a5-correction-local-qualification.md",
+          "docs/project16-cross-platform-browser.md"
+        ]
+      },
+      {
+        "issues": [
+          1459,
+          1497
+        ],
+        "scope": "Actual workspace proof and Code Definition/overview budgets",
+        "sourceState": "correction_merged",
+        "acceptanceState": "a6_and_a7_bounded_Definition_and_overview_measurements_passed",
+        "evidence": [
+          "docs/project16-editor-a5-corrections.md",
+          "docs/evidence/project16-hosted/a6/editor-ui-budgets.json",
+          "docs/evidence/project16-hosted/a7/editor-ui-budgets.json"
+        ]
+      },
+      {
+        "issues": [
+          1578,
+          1580
+        ],
+        "scope": "Instrumentation overhead and same-source lazy evaluation",
+        "sourceState": "present",
+        "acceptanceState": "a7_instrumentation_passed_lazy_positive_saving_failed_offline_tools_passed",
+        "evidence": [
+          "docs/project16-hosted-qualification.md",
+          "docs/workbench-lazy-evaluation.md",
+          "docs/project16-hosted-a6.md",
+          "docs/project16-cross-platform-browser.md",
+          "docs/project16-hosted-a7.md"
+        ],
+        "boundary": "All five tools activated offline on Linux/Chromium, Windows/Firefox and separately macOS/Chromium. A7 instrumentation passed at 0.309067% < 1%; a7 strict positive lazy saving failed at\u22120.576123%. Historical a5/a6 lazy passes do not override this failure; no statistical or causal claim."
+      },
+      {
+        "issues": [
+          1581,
+          1643
+        ],
+        "scope": "Compatible reviewed browser/workbench regression baselines",
+        "sourceState": "profile_merged",
+        "acceptanceState": "a7_editor_25_of_25_and_workbench_comparative_gates_passed",
+        "evidence": [
+          "docs/project16-a5-baseline-profile.md",
+          "docs/project16-hosted-a6.md",
+          "docs/project16-hosted-a7.md"
+        ],
+        "boundary": "A7 used the exact a5 baseline with no environment mismatch or threshold changes; all 25 editor rows and workbench comparison passed. A6 original three undo-row failures remain retained; no causal attribution to the functional correction."
+      },
+      {
+        "issues": [
+          1504,
+          1643
+        ],
+        "scope": "ChangeTracking undo/deletion geometry and comparative editor qualification",
+        "sourceState": "correction_merged_in_PR4453",
+        "acceptanceState": "affected_69_functional_cases_and_a7_editor_comparison_passed",
+        "evidence": [
+          "docs/project16-final-followup-local.md",
+          "docs/project16-hosted-a6.md",
+          "docs/project16-hosted-a7.md"
+        ],
+        "boundary": "Seven defects reproduced against old source; 69 affected cases passed after correction. A7 editor comparisons passed independently; these observations do not prove the cause of the a6 latency difference."
+      }
+    ],
+    "localCorrectionEvidence": {
+      "evidence": "docs/project16-a5-correction-local-qualification.md",
+      "fullA19": {
+        "tests": 790,
+        "passed": 787,
+        "failed": 3,
+        "skipped": 0
+      },
+      "fullA20": {
+        "tests": 722,
+        "passed": 712,
+        "failed": 1,
+        "skipped": 9
+      },
+      "affectedRetry": {
+        "tests": 21,
+        "passed": 21,
+        "failed": 0,
+        "skipped": 0
+      },
+      "interpretation": "All four initial failures have affected passing observations; no additive total or complete-area rerun is claimed."
+    },
+    "performanceReviewEvidence": "docs/project16-correction-performance-review.md",
+    "plannedHostedRuns": [],
+    "platformInterpretation": "Actual browser coverage spans three operating systems and three selected engines, with M1 WebKit failure retained. M2 separately demonstrates the macOS/Chromium offline workflow at newer source. No nine-cell matrix, native Safari certification or blanket per-leaf acceptance.",
+    "remainingNativeOrManual": [
+      {
+        "issues": [
+          1576,
+          1637,
+          1638
+        ],
+        "requirement": "Actual screen-reader output/transcript and announcements, not only DOM live-region state."
+      },
+      {
+        "issues": [
+          1606,
+          1624,
+          1640
+        ],
+        "requirement": "Native CJK IME, cross-application clipboard delivery and actual Windows high-contrast behavior."
+      },
+      {
+        "issues": [
+          1604,
+          1605,
+          1623
+        ],
+        "requirement": "Pinned native Unicode compatibility and actual external editor/oracle comparisons remain distinct from specification and model fixtures."
+      }
+    ],
+    "unsupportedCapabilities": {
+      "issues": [
+        1488,
+        1529,
+        1530,
+        1623
+      ],
+      "note": "Native atomic resource rename/start-instance and unadvertised native launch capabilities remain unsupported, not merely untested. Documented Vim extension/runtime exclusions remain explicit."
+    },
+    "closeIssueRecommendations": 0,
+    "policy": "No suite pass promotes every associated leaf to accepted. Existing per-leaf source limits and every closeIssue:false remain unchanged.",
+    "remainingObservedQualificationFailures": [
+      {
+        "issue": 1580,
+        "attempt": "a7",
+        "scope": "performance:lazy-evaluation",
+        "status": "failed",
+        "requirement": "Demonstrate reduced startup script evaluation from lazy loading.",
+        "observation": "Eager1560.778ms; lazy1569.77ms; saving\u22128.992ms (\u22120.5761229335626329%), five positive and seven negative pairs. Strict positive saving not demonstrated.",
+        "evidence": "docs/project16-hosted-a7.json",
+        "cause": "No causal explanation established. Completed narrow source/harness review found no concrete remaining implementation defect; the strict failed qualification is retained without rerun, waiver or gate change."
+      },
+      {
+        "issue": 1583,
+        "attempt": "m1",
+        "scope": "browser:workbench-workflows-standalone",
+        "status": "failed",
+        "requirement": "Browser/platform workflow qualification.",
+        "observation": "Playwright-managed WebKit offline-file navigation failed before product initialization. M2 macOS/Chromium separately passed the actual offline artifact.",
+        "evidence": "docs/project16-cross-platform-browser.json",
+        "cause": "Strong pinned-source automation explanation, not native Safari proof."
+      }
+    ],
+    "completedSourceReviewBoundary": {
+      "issue": 1580,
+      "observation": "The same lazy-evaluation harness ran a5/a6/a7; the lazy graph omits all five deferred controllers, the eager graph includes them and issues 14 additional module requests.",
+      "conclusion": "No concrete loader/harness defect or mandatory source correction was identified. These source/graph observations do not explain the measured negative saving or override the failed gate.",
+      "performanceExceptionAccepted": false,
+      "repeatUntilPass": false
+    }
+  },
+  "priorCurrentStatus": {
+    "cutoff": "a4 and PR4105",
+    "latestPublishedSource": {
+      "pullRequest": 4105,
+      "pullRequestUrl": "https://github.com/wieslawsoltes/SharpForge/pull/4105",
+      "mergedPullRequests": [
+        3451,
+        3475,
+        3485,
+        3533,
+        3843,
+        3865,
+        3904,
+        4105
+      ],
+      "localSource": "0858f721e8e737e6bcca1365748409cb6b0b5f35",
+      "publishedHead": "cce1aa2ceb6bce8247c4ab62c76a7d56d9518370",
+      "sourceTree": "543ac1fd0f99e60bd7be5319ecad1590ba1eeccd",
+      "mergeCommit": "8d1be9cffa04b0fd7390e5cb6fe5f6c03b997557",
+      "mergeTree": "dc9d4e337b91c6e878e7c6c7d65f013667b5ec6b",
+      "ownCore": {
+        "runId": 37175219507,
+        "jobId": 111356347344,
+        "conclusion": "success"
+      },
+      "mainCore": {
+        "runId": 37175263470,
+        "jobId": 111356461984,
+        "conclusion": "success"
+      },
+      "earlierSameHeadCore": {
+        "runId": 37175211209,
+        "conclusion": "cancelled",
+        "note": "Automatic cancellation; not a passing run."
+      },
+      "evidence": "docs/project16-hosted-qualification.json",
+      "interpretation": "Merged implementation and successful hosted core do not establish full browser, platform or acceptance qualification."
+    },
+    "latestQualification": {
+      "attempt": "a4",
+      "runId": 37175293552,
+      "jobId": 111356550684,
+      "sourceCommit": "8d1be9cffa04b0fd7390e5cb6fe5f6c03b997557",
+      "sourceTree": "dc9d4e337b91c6e878e7c6c7d65f013667b5ec6b",
+      "runner": "ubuntu-latest",
+      "engine": "chromium",
+      "browserVersion": "153.0.8010.12",
+      "status": "failed",
+      "selectedOutcomes": 15,
+      "passedOutcomes": 9,
+      "failedOutcomes": 6,
+      "node": {
+        "A19": {
+          "tests": 710,
+          "passed": 710,
+          "failed": 0,
+          "skipped": 0
+        },
+        "A20": {
+          "tests": 686,
+          "passed": 677,
+          "failed": 0,
+          "skipped": 9
+        }
+      },
+      "failedScopes": [
+        "browser:workbench-sessions",
+        "browser:workbench-workflows",
+        "browser:workbench-workflows-standalone",
+        "browser:editor-insights",
+        "performance:editor-budgets",
+        "performance:studio-large-file"
+      ],
+      "performanceObservations": {
+        "generatedModel200MiB": {
+          "p95Ms": 32.29999999998836,
+          "budgetMs": 50,
+          "absolutePassed": true,
+          "note": "Generated-model event-to-paint capture; actual Studio File-input ingress failed separately."
+        },
+        "instrumentation": {
+          "pairedCaptures": 12,
+          "overheadPercent": 0.19641649896905353,
+          "budgetPercent": 1,
+          "passed": true,
+          "note": "Specified paired aggregate gate on one Ubuntu/Chromium host; not statistical or cross-platform proof."
+        },
+        "relativeRegressionVerdict": null
+      },
+      "evidence": "docs/project16-hosted-qualification.json",
+      "summaryEvidence": "docs/evidence/project16-hosted/a4/qualification-summary.json",
+      "interpretation": "Fifteen scopes are not fifteen tests. Partial scenario checks do not turn failed suites into passes; overlapping runs are never added. Every historical outcome and skip remains intact."
+    },
+    "currentFollowupSource": {
+      "branch": "codex/project16/09-hosted-followup",
+      "implementation": "complete_followup_source_present",
+      "qualification": "pending_completed_scope_checks_and_hosted_execution",
+      "identityPolicy": "No moving follow-up HEAD is pinned here. The integration owner will append exact publication and execution identities from actual later results.",
+      "corrections": [
+        {
+          "scope": "Workspace document/layout reconciliation",
+          "issues": [
+            1517,
+            1524,
+            1538,
+            1542,
+            1543,
+            1544,
+            1583
+          ],
+          "evidence": "docs/project16-workspace-layout.md"
+        },
+        {
+          "scope": "Production Watch storage registration",
+          "issues": [
+            1547,
+            1513
+          ],
+          "evidence": "docs/project16-watch-storage-correction.md"
+        },
+        {
+          "scope": "Native Find history combobox fixture and independent budget interpretation",
+          "issues": [
+            1506,
+            1459,
+            1497
+          ],
+          "evidence": "docs/project16-editor-a4-corrections.md"
+        },
+        {
+          "scope": "Standalone worker startup and failure diagnostics",
+          "issues": [
+            1515,
+            1583
+          ],
+          "evidence": "planning/qualification/project16-standalone-worker-startup.md"
+        },
+        {
+          "scope": "Committed source, save and transaction ownership during rename preview",
+          "issues": [
+            1488,
+            1517,
+            1615,
+            1617
+          ],
+          "evidence": "docs/project16-preview-publication.md"
+        },
+        {
+          "scope": "Committed diagnostic presentation during visual rename",
+          "issues": [
+            1488,
+            1492
+          ],
+          "evidence": "docs/project16-preview-diagnostics.md"
+        },
+        {
+          "scope": "Same-source lazy-evaluation measurement and independent serial registration",
+          "issues": [
+            1580
+          ],
+          "evidence": "docs/workbench-lazy-evaluation.md",
+          "registrationEvidence": "docs/project16-qualification-outcomes.md"
+        }
+      ],
+      "nextRegisteredScopeCount": 16,
+      "registrationNote": "The new lazy-evaluation performance outcome makes future all selections 16 scopes. Historical a4 remains 15. Registration is not an execution result.",
+      "remainingQualification": [
+        "Corrected hosted outcomes on the assembled published source",
+        "Standalone workflow and offline first-use acceptance",
+        "Actual Studio 200 MiB File ingress independent of the passing generated-model capture",
+        "Compatible baseline comparisons for relative performance acceptance",
+        "Additional OS/browser coverage and explicit native, physical-input, IME, assistive and external-oracle evidence"
+      ],
+      "closeIssueRecommendations": 0
+    }
+  },
+  "productCorrectionPublication": {
+    "pullRequest": 4413,
+    "pullRequestUrl": "https://github.com/wieslawsoltes/SharpForge/pull/4413",
+    "mergedPullRequests": [
+      3451,
+      3475,
+      3485,
+      3533,
+      3843,
+      3865,
+      3904,
+      4105,
+      4297,
+      4413
+    ],
+    "localSource": "7261fc5a1355cbbd57947196b6a243856c21a946",
+    "publishedHead": "4cb2d290c4453192c777786a39ebdb7fa45b9461",
+    "sourceTree": "2a6cf385a1f81114ed980f1463e19fd6c7ce7c72",
+    "mergeCommit": "e905566c1933830deb6de7249062113c2b0eeee5",
+    "mergeTree": "1f340cafbdc6c7843e3f1335ff59f2bb1f667f28",
+    "ownCore": {
+      "runId": 37183190894,
+      "jobId": 111379703761,
+      "conclusion": "success"
+    },
+    "mainCore": {
+      "runId": 37183295751,
+      "jobId": 111380009037,
+      "conclusion": "success"
+    },
+    "initialCore": {
+      "runId": 37182594704,
+      "jobId": 111378010076,
+      "conclusion": "failure",
+      "reason": "Missing exact-hash review for the trusted checkout benchmark dynamic import; corrected by adding the reviewed contract without changing harness bytes."
+    },
+    "interpretation": "Merged product corrections and passing core do not rewrite the initial failed core, a5 failures or qualify browser/native acceptance."
+  },
+  "crossPlatformQualification": {
+    "evidence": "docs/project16-cross-platform-browser.json",
+    "attempts": [
+      {
+        "attempt": "w1",
+        "runId": 37184606471,
+        "jobId": 111383814564,
+        "runner": "windows-latest",
+        "engine": "firefox",
+        "browserVersion": "155.0",
+        "status": "passed",
+        "counts": {
+          "selected": 9,
+          "passed": 9,
+          "failed": 0
+        },
+        "sourceCommit": "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e",
+        "sourceTree": "a0922a5f98e4ce38cd377d109a083a1da77df9a1",
+        "stage": "browser"
+      },
+      {
+        "attempt": "m1",
+        "runId": 37184861392,
+        "jobId": 111384572220,
+        "runner": "macos-latest",
+        "engine": "webkit",
+        "browserVersion": "26.6",
+        "status": "failed",
+        "counts": {
+          "selected": 9,
+          "passed": 8,
+          "failed": 1
+        },
+        "sourceCommit": "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e",
+        "sourceTree": "a0922a5f98e4ce38cd377d109a083a1da77df9a1",
+        "stage": "browser"
+      },
+      {
+        "attempt": "m2",
+        "runId": 37186932517,
+        "jobId": 111390739312,
+        "runner": "macos-latest",
+        "engine": "chromium",
+        "browserVersion": "153.0.8010.12",
+        "sourceCommit": "b8d68d417c792156dedb2ac2b98acf33cac3f141",
+        "sourceTree": "74021421e044947908f037bf34d00bcb258e25fc",
+        "stage": "standalone",
+        "status": "passed",
+        "counts": {
+          "selected": 1,
+          "passed": 1,
+          "failed": 0
+        },
+        "startedAt": "2026-10-04T07:49:41.321Z",
+        "finishedAt": "2026-10-04T07:49:47.330Z",
+        "offline": true,
+        "fileArtifactBytes": 16625302,
+        "fileArtifactSha256": "f8850e1bc7d2fc1bae8153b4337f0bed1f124218bcbefba33288426b8797701a",
+        "workflowScenariosPassed": 5,
+        "lazyToolsPassed": 5,
+        "httpAttempts": [],
+        "pageErrors": [],
+        "evidence": "docs/evidence/project16-hosted/m2/vs-workflow-standalone-results.json",
+        "interpretation": "A separate actual offline file workflow on macOS/Chromium; not a rerun or pass of M1 WebKit, native Safari or nine browser scopes."
+      }
+    ],
+    "webkitFileBoundary": {
+      "attempt": "m1",
+      "failedScope": "browser:workbench-workflows-standalone",
+      "checksExecuted": 0,
+      "error": "Page.goto: WebKit encountered an internal error",
+      "classification": "Playwright-managed WebKit offline-file qualification block before SharpForge initialization",
+      "causalAssessment": "Strong source-based inference from pinned Playwright 1.63.0/WebKit loader guard and matching trace; no separate isolated runtime control was performed.",
+      "preservedConditions": [
+        "offline=True",
+        "actual file URL",
+        "HTTP request observation and blocking",
+        "CSP checks"
+      ],
+      "nativeSafariQualified": false,
+      "waiver": false
+    },
+    "interpretation": "A6/W1/M1 browser coverage remains at 25ef: nine Linux/Chromium, nine Windows/Firefox and eight macOS/WebKit scopes passed. M2 separately passed only macOS/Chromium standalone at b8. Source/scope counts are not added and M1 stays failed; no nine-cell matrix or native Safari qualification is claimed.",
+    "initialBrowserSourceCommit": "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e",
+    "initialBrowserSourceTree": "a0922a5f98e4ce38cd377d109a083a1da77df9a1"
+  },
+  "baselineProfilePublication": {
+    "pullRequest": 4426,
+    "localSource": "3c509d987e1af094333454f81debe2e0681c8202",
+    "publishedHead": "aca4d358167c8840a1efce9e39182e1eb5b6f71b",
+    "sourceTree": "fd9dc104ddd4e46ca1dceca8630cfacbaa584686",
+    "mergeCommit": "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e",
+    "mergeTree": "a0922a5f98e4ce38cd377d109a083a1da77df9a1",
+    "parents": [
+      "e905566c1933830deb6de7249062113c2b0eeee5",
+      "aca4d358167c8840a1efce9e39182e1eb5b6f71b"
+    ],
+    "ownCore": {
+      "runId": 37183489254,
+      "jobId": 111380582948,
+      "conclusion": "success"
+    },
+    "mainCore": {
+      "runId": 37183596240,
+      "jobId": 111380885340,
+      "conclusion": "success"
+    },
+    "earlierOwnCore": {
+      "runId": 37183486528,
+      "conclusion": "cancelled"
+    },
+    "localProfileQualification": {
+      "source": "876baeb099c9697f20fd09e7ffa39ebda284770e",
+      "tree": "bb8661834ea08234b6cbf499dbdd7b8c53322cb9",
+      "tests": 35,
+      "passed": 35,
+      "failed": 0,
+      "skipped": 0
+    },
+    "evidence": "docs/project16-a5-baseline-profile.md",
+    "interpretation": "Merged profile behavior and core evidence are separate from a6 actual comparative outcomes."
+  },
+  "priorHostedQualification": {
+    "attempt": "a5",
+    "runId": 37178840757,
+    "jobId": 111367060633,
+    "sourceCommit": "c13aa0fd9d27df28b3708bb83d914a04c20a5c7c",
+    "sourceTree": "29023ed8b962b6d91671bdb0c0359d905ef2659e",
     "runner": "ubuntu-latest",
     "engine": "chromium",
     "browserVersion": "153.0.8010.12",
     "status": "failed",
-    "selectedOutcomes": 15,
-    "passedOutcomes": 9,
-    "failedOutcomes": 6,
+    "selectedOutcomes": 16,
+    "passedOutcomes": 11,
+    "failedOutcomes": 5,
     "node": {
       "A19": {
-        "tests": 710,
-        "passed": 710,
+        "tests": 748,
+        "passed": 748,
         "failed": 0,
         "skipped": 0
       },
       "A20": {
-        "tests": 686,
-        "passed": 677,
+        "tests": 712,
+        "passed": 703,
         "failed": 0,
         "skipped": 9
       }
@@ -73,111 +737,83 @@
       "browser:workbench-sessions",
       "browser:workbench-workflows",
       "browser:workbench-workflows-standalone",
-      "browser:editor-insights",
       "performance:editor-budgets",
       "performance:studio-large-file"
     ],
     "performanceObservations": {
-      "generatedModel200MiB": {
-        "p95Ms": 32.29999999998836,
-        "budgetMs": 50,
-        "absolutePassed": true,
-        "note": "Generated-model event-to-paint capture; actual Studio File-input ingress failed separately."
-      },
-      "instrumentation": {
-        "pairedCaptures": 12,
-        "overheadPercent": 0.19641649896905353,
-        "budgetPercent": 1,
-        "passed": true,
-        "note": "Specified paired aggregate gate on one Ubuntu/Chromium host; not statistical or cross-platform proof."
+      "generatedModel200MiBTypingP95Ms": 32.40000000002328,
+      "typingBudgetMs": 50,
+      "actualFileIngress": "failed",
+      "instrumentationOverheadPercent": -0.23874095989473437,
+      "lazyEvaluationReductionPercent": 2.4215209683991104,
+      "lazyPairs": {
+        "positive": 9,
+        "negative": 3
       },
       "relativeRegressionVerdict": null
     },
     "evidence": "docs/project16-hosted-qualification.json",
-    "summaryEvidence": "docs/evidence/project16-hosted/a4/qualification-summary.json",
-    "interpretation": "Fifteen scopes are not fifteen tests. Partial scenario checks do not turn failed suites into passes; overlapping runs are never added. Every historical outcome and skip remains intact."
+    "summaryEvidence": "docs/evidence/project16-hosted/a5/qualification-summary.json",
+    "interpretation": "Historical failed run preserved. Generated-model timing is not File ingress, partial standalone startup is not complete offline workflow, and overlapping counts are not added."
   },
-  "currentFollowupSource": {
-    "branch": "codex/project16/09-hosted-followup",
-    "implementation": "complete_followup_source_present",
-    "qualification": "pending_completed_scope_checks_and_hosted_execution",
-    "identityPolicy": "No moving follow-up HEAD is pinned here. The integration owner will append exact publication and execution identities from actual later results.",
-    "corrections": [
-      {
-        "scope": "Workspace document/layout reconciliation",
-        "issues": [
-          1517,
-          1524,
-          1538,
-          1542,
-          1543,
-          1544,
-          1583
-        ],
-        "evidence": "docs/project16-workspace-layout.md"
+  "latestCompleteAllQualification": {
+    "attempt": "a6",
+    "runId": 37183721322,
+    "jobId": 111381241587,
+    "sourceCommit": "25ef23b0fb86eb3be4151492c2ef6bbc51f0a82e",
+    "sourceTree": "a0922a5f98e4ce38cd377d109a083a1da77df9a1",
+    "runner": "ubuntu-latest",
+    "engine": "chromium",
+    "browserVersion": "153.0.8010.12",
+    "stage": "all",
+    "baselineProfile": "a5",
+    "captureOnly": false,
+    "status": "failed",
+    "selectedOutcomes": 16,
+    "passedOutcomes": 15,
+    "failedOutcomes": 1,
+    "node": {
+      "A19": {
+        "tests": 807,
+        "passed": 807,
+        "failed": 0,
+        "skipped": 0
       },
-      {
-        "scope": "Production Watch storage registration",
-        "issues": [
-          1547,
-          1513
-        ],
-        "evidence": "docs/project16-watch-storage-correction.md"
-      },
-      {
-        "scope": "Native Find history combobox fixture and independent budget interpretation",
-        "issues": [
-          1506,
-          1459,
-          1497
-        ],
-        "evidence": "docs/project16-editor-a4-corrections.md"
-      },
-      {
-        "scope": "Standalone worker startup and failure diagnostics",
-        "issues": [
-          1515,
-          1583
-        ],
-        "evidence": "planning/qualification/project16-standalone-worker-startup.md"
-      },
-      {
-        "scope": "Committed source, save and transaction ownership during rename preview",
-        "issues": [
-          1488,
-          1517,
-          1615,
-          1617
-        ],
-        "evidence": "docs/project16-preview-publication.md"
-      },
-      {
-        "scope": "Committed diagnostic presentation during visual rename",
-        "issues": [
-          1488,
-          1492
-        ],
-        "evidence": "docs/project16-preview-diagnostics.md"
-      },
-      {
-        "scope": "Same-source lazy-evaluation measurement and independent serial registration",
-        "issues": [
-          1580
-        ],
-        "evidence": "docs/workbench-lazy-evaluation.md",
-        "registrationEvidence": "docs/project16-qualification-outcomes.md"
+      "A20": {
+        "tests": 722,
+        "passed": 713,
+        "failed": 0,
+        "skipped": 9
       }
+    },
+    "browser": {
+      "selected": 9,
+      "passed": 9,
+      "failed": 0
+    },
+    "failedScopes": [
+      "performance"
     ],
-    "nextRegisteredScopeCount": 16,
-    "registrationNote": "The new lazy-evaluation performance outcome makes future all selections 16 scopes. Historical a4 remains 15. Registration is not an execution result.",
-    "remainingQualification": [
-      "Corrected hosted outcomes on the assembled published source",
-      "Standalone workflow and offline first-use acceptance",
-      "Actual Studio 200 MiB File ingress independent of the passing generated-model capture",
-      "Compatible baseline comparisons for relative performance acceptance",
-      "Additional OS/browser coverage and explicit native, physical-input, IME, assistive and external-oracle evidence"
-    ],
-    "closeIssueRecommendations": 0
+    "performanceObservations": {
+      "generatedModel200MiBTypingP95Ms": 32.29999999998836,
+      "typingBudgetMs": 50,
+      "actualFileIngress": "passed_synthetic_File_via_real_input_handler",
+      "editorBudgets": "passed",
+      "instrumentation": "passed",
+      "lazyEvaluation": "passed",
+      "editorRelativeRegressionVerdict": false,
+      "workbenchRelativeRegressionVerdict": true,
+      "failedEditorRows": [
+        "1048576/browser.undoToPaint",
+        "10485760/browser.undoToPaint",
+        "104857600/browser.undoToPaint"
+      ],
+      "relativeThreshold": 0.2,
+      "cause": "Not established by capture; later pre-existing ChangeTracking correction is not proof of causation."
+    },
+    "evidence": "docs/project16-hosted-a6.json",
+    "summaryEvidence": "docs/evidence/project16-hosted/a6/qualification-summary.json",
+    "interpretation": "Latest completed all-stage observation, not latest product source. A6 remains failed despite passing Node/browser and independent performance scopes. No overlapping counts are added."
   },
   "inventory": {
     "file": "project16-issues.json (provided snapshot)",

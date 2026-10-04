@@ -20,13 +20,24 @@ const constantTypes = Object.freeze({
   box: 'object',
 });
 
+/**
+ * The stack entry of `ldloca`: the address of a local variable. A managed pointer cannot be stored across a
+ * suspension, but the local it names can (it is hoisted), so the address is taken again instead of being saved.
+ */
+export class LocalAddress {
+  /** @param {number} slot the local variable slot */
+  constructor(slot) {
+    this.slot = slot;
+  }
+}
+
 export class TypedIlBuilder extends IlBuilder {
   /** @param core the CoreTypes of the compilation  @param {(object|null)[]} argumentTypes the type of each argument slot */
   constructor(core, argumentTypes) {
     super();
     this.core = core;
     this.argumentTypes = argumentTypes;
-    /** One entry per stack slot, bottom first: a type symbol, or null when the type is not known. */
+    /** One entry per stack slot, bottom first: a type symbol, a LocalAddress, or null when the type is not known. */
     this.stackTypes = [];
   }
   /** What an instruction pushes, when the instruction alone says it. */
@@ -37,6 +48,7 @@ export class TypedIlBuilder extends IlBuilder {
       const local = this.locals[operand];
       return local && !local.isByReference ? local.type : null;
     }
+    if (name === 'ldloca') return this.locals[operand]?.isByReference ? null : new LocalAddress(operand);
     const keyword = constantTypes[name];
     return keyword ? this.core[keyword] : null;
   }
@@ -67,7 +79,7 @@ export class TypedIlBuilder extends IlBuilder {
   recordTop(type) {
     if (this.depth) this.stackTypes[this.depth - 1] = type;
   }
-  /** The types of the values on the stack, bottom first; null entries are values of unknown type. */
+  /** The entries of the values on the stack, bottom first; null entries are values of unknown type. */
   get pendingTypes() {
     return this.stackTypes.slice(0, this.depth ?? 0);
   }

@@ -5,7 +5,7 @@
  * `canCast` is "an explicit conversion exists" (CS0030 otherwise) and `typeTestOutcome` says whether an `is` test is
  * always true, always false or decided at run time (CS0183/CS0184 warnings).
  */
-import { TypeKind, SymbolKind, ArrayTypeSymbol, NamedTypeSymbol, TypeParameterSymbol } from '../symbols/types.js';
+import { TypeKind, SymbolKind, ArrayTypeSymbol, NamedTypeSymbol, TypeParameterSymbol, TypeCompareKind } from '../symbols/types.js';
 import { baseTypeChain, allInterfacesOf, derivesFrom, effectiveBaseClass, effectiveInterfaces } from '../symbols/substitution.js';
 import { hasVarianceConversion } from './variance.js';
 
@@ -18,9 +18,17 @@ export const isReference = t => t.isReferenceType === true;
 /** True when the type is known to be a value type (structs, enums, `struct`-constrained type parameters). */
 export const isValue = t => t.isValueType === true;
 
+/**
+ * The same interface for a conversion: element names are not part of a tuple's identity, so `(int X, int Y)`
+ * implements `IEquatable<(int X, int Y)>` through the `IEquatable<ValueTuple<int, int>>` its definition lists.
+ */
+const sameIgnoringTupleNames = (left, right) => left.equals(right, TypeCompareKind.IgnoreTupleNames);
+/** `nint` is `IntPtr` to the runtime: it implements `INumber<nint>` through the `INumber<IntPtr>` its definition lists. */
+const sameInterface = (left, right) => left.equals(right, TypeCompareKind.IgnoreTupleNames | TypeCompareKind.IgnoreNativeIntegers);
+
 /** Identity or implicit reference conversion (the test variance and array covariance use). */
 export function hasIdentityOrImplicitReference(from, to, core) {
-  return from.equals(to) || hasImplicitReferenceConversion(from, to, core);
+  return sameIgnoringTupleNames(from, to) || hasImplicitReferenceConversion(from, to, core);
 }
 /** Implicit reference conversions (identity excluded). */
 export function hasImplicitReferenceConversion(from, to, core) {
@@ -59,7 +67,7 @@ export function hasImplicitReferenceConversion(from, to, core) {
     if (derivesFrom(from, to, core)) return true;
   }
   if (isInterface(to)) {
-    if (allInterfacesOf(from, core).some(i => i.equals(to))) return true;
+    if (allInterfacesOf(from, core).some(i => sameIgnoringTupleNames(i, to))) return true;
     // Variance: any implemented construction (or `from` itself) that is variance-convertible to `to`.
     const reference = (a, b) => hasIdentityOrImplicitReference(a, b, core);
     return [from, ...allInterfacesOf(from, core)].some(i => hasVarianceConversion(i, to, reference));
@@ -95,7 +103,7 @@ export function hasBoxingConversion(from, to, core) {
   if (from.typeKind === TypeKind.Enum && to.equals(core.enumType)) return true;
   if (isInterface(to)) {
     const reference = (a, b) => hasIdentityOrImplicitReference(a, b, core);
-    return allInterfacesOf(from, core).some(i => i.equals(to) || hasVarianceConversion(i, to, reference));
+    return allInterfacesOf(from, core).some(i => sameInterface(i, to) || hasVarianceConversion(i, to, reference));
   }
   return false;
 }
@@ -146,7 +154,7 @@ export function hasExplicitReferenceConversion(from, to, core) {
   if (!isInterface(from) && isInterface(to)) return from.typeKind === TypeKind.Class && !from.isSealed;
   // Interface to class: allowed unless the class is sealed and does not implement the interface.
   if (isInterface(from) && !isInterface(to))
-    return to.typeKind === TypeKind.Class && (!to.isSealed || allInterfacesOf(to, core).some(i => i.equals(from)));
+    return to.typeKind === TypeKind.Class && (!to.isSealed || hasImplicitReferenceConversion(to, from, core));
   // Interface to interface that is not a base interface.
   return true;
 }
