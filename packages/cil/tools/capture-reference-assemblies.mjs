@@ -34,16 +34,34 @@ try {
   const references = pack.files.map(path => '-r:' + path);
   const common = [csc, '-nologo', '-noconfig', '-nostdlib+', '-warn:0', '-unsafe+', '-deterministic+', '-langversion:latest', ...references];
   const oracle = join(temporary, 'Oracle.dll');
-  run([...common, '-target:exe', '-out:' + oracle, join(fixture, 'Program.cs'), join(fixture, 'SignatureNames.cs')]);
+  const oracleSources = ['Program.cs', 'SignatureNames.cs', 'AttributeTypes.cs'];
+  writeJson(join(output, 'capture-inputs.json'), { sdk, compiler, referencePack: pack.version,
+    platform: process.platform, architecture: process.arch,
+    files: Object.fromEntries([...oracleSources, 'surface.cs', 'consumer.cs', 'observer-enums.cs']
+      .map(name => [name, hash(readFileSync(join(fixture, name)))])) });
+  run([...common, '-target:exe', '-out:' + oracle, ...oracleSources.map(name => join(fixture, name))]);
   writeJson(join(temporary, 'Oracle.runtimeconfig.json'), {
     runtimeOptions: { tfm: pack.targetFramework, framework: { name: 'Microsoft.NETCore.App', version: pack.version } },
   });
+  const enumProbe = join(temporary, 'ObserverEnums.dll');
+  run([...common, '-target:library', '-refonly', '-out:' + enumProbe, join(fixture, 'observer-enums.cs')]);
+  copyFileSync(enumProbe, join(output, 'observer-enums.dll'));
+  const enumObservation = JSON.parse(run([oracle, enumProbe]));
+  writeJson(join(output, 'observer-enums.json'), enumObservation);
+  const enumAttribute = enumObservation.surface.find(type => type.name === 'EnumObservation.Probe').attributes
+    .find(attribute => attribute.name === 'EnumObservation.EnumArgumentsAttribute');
+  assert.deepEqual(enumAttribute.arguments.map(argument => Array.isArray(argument.value)
+    ? argument.value.map(element => element.value) : argument.value), [255, 4294967296, 0, 4294967296, [255], 'System.Int32']);
+  assert.equal(enumAttribute.arguments[4].value[0].type, enumAttribute.arguments[0].type);
+  assert.deepEqual(enumAttribute.named.map(argument => [argument.name, argument.value]), [['Choice', 255], ['NullValues', null]]);
   const source = readFileSync(join(fixture, 'surface.cs'), 'utf8');
   const control = compileToReferenceAssembly(source, { name: 'MetadataControl', allowUnsafe: true });
   assert.equal(control.success, true, JSON.stringify(control.diagnostics));
   const controlPath = join(temporary, 'MetadataControl.dll');
   writeFileSync(controlPath, control.assembly);
+  copyFileSync(controlPath, join(output, 'metadata-control.dll'));
   const controlObservation = JSON.parse(run([oracle, controlPath]));
+  writeJson(join(output, 'metadata-control.json'), controlObservation);
   assert.equal(controlObservation.markerCount, 0);
   assert.equal(controlObservation.loadRejection, 'none', 'Marker-free metadata-only control must load successfully');
   const consumer = join(fixture, 'consumer.cs');
@@ -59,15 +77,17 @@ try {
     mkdirSync(dirname(native), { recursive: true });
     mkdirSync(dirname(emitted), { recursive: true });
     writeFileSync(sourcePath, text);
+    writeFileSync(join(output, id + '-source.cs'), text);
     run([...common, '-target:library', '-refonly', '-out:' + native, sourcePath]);
+    copyFileSync(native, join(output, id + '-roslyn.dll'));
     const compiled = compileToReferenceAssembly(text, { name: 'RefSurface', refout: true, allowUnsafe: true });
     assert.equal(compiled.success, true, JSON.stringify(compiled.diagnostics));
     writeFileSync(emitted, compiled.assembly);
+    copyFileSync(emitted, join(output, id + '-sharpforge.dll'));
     const expected = JSON.parse(run([oracle, native]));
-    const observed = JSON.parse(run([oracle, emitted]));
     writeJson(join(output, id + '-expected.json'), expected);
+    const observed = JSON.parse(run([oracle, emitted]));
     writeJson(join(output, id + '-observed.json'), observed);
-    copyFileSync(native, join(output, id + '-roslyn.dll'));
     assert.deepEqual(observed, expected, `${id}: native SRM and CLR observations must match Roslyn`);
     assert.equal(observed.markerCount, 1);
     assert.equal(observed.allBodiesThrowNull, true);
@@ -90,7 +110,9 @@ try {
   const result = { schemaVersion: 1, sdk, compiler, runtime: cases[0].runtime, referencePack: pack.version,
     platform: process.platform, architecture: process.arch, metadataControlLoads: true,
     sourceSha256: hash(source), oracleSha256: hash(readFileSync(join(fixture, 'Program.cs'))),
-    signatureNamesSha256: hash(readFileSync(join(fixture, 'SignatureNames.cs'))), cases };
+    signatureNamesSha256: hash(readFileSync(join(fixture, 'SignatureNames.cs'))),
+    attributeTypesSha256: hash(readFileSync(join(fixture, 'AttributeTypes.cs'))),
+    observerEnumsSha256: hash(readFileSync(join(fixture, 'observer-enums.cs'))), cases };
   writeJson(join(output, 'reference.json'), result);
   console.log(JSON.stringify({ sdk, compiler, runtime: result.runtime, cases: cases.length, output }, null, 2));
 } finally {

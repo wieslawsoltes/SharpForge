@@ -12,6 +12,7 @@ using var stream = File.OpenRead(args[0]);
 using var pe = new PEReader(stream);
 var metadata = pe.GetMetadataReader();
 var names = new SignatureNames();
+var attributeTypes = new AttributeTypes(metadata, names);
 string Name(EntityHandle handle) => names.Name(metadata, handle);
 string MethodName(EntityHandle handle)
 {
@@ -34,19 +35,24 @@ string AttributeName(CustomAttributeHandle handle)
         : metadata.GetMethodDefinition((MethodDefinitionHandle)constructor).GetDeclaringType();
     return Name(owner);
 }
-object? Value(object? value) => value is ImmutableArray<CustomAttributeTypedArgument<string>> array
-    ? array.Select(item => new { type = item.Type, value = Value(item.Value) }).ToArray() : value;
+object? Value(object? value) => value switch
+{
+    ImmutableArray<CustomAttributeTypedArgument<AttributeType>> array =>
+        array.IsDefault ? null : array.Select(item => new { type = item.Type.Name, value = Value(item.Value) }).ToArray(),
+    AttributeType type => type.Name,
+    _ => value,
+};
 object[] Attributes(CustomAttributeHandleCollection handles) => handles.Select(handle =>
 {
     var attribute = metadata.GetCustomAttribute(handle);
-    var value = attribute.DecodeValue(names);
+    var value = attribute.DecodeValue(attributeTypes);
     return new
     {
         name = AttributeName(handle), constructor = MethodName(attribute.Constructor),
-        arguments = value.FixedArguments.Select(item => new { type = item.Type, value = Value(item.Value) }).ToArray(),
+        arguments = value.FixedArguments.Select(item => new { type = item.Type.Name, value = Value(item.Value) }).ToArray(),
         named = value.NamedArguments.Select(item => new
         {
-            name = item.Name, kind = item.Kind.ToString(), type = item.Type, value = Value(item.Value),
+            name = item.Name, kind = item.Kind.ToString(), type = item.Type.Name, value = Value(item.Value),
         }).ToArray(),
     };
 }).OrderBy(item => item.name, StringComparer.Ordinal).ToArray();

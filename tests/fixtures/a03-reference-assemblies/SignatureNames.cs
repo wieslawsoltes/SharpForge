@@ -3,7 +3,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Reflection.Metadata;
 
-sealed class SignatureNames : ISignatureTypeProvider<string, object?>, ICustomAttributeTypeProvider<string>
+sealed class SignatureNames : ISignatureTypeProvider<string, object?>
 {
     public string Name(MetadataReader metadata, EntityHandle handle)
     {
@@ -49,10 +49,4 @@ sealed class SignatureNames : ISignatureTypeProvider<string, object?>, ICustomAt
     public string GetTypeFromSpecification(MetadataReader metadata, object? context, TypeSpecificationHandle handle, byte raw) =>
         metadata.GetTypeSpecification(handle).DecodeSignature(this, context);
 
-    public string GetSystemType() => "class System.Type";
-    public bool IsSystemType(string type) => type == GetSystemType();
-    // This fixture serializes only non-generic primitive typeof values; contract assembly versions differ by target.
-    public string GetTypeFromSerializedName(string name) => name.Split(',')[0];
-    public PrimitiveTypeCode GetUnderlyingEnumType(string type) =>
-        throw new BadImageFormatException("The reference fixture declares no enum-valued custom-attribute arguments: " + type);
 }

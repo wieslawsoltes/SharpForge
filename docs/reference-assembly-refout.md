@@ -94,13 +94,18 @@ corpora include fixed buffers in generic and nested generic structs, and the ind
 storage forms from closed instantiations. It checks concrete method
 bodies, compiles an independent consumer against the SharpForge image, verifies friend access, and compares CoreCLR's
 reference-loading HRESULT against Roslyn while a marker-free control loads successfully. Serialized `typeof` values
-are compared by type name because the reference contract versions differ. Every retained observation records SDK,
+are compared by type name because the reference contract versions differ. Attribute decoding retains native metadata
+identities: source enums use their `value__` storage signatures, and external enums resolve their exact AssemblyRef
+through the CLR, including framework forwarders. An independent Roslyn observer probe exercises byte and unsigned
+64-bit source enums, an external enum, boxed and array enum values, named arguments and null arrays before comparison.
+The source, both images and each completed observation are retained even if a later stage fails. Every retained observation records SDK,
 compiler, runtime, platform and input hashes. The separate `edge-roslyn.json` observation was captured from
 `edge-source.cs` with SDK 10.0.201 and CoreCLR 10.0.5 on Linux x64, using `/refonly /target:library /deterministic+`
-and `/langversion:latest`, the installed reference-pack assemblies and the same native observer. It records source,
+and `/langversion:latest`, the installed reference-pack assemblies and the observer revision identified in that snapshot. It records source,
 compiler, observer and reference-image hashes, canonical interface names and the file-local attribute exception above.
-The source was named `Source.cs` during capture; file-local name hashes are compiler-specific. Unit tests, the main
-native comparison and performance are pending at this revision.
+The source was named `Source.cs` during capture; file-local name hashes are compiler-specific. The focused Node gate
+passed 40 tests at `e14947ea`; four separate parameter-default reference-pack tests skipped because their SDK path was
+not configured. The main native comparison and performance remain pending while the native observer is qualified.
 Browser, Rust-native and Wasm execution are not qualified by these checks: the output is a compile-time reference
 assembly and its marker deliberately prevents execution loading.
 
