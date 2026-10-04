@@ -5,21 +5,40 @@ import {createCommandRegistry} from '../apps/studio/commands/registry.js';
 import {registerStudioCommands} from '../apps/studio/commands/core.js';
 import {toolDefinitions} from '../apps/studio/tools/definitions.js';
 import {EDITOR_KEYMAPS} from '@sharpforge/editor';
+import {createWorkbenchServices} from '../apps/studio/workbench/sessions.js';
+import {registerStartupCommands} from '../apps/studio/workbench/startup-commands.js';
 import {registerShellCommands} from '../apps/studio/workbench/shell-commands.js';
 import {workbenchToolDefinitions} from '../apps/studio/workbench/shell-tools.js';
 import {createWorkbenchInventory} from '../apps/studio/workbench/inventory.js';
 import {assessWorkbenchTrace, compareWorkbenchTraces} from './workbench-perf-budget.mjs';
 
-test('workbench inventory matches every registered shell window and command', async () => {
+test('workbench inventory matches every registered shell window and command', async context => {
   const registry = createCommandRegistry();
+  const services = createWorkbenchServices();
+  context.after(() => {
+    registry.dispose();
+    services.dispose();
+  });
+  const noAction = () => {};
   registerStudioCommands(registry, {EDITOR_KEYMAPS, toolDefinitions});
+  registerStartupCommands(registry, {
+    services, configure: noAction, configureProfiles: noAction,
+    showProcesses: noAction, stopAll: noAction, startNewInstance: noAction
+  });
   registerShellCommands({commands: registry, toolDefinitions: workbenchToolDefinitions, options: {}, tests: {providers: new Map()}});
   const actual = createWorkbenchInventory(registry);
   const saved = JSON.parse(await readFile(new URL('../docs/vs-workbench-inventory.json', import.meta.url), 'utf8'));
   assert.deepEqual(actual, saved);
   assert(actual.windows.every(window => window.status === 'registered'));
   assert.equal(new Set(actual.commands.map(command => command.id)).size, actual.commands.length);
-  registry.dispose();
+  for (const id of ['startup-projects', 'solutionSetStartupProjects', 'launch-profiles', 'processes',
+    'stop-all', 'start-new-instance', 'projectDebugStartNewInstance']) {
+    assert(actual.commands.some(command => command.id === id), `Missing production startup command: ${id}`);
+  }
+  assert(actual.menus.find(menu => menu.id === 'project').commands.includes('solutionSetStartupProjects'));
+  const debugCommands = actual.menus.find(menu => menu.id === 'debug').commands;
+  assert(debugCommands.includes('start-new-instance'));
+  assert(debugCommands.includes('stop-all'));
 });
 
 function performanceTrace(duration = 100) {
