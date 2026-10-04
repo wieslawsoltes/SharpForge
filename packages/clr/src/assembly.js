@@ -4,6 +4,7 @@ import { checkCancellation, loadError, LoadErrorCode } from './load-errors.js';
 import { MetadataTypeDefinitions } from './type-system/metadata-type-definitions.js';
 import { MetadataMemberDefinitions } from './type-system/metadata-member-definitions.js';
 import { MetadataConstants } from './type-system/metadata-constants.js';
+import { MetadataPropertyAccessors } from './type-system/metadata-property-accessors.js';
 import { MetadataParameters } from './type-system/metadata-parameters.js';
 import { MetadataGenericParameters } from './type-system/metadata-generic-parameters.js';
 
@@ -41,6 +42,8 @@ export class RuntimeModule {
   #typeDefinitions;
   #methodDefinitions;
   #fieldDefinitions;
+  #propertyDefinitions;
+  #propertyAccessors;
   #constants;
   #parameterDefinitions;
   #genericParameters;
@@ -155,6 +158,27 @@ export class RuntimeModule {
     this.#assembly.ensureUsable();
     this.#fieldDefinitions ??= new MetadataMemberDefinitions(this, 'field');
     return this.#fieldDefinitions.forType(typeToken);
+  }
+
+  /** Canonical Property metadata identity with lazy signature and accessor links. */
+  propertyDefinition(token) {
+    this.#assembly.ensureUsable();
+    this.#propertyDefinitions ??= new MetadataMemberDefinitions(this, 'property');
+    return this.#propertyDefinitions.get(token);
+  }
+
+  /** Frozen declared-property list through PropertyMap and optional #- PropertyPtr indirection. */
+  propertyDefinitions(typeToken) {
+    this.#assembly.ensureUsable();
+    this.#propertyDefinitions ??= new MetadataMemberDefinitions(this, 'property');
+    return this.#propertyDefinitions.forType(typeToken);
+  }
+
+  /** Frozen {getMethod, setMethod, otherMethods} using canonical methods; no visibility filtering or execution. */
+  propertyAccessors(token) {
+    this.#assembly.ensureUsable();
+    this.#propertyAccessors ??= new MetadataPropertyAccessors(this);
+    return this.#propertyAccessors.get(token);
   }
 
   /** Frozen raw Constant value for a Field/Param/Property token, or null; malformed metadata yields SFCLR005/007. */

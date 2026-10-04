@@ -41,6 +41,7 @@ export function callSourceFrame(vm, methodId, args) {
   frame.base = vm.stack.length;
   for (let index = 0; index < args.length; index++) frame.locals[index] = args[index];
   vm.frames.push(frame);
+  vm.profiler?.enter(frame);
 }
 
 export function callSourceFromStack(vm, methodId, count) {

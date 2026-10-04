@@ -6,7 +6,9 @@ import { CooperativeScheduler } from '../scheduler.js';
 import { normalizeRuntimeLaunchOptions } from '../launch-options.js';
 import { createSourceMethodTables } from './method-table.js';
 import { sourceEntryArguments } from './entry-arguments.js';
+import { initializeExecutionProfiler } from './profiler.js';
 import { initializeSourceNumbers, sourceInitialValue } from './source-numbers.js';
+import { installRootProvider } from './frame-roots.js';
 
 /** Initialize each source runtime's heap, state and entry frame from independent host options. */
 export function initializeSourceVM(vm, image, options) {
@@ -21,7 +23,7 @@ export function initializeSourceVM(vm, image, options) {
   vm.options = { maxInstructions: 20_000_000, maxFrames: 512, maxOutputCharacters: 1_000_000, ...options };
   initializeSourceNumbers(vm);
   vm.heap = new ManagedHeap({ ...options, methodTables: createSourceMethodTables(image, vm.options) });
-  vm.heap.rootProvider = () => vm.roots();
+  installRootProvider(vm);
   vm.stack = [];
   vm.frames = [];
   vm.statics = image.statics.map(slot => sourceInitialValue(vm, slot));
@@ -44,6 +46,7 @@ export function initializeSourceVM(vm, image, options) {
   vm.onOutput = options.onOutput ?? (() => {});
   vm.onException = null;
   vm.onWrite = null;
+  initializeExecutionProfiler(vm, options.profile);
   vm.platform = new ManagedPlatform(vm, options);
   vm.scheduler = new CooperativeScheduler(vm, options);
   vm.call(image.entryPoint, sourceEntryArguments(vm, options));
