@@ -2,23 +2,27 @@ import {verifyNumericInstruction,verifyScalarConstant} from './numeric/source-pr
 import {enumTypes,frameworkType} from '@sharpforge/framework';
 export {smallInteger, smallIntegerIndirect} from './numeric/small-int.js';
 export {managedExceptionTypes, exceptionTypeName, exceptionBaseType, exceptionHResult, exceptionMatches} from './exception-types.js';
-import {FORMAT_VERSION,Op,OpName,BinaryName,UnaryName} from './opcodes.js';
+import {FORMAT_VERSION,Op,BinaryName,UnaryName} from './opcodes.js';
+import {verifyProjectReferences} from './project-references.js';
+import {projectInstructionEffect} from './project-reference-instructions.js';
+export {PROJECT_REFERENCE_FORMAT,projectReferenceLimits,projectAssemblyKey,verifyProjectReferences} from './project-references.js';
 export {FORMAT_VERSION,EnumConvertBase,Op,OpName,Binary,BinaryName,Unary,UnaryName} from './opcodes.js';
 import {recordSourceStacks,discardSourceStacks} from './source-stack-proof.js';
 export {verifiedSourceStackBound} from './source-stack-proof.js';
 import {Builtins} from './builtins.js';
 export {Builtins,BuiltinMap,frameworkBuiltin,CONTRACT_BUILTIN_OFFSET,createBuiltinRegistry} from './builtins.js';
 export {builtinOwners,builtinMemberShape,builtinParameterType} from './builtin-metadata.js';
-export function disassemble(image, methodId) {
-  const methods=methodId===undefined?image.methods:[image.methods[methodId]];
-  return methods.map(m=>({name:m.qualifiedName,id:m.id,instructions:Array.from({length:m.code.length/3},(_,i)=>({offset:i,op:OpName[m.code[i*3]],a:m.code[i*3+1],b:m.code[i*3+2],point:m.code[i*3]===Op.SEQ?image.sequencePoints[m.code[i*3+1]]:null}))}));
-}
-export function serializeImage(image) { return JSON.stringify(image, (key,value)=>value instanceof Int32Array?{$int32:[...value]}:value); }
-export function deserializeImage(text) { const image=JSON.parse(text,(key,value)=>value?.$int32?Int32Array.from(value.$int32):value);if(image.formatVersion!==FORMAT_VERSION)throw new Error('Unsupported SharpForge bytecode version');return image; }
+export {disassemble} from './disassembly.js';
+export {serializeImage,deserializeImage} from './serialization.js';
 /** Structural and stack-height verification for compiler output and externally loaded images. */
 export function verifyImage(image,{stackBounds=false}={}){
   const errors=[],bounds=stackBounds?[]:null;
   if(image?.formatVersion!==FORMAT_VERSION||!Array.isArray(image?.methods)||!Array.isArray(image?.constants)||!Array.isArray(image?.types)||!Array.isArray(image?.sequencePoints)||!Array.isArray(image?.statics)){discardSourceStacks(image);return ['Malformed or incompatible bytecode image'];}
+  const invalid = image.externalReferences === undefined ? null : verifyProjectReferences(image.externalReferences);
+  if (invalid?.length) {
+    discardSourceStacks(image);
+    return invalid;
+  }
   const fail=(m,pc,msg)=>{if(errors.length<100)errors.push(`${m?.qualifiedName??'<image>'}:${pc}: ${msg}`);};
   if(!image.constants.every(verifyScalarConstant)||!image.statics.every(s=>verifyScalarConstant(s.value)))fail(null,0,'Invalid scalar constant');
   if(image.outputKind==='library'?image.entryPoint!==null:!Number.isInteger(image.entryPoint)||!image.methods[image.entryPoint])fail(null,0,'Invalid entry point');
@@ -47,7 +51,13 @@ export function verifyImage(image,{stackBounds=false}={}){
         case Op.NEWARR:if(typeof image.constants[a]!=='string')fail(m,pc,'Invalid array element type');need=1;break;
         case Op.LDELEM:need=2;delta=-1;break;case Op.STELEM:need=3;delta=-2;break;
         case Op.LENGTH:need=1;break;case Op.THROW:need=1;delta=-1;break;case Op.RETHROW:break;
-        default:fail(m,pc,'Unknown opcode');continue;
+        default: {
+          const effect = projectInstructionEffect(image, op, a, b);
+          if (!effect) { fail(m, pc, 'Unknown opcode'); continue; }
+          if (effect.error) fail(m, pc, effect.error);
+          need = effect.need;
+          delta = effect.delta;
+        }
       }
       if(height<need){fail(m,pc,'Stack underflow');continue;}
       peak=Math.max(peak,height,height+delta);
@@ -61,15 +71,4 @@ export function verifyImage(image,{stackBounds=false}={}){
   return errors;
 }
 
-export {
-  float, floatBinary, floatCompare, finiteFloat, ieeeRemainder, int64Binary, int64Compare, int64Unary,
-  uint32Binary, uint32Compare, convert, conversionTargets, number, isNumber,
-  singleToInt32Bits, doubleToInt64Bits, int32BitsToSingle, int64BitsToDouble,
-  nativeIntegerBits, isNativeInteger, nativeInteger, nativeBinary, nativeSize,
-  decimal, decimalZero, decimalMaxCoefficient, isDecimal, decimalFromBits, decimalBits,
-  decimalParse, decimalFromInteger, decimalFromFloat, decimalToInteger, decimalToFloat,
-  decimalCompare, decimalNegate, decimalAbs, decimalAdd, decimalMultiply, decimalDivide, decimalRemainder,
-  decimalRound, decimalBinary, decimalFormat, decimalIntrinsicDefinitions, isDecimalConstantField,
-  NumericType, numericTypeNames, numericAliases, numericTypeName, numericTypeId, numericMode,
-  decodeNumericMode, isNumericMode, integerType, encodeScalar, decodeScalar
-} from './numeric/index.js';
+export * from './numeric-exports.js';
