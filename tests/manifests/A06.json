@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "area": "A06",
-  "nodeGlobs": [],
+  "nodeGlobs": ["tests/a06-*.test.js"],
   "browserScripts": [],
   "requiredServices": [],
   "timeout": 300000,
-  "tags": []
+  "tags": ["gc", "runtime"]
 }
