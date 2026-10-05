@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "productSource": "c1a662d18d31e202a6b420bce1e9177b0b1a50ba",
+  "productBlob": "5f282443898d7eb56a5703c4b26e4c4441f19d52",
+  "priorEvidence": "The test-panel delegation assertion passed in a23-studio-tools-registration within the completed Node22/26 native UI106/106 scopes.",
+  "newContractTests": {
+    "file": "tests/a23-native-tool-renderer.test.js",
+    "count": 3,
+    "status": "pending scheduled root qualification"
+  },
+  "boundaries": [
+    "No protected Studio entry or controller copied",
+    "Only the explicit render host contract is implemented in this foundation"
+  ]
+}
