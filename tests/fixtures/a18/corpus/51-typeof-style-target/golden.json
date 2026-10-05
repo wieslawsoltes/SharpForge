@@ -1,0 +1,121 @@
+{
+  "accepted": true,
+  "category": "styles",
+  "compilationSucceeded": false,
+  "diagnostics": [
+    {
+      "code": "CS1729",
+      "legacyCode": null,
+      "severity": "error"
+    }
+  ],
+  "document": {
+    "height": 480,
+    "name": "View",
+    "nodes": [
+      {
+        "children": [],
+        "events": {},
+        "id": "action",
+        "properties": {
+          "Content": "Run",
+          "Height": 40,
+          "Left": 20,
+          "Name": "Action",
+          "Top": 30,
+          "Width": 160
+        },
+        "style": "accent",
+        "type": "Microsoft.UI.Xaml.Controls.Button"
+      },
+      {
+        "children": [
+          "action"
+        ],
+        "events": {},
+        "id": "root",
+        "properties": {
+          "Height": 480,
+          "Name": "Root",
+          "Width": 640
+        },
+        "type": "Microsoft.UI.Xaml.Controls.Canvas"
+      },
+      {
+        "children": [
+          "root"
+        ],
+        "events": {},
+        "id": "window",
+        "properties": {},
+        "type": "Microsoft.UI.Xaml.Window"
+      }
+    ],
+    "root": "window",
+    "styles": {
+      "accent": {
+        "setters": {
+          "FontSize": 18
+        },
+        "targetType": "Microsoft.UI.Xaml.Controls.Button"
+      }
+    },
+    "templates": {},
+    "version": 1,
+    "width": 640
+  },
+  "entry": {
+    "className": "View",
+    "methodName": "Create",
+    "uri": "View.cs"
+  },
+  "fixture": "51-typeof-style-target",
+  "identity": [
+    {
+      "declaration": {
+        "end": 444,
+        "start": 438,
+        "uri": "View.cs"
+      },
+      "designId": "action",
+      "field": false,
+      "uri": "View.cs",
+      "variable": "action"
+    },
+    {
+      "declaration": {
+        "end": 363,
+        "start": 359,
+        "uri": "View.cs"
+      },
+      "designId": "root",
+      "field": false,
+      "uri": "View.cs",
+      "variable": "root"
+    },
+    {
+      "declaration": {
+        "end": 327,
+        "start": 321,
+        "uri": "View.cs"
+      },
+      "designId": "window",
+      "field": false,
+      "uri": "View.cs",
+      "variable": "window"
+    }
+  ],
+  "ownership": {
+    "designer": 11,
+    "handwritten": 0
+  },
+  "protectedStatements": 0,
+  "sources": [
+    {
+      "sha256": "c8134bbc07ca57072cb25dfd39c4df1556b84b7e437b938994365bef9f1623f8",
+      "uri": "View.cs"
+    }
+  ],
+  "structuralEditable": true,
+  "unsupportedConstructs": []
+}
