@@ -14,6 +14,7 @@
     "src",
     "bin",
     "README.md",
+    "docs",
     "LICENSE"
   ],
   "dependencies": {
