@@ -117,8 +117,10 @@ Worktree: sf6-generic-instantiation.
   plus three retention/provenance/protection records.
 - Retention manifest SHA256:
   c0eccabf666570337361ff420488790fe5c7601f51d710bc99e94a38d735f543.
-- Re-read the source-protection digest from its retained manifest after recovery;
-  the summarized digest was incomplete and is intentionally not repeated here.
+- Source-protection SHA256:
+  4ebc4b396cbe8554ac5f5acf8ba4c4f403c5d0e029fd059fe0303f4fe6af74f7.
+  The full digest was recovered from retained successful tool result 07a525;
+  that result recorded a 7,352-byte file included in commit 48c3b667.
 - Input-provenance SHA256:
   543ee86c5f3e709247f68a5305920c0cb489cc2f2a4d1b8a2fb369170ef0dbc0.
 
