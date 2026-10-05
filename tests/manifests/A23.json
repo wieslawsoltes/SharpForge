@@ -8,7 +8,8 @@
     "tests/msbuild-examples.test.js",
     "tests/msbuild-native.test.js",
     "tests/msbuild-solution.test.js",
-    "tests/msbuild-tools.test.js"
+    "tests/msbuild-tools.test.js",
+    "tests/a23-project-debug-sources.test.js"
   ],
   "browserScripts": [
     "tests/browser_msbuild_test.py"
