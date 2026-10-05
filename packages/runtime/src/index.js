@@ -17,3 +17,4 @@ export {instantiateWasmIR} from './execution/wasm/compile.js';
 export {prepareWasmMethod, runWasmSlice, disposeWasmMethod} from './execution/wasm/manual-runtime.js';
 export {wasmTieringStatistics, disposeWasmTiering} from './execution/wasm/tiering.js';
 export {deoptWasmFrames} from './execution/wasm/deopt.js';
+export {prepareExecution, executionPreparationCapabilities} from './execution/prepare.js';
