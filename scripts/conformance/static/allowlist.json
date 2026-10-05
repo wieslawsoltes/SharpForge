@@ -233,6 +233,13 @@
       "reason": "Package smoke test imports fixed workspace or Node modules in its bounded test phases."
     },
     {
+      "path": "packages/msbuild/src/testing/portable/source-symbols.js",
+      "operation": "dynamic-import",
+      "count": 1,
+      "sha256": "b59b8dbaca8c2a9d6a1c921c4b00e1a1e8bcdf4bdd28312ec07659241581e0fa",
+      "reason": "Source test discovery lazily imports the fixed syntax package to inspect source trees without executing user source."
+    },
+    {
       "path": "packages/network/smoke.mjs",
       "operation": "dynamic-import",
       "count": 2,

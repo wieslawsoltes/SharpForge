@@ -14,11 +14,13 @@
     "src",
     "bin",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "docs"
   ],
   "dependencies": {
     "@sharpforge/project-system": "0.14.0",
-    "@sharpforge/network": "0.14.0"
+    "@sharpforge/network": "0.14.0",
+    "@sharpforge/syntax": "0.14.0"
   },
   "engines": {
     "node": ">=22"
