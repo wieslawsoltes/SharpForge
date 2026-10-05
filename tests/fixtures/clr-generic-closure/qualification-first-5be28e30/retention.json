@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "status": "native-passed-focused-failed-benchmarks-not-run",
+  "retainedUtc": "2026-10-04T20:23:46.841789+00:00",
+  "sourceHead": "5be28e30fa9130bff147b0699f47da0f33d674f0",
+  "sourceTree": "4aa0c49d207d8e221ab584d269ef2523f432ee2a",
+  "nativeCounts": {
+    "cases": 34,
+    "operations": 71,
+    "identities": 38,
+    "images": 14,
+    "subprocesses": 40
+  },
+  "nativeOperationOutcomes": {
+    "returned": 43,
+    "System.TypeLoadException": 28
+  },
+  "focused": {
+    "tests": 122,
+    "suites": 0,
+    "pass": 119,
+    "fail": 3,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "failures": [
+    "not ok 21 - CLR closure-only foreign contexts are monitored through throwing unload callbacks and cleaned on failure",
+    "not ok 23 - CLR finite-instantiation closure replays every isolated native request and available identity",
+    "not ok 27 - CLR acyclic expanding edges and a non-generic self interface remain valid"
+  ],
+  "copiedEvidence": [
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-closure-first.execution.json",
+      "retained": "tests/fixtures/clr-generic-closure/qualification-first-5be28e30/native-closure-first.execution.json",
+      "bytes": 146137,
+      "sha256": "0c6129d7ef7831ca49f53fbeba217e1caf5e95b13f05d210bf19be3e5574be72"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-closure-first.stdout.txt",
+      "retained": "tests/fixtures/clr-generic-closure/qualification-first-5be28e30/native-closure-first.stdout.txt",
+      "bytes": 313,
+      "sha256": "e6ec535be36fe405619c1b79573e516f5c63c8dcbe24d3f3e1f130f097569067"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-closure-first.stderr.txt",
+      "retained": "tests/fixtures/clr-generic-closure/qualification-first-5be28e30/native-closure-first.stderr.txt",
+      "bytes": 94,
+      "sha256": "efa2c0796767ca086f3d032d1bedc4a3002a555df65194f4ae54ff53a1291595"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-retention.json",
+      "retained": "tests/fixtures/clr-generic-closure/qualification-first-5be28e30/native-retention.json",
+      "bytes": 139752,
+      "sha256": "3a4e9aacc99f3f1cbaabe71121536eeb3999ce65c344a0743f37fab1cc3a775c"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/focused-node.execution.json",
+      "retained": "tests/fixtures/clr-generic-closure/qualification-first-5be28e30/focused-node.execution.json",
+      "bytes": 137643,
+      "sha256": "c268f5eaf11938925f3161e5b7158b725deb230aa71f2e7d1558f2397c3192fa"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/focused-node.stdout.txt",
+      "retained": "tests/fixtures/clr-generic-closure/qualification-first-5be28e30/focused-node.stdout.txt",
+      "bytes": 37485,
+      "sha256": "1044015dce2dab9015a07e81b61a24cd28705ae5d35825a465c7f11e75239d80"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/focused-node.stderr.txt",
+      "retained": "tests/fixtures/clr-generic-closure/qualification-first-5be28e30/focused-node.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-5be28e30-validation-plan.json",
+      "retained": "tests/fixtures/clr-generic-closure/qualification-first-5be28e30/generic-5be28e30-validation-plan.json",
+      "bytes": 66725,
+      "sha256": "29e542b4b7dc2e1199aeb234c859e061d5e216f11db43f7da9e25585efaf8802"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-5be-run-step.py",
+      "retained": "tests/fixtures/clr-generic-closure/qualification-first-5be28e30/generic-5be-run-step.py.txt",
+      "bytes": 12022,
+      "sha256": "afd9b898f08c44f77779071236dd361db17d62d06385a4b57ccaa8786e8ad09c"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/generic-5be-retain-native.py",
+      "retained": "tests/fixtures/clr-generic-closure/qualification-first-5be28e30/generic-5be-retain-native.py.txt",
+      "bytes": 6373,
+      "sha256": "1337ed4ef31484058028561ac9514692178d53786174697e1bb207580d485e07"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/project6-generic-closure-source-review-9692d35f.json",
+      "retained": "tests/fixtures/clr-generic-closure/qualification-first-5be28e30/project6-generic-closure-source-review-9692d35f.json",
+      "bytes": 16423,
+      "sha256": "bb443949624147b5307ba5604fdf08388b5acc5b2957416b2a5f2fc1d03356ad"
+    },
+    {
+      "source": "/workspace/scratch/7e3d2a445c44/project6-generic-category-source-review-5be28e30.json",
+      "retained": "tests/fixtures/clr-generic-closure/qualification-first-5be28e30/project6-generic-category-source-review-5be28e30.json",
+      "bytes": 10527,
+      "sha256": "1b46564bd252a0dd489c4c28890be8f169a6852a4fd74685dfcb2e2a56004077"
+    }
+  ],
+  "performance": "not-run",
+  "evidencePolicy": "The failed gate is retained unchanged. Diagnose source/test defects before subsequent qualification; never substitute historical native data for current qualification."
+}

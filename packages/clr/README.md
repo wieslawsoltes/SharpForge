@@ -10,6 +10,9 @@ Canonical [property metadata](PROPERTIES.md) adds index signatures and accessor 
 Canonical [event metadata](EVENTS.md) adds raw event-type tokens and add/remove/raise method links.
 Bounded AST [generic signature substitution](GENERICS.md) preserves metadata
 tokens and open caller scopes without parsing display names.
+[Canonical generic instantiation](INSTANTIATION.md) binds ordered type handles,
+resolves scoped TypeSpecs and completes substituted base/interface graphs with
+explicit constraint and execution boundaries.
 [Prepared CIL core authority](VERIFICATION-CORE-TYPES.md) binds an explicit token
 selection through the loader for synchronous verification category queries.
 [Manifest resource readers](MANIFEST-RESOURCES.md) expose bounded embedded,
@@ -58,6 +61,7 @@ diagnostics. Restore and downloading remain separate responsibilities.
 | Ordered offline resolver | Positive, mismatch, ambiguity, cancellation and disposal regressions pass |
 | deps/runtimeconfig and RID fallback | Application paths match native `dotnet exec --depsfile` host trace; RID/cycle regressions pass |
 | NuGet asset selection | 30 fixture package layouts match native NuGet FrameworkReducer; in-memory archive selection passes |
+| Canonical generic type metadata | [Identity, scoped binding, finite closure and current qualification](INSTANTIATION.md#current-qualification) |
 | Execution targets | Host JavaScript services only; source VM, direct CIL, Rust native and Rust Wasm integration pending |
 
 Reference grammar: [.NET v10.0.5 AssemblyNameParser](https://github.com/dotnet/runtime/blob/v10.0.5/src/libraries/Common/src/System/Reflection/AssemblyNameParser.cs).

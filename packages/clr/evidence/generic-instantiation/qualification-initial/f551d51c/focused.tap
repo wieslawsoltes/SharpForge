@@ -1,0 +1,548 @@
+TAP version 13
+# Subtest: CLR generic identity and tuple limits preflight new entries and retain existing canonical results
+ok 1 - CLR generic identity and tuple limits preflight new entries and retain existing canonical results
+  ---
+  duration_ms: 3.594819
+  type: 'test'
+  ...
+# Subtest: CLR invalid generic names and arity do not consume handle identity capacity
+ok 2 - CLR invalid generic names and arity do not consume handle identity capacity
+  ---
+  duration_ms: 0.569967
+  type: 'test'
+  ...
+# Subtest: CLR cross-context instantiation uses the defining type service and its configured work bounds
+ok 3 - CLR cross-context instantiation uses the defining type service and its configured work bounds
+  ---
+  duration_ms: 20.664755
+  type: 'test'
+  ...
+# Subtest: CLR ordered generic arrays cannot replace bounded indexing with an arbitrary iterator
+ok 4 - CLR ordered generic arrays cannot replace bounded indexing with an arbitrary iterator
+  ---
+  duration_ms: 6.034663
+  type: 'test'
+  ...
+# Subtest: CLR generic depth, signature byte and per-operation work budgets reject bounded expansion
+ok 5 - CLR generic depth, signature byte and per-operation work budgets reject bounded expansion
+  ---
+  duration_ms: 4.992322
+  type: 'test'
+  ...
+# Subtest: CLR generic options and malformed parameter metadata preserve stable diagnostic contracts
+ok 6 - CLR generic options and malformed parameter metadata preserve stable diagnostic contracts
+  ---
+  duration_ms: 3.893639
+  type: 'test'
+  ...
+# Subtest: CLR constrained generic definitions remain explicitly unqualified for every stored constraint form
+ok 7 - CLR constrained generic definitions remain explicitly unqualified for every stored constraint form
+  ---
+  duration_ms: 10.025855
+  type: 'test'
+  ...
+# Subtest: CLR canonical generic caches release collectible definitions and arguments through every supported wrapper
+ok 8 - CLR canonical generic caches release collectible definitions and arguments through every supported wrapper
+  ---
+  duration_ms: 721.226693
+  type: 'test'
+  ...
+# Subtest: CLR substituted base and diamond interface graphs preserve exact argument ownership and deduplicate handles
+ok 9 - CLR substituted base and diamond interface graphs preserve exact argument ownership and deduplicate handles
+  ---
+  duration_ms: 15.464593
+  type: 'test'
+  ...
+# Subtest: CLR self-referential generic arguments remain finite while the requested inheritance graph completes
+ok 10 - CLR self-referential generic arguments remain finite while the requested inheritance graph completes
+  ---
+  duration_ms: 3.028377
+  type: 'test'
+  ...
+# Subtest: CLR nested and non-backtick definitions use actual metadata arity and preserve the declaring definition
+ok 11 - CLR nested and non-backtick definitions use actual metadata arity and preserve the declaring definition
+  ---
+  duration_ms: 3.680295
+  type: 'test'
+  ...
+# Subtest: CLR generic inheritance cycles and malformed signature categories never publish a completed type
+ok 12 - CLR generic inheritance cycles and malformed signature categories never publish a completed type
+  ---
+  duration_ms: 5.692129
+  type: 'test'
+  ...
+# Subtest: CLR cancelling one generic consumer promptly preserves a concurrent consumer and the shared binding
+ok 13 - CLR cancelling one generic consumer promptly preserves a concurrent consumer and the shared binding
+  ---
+  duration_ms: 15.513004
+  type: 'test'
+  ...
+# Subtest: CLR generic operation arrays are snapshotted before asynchronous binding
+ok 14 - CLR generic operation arrays are snapshotted before asynchronous binding
+  ---
+  duration_ms: 6.771786
+  type: 'test'
+  ...
+# Subtest: CLR generic binding listeners are removed after success, failure and cancellation
+ok 15 - CLR generic binding listeners are removed after success, failure and cancellation
+  ---
+  duration_ms: 9.751252
+  type: 'test'
+  ...
+# Subtest: CLR generic completion rejects context unload transitions and retains previously completed metadata identities
+ok 16 - CLR generic completion rejects context unload transitions and retains previously completed metadata identities
+  ---
+  duration_ms: 3.151529
+  type: 'test'
+  ...
+# Subtest: CLR a collectible argument context unload cannot publish a stale completion in a shared definition context
+ok 17 - CLR a collectible argument context unload cannot publish a stale completion in a shared definition context
+  ---
+  duration_ms: 3.301419
+  type: 'test'
+  ...
+# Subtest: CLR already aborted generic operations do not create or publish constructions
+ok 18 - CLR already aborted generic operations do not create or publish constructions
+  ---
+  duration_ms: 0.998196
+  type: 'test'
+  ...
+# Subtest: CLR copied VAR and MVAR contexts are observed before an external generic definition bind
+ok 19 - CLR copied VAR and MVAR contexts are observed before an external generic definition bind
+  ---
+  duration_ms: 9.343633
+  type: 'test'
+  ...
+# Subtest: CLR concurrent generic operations share one context subscription and release it at completion
+ok 20 - CLR concurrent generic operations share one context subscription and release it at completion
+  ---
+  duration_ms: 233.021014
+  type: 'test'
+  ...
+# Subtest: CLR context-owned generic lifetime subscribers have an explicit bound and cancelled consumers release capacity
+ok 21 - CLR context-owned generic lifetime subscribers have an explicit bound and cancelled consumers release capacity
+  ---
+  duration_ms: 55.964774
+  type: 'test'
+  ...
+# Subtest: CLR reentrant unloading retains completed metadata while invalidating earlier pending generic work
+ok 22 - CLR reentrant unloading retains completed metadata while invalidating earlier pending generic work
+  ---
+  duration_ms: 2.266088
+  type: 'test'
+  ...
+# Subtest: CLR throwing unloading listeners cannot publish successful pending generic root operations
+ok 23 - CLR throwing unloading listeners cannot publish successful pending generic root operations
+  ---
+  duration_ms: 9.064834
+  type: 'test'
+  ...
+# Subtest: CLR failed foreign lifetime subscription releases earlier context subscriptions
+ok 24 - CLR failed foreign lifetime subscription releases earlier context subscriptions
+  ---
+  duration_ms: 2.773394
+  type: 'test'
+  ...
+# Subtest: CLR cross-context find and array-member requests observe the module owner before binding
+ok 25 - CLR cross-context find and array-member requests observe the module owner before binding
+  ---
+  duration_ms: 3.250885
+  type: 'test'
+  ...
+# Subtest: CLR ignored external-resolver cancellation rejects promptly and observes both late outcomes
+ok 26 - CLR ignored external-resolver cancellation rejects promptly and observes both late outcomes
+  ---
+  duration_ms: 9.317595
+  type: 'test'
+  ...
+# Subtest: CLR unloading during external generic type resolution prevents requested loaded-state publication
+ok 27 - CLR unloading during external generic type resolution prevents requested loaded-state publication
+  ---
+  duration_ms: 0.870899
+  type: 'test'
+  ...
+# Subtest: CLR a resolved foreign generic definition is observed before resolving later argument identities
+ok 28 - CLR a resolved foreign generic definition is observed before resolving later argument identities
+  ---
+  duration_ms: 1.425163
+  type: 'test'
+  ...
+# Subtest: CLR generic instantiation replays every pinned native identity, scope and substituted graph observation
+not ok 29 - CLR generic instantiation replays every pinned native identity, scope and substituted graph observation
+  ---
+  duration_ms: 25.602031
+  type: 'test'
+  location: '/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/clr-generics-instantiation-reference.test.js:76:1'
+  failureType: 'testCodeFailure'
+  error: 'Missing expected rejection: definition-node'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  stack: |-
+    async replayCase (file:///workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/clr-generics-instantiation-reference.test.js:58:5)
+    async TestContext.<anonymous> (file:///workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/clr-generics-instantiation-reference.test.js:84:24)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: CLR generic native inputs retain independent SRM signatures and explicit context-invalid TypeSpec observations
+ok 30 - CLR generic native inputs retain independent SRM signatures and explicit context-invalid TypeSpec observations
+  ---
+  duration_ms: 11.79276
+  type: 'test'
+  ...
+# Subtest: CLR native collectible generic cases preserve defining ownership and retained identities after unload
+ok 31 - CLR native collectible generic cases preserve defining ownership and retained identities after unload
+  ---
+  duration_ms: 11.804978
+  type: 'test'
+  ...
+# {"nativeGcObservation":{"rounds":8,"firstContextCollected":true,"secondContextCollected":true,"comparison":"observation-only","scope":"Bounded WeakReference observation of ALC objects; no GC deadline, cache-size or native-memory parity claim."},"comparison":"Deterministic identity and descriptor observations; collection timing is covered separately by the Node GC probe"}
+# Subtest: CLR TypeSpec VAR and MVAR environments are ordered handles and never a module/token-only result cache
+ok 32 - CLR TypeSpec VAR and MVAR environments are ordered handles and never a module/token-only result cache
+  ---
+  duration_ms: 16.618798
+  type: 'test'
+  ...
+# Subtest: CLR TypeSpec rejects missing, undersized and malformed environments without guessing a neighboring declaration
+ok 33 - CLR TypeSpec rejects missing, undersized and malformed environments without guessing a neighboring declaration
+  ---
+  duration_ms: 3.858577
+  type: 'test'
+  ...
+# Subtest: CLR replacement handles retain their original module and generic parameter owner
+ok 34 - CLR replacement handles retain their original module and generic parameter owner
+  ---
+  duration_ms: 2.64839
+  type: 'test'
+  ...
+# Subtest: CLR a cross-context TypeSpec request snapshots each explicit environment property once
+ok 35 - CLR a cross-context TypeSpec request snapshots each explicit environment property once
+  ---
+  duration_ms: 2.560181
+  type: 'test'
+  ...
+# Subtest: CLR canonical generic identities cover closed, open, partially open and own-parameter normalization
+ok 36 - CLR canonical generic identities cover closed, open, partially open and own-parameter normalization
+  ---
+  duration_ms: 22.08848
+  type: 'test'
+  ...
+# Subtest: CLR referring assemblies and explicit shared definitions resolve the same generic tuple
+ok 37 - CLR referring assemblies and explicit shared definitions resolve the same generic tuple
+  ---
+  duration_ms: 13.941055
+  type: 'test'
+  ...
+# Subtest: CLR generic instantiation unifies the pre-existing vector-interface cache
+ok 38 - CLR generic instantiation unifies the pre-existing vector-interface cache
+  ---
+  duration_ms: 1.750041
+  type: 'test'
+  ...
+# Subtest: CLR generic type arguments reject structural invalidity and explicitly defer constraint enforcement
+ok 39 - CLR generic type arguments reject structural invalidity and explicitly defer constraint enforcement
+  ---
+  duration_ms: 5.594507
+  type: 'test'
+  ...
+# Subtest: CLR substituted raw member signatures match independent CoreCLR closed generic reflection
+ok 40 - CLR substituted raw member signatures match independent CoreCLR closed generic reflection
+  ---
+  duration_ms: 4.76564
+  type: 'test'
+  ...
+# Subtest: CLR substitution independently replaces VAR and MVAR while preserving method header and receiver
+ok 41 - CLR substitution independently replaces VAR and MVAR while preserving method header and receiver
+  ---
+  duration_ms: 3.682519
+  type: 'test'
+  ...
+# Subtest: CLR substitution preserves nested generic instances, modifiers, array bounds and function pointer signatures
+ok 42 - CLR substitution preserves nested generic instances, modifiers, array bounds and function pointer signatures
+  ---
+  duration_ms: 1.023783
+  type: 'test'
+  ...
+# Subtest: CLR substitution handles fields, properties, local pinned/byref slots and MethodSpec arguments
+ok 43 - CLR substitution handles fields, properties, local pinned/byref slots and MethodSpec arguments
+  ---
+  duration_ms: 0.575766
+  type: 'test'
+  ...
+# Subtest: CLR substitution is simultaneous, deeply immutable and independent of caller mutations
+ok 44 - CLR substitution is simultaneous, deeply immutable and independent of caller mutations
+  ---
+  duration_ms: 0.353179
+  type: 'test'
+  ...
+# Subtest: CLR substitution rejects malformed ASTs, invalid replacement forms and sparse arguments
+ok 45 - CLR substitution rejects malformed ASTs, invalid replacement forms and sparse arguments
+  ---
+  duration_ms: 0.697925
+  type: 'test'
+  ...
+# Subtest: CLR substitution bounds cyclic/deep input, replacement amplification and cancellation
+ok 46 - CLR substitution bounds cyclic/deep input, replacement amplification and cancellation
+  ---
+  duration_ms: 0.777072
+  type: 'test'
+  ...
+# Subtest: CLR array interfaces, accessor signatures and constructor arities match independent CoreCLR reflection
+ok 47 - CLR array interfaces, accessor signatures and constructor arities match independent CoreCLR reflection
+  ---
+  duration_ms: 10.237586
+  type: 'test'
+  ...
+# Subtest: CLR resolves a multidimensional constructor MemberRef emitted by the native C\# compiler
+ok 48 - CLR resolves a multidimensional constructor MemberRef emitted by the native C\# compiler
+  ---
+  duration_ms: 5.30445
+  type: 'test'
+  ...
+# Subtest: CLR class, interface and array assignability matches independent native reflection
+ok 49 - CLR class, interface and array assignability matches independent native reflection
+  ---
+  duration_ms: 12.832537
+  type: 'test'
+  ...
+# Subtest: CLR assignability preserves context identity and rejects unresolved or unsupported forms
+ok 50 - CLR assignability preserves context identity and rejects unresolved or unsupported forms
+  ---
+  duration_ms: 14.029184
+  type: 'test'
+  ...
+# Subtest: CLR assignability bounds traversal and detects generic metadata without claiming generic support
+ok 51 - CLR assignability bounds traversal and detects generic metadata without claiming generic support
+  ---
+  duration_ms: 2.466273
+  type: 'test'
+  ...
+# Subtest: CLR constructed elements preserve rank, vector identity and exact accessor signatures
+ok 52 - CLR constructed elements preserve rank, vector identity and exact accessor signatures
+  ---
+  duration_ms: 6.793939
+  type: 'test'
+  ...
+# Subtest: CLR function pointer identity includes every calling convention field
+ok 53 - CLR function pointer identity includes every calling convention field
+  ---
+  duration_ms: 0.812413
+  type: 'test'
+  ...
+# Subtest: CLR element constructions preserve the defining context of an explicitly shared type
+ok 54 - CLR element constructions preserve the defining context of an explicitly shared type
+  ---
+  duration_ms: 12.681865
+  type: 'test'
+  ...
+# Subtest: CLR resolves multidimensional array constructor/accessor MemberRefs and rejects cyclic TypeSpecs
+ok 55 - CLR resolves multidimensional array constructor/accessor MemberRefs and rejects cyclic TypeSpecs
+  ---
+  duration_ms: 6.191694
+  type: 'test'
+  ...
+# Subtest: bounded forwarder cache publication does not retain a partial path after capacity failure
+ok 56 - bounded forwarder cache publication does not retain a partial path after capacity failure
+  ---
+  duration_ms: 1.864018
+  type: 'test'
+  ...
+# Subtest: facade, nested, cyclic and consumer TypeRef forwarding agree with native CoreCLR
+ok 57 - facade, nested, cyclic and consumer TypeRef forwarding agree with native CoreCLR
+  ---
+  duration_ms: 51.286453
+  type: 'test'
+  ...
+# Subtest: facade and nested ExportedType chains resolve canonical definitions without executable body reads
+ok 58 - facade and nested ExportedType chains resolve canonical definitions without executable body reads
+  ---
+  duration_ms: 22.037842
+  type: 'test'
+  ...
+# Subtest: concurrent forwarder resolutions share load contexts and preserve cross-context descriptor identity after unload
+ok 59 - concurrent forwarder resolutions share load contexts and preserve cross-context descriptor identity after unload
+  ---
+  duration_ms: 7.514657
+  type: 'test'
+  ...
+# Subtest: forwarder cycles, missing names and unsupported linked netmodules fail explicitly
+ok 60 - forwarder cycles, missing names and unsupported linked netmodules fail explicitly
+  ---
+  duration_ms: 5.096816
+  type: 'test'
+  ...
+# Subtest: forwarder metadata rejects malformed flags, nested scopes, duplicate names and nested ownership cycles
+ok 61 - forwarder metadata rejects malformed flags, nested scopes, duplicate names and nested ownership cycles
+  ---
+  duration_ms: 7.487637
+  type: 'test'
+  ...
+# Subtest: forwarder hop, row, nested-depth and heap limits are enforced before unbounded expansion
+ok 62 - forwarder hop, row, nested-depth and heap limits are enforced before unbounded expansion
+  ---
+  duration_ms: 8.060238
+  type: 'test'
+  ...
+# Subtest: cancelled and failed forwarder lookups do not poison success caches
+ok 63 - cancelled and failed forwarder lookups do not poison success caches
+  ---
+  duration_ms: 2.921271
+  type: 'test'
+  ...
+# Subtest: CLR type generic parameter identities match independent CoreCLR reflection and SRM metadata
+ok 64 - CLR type generic parameter identities match independent CoreCLR reflection and SRM metadata
+  ---
+  duration_ms: 12.430567
+  type: 'test'
+  ...
+# Subtest: CLR generic parameter metadata rejects invalid ownership, numbering, tokens and constraints
+ok 65 - CLR generic parameter metadata rejects invalid ownership, numbering, tokens and constraints
+  ---
+  duration_ms: 13.066811
+  type: 'test'
+  ...
+# Subtest: CLR generic parameter positions are ordered independently of \#- physical row order and preserve empty owners
+ok 66 - CLR generic parameter positions are ordered independently of \#- physical row order and preserve empty owners
+  ---
+  duration_ms: 1.063843
+  type: 'test'
+  ...
+# Subtest: CLR base/interface graphs, enum underlying types and nested ownership match CoreCLR reflection
+ok 67 - CLR base/interface graphs, enum underlying types and nested ownership match CoreCLR reflection
+  ---
+  duration_ms: 14.1247
+  type: 'test'
+  ...
+# Subtest: CLR graph loading retains canonical shared identities and rejects invalid interfaces and cancellation
+ok 68 - CLR graph loading retains canonical shared identities and rejects invalid interfaces and cancellation
+  ---
+  duration_ms: 5.930531
+  type: 'test'
+  ...
+# Subtest: CLR unresolved framework references and generic inheritance stay explicit diagnostics
+not ok 69 - CLR unresolved framework references and generic inheritance stay explicit diagnostics
+  ---
+  duration_ms: 3.575952
+  type: 'test'
+  location: '/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/clr-types-graphs.test.js:60:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /generic\/modifier type services/. Input:
+    
+    'FileNotFoundException: Assembly was not found'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  error: 'Assembly was not found'
+  stack: |-
+    loadError (file:///workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/packages/clr/src/load-errors.js:47:10)
+    AssemblyResolver.resolve (file:///workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/packages/clr/src/resolver.js:85:11)
+    #resolve (file:///workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/packages/clr/src/load-context.js:180:37)
+    file:///workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/packages/clr/src/load-context.js:157:65
+    async #loadWithPath (file:///workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/packages/clr/src/load-context.js:162:24)
+  operator: 'rejects'
+  stack: |-
+    async TestContext.<anonymous> (file:///workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/clr-types-graphs.test.js:69:3)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: CLR metadata type descriptors preserve canonical identity within their defining context
+ok 70 - CLR metadata type descriptors preserve canonical identity within their defining context
+  ---
+  duration_ms: 5.965901
+  type: 'test'
+  ...
+# Subtest: CLR nested metadata names inherit their enclosing namespace and interface flags remain inspectable
+ok 71 - CLR nested metadata names inherit their enclosing namespace and interface flags remain inspectable
+  ---
+  duration_ms: 4.109056
+  type: 'test'
+  ...
+# Subtest: CLR type metadata rejects invalid tokens, nested cycles, duplicate owners and excessive names
+ok 72 - CLR type metadata rejects invalid tokens, nested cycles, duplicate owners and excessive names
+  ---
+  duration_ms: 5.206827
+  type: 'test'
+  ...
+# Subtest: CLR nested metadata identity has an explicit depth limit
+ok 73 - CLR nested metadata identity has an explicit depth limit
+  ---
+  duration_ms: 2.296333
+  type: 'test'
+  ...
+# Subtest: CLR descriptors resolve immutable generic parameter metadata only once, including empty owners
+ok 74 - CLR descriptors resolve immutable generic parameter metadata only once, including empty owners
+  ---
+  duration_ms: 1.161336
+  type: 'test'
+  ...
+# Subtest: CLR binding supplies canonical CIL core handles without changing local verifier identities
+ok 75 - CLR binding supplies canonical CIL core handles without changing local verifier identities
+  ---
+  duration_ms: 14.10773
+  type: 'test'
+  ...
+# Subtest: core-module TypeDefs can establish fundamental roots through the same authority contract
+ok 76 - core-module TypeDefs can establish fundamental roots through the same authority contract
+  ---
+  duration_ms: 3.019795
+  type: 'test'
+  ...
+# Subtest: unprepared, non-core and open definitions remain unknown without assembly-name or token aliasing
+ok 77 - unprepared, non-core and open definitions remain unknown without assembly-name or token aliasing
+  ---
+  duration_ms: 2.613428
+  type: 'test'
+  ...
+# Subtest: the prepared lookup owns the token selection and bounded result records
+ok 78 - the prepared lookup owns the token selection and bounded result records
+  ---
+  duration_ms: 3.068536
+  type: 'test'
+  ...
+# Subtest: host intrinsic descriptors cannot impersonate the declared metadata core module
+ok 79 - host intrinsic descriptors cannot impersonate the declared metadata core module
+  ---
+  duration_ms: 1.906229
+  type: 'test'
+  ...
+# Subtest: invalid or oversized preparation rejects before resolving any input reference
+ok 80 - invalid or oversized preparation rejects before resolving any input reference
+  ---
+  duration_ms: 3.576707
+  type: 'test'
+  ...
+# Subtest: missing assemblies and malformed type metadata propagate loader diagnostics
+ok 81 - missing assemblies and malformed type metadata propagate loader diagnostics
+  ---
+  duration_ms: 3.557165
+  type: 'test'
+  ...
+# Subtest: cancellation before and during asynchronous binding never publishes a partial authority
+ok 82 - cancellation before and during asynchronous binding never publishes a partial authority
+  ---
+  duration_ms: 2.838679
+  type: 'test'
+  ...
+# Subtest: warm token and name lookup retain canonical ownership, cancellation and token validation
+ok 83 - warm token and name lookup retain canonical ownership, cancellation and token validation
+  ---
+  duration_ms: 15.700148
+  type: 'test'
+  ...
+# Subtest: cold inheritance cycles remain detectable after warming another definition in the same module
+ok 84 - cold inheritance cycles remain detectable after warming another definition in the same module
+  ---
+  duration_ms: 2.290324
+  type: 'test'
+  ...
+1..84
+# tests 84
+# suites 0
+# pass 82
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 8966.483128

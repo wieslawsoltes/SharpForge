@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "pin": {
+    "sdk": "10.0.201",
+    "runtime": "10.0.5",
+    "framework": "net10.0"
+  },
+  "head": "f551d51c26ccb4460c0300cea5069a77e8b34a8a",
+  "trackedChanges": "",
+  "node": "v24.19.0",
+  "platform": "linux",
+  "architecture": "x64",
+  "dotnet": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+  "dotnetSha256": "54e50ea9704dfe67c11176d2ed0665f4477843e626c314ada55e40b0a25e48f3",
+  "sources": [
+    {
+      "path": "packages/clr/interop/GenericInstantiation/CaseMatrix.cs",
+      "sha256": "66488919a34cd4c9fe418f9bdf37437c46d665354729146bf73a3f4deb6b7675"
+    },
+    {
+      "path": "packages/clr/interop/GenericInstantiation/FixtureTypes.cs",
+      "sha256": "d9d8f7f70ed1cb01530ae117ec6f6799d80935278205e216f12ebada5006ebd7"
+    },
+    {
+      "path": "packages/clr/interop/GenericInstantiation/LifetimeObservations.cs",
+      "sha256": "f45b2a31fccf25afcfd7825f8662d54793762a0fabd70d8e4b5520181d0ed892"
+    },
+    {
+      "path": "packages/clr/interop/GenericInstantiation/MetadataImages.cs",
+      "sha256": "b5ee006415aa68ae6255525a17e1f2a5a1dcb5070fccea392f6054836eaf58c6"
+    },
+    {
+      "path": "packages/clr/interop/GenericInstantiation/Program.cs",
+      "sha256": "c12e4bb85cb5888a2cf57abb2ee13ac253325a7a2557fa094e14c8edda3d3542"
+    },
+    {
+      "path": "packages/clr/interop/GenericInstantiation/SignatureObservations.cs",
+      "sha256": "c20bd14a890d45c24e83ec8b33faad1dcb266a08c9d613a00f52430296b9ea51"
+    },
+    {
+      "path": "packages/clr/interop/GenericInstantiation/TypeObservations.cs",
+      "sha256": "89d2942aeec005786a2853dc2e4cbfa585ebf8039ffa47b567208fd1a7570bd9"
+    },
+    {
+      "path": "packages/clr/tools/capture-generic-instantiation.mjs",
+      "sha256": "16b9a98d370a26d824ac19ef0d22a8f451c5c6fa2b45854755829644a5ca29b8"
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "label": "compiler-version",
+  "argv": [
+    "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+    "exec",
+    "--runtimeconfig",
+    "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/pinned.runtimeconfig.json",
+    "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/sdk/10.0.201/Roslyn/bincore/csc.dll",
+    "-version"
+  ],
+  "cwd": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace",
+  "environment": {
+    "PATH": "/root/.codex/tmp/arg0/codex-arg0FW6Pa9:/opt/codex/codex-path:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "DOTNET_CLI_TELEMETRY_OPTOUT": "1",
+    "DOTNET_SKIP_FIRST_TIME_EXPERIENCE": "1",
+    "DOTNET_NOLOGO": "1",
+    "DOTNET_MULTILEVEL_LOOKUP": "0",
+    "DOTNET_CLI_WORKLOAD_UPDATE_NOTIFY_DISABLE": "1",
+    "DOTNET_CLI_HOME": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/cli-home"
+  },
+  "startedUtc": "2026-10-04T20:14:26.641Z",
+  "limits": {
+    "timeoutMilliseconds": 120000,
+    "maximumBufferedBytes": 33554432
+  },
+  "status": "exited",
+  "finishedUtc": "2026-10-04T20:14:26.736Z",
+  "exitCode": 0,
+  "signal": null,
+  "error": null,
+  "stdout": {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/04-compiler-version.stdout",
+    "bytes": 61,
+    "sha256": "335ee5c8674ef201012063d1afcf0c093316d04c0c357f69b6322dea86a5529d"
+  },
+  "stderr": {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/04-compiler-version.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

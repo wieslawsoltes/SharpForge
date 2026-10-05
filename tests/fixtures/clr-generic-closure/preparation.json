@@ -1,0 +1,1147 @@
+{
+  "schemaVersion": 1,
+  "status": "source-prepared-not-executed",
+  "recordedUtc": "2026-10-04T18:18:41.902910+00:00",
+  "trackingIssue": 2460,
+  "authoringRevision": "a19e1eac7dfe7061efcf22233a680bb32bd3486a",
+  "authoringWorktree": "/workspace/scratch/7e3d2a445c44/sf6-generic-constraints",
+  "sourceOwnership": {
+    "newOnly": [
+      "packages/clr/interop/GenericClosure/",
+      "packages/clr/tools/capture-generic-closure.mjs",
+      "tests/fixtures/clr-generic-closure/"
+    ],
+    "existingFilesModified": false,
+    "staged": false,
+    "committed": false,
+    "productOrReplayEdits": false
+  },
+  "qualification": {
+    "capture": "not-run",
+    "compilation": "not-run",
+    "nativeEvidence": "absent",
+    "tests": "not-run",
+    "benchmark": "not-run",
+    "browser": "not-run",
+    "additionalPlatforms": "not-run",
+    "corpus": "not-run",
+    "executionOwner": "root serial-slot coordinator"
+  },
+  "counts": {
+    "cases": 34,
+    "operations": 71,
+    "identities": 38,
+    "images": 14,
+    "newCSharpSources": 6,
+    "reusedCSharpSources": 2,
+    "plannedChildProcesses": 40
+  },
+  "countMeaning": "Operations are observed primary/repeat/companion requests, not individual native reflection calls.",
+  "sourceAggregate": {
+    "algorithm": "sha256(JSON.stringify(sorted [{path,bytes,sha256}]))",
+    "sha256": "13a7305821d55b2a38497e5a8f43300f4fd9e0a4411b579facfb0cbf29f6cef6"
+  },
+  "sources": [
+    {
+      "path": "packages/clr/interop/GenericClosure/CaseObservations.cs",
+      "bytes": 6865,
+      "sha256": "18ee2ae6d35eacd275ea7538b20ab1e597dfb5da51dfe7e5e2681ca2eb1dd418"
+    },
+    {
+      "path": "packages/clr/interop/GenericClosure/MetadataImage.cs",
+      "bytes": 9497,
+      "sha256": "23bf64a5bd41679b9c983912547e55577f555546b0c9089fb939fdebd3853150"
+    },
+    {
+      "path": "packages/clr/interop/GenericClosure/MetadataInventory.cs",
+      "bytes": 3634,
+      "sha256": "16a571f9f22f66c512d0f0f2d480e4a2fb2b069d8618b49b379f9a6698f2608f"
+    },
+    {
+      "path": "packages/clr/interop/GenericClosure/NativeTypes.cs",
+      "bytes": 4122,
+      "sha256": "e875b613ad75e5db9300cf362cb909dfcd625d996e068372ab30b3886e9a2367"
+    },
+    {
+      "path": "packages/clr/interop/GenericClosure/Program.cs",
+      "bytes": 2693,
+      "sha256": "5d0e33b219f05e24a15b5a158acdc3f0d1072ddb3aa3c8074b514ca1387c4358"
+    },
+    {
+      "path": "packages/clr/interop/GenericClosure/RequestBindings.cs",
+      "bytes": 5754,
+      "sha256": "deecd3bde7f856ece2e9ca692e28e0ed4e36defe476ccd04e3671b468b696bd8"
+    },
+    {
+      "path": "packages/clr/interop/GenericClosure/images.json",
+      "bytes": 13860,
+      "sha256": "f403ce160edb1ed9ffbf4763566c8d093540c4cd6345d96e5e168bb79a0123ac"
+    },
+    {
+      "path": "packages/clr/interop/GenericClosure/matrix.json",
+      "bytes": 12247,
+      "sha256": "5250d0489ad5be390d8cc703770d450c314e5d6c606b48049e2883fe477ee8e1"
+    },
+    {
+      "path": "packages/clr/interop/GenericClosure/oracle-toolchain.json",
+      "bytes": 3600,
+      "sha256": "58eaf5e63a8edcf47d3ef96635655f1dd89d230a15b5b39f29503576484fe52d"
+    },
+    {
+      "path": "packages/clr/interop/GenericInstantiation/SignatureObservations.cs",
+      "bytes": 3949,
+      "sha256": "c20bd14a890d45c24e83ec8b33faad1dcb266a08c9d613a00f52430296b9ea51"
+    },
+    {
+      "path": "packages/clr/interop/GenericInstantiation/TypeObservations.cs",
+      "bytes": 7812,
+      "sha256": "4e54f1648b1e36347e806102ed8734acba03e018f02a2f2cfa36b51c79d5b687"
+    },
+    {
+      "path": "packages/clr/tools/capture-generic-closure.mjs",
+      "bytes": 23106,
+      "sha256": "28eafbcb18bf59940e87dea8a9db0e3c54376be61623d59fd40f06d7db89eb20"
+    }
+  ],
+  "reusedSourceVariants": [
+    {
+      "path": "packages/clr/interop/GenericInstantiation/TypeObservations.cs",
+      "authoring": {
+        "revision": "a19e1eac7dfe7061efcf22233a680bb32bd3486a",
+        "path": "packages/clr/interop/GenericInstantiation/TypeObservations.cs",
+        "bytes": 7812,
+        "sha256": "4e54f1648b1e36347e806102ed8734acba03e018f02a2f2cfa36b51c79d5b687"
+      },
+      "f551": {
+        "revision": "f551d51c26ccb4460c0300cea5069a77e8b34a8a",
+        "path": "packages/clr/interop/GenericInstantiation/TypeObservations.cs",
+        "bytes": 8356,
+        "sha256": "89d2942aeec005786a2853dc2e4cbfa585ebf8039ffa47b567208fd1a7570bd9"
+      },
+      "wholeFileIdentical": false,
+      "reusedClassBody": {
+        "symbol": "GenericInstantiationOracle.TypeObservations",
+        "identical": true,
+        "bytes": 4327,
+        "sha256": "cb6f39ec234bce12a7888fb1d77ee64bd500e0f339c64eb0ad8c77dbfa614895"
+      },
+      "difference": "Using System.Text.Json.Serialization and unused prior CaseObservations identity helper only; new closure code never calls that helper."
+    },
+    {
+      "path": "packages/clr/interop/GenericInstantiation/SignatureObservations.cs",
+      "authoring": {
+        "revision": "a19e1eac7dfe7061efcf22233a680bb32bd3486a",
+        "path": "packages/clr/interop/GenericInstantiation/SignatureObservations.cs",
+        "bytes": 3949,
+        "sha256": "c20bd14a890d45c24e83ec8b33faad1dcb266a08c9d613a00f52430296b9ea51"
+      },
+      "f551": {
+        "revision": "f551d51c26ccb4460c0300cea5069a77e8b34a8a",
+        "path": "packages/clr/interop/GenericInstantiation/SignatureObservations.cs",
+        "bytes": 3949,
+        "sha256": "c20bd14a890d45c24e83ec8b33faad1dcb266a08c9d613a00f52430296b9ea51"
+      },
+      "wholeFileIdentical": true
+    }
+  ],
+  "toolchain": {
+    "sdk": "10.0.201",
+    "runtime": "10.0.5",
+    "targetFramework": "net10.0",
+    "referencePack": "10.0.5",
+    "copiedPin": {
+      "path": "packages/clr/interop/GenericClosure/oracle-toolchain.json",
+      "bytes": 3600,
+      "sha256": "58eaf5e63a8edcf47d3ef96635655f1dd89d230a15b5b39f29503576484fe52d"
+    },
+    "repositoryPinByteIdentical": true,
+    "sourceVariantHandling": "Historical variant hashes are documentation only. Capture stages and binds actual whole files; no source-binding exception."
+  },
+  "caseIds": [
+    "resolve-simple-self-base",
+    "instantiate-simple-self-base",
+    "resolve-expanding-self-base",
+    "instantiate-expanding-self-base",
+    "resolve-permuted-mutual",
+    "instantiate-permuted-mutual",
+    "resolve-indirect-expanding",
+    "instantiate-indirect-expanding",
+    "resolve-acyclic-expansion",
+    "instantiate-acyclic-expansion",
+    "resolve-array-expanding",
+    "instantiate-array-expanding",
+    "resolve-array-acyclic-expansion",
+    "instantiate-array-acyclic-expansion",
+    "resolve-erased-constant-cycle",
+    "instantiate-erased-constant-cycle",
+    "resolve-hidden-invalid-argument",
+    "instantiate-hidden-invalid-argument",
+    "resolve-unrelated-invalid",
+    "instantiate-unrelated-invalid",
+    "resolve-cross-module-permuted",
+    "instantiate-cross-module-permuted",
+    "resolve-cross-module-expanding",
+    "instantiate-cross-module-expanding",
+    "resolve-non-generic-self-interface",
+    "instantiate-partial-permuted-mutual",
+    "instantiate-partial-cross-module-permuted",
+    "instantiate-own-parameters-permuted-mutual",
+    "resolve-cross-module-owner-identity",
+    "instantiate-cross-module-formal-identity",
+    "resolve-typespec-simple-self-base",
+    "resolve-typespec-expanding-self-base",
+    "resolve-typespec-cross-permuted-left",
+    "resolve-hidden-invalid-control"
+  ],
+  "groupCounts": {
+    "acyclic-expansion": 2,
+    "array-acyclic-expansion": 2,
+    "array-expanding": 2,
+    "cross-module-expanding": 2,
+    "cross-module-permuted": 5,
+    "cross-permuted-left": 1,
+    "erased-constant-cycle": 2,
+    "expanding-self-base": 3,
+    "hidden-invalid-argument": 3,
+    "indirect-expanding": 2,
+    "non-generic-self-interface": 1,
+    "permuted-mutual": 4,
+    "simple-self-base": 3,
+    "unrelated-invalid": 2
+  },
+  "cases": [
+    {
+      "id": "resolve-simple-self-base",
+      "group": "simple-self-base",
+      "comparison": "native-parity",
+      "operationIds": [
+        "primary",
+        "repeat"
+      ],
+      "identityIds": [
+        "primary-repeat"
+      ]
+    },
+    {
+      "id": "instantiate-simple-self-base",
+      "group": "simple-self-base",
+      "comparison": "native-parity",
+      "operationIds": [
+        "primary",
+        "repeat"
+      ],
+      "identityIds": [
+        "primary-repeat"
+      ]
+    },
+    {
+      "id": "resolve-expanding-self-base",
+      "group": "expanding-self-base",
+      "comparison": "native-parity",
+      "operationIds": [
+        "primary",
+        "repeat"
+      ],
+      "identityIds": [
+        "primary-repeat"
+      ]
+    },
+    {
+      "id": "instantiate-expanding-self-base",
+      "group": "expanding-self-base",
+      "comparison": "native-parity",
+      "operationIds": [
+        "primary",
+        "repeat"
+      ],
+      "identityIds": [
+        "primary-repeat"
+      ]
+    },
+    {
+      "id": "resolve-permuted-mutual",
+      "group": "permuted-mutual",
+      "comparison": "native-parity",
+      "operationIds": [
+        "primary",
+        "repeat"
+      ],
+      "identityIds": [
+        "primary-repeat"
+      ]
+    },
+    {
+      "id": "instantiate-permuted-mutual",
+      "group": "permuted-mutual",
+      "comparison": "native-parity",
+      "operationIds": [
+        "primary",
+        "repeat"
+      ],
+      "identityIds": [
+        "primary-repeat"
+      ]
+    },
+    {
+      "id": "resolve-indirect-expanding",
+      "group": "indirect-expanding",
+      "comparison": "native-parity",
+      "operationIds": [
+        "primary",
+        "repeat"
+      ],
+      "identityIds": [
+        "primary-repeat"
+      ]
+    },
+    {
+      "id": "instantiate-indirect-expanding",
+      "group": "indirect-expanding",
+      "comparison": "native-parity",
+      "operationIds": [
+        "primary",
+        "repeat"
+      ],
+      "identityIds": [
+        "primary-repeat"
+      ]
+    },
+    {
+      "id": "resolve-acyclic-expansion",
+      "group": "acyclic-expansion",
+      "comparison": "native-parity",
+      "operationIds": [
+        "primary",
+        "repeat"
+      ],
+      "identityIds": [
+        "primary-repeat"
+      ]
+    },
+    {
+      "id": "instantiate-acyclic-expansion",
+      "group": "acyclic-expansion",
+      "comparison": "native-parity",
+      "operationIds": [
+        "primary",
+        "repeat"
+      ],
+      "identityIds": [
+        "primary-repeat"
+      ]
+    },
+    {
+      "id": "resolve-array-expanding",
+      "group": "array-expanding",
+      "comparison": "native-parity",
+      "operationIds": [
+        "primary",
+        "repeat"
+      ],
+      "identityIds": [
+        "primary-repeat"
+      ]
+    },
+    {
+      "id": "instantiate-array-expanding",
+      "group": "array-expanding",
+      "comparison": "native-parity",
+      "operationIds": [
+        "primary",
+        "repeat"
+      ],
+      "identityIds": [
+        "primary-repeat"
+      ]
+    },
+    {
+      "id": "resolve-array-acyclic-expansion",
+      "group": "array-acyclic-expansion",
+      "comparison": "native-parity",
+      "operationIds": [
+        "primary",
+        "repeat"
+      ],
+      "identityIds": [
+        "primary-repeat"
+      ]
+    },
+    {
+      "id": "instantiate-array-acyclic-expansion",
+      "group": "array-acyclic-expansion",
+      "comparison": "native-parity",
+      "operationIds": [
+        "primary",
+        "repeat"
+      ],
+      "identityIds": [
+        "primary-repeat"
+      ]
+    },
+    {
+      "id": "resolve-erased-constant-cycle",
+      "group": "erased-constant-cycle",
+      "comparison": "native-parity",
+      "operationIds": [
+        "primary",
+        "repeat"
+      ],
+      "identityIds": [
+        "primary-repeat"
+      ]
+    },
+    {
+      "id": "instantiate-erased-constant-cycle",
+      "group": "erased-constant-cycle",
+      "comparison": "native-parity",
+      "operationIds": [
+        "primary",
+        "repeat"
+      ],
+      "identityIds": [
+        "primary-repeat"
+      ]
+    },
+    {
+      "id": "resolve-hidden-invalid-argument",
+      "group": "hidden-invalid-argument",
+      "comparison": "native-parity",
+      "operationIds": [
+        "primary",
+        "repeat"
+      ],
+      "identityIds": [
+        "primary-repeat"
+      ]
+    },
+    {
+      "id": "instantiate-hidden-invalid-argument",
+      "group": "hidden-invalid-argument",
+      "comparison": "native-parity",
+      "operationIds": [
+        "primary",
+        "repeat"
+      ],
+      "identityIds": [
+        "primary-repeat"
+      ]
+    },
+    {
+      "id": "resolve-unrelated-invalid",
+      "group": "unrelated-invalid",
+      "comparison": "native-parity",
+      "operationIds": [
+        "primary",
+        "repeat"
+      ],
+      "identityIds": [
+        "primary-repeat"
+      ]
+    },
+    {
+      "id": "instantiate-unrelated-invalid",
+      "group": "unrelated-invalid",
+      "comparison": "native-parity",
+      "operationIds": [
+        "primary",
+        "repeat"
+      ],
+      "identityIds": [
+        "primary-repeat"
+      ]
+    },
+    {
+      "id": "resolve-cross-module-permuted",
+      "group": "cross-module-permuted",
+      "comparison": "native-parity",
+      "operationIds": [
+        "primary",
+        "repeat"
+      ],
+      "identityIds": [
+        "primary-repeat"
+      ]
+    },
+    {
+      "id": "instantiate-cross-module-permuted",
+      "group": "cross-module-permuted",
+      "comparison": "native-parity",
+      "operationIds": [
+        "primary",
+        "repeat"
+      ],
+      "identityIds": [
+        "primary-repeat"
+      ]
+    },
+    {
+      "id": "resolve-cross-module-expanding",
+      "group": "cross-module-expanding",
+      "comparison": "native-parity",
+      "operationIds": [
+        "primary",
+        "repeat"
+      ],
+      "identityIds": [
+        "primary-repeat"
+      ]
+    },
+    {
+      "id": "instantiate-cross-module-expanding",
+      "group": "cross-module-expanding",
+      "comparison": "native-parity",
+      "operationIds": [
+        "primary",
+        "repeat"
+      ],
+      "identityIds": [
+        "primary-repeat"
+      ]
+    },
+    {
+      "id": "resolve-non-generic-self-interface",
+      "group": "non-generic-self-interface",
+      "comparison": "native-parity",
+      "operationIds": [
+        "primary",
+        "repeat"
+      ],
+      "identityIds": [
+        "primary-repeat"
+      ]
+    },
+    {
+      "id": "instantiate-partial-permuted-mutual",
+      "group": "permuted-mutual",
+      "comparison": "native-parity",
+      "operationIds": [
+        "primary",
+        "repeat"
+      ],
+      "identityIds": [
+        "primary-repeat"
+      ]
+    },
+    {
+      "id": "instantiate-partial-cross-module-permuted",
+      "group": "cross-module-permuted",
+      "comparison": "native-parity",
+      "operationIds": [
+        "primary",
+        "repeat"
+      ],
+      "identityIds": [
+        "primary-repeat"
+      ]
+    },
+    {
+      "id": "instantiate-own-parameters-permuted-mutual",
+      "group": "permuted-mutual",
+      "comparison": "native-parity",
+      "operationIds": [
+        "primary",
+        "repeat",
+        "definition"
+      ],
+      "identityIds": [
+        "primary-repeat",
+        "definition-identity"
+      ]
+    },
+    {
+      "id": "resolve-cross-module-owner-identity",
+      "group": "cross-module-permuted",
+      "comparison": "owner-identity",
+      "operationIds": [
+        "primary",
+        "repeat",
+        "other-owner"
+      ],
+      "identityIds": [
+        "primary-repeat",
+        "distinct-type-owners",
+        "distinct-formal-owners"
+      ]
+    },
+    {
+      "id": "instantiate-cross-module-formal-identity",
+      "group": "cross-module-permuted",
+      "comparison": "owner-identity",
+      "operationIds": [
+        "primary",
+        "repeat",
+        "other-formal"
+      ],
+      "identityIds": [
+        "primary-repeat",
+        "distinct-open-tuples"
+      ]
+    },
+    {
+      "id": "resolve-typespec-simple-self-base",
+      "group": "simple-self-base",
+      "comparison": "native-parity",
+      "operationIds": [
+        "primary",
+        "repeat"
+      ],
+      "identityIds": [
+        "primary-repeat"
+      ]
+    },
+    {
+      "id": "resolve-typespec-expanding-self-base",
+      "group": "expanding-self-base",
+      "comparison": "native-parity",
+      "operationIds": [
+        "primary",
+        "repeat"
+      ],
+      "identityIds": [
+        "primary-repeat"
+      ]
+    },
+    {
+      "id": "resolve-typespec-cross-permuted-left",
+      "group": "cross-permuted-left",
+      "comparison": "native-parity",
+      "operationIds": [
+        "primary",
+        "repeat"
+      ],
+      "identityIds": [
+        "primary-repeat"
+      ]
+    },
+    {
+      "id": "resolve-hidden-invalid-control",
+      "group": "hidden-invalid-argument",
+      "comparison": "native-parity",
+      "operationIds": [
+        "primary",
+        "repeat"
+      ],
+      "identityIds": [
+        "primary-repeat"
+      ]
+    }
+  ],
+  "images": [
+    {
+      "id": "simple-self-base",
+      "assemblyName": "Closure_simple_self_base",
+      "namespace": "Closure.Shared",
+      "definitions": [
+        {
+          "id": "Box",
+          "name": "Box",
+          "arity": 1
+        },
+        {
+          "id": "Wrap",
+          "name": "Wrap",
+          "arity": 1
+        },
+        {
+          "id": "C",
+          "name": "C",
+          "arity": 1
+        }
+      ],
+      "specificationIds": [
+        "closed-root"
+      ]
+    },
+    {
+      "id": "expanding-self-base",
+      "assemblyName": "Closure_expanding_self_base",
+      "namespace": "Closure.Shared",
+      "definitions": [
+        {
+          "id": "Box",
+          "name": "Box",
+          "arity": 1
+        },
+        {
+          "id": "Wrap",
+          "name": "Wrap",
+          "arity": 1
+        },
+        {
+          "id": "C",
+          "name": "C",
+          "arity": 1
+        }
+      ],
+      "specificationIds": [
+        "closed-root"
+      ]
+    },
+    {
+      "id": "permuted-mutual",
+      "assemblyName": "Closure_permuted_mutual",
+      "namespace": "Closure.Shared",
+      "definitions": [
+        {
+          "id": "Box",
+          "name": "Box",
+          "arity": 1
+        },
+        {
+          "id": "Wrap",
+          "name": "Wrap",
+          "arity": 1
+        },
+        {
+          "id": "A",
+          "name": "A",
+          "arity": 2
+        },
+        {
+          "id": "B",
+          "name": "B",
+          "arity": 2
+        }
+      ],
+      "specificationIds": [
+        "closed-root"
+      ]
+    },
+    {
+      "id": "indirect-expanding",
+      "assemblyName": "Closure_indirect_expanding",
+      "namespace": "Closure.Shared",
+      "definitions": [
+        {
+          "id": "Box",
+          "name": "Box",
+          "arity": 1
+        },
+        {
+          "id": "Wrap",
+          "name": "Wrap",
+          "arity": 1
+        },
+        {
+          "id": "A",
+          "name": "A",
+          "arity": 1
+        },
+        {
+          "id": "B",
+          "name": "B",
+          "arity": 1
+        },
+        {
+          "id": "C",
+          "name": "C",
+          "arity": 1
+        }
+      ],
+      "specificationIds": [
+        "closed-root"
+      ]
+    },
+    {
+      "id": "acyclic-expansion",
+      "assemblyName": "Closure_acyclic_expansion",
+      "namespace": "Closure.Shared",
+      "definitions": [
+        {
+          "id": "Box",
+          "name": "Box",
+          "arity": 1
+        },
+        {
+          "id": "Wrap",
+          "name": "Wrap",
+          "arity": 1
+        },
+        {
+          "id": "A",
+          "name": "A",
+          "arity": 1
+        },
+        {
+          "id": "B",
+          "name": "B",
+          "arity": 1
+        }
+      ],
+      "specificationIds": [
+        "closed-root"
+      ]
+    },
+    {
+      "id": "array-expanding",
+      "assemblyName": "Closure_array_expanding",
+      "namespace": "Closure.Shared",
+      "definitions": [
+        {
+          "id": "Box",
+          "name": "Box",
+          "arity": 1
+        },
+        {
+          "id": "Wrap",
+          "name": "Wrap",
+          "arity": 1
+        },
+        {
+          "id": "C",
+          "name": "C",
+          "arity": 1
+        }
+      ],
+      "specificationIds": [
+        "closed-root"
+      ]
+    },
+    {
+      "id": "array-acyclic-expansion",
+      "assemblyName": "Closure_array_acyclic_expansion",
+      "namespace": "Closure.Shared",
+      "definitions": [
+        {
+          "id": "Box",
+          "name": "Box",
+          "arity": 1
+        },
+        {
+          "id": "Wrap",
+          "name": "Wrap",
+          "arity": 1
+        },
+        {
+          "id": "A",
+          "name": "A",
+          "arity": 1
+        },
+        {
+          "id": "B",
+          "name": "B",
+          "arity": 1
+        }
+      ],
+      "specificationIds": [
+        "closed-root"
+      ]
+    },
+    {
+      "id": "erased-constant-cycle",
+      "assemblyName": "Closure_erased_constant_cycle",
+      "namespace": "Closure.Shared",
+      "definitions": [
+        {
+          "id": "Box",
+          "name": "Box",
+          "arity": 1
+        },
+        {
+          "id": "Wrap",
+          "name": "Wrap",
+          "arity": 1
+        },
+        {
+          "id": "A",
+          "name": "A",
+          "arity": 1
+        },
+        {
+          "id": "B",
+          "name": "B",
+          "arity": 1
+        }
+      ],
+      "specificationIds": [
+        "closed-root"
+      ]
+    },
+    {
+      "id": "nested-invalid",
+      "assemblyName": "Closure_nested_invalid",
+      "namespace": "Closure.Shared",
+      "definitions": [
+        {
+          "id": "Box",
+          "name": "Box",
+          "arity": 1
+        },
+        {
+          "id": "Wrap",
+          "name": "Wrap",
+          "arity": 1
+        },
+        {
+          "id": "Bad",
+          "name": "Bad",
+          "arity": 1
+        },
+        {
+          "id": "Hidden",
+          "name": "Hidden",
+          "arity": 1
+        },
+        {
+          "id": "Good",
+          "name": "Good",
+          "arity": 1
+        }
+      ],
+      "specificationIds": [
+        "closed-root"
+      ]
+    },
+    {
+      "id": "cross-permuted-left",
+      "assemblyName": "Closure_cross_permuted_left",
+      "namespace": "Closure.Shared",
+      "definitions": [
+        {
+          "id": "Box",
+          "name": "Box",
+          "arity": 1
+        },
+        {
+          "id": "Wrap",
+          "name": "Wrap",
+          "arity": 1
+        },
+        {
+          "id": "Same",
+          "name": "Same",
+          "arity": 2
+        }
+      ],
+      "specificationIds": [
+        "closed-root"
+      ]
+    },
+    {
+      "id": "cross-permuted-right",
+      "assemblyName": "Closure_cross_permuted_right",
+      "namespace": "Closure.Shared",
+      "definitions": [
+        {
+          "id": "Box",
+          "name": "Box",
+          "arity": 1
+        },
+        {
+          "id": "Wrap",
+          "name": "Wrap",
+          "arity": 1
+        },
+        {
+          "id": "Same",
+          "name": "Same",
+          "arity": 2
+        }
+      ],
+      "specificationIds": [
+        "closed-root"
+      ]
+    },
+    {
+      "id": "cross-expanding-left",
+      "assemblyName": "Closure_cross_expanding_left",
+      "namespace": "Closure.Shared",
+      "definitions": [
+        {
+          "id": "Box",
+          "name": "Box",
+          "arity": 1
+        },
+        {
+          "id": "Wrap",
+          "name": "Wrap",
+          "arity": 1
+        },
+        {
+          "id": "Same",
+          "name": "Same",
+          "arity": 2
+        }
+      ],
+      "specificationIds": [
+        "closed-root"
+      ]
+    },
+    {
+      "id": "cross-expanding-right",
+      "assemblyName": "Closure_cross_expanding_right",
+      "namespace": "Closure.Shared",
+      "definitions": [
+        {
+          "id": "Box",
+          "name": "Box",
+          "arity": 1
+        },
+        {
+          "id": "Wrap",
+          "name": "Wrap",
+          "arity": 1
+        },
+        {
+          "id": "Same",
+          "name": "Same",
+          "arity": 2
+        }
+      ],
+      "specificationIds": [
+        "closed-root"
+      ]
+    },
+    {
+      "id": "non-generic-self-interface",
+      "assemblyName": "Closure_non_generic_self_interface",
+      "namespace": "Closure.Shared",
+      "definitions": [
+        {
+          "id": "Box",
+          "name": "Box",
+          "arity": 1
+        },
+        {
+          "id": "Wrap",
+          "name": "Wrap",
+          "arity": 1
+        },
+        {
+          "id": "I",
+          "name": "I",
+          "arity": 1
+        },
+        {
+          "id": "C",
+          "name": "C",
+          "arity": 0
+        }
+      ],
+      "specificationIds": []
+    }
+  ],
+  "schema": {
+    "file": "native-closure.json",
+    "version": 1,
+    "caseIsolation": "one native process per case",
+    "requests": [
+      "resolve",
+      "instantiate"
+    ],
+    "context": "default; one noncollectible GenericClosure load context per process",
+    "identities": "actual same-process ReferenceEquals only when both endpoints are available; null otherwise",
+    "errors": "actual native exception with failing phase; descriptor/serialization/registration/harness errors fail capture",
+    "metadata": "independent SRM TypeDef/Extends/InterfaceImpl/GenericParam/TypeRef/AssemblyRef inventory and raw/decoded TypeSpec signatures"
+  },
+  "sourceReview": [
+    "Read-only JSON consistency checks verified every authored image/definition/specification reference, generic arity, formal index and identity endpoint.",
+    "No expected acceptance, rejection, HResult or reference-identity values are authored.",
+    "All matrix requests bind metadata tokens before native calls; emitted types are not eagerly enumerated.",
+    "Scope registration covers deferred cross-module loads; registration failure escapes as a harness failure.",
+    "Identity request JsonElements are cloned before their matrix document is disposed.",
+    "Progress journals retain native returns before type description and flush every event.",
+    "Driver records exact staged bytes, whole reused source files, compiler/reference/runtime identities and raw command receipts.",
+    "Compiled observer and all 14 image identities are recorded before cases and checked for drift afterward.",
+    "Fresh destinations, strict source inventory, 120-second/32-MiB child limits and retained failure workspaces are explicit.",
+    "No compilation, syntax-check process, native capture, replay, test, benchmark, installation or remote mutation was performed."
+  ],
+  "sourceMetrics": [
+    {
+      "path": "packages/clr/interop/GenericClosure/CaseObservations.cs",
+      "lines": 160,
+      "bytes": 6865,
+      "longestLine": 141
+    },
+    {
+      "path": "packages/clr/interop/GenericClosure/MetadataImage.cs",
+      "lines": 176,
+      "bytes": 9497,
+      "longestLine": 153
+    },
+    {
+      "path": "packages/clr/interop/GenericClosure/MetadataInventory.cs",
+      "lines": 62,
+      "bytes": 3634,
+      "longestLine": 144
+    },
+    {
+      "path": "packages/clr/interop/GenericClosure/NativeTypes.cs",
+      "lines": 105,
+      "bytes": 4122,
+      "longestLine": 151
+    },
+    {
+      "path": "packages/clr/interop/GenericClosure/Program.cs",
+      "lines": 51,
+      "bytes": 2693,
+      "longestLine": 153
+    },
+    {
+      "path": "packages/clr/interop/GenericClosure/RequestBindings.cs",
+      "lines": 111,
+      "bytes": 5754,
+      "longestLine": 133
+    },
+    {
+      "path": "packages/clr/interop/GenericClosure/images.json",
+      "lines": 394,
+      "bytes": 13860,
+      "longestLine": 156
+    },
+    {
+      "path": "packages/clr/interop/GenericClosure/matrix.json",
+      "lines": 346,
+      "bytes": 12247,
+      "longestLine": 150
+    },
+    {
+      "path": "packages/clr/interop/GenericClosure/oracle-toolchain.json",
+      "lines": 82,
+      "bytes": 3600,
+      "longestLine": 161
+    },
+    {
+      "path": "packages/clr/interop/GenericInstantiation/SignatureObservations.cs",
+      "lines": 63,
+      "bytes": 3949,
+      "longestLine": 147
+    },
+    {
+      "path": "packages/clr/interop/GenericInstantiation/TypeObservations.cs",
+      "lines": 148,
+      "bytes": 7812,
+      "longestLine": 141
+    },
+    {
+      "path": "packages/clr/tools/capture-generic-closure.mjs",
+      "lines": 375,
+      "bytes": 23106,
+      "longestLine": 150
+    }
+  ],
+  "documentation": {
+    "path": "tests/fixtures/clr-generic-closure/README.md",
+    "bytes": 13365,
+    "sha256": "adbc00a943892556f465b5569a9fd8fa3be1247de2d001ea1fd91fdc1de50ad8"
+  },
+  "plannedCaptureArgv": [
+    "node",
+    "scripts/limited.js",
+    "node",
+    "packages/clr/tools/capture-generic-closure.mjs",
+    "--dotnet",
+    "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+    "--output",
+    "/workspace/scratch/7e3d2a445c44/generic-closure-native-first",
+    "--evidence",
+    "/workspace/scratch/7e3d2a445c44/generic-closure-capture-first"
+  ],
+  "nextGates": [
+    "Owner copies only the dedicated new paths into the actual frozen #2460 candidate and commits them.",
+    "Root grants one serial slot for a fresh real capture using exact actual whole source files.",
+    "Review all actual outcomes and preserve any failure before adapting product or the harness.",
+    "Owner authors strict native replay and focused product tests; root executes the authorized scope.",
+    "Quantify closure product performance with the separately frozen protocol; retain remaining platform/corpus gaps."
+  ]
+}

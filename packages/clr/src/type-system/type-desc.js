@@ -28,6 +28,10 @@ export class TypeDesc {
   get interfaces() { return this.#state.interfaces ?? empty; }
   get underlyingType() { return this.#state.underlyingType ?? null; }
   get isLoaded() { return this.#state.loaded === true; }
+  get isCollectible() { return this.#state.isCollectible ?? this.loadContext.isCollectible; }
+  get containsGenericParameters() {
+    return this.#state.containsGenericParameters ??= this.kind === TypeKind.GenericParameter || this.genericParameters.length > 0;
+  }
   get elementType() { return this.#state.elementType ?? null; }
   get rank() { return this.#state.rank ?? 0; }
   get methods() { return this.#state.methods ?? empty; }

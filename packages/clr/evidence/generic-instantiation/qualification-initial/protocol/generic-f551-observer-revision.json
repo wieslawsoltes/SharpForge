@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "status": "prepared-unexecuted",
+  "workItem": "SF-A04-T05.1 / #2460",
+  "worktree": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation",
+  "previousFrozenHead": "2042ca6bd4f6bb4db0c2a4927dfde15cb804efb2",
+  "observerRevisionHead": "f551d51c26ccb4460c0300cea5069a77e8b34a8a",
+  "unchangedProductTrees": {
+    "clr": "7054ca7157a723e09fef8e5df3b468925b8faad5",
+    "cil": "8f1711276d10bcaa62cc711ff9d070a97e056993"
+  },
+  "preservedFixture": {
+    "path": "packages/clr/interop/GenericInstantiation/FixtureTypes.cs",
+    "sha256": "d9d8f7f70ed1cb01530ae117ec6f6799d80935278205e216f12ebada5006ebd7"
+  },
+  "changedFiles": [
+    {
+      "path": "packages/clr/interop/GenericInstantiation/CaseMatrix.cs",
+      "sha256": "66488919a34cd4c9fe418f9bdf37437c46d665354729146bf73a3f4deb6b7675",
+      "bytes": 16464
+    },
+    {
+      "path": "packages/clr/interop/GenericInstantiation/Program.cs",
+      "sha256": "c12e4bb85cb5888a2cf57abb2ee13ac253325a7a2557fa094e14c8edda3d3542",
+      "bytes": 3527
+    },
+    {
+      "path": "packages/clr/interop/GenericInstantiation/TypeObservations.cs",
+      "sha256": "89d2942aeec005786a2853dc2e4cbfa585ebf8039ffa47b567208fd1a7570bd9",
+      "bytes": 8356
+    },
+    {
+      "path": "packages/clr/tools/capture-generic-instantiation.mjs",
+      "sha256": "16b9a98d370a26d824ac19ef0d22a8f451c5c6fa2b45854755829644a5ca29b8",
+      "bytes": 10684
+    },
+    {
+      "path": "tests/clr-generics-instantiation-native.js",
+      "sha256": "9e40b3933c4851abcc71c5ca871497a3f751a6b1742d3caa0796f57559f00a07",
+      "bytes": 11432
+    },
+    {
+      "path": "tests/clr-generics-instantiation-reference.test.js",
+      "sha256": "c94c69199dc71149e4802734ec080c39a68bdef665805dc0b3354bace2d5ff31",
+      "bytes": 8874
+    },
+    {
+      "path": "tests/fixtures/clr-generic-instantiation/README.md",
+      "sha256": "cd258e52bc29902283e138d593d244b2708c55579e863aa7b26d5b5658a6323c",
+      "bytes": 10075
+    }
+  ],
+  "sourceChangesOnly": true,
+  "sourceHashPreflight": "Apply these exact seven changed-file pins as a separate revision overlay; retain the original 2042 plan and all other pins unchanged.",
+  "previousPlan": {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-2042-validation-plan.json",
+    "sha256": "876d7cfd763c9a7d9057775450563f3978a97f051d23798335ad37fa4c73895a"
+  },
+  "nativeSchemaVersion": 2,
+  "plannedCounts": {
+    "main": 101,
+    "lifetime": 7,
+    "images": 6,
+    "sourceFiles": 8
+  },
+  "identitySchema": {
+    "observed": {
+      "status": "observed",
+      "same": "boolean from ReferenceEquals",
+      "unavailable": []
+    },
+    "unavailable": {
+      "status": "unavailable",
+      "same": null,
+      "unavailable": "exact case IDs with native errors; no equality assertion"
+    }
+  },
+  "observationPolicy": "All Node requests use symbolic metadata tokens and execute reflection inside Compatibility. Descriptor serialization errors remain fatal. Native rejections still require product rejection in strict replay; unavailable identity endpoints do not bypass operation comparison.",
+  "executionByThisAgent": {
+    "native": false,
+    "productImports": false,
+    "tests": false,
+    "benchmarks": false,
+    "checks": [
+      "git diff --check",
+      "static source size/line checks",
+      "FixtureTypes.cs bytes equal original Git blob",
+      "all changed source bytes equal committed Git blobs"
+    ]
+  },
+  "nextRootActions": [
+    "Review f551d51c2 observer/schema/replay diff",
+    "Use a fresh capture destination and retain native-first failure unchanged",
+    "Capture revised observer in an exclusive heavy slot",
+    "Retain the expected current-product finite-closure mismatch before authorizing behavior correction"
+  ],
+  "knownProductGap": "The unchanged current Node fixture has an expanding recursive generic inheritance dependency; current host graph test accepts it, while first native reflection rejected it. Product source is intentionally unchanged in this observer revision."
+}

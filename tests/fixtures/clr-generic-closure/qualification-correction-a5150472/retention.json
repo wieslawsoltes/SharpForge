@@ -1,0 +1,156 @@
+{
+  "schemaVersion": 1,
+  "kind": "additive-focused-qualification-retention",
+  "reviewer": "/root/project6_reconcile",
+  "createdUtc": "2026-10-04T21:18:00.282275+00:00",
+  "qualifiedSourceCommit": "a5150472de399a1abea85db4229ead415522cf7e",
+  "qualifiedSourceTree": "ad4958c47c23fd5add8e695b4ef4decae6c77e39",
+  "originalNativeAndFailedGateRetentionCommit": "b6590e7cb1a106083eb65c9a9fb99d0f366b17f2",
+  "originalExistingEvidencePathsUnchanged": 322,
+  "destination": "tests/fixtures/clr-generic-closure/qualification-correction-a5150472",
+  "files": [
+    {
+      "path": "focused-node.stdout.txt",
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-a5150472-focused/focused-node.stdout.txt",
+      "bytes": 33743,
+      "sha256": "790a70114a8092faf7c4d02783ed16d1c7007fe98a828d8f896450263e156a0a",
+      "retention": "byte-for-byte"
+    },
+    {
+      "path": "focused-node.stderr.txt",
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-a5150472-focused/focused-node.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "retention": "byte-for-byte"
+    },
+    {
+      "path": "focused-node.execution.json",
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-a5150472-focused/focused-node.execution.json",
+      "bytes": 338825,
+      "sha256": "f0039d449815c2367db98d93293db4d69e6e3da215323258eb04e4ea3462ae17",
+      "retention": "byte-for-byte"
+    },
+    {
+      "path": "generic-a5150472-focused-validation-plan.json",
+      "source": "/workspace/scratch/7e3d2a445c44/generic-a5150472-focused-validation-plan.json",
+      "bytes": 164940,
+      "sha256": "f405265c1163ea27cdbb748d3193f911b623b33b81af40299f8b1b16cc37e983",
+      "retention": "byte-for-byte"
+    },
+    {
+      "path": "generic-a515-focused-run-step.py.txt",
+      "source": "/workspace/scratch/7e3d2a445c44/generic-a515-focused-run-step.py",
+      "bytes": 13131,
+      "sha256": "fd7dfc0834b719ebfd4f194446510dd1226310b35d45d7058273d64d06d23df6",
+      "retention": "byte-for-byte"
+    },
+    {
+      "path": "generic-a515-focused-preparation.json",
+      "source": "/workspace/scratch/7e3d2a445c44/generic-a515-focused-preparation.json",
+      "bytes": 5002,
+      "sha256": "0ab2bea737234bcb41314c032a8acb79427bc0d4184f76ce493aa757d37b51bc",
+      "retention": "byte-for-byte"
+    },
+    {
+      "path": "generic-a515-focused-root-review.json",
+      "source": "/workspace/scratch/7e3d2a445c44/generic-a515-focused-root-review.json",
+      "bytes": 1458,
+      "sha256": "9ed2a9f7d6740ff136565b951990e7061fb7096ab8bcf68fb16516ba59cdc550",
+      "retention": "byte-for-byte"
+    },
+    {
+      "path": "project6-generic-typespec-marker-diagnosis-5be28e30.json",
+      "source": "/workspace/scratch/7e3d2a445c44/project6-generic-typespec-marker-diagnosis-5be28e30.json",
+      "bytes": 12374,
+      "sha256": "8e9b0b75dbf9e1eecc500f5afeb49aa613d62946e228b65122344c15ddf462b5",
+      "retention": "byte-for-byte"
+    },
+    {
+      "path": "README.md",
+      "source": "authored correction and qualification explanation",
+      "bytes": 4143,
+      "sha256": "44ef50099b3028d809ba06d741bd060c8a50f9f8685e43e168765d4484d41b8d",
+      "retention": "new documentation"
+    }
+  ],
+  "payloadBytes": 573616,
+  "actualExecution": {
+    "status": "passed",
+    "startedUtc": "2026-10-04T21:13:25.365503+00:00",
+    "finishedUtc": "2026-10-04T21:13:37.532224+00:00",
+    "exitCode": 0,
+    "signal": null,
+    "counts": {
+      "tests": 126,
+      "suites": 0,
+      "pass": 126,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "interruptions": [],
+    "inspectionErrors": [],
+    "beforeAfterEqual": true,
+    "stderrBytes": 0
+  },
+  "independentVerification": [
+    "Verified raw stdout/stderr byte counts and SHA256 values against the execution receipt.",
+    "Parsed each actual top-level TAP summary field and the 126-test plan without executing a test or recorder.",
+    "Verified exact expected argv, plan/recorder identities, sourceBefore=sourceAfter and all source/alias/historical matches.",
+    "Rehashed all 402 candidate and 221 historical pins after execution.",
+    "Checked every pre-existing retained closure/initial qualification file against b659 before adding this directory."
+  ],
+  "nativePrerequisite": {
+    "executionReceipt": {
+      "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-closure-first.execution.json",
+      "bytes": 146137,
+      "sha256": "0c6129d7ef7831ca49f53fbeba217e1caf5e95b13f05d210bf19be3e5574be72"
+    },
+    "retentionReceipt": {
+      "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-retention.json",
+      "bytes": 139752,
+      "sha256": "3a4e9aacc99f3f1cbaabe71121536eeb3999ce65c344a0743f37fab1cc3a775c"
+    },
+    "nativeJson": {
+      "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-output/native-closure.json",
+      "bytes": 353615,
+      "sha256": "6c3fc6ba84f52052679b72075d25a1e854798930e344270319683f96f0967c3f"
+    },
+    "sourceFreeze": "5be28e30fa9130bff147b0699f47da0f33d674f0",
+    "retainedCommit": "b6590e7cb1a106083eb65c9a9fb99d0f366b17f2",
+    "executionRequired": {
+      "status": "passed",
+      "exitCode": 0,
+      "signal": null
+    },
+    "retentionRequired": {
+      "status": "retained-and-verified",
+      "sourceHead": "5be28e30fa9130bff147b0699f47da0f33d674f0"
+    },
+    "counts": {
+      "cases": 34,
+      "operations": 71,
+      "identities": 38,
+      "images": 14
+    },
+    "commands": 40,
+    "rawCommandLogs": 80,
+    "operationOutcomes": {
+      "returned": 43,
+      "System.TypeLoadException": 28
+    },
+    "liveOracleSourcePins": 12,
+    "historicalProductSourcePins": 70,
+    "referenceAssemblyPins": 167,
+    "originalOutputFiles": 15,
+    "originalEvidenceFiles": 188,
+    "bindingContract": "readNativeClosure still compares the 12 exact oracle/tool sources against live and captured bytes; the 70 product source records remain historical capture provenance. No assertion or source-binding exception is added.",
+    "preservation": "All original capture outputs/evidence and repository copies are pinned byte-for-byte; original plan/recorder, native receipts, failed TAP and execution remain untouched.",
+    "newCaptureRequested": false,
+    "reason": "Only the product TypeSpec semantic-completion marker and authored tests changed; native observer, matrix, images, compiler/runtime pins and captured outcomes are identical."
+  },
+  "newNativeCapture": false,
+  "performanceMeasured": false,
+  "newProductChangeInThisRetention": false
+}

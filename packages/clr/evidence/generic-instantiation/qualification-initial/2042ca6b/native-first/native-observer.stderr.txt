@@ -1,0 +1,4 @@
+Unhandled exception. System.TypeLoadException: Could not load type 'Fixture.Node`1' from assembly 'Fixture, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null' because it has recursive generic definition.
+   at GenericInstantiationOracle.CaseMatrix.DefinitionTokens()
+   at GenericInstantiationOracle.CaseMatrix.Definitions()
+   at GenericInstantiationOracle.Program.Main(String[] args)
