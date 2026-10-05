@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "status": "canonical-source-and-evidence-artifacts-published",
+  "repository": "wieslawsoltes/SharpForge",
+  "project": "https://github.com/users/wieslawsoltes/projects/18",
+  "pinnedMain": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+  "candidateSource": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+  "candidateTree": "7399d972ea939b8a5f05f894bc793f9b713cfd49",
+  "candidateRef": "refs/heads/codex/p18-integration",
+  "protectedCanonicalFiles": [
+    {
+      "path": "apps/studio/studio.js",
+      "baselineBlob": "15aa6a74f3cd875f5bec8e4941c150cc8b0dac9f",
+      "candidateBlob": "15aa6a74f3cd875f5bec8e4941c150cc8b0dac9f",
+      "unchanged": true
+    },
+    {
+      "path": "package.json",
+      "baselineBlob": "118c0a9af4dc292d5df8f7c5e02121f8309957fe",
+      "candidateBlob": "118c0a9af4dc292d5df8f7c5e02121f8309957fe",
+      "unchanged": true
+    },
+    {
+      "path": "package-lock.json",
+      "baselineBlob": "61aa0aad42fe8ccb71ab679100a14237544c5f7f",
+      "candidateBlob": "61aa0aad42fe8ccb71ab679100a14237544c5f7f",
+      "unchanged": true
+    }
+  ],
+  "historyArtifact": {
+    "path": "artifacts/integration.bundle",
+    "state": "published-and-fetched-bytes-verified",
+    "excludedAncestorsOf": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+    "preservesOriginalCommitObjects": true,
+    "referencedSourceReachabilityVerification": "5968 required objects present; original c68 commit resolves frozen tree without alternate object lookup",
+    "artifactRecord": "artifacts.json"
+  },
+  "implementationInventory": {
+    "issues": 189,
+    "epics": 8,
+    "parentTasks": 24,
+    "leaves": 157,
+    "implementationRecords": 166,
+    "leavesWithMultipleContributors": 9,
+    "meaning": "Implementation presence records, not merged/passed acceptance totals"
+  },
+  "publicationIndex": {
+    "path": "pull-requests.json",
+    "state": "sealed-owner-census",
+    "distinctFinalPrCount": 159,
+    "sha256": "b026bdf4f6bac3916a077149521965640e2ebf92577843de7dafe580e048b032",
+    "sourceCommit": "892f1bf54dde759768ab3cc5f2f229aaf15d08ec",
+    "maximalActualParents": 34,
+    "unresolvedAncestryNodes": 0
+  },
+  "workflow": {
+    "worktrees": true,
+    "stackOnActualPrerequisites": true,
+    "forwardMergesPreservePublishedHeads": true,
+    "forcePush": false,
+    "rebase": false,
+    "squash": false,
+    "pinnedMainRefreshAfter": false
+  },
+  "productBuildSource": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+  "buildEquivalence": "build-equivalence.json",
+  "canonicalMetadata": {
+    "commit": "c68c77252cd5469c5aaf0c8318ee28fe2ec3b65d",
+    "tree": "55e5f5c443d15030bc47592e6ba511862812f363",
+    "postQualificationChangedPaths": 122,
+    "changesAreEvidenceOnly": true,
+    "freezeReceiptSha256": "c5a483f6749afc048280f3729f9f15d56bf83cef86c1e7a4bd1540e22b9c6032"
+  },
+  "canonicalSource": {
+    "commit": "c68c77252cd5469c5aaf0c8318ee28fe2ec3b65d",
+    "tree": "55e5f5c443d15030bc47592e6ba511862812f363",
+    "advertisedBundleRef": "refs/heads/codex/p18-integration"
+  },
+  "aggregate": {
+    "ref": "refs/heads/codex/p18-final-integration",
+    "commit": "69122b13e8ac9a02459ab1f9bc0108a25296518e",
+    "tree": "55e5f5c443d15030bc47592e6ba511862812f363",
+    "parentCount": 34,
+    "url": "https://github.com/wieslawsoltes/SharpForge/tree/codex/p18-final-integration",
+    "receipt": "aggregate.json"
+  },
+  "evidenceDelivery": {
+    "ref": "refs/heads/codex/p18-final-evidence",
+    "artifactPublication": "artifact-publication.json",
+    "binaryReadback": {
+      "state": "verified",
+      "commit": "09f2c383ea5038684dc5d0c515ea6c027bb1d8f5",
+      "tree": "20565d7f4724c5ec040af531f6c9ea01dc610eff",
+      "receipt": "artifact-byte-readback.json",
+      "receiptBytes": 12323,
+      "receiptSha256": "3e0b87cddbb303979931fda5a817e802d59873d22c148d84a3a15f8cf0d50ff0",
+      "binaryBlobCount": 17,
+      "binaryPayloadBytes": 70001708,
+      "reconstructedArchiveVerified": true,
+      "scope": "This exact initial evidence commit was fetched once. Later metadata-only publication preserves the same 17 blob identities; it is not a claim of another fetch or qualification run."
+    },
+    "core": "The ordinary required check on the final evidence PR is separate from the preserved product qualification."
+  }
+}

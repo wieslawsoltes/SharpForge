@@ -1,0 +1,543 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "c68c77252cd5469c5aaf0c8318ee28fe2ec3b65d",
+  "sourceTree": "55e5f5c443d15030bc47592e6ba511862812f363",
+  "aggregateCommit": "69122b13e8ac9a02459ab1f9bc0108a25296518e",
+  "aggregateTree": "55e5f5c443d15030bc47592e6ba511862812f363",
+  "ref": "refs/heads/codex/p18-final-integration",
+  "orderedParents": [
+    "c542f4f62c0565686637a037e5cb2fef0eed75d1",
+    "8cb83f2a70abf3327032b2a506ced9d03f571c18",
+    "d2f8c4df19338e7435b3b2d5520d4a66030831ed",
+    "54e1ffe6cd4d91fb3b24cf97da6719db1f12811b",
+    "e76d3b000d164217bfc800d5fa9ae00715d869ff",
+    "17fe17a7066123275ea53c3e6170e0d2206c4da9",
+    "64f97b51ed63d1d264a990d08d8686b8141f35fa",
+    "44b499483f3604a451c9f9f5f46571bc3049d1cd",
+    "3c9de732073d374e6dfae291c96a59a0c8b4ab59",
+    "486b19a5177de1be5da630460bcafa733ccf3e44",
+    "371a88fc0b62f2bed86b1cd748900e6e489e2aa6",
+    "75fd6dc0eb76d8d5137109a419f13238903be89d",
+    "30da8452fcf10107d742a12f3f5b3359b4765fc6",
+    "484f1e24b8ee34b40b50aa91cf323ccf00ec06d6",
+    "5860d94dca296b6093ceb3ebebbf0efb2ec6071a",
+    "cccd5dd36ae4b625bc005244fa6af5382b7182ea",
+    "06ed476b97c5d401055d766b593cfe3c48902e33",
+    "75694942b9f12e1b85aac4a8d2c4b84797507106",
+    "1bdf37a8bf0e44b5955182d4f270eaf4dcc47cd1",
+    "3c12c550114c102e6f277cabe525eef0d99413b3",
+    "536287f7c03caf2511de744db6527d6614f1a984",
+    "734500d5545796c89ae8cb059e3d927cb2da04af",
+    "4bcd8cb87caff39624a6e5ffa6240cb495814e55",
+    "aa41c5d7638e3a185bed6ac00ba76313cca5a49b",
+    "d7cf835910f2223fd3afe0745e4b5509e1cc11b3",
+    "a1494556a244f2747ae3e4edf392c0b8718a72de",
+    "106298a1b9ce26c56a4338660831484296c32ee9",
+    "87b56cb43c6776f533e1e2848cef4df635ecd5fe",
+    "f207a3518e8afc7c985b9f4c93cebbcd2b85611e",
+    "9493ec0819aa171e0c421f74b99cb2915c7f2b46",
+    "675e1f86ace7510a9d9744db3d88773a862d254c",
+    "c7449d06738db5a2b322dbfeba544f321c09af2e",
+    "edce4592e010dba4eb6559b76e0e69be4de85953",
+    "98403f2cab6becebe5225d0a9c95fe9ee556ec26"
+  ],
+  "commitReadback": {
+    "sha": "69122b13e8ac9a02459ab1f9bc0108a25296518e",
+    "node_id": "C_kwDOU59Ms9oAKDY5MTIyYjEzZThhYzlhMDI0NTlhYjFmOWJjMDEwOGEyNTI5NjUxOGU",
+    "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/69122b13e8ac9a02459ab1f9bc0108a25296518e",
+    "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/69122b13e8ac9a02459ab1f9bc0108a25296518e",
+    "author": {
+      "name": "Wies\u0142aw \u0160olt\u00e9s",
+      "email": "wieslawsoltes@users.noreply.github.com",
+      "date": "2026-10-04T08:04:07Z"
+    },
+    "committer": {
+      "name": "Wies\u0142aw \u0160olt\u00e9s",
+      "email": "wieslawsoltes@users.noreply.github.com",
+      "date": "2026-10-04T08:04:07Z"
+    },
+    "tree": {
+      "sha": "55e5f5c443d15030bc47592e6ba511862812f363",
+      "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/trees/55e5f5c443d15030bc47592e6ba511862812f363"
+    },
+    "message": "SF-A23-T12: compose reviewed Project18 feature stacks\n\nExact canonical tree: 55e5f5c443d15030bc47592e6ba511862812f363\nOriginal integration source: c68c77252cd5469c5aaf0c8318ee28fe2ec3b65d\nQualified product/test source: 0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760\nPinned main: 1db2e1d540a78403b7aaddcf472311fcde1a81ef\n\nThe 34 ordered parents are real maximal published feature heads from the sealed 159-PR census. This branch preserves the reviewed resolved composition; individual stacked drafts remain the review units. Original local source identities remain distinct and are preserved in the verified incremental source bundle. No main merge, force update, full-ci label or dispatch is performed.",
+    "parents": [
+      {
+        "sha": "c542f4f62c0565686637a037e5cb2fef0eed75d1",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/c542f4f62c0565686637a037e5cb2fef0eed75d1",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/c542f4f62c0565686637a037e5cb2fef0eed75d1"
+      },
+      {
+        "sha": "8cb83f2a70abf3327032b2a506ced9d03f571c18",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/8cb83f2a70abf3327032b2a506ced9d03f571c18",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/8cb83f2a70abf3327032b2a506ced9d03f571c18"
+      },
+      {
+        "sha": "d2f8c4df19338e7435b3b2d5520d4a66030831ed",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/d2f8c4df19338e7435b3b2d5520d4a66030831ed",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/d2f8c4df19338e7435b3b2d5520d4a66030831ed"
+      },
+      {
+        "sha": "54e1ffe6cd4d91fb3b24cf97da6719db1f12811b",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/54e1ffe6cd4d91fb3b24cf97da6719db1f12811b",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/54e1ffe6cd4d91fb3b24cf97da6719db1f12811b"
+      },
+      {
+        "sha": "e76d3b000d164217bfc800d5fa9ae00715d869ff",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/e76d3b000d164217bfc800d5fa9ae00715d869ff",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/e76d3b000d164217bfc800d5fa9ae00715d869ff"
+      },
+      {
+        "sha": "17fe17a7066123275ea53c3e6170e0d2206c4da9",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/17fe17a7066123275ea53c3e6170e0d2206c4da9",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/17fe17a7066123275ea53c3e6170e0d2206c4da9"
+      },
+      {
+        "sha": "64f97b51ed63d1d264a990d08d8686b8141f35fa",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/64f97b51ed63d1d264a990d08d8686b8141f35fa",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/64f97b51ed63d1d264a990d08d8686b8141f35fa"
+      },
+      {
+        "sha": "44b499483f3604a451c9f9f5f46571bc3049d1cd",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/44b499483f3604a451c9f9f5f46571bc3049d1cd",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/44b499483f3604a451c9f9f5f46571bc3049d1cd"
+      },
+      {
+        "sha": "3c9de732073d374e6dfae291c96a59a0c8b4ab59",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/3c9de732073d374e6dfae291c96a59a0c8b4ab59",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/3c9de732073d374e6dfae291c96a59a0c8b4ab59"
+      },
+      {
+        "sha": "486b19a5177de1be5da630460bcafa733ccf3e44",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/486b19a5177de1be5da630460bcafa733ccf3e44",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/486b19a5177de1be5da630460bcafa733ccf3e44"
+      },
+      {
+        "sha": "371a88fc0b62f2bed86b1cd748900e6e489e2aa6",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/371a88fc0b62f2bed86b1cd748900e6e489e2aa6",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/371a88fc0b62f2bed86b1cd748900e6e489e2aa6"
+      },
+      {
+        "sha": "75fd6dc0eb76d8d5137109a419f13238903be89d",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/75fd6dc0eb76d8d5137109a419f13238903be89d",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/75fd6dc0eb76d8d5137109a419f13238903be89d"
+      },
+      {
+        "sha": "30da8452fcf10107d742a12f3f5b3359b4765fc6",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/30da8452fcf10107d742a12f3f5b3359b4765fc6",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/30da8452fcf10107d742a12f3f5b3359b4765fc6"
+      },
+      {
+        "sha": "484f1e24b8ee34b40b50aa91cf323ccf00ec06d6",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/484f1e24b8ee34b40b50aa91cf323ccf00ec06d6",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/484f1e24b8ee34b40b50aa91cf323ccf00ec06d6"
+      },
+      {
+        "sha": "5860d94dca296b6093ceb3ebebbf0efb2ec6071a",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/5860d94dca296b6093ceb3ebebbf0efb2ec6071a",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/5860d94dca296b6093ceb3ebebbf0efb2ec6071a"
+      },
+      {
+        "sha": "cccd5dd36ae4b625bc005244fa6af5382b7182ea",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/cccd5dd36ae4b625bc005244fa6af5382b7182ea",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/cccd5dd36ae4b625bc005244fa6af5382b7182ea"
+      },
+      {
+        "sha": "06ed476b97c5d401055d766b593cfe3c48902e33",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/06ed476b97c5d401055d766b593cfe3c48902e33",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/06ed476b97c5d401055d766b593cfe3c48902e33"
+      },
+      {
+        "sha": "75694942b9f12e1b85aac4a8d2c4b84797507106",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/75694942b9f12e1b85aac4a8d2c4b84797507106",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/75694942b9f12e1b85aac4a8d2c4b84797507106"
+      },
+      {
+        "sha": "1bdf37a8bf0e44b5955182d4f270eaf4dcc47cd1",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/1bdf37a8bf0e44b5955182d4f270eaf4dcc47cd1",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/1bdf37a8bf0e44b5955182d4f270eaf4dcc47cd1"
+      },
+      {
+        "sha": "3c12c550114c102e6f277cabe525eef0d99413b3",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/3c12c550114c102e6f277cabe525eef0d99413b3",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/3c12c550114c102e6f277cabe525eef0d99413b3"
+      },
+      {
+        "sha": "536287f7c03caf2511de744db6527d6614f1a984",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/536287f7c03caf2511de744db6527d6614f1a984",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/536287f7c03caf2511de744db6527d6614f1a984"
+      },
+      {
+        "sha": "734500d5545796c89ae8cb059e3d927cb2da04af",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/734500d5545796c89ae8cb059e3d927cb2da04af",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/734500d5545796c89ae8cb059e3d927cb2da04af"
+      },
+      {
+        "sha": "4bcd8cb87caff39624a6e5ffa6240cb495814e55",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/4bcd8cb87caff39624a6e5ffa6240cb495814e55",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/4bcd8cb87caff39624a6e5ffa6240cb495814e55"
+      },
+      {
+        "sha": "aa41c5d7638e3a185bed6ac00ba76313cca5a49b",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/aa41c5d7638e3a185bed6ac00ba76313cca5a49b",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/aa41c5d7638e3a185bed6ac00ba76313cca5a49b"
+      },
+      {
+        "sha": "d7cf835910f2223fd3afe0745e4b5509e1cc11b3",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/d7cf835910f2223fd3afe0745e4b5509e1cc11b3",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/d7cf835910f2223fd3afe0745e4b5509e1cc11b3"
+      },
+      {
+        "sha": "a1494556a244f2747ae3e4edf392c0b8718a72de",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/a1494556a244f2747ae3e4edf392c0b8718a72de",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/a1494556a244f2747ae3e4edf392c0b8718a72de"
+      },
+      {
+        "sha": "106298a1b9ce26c56a4338660831484296c32ee9",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/106298a1b9ce26c56a4338660831484296c32ee9",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/106298a1b9ce26c56a4338660831484296c32ee9"
+      },
+      {
+        "sha": "87b56cb43c6776f533e1e2848cef4df635ecd5fe",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/87b56cb43c6776f533e1e2848cef4df635ecd5fe",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/87b56cb43c6776f533e1e2848cef4df635ecd5fe"
+      },
+      {
+        "sha": "f207a3518e8afc7c985b9f4c93cebbcd2b85611e",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/f207a3518e8afc7c985b9f4c93cebbcd2b85611e",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/f207a3518e8afc7c985b9f4c93cebbcd2b85611e"
+      },
+      {
+        "sha": "9493ec0819aa171e0c421f74b99cb2915c7f2b46",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/9493ec0819aa171e0c421f74b99cb2915c7f2b46",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/9493ec0819aa171e0c421f74b99cb2915c7f2b46"
+      },
+      {
+        "sha": "675e1f86ace7510a9d9744db3d88773a862d254c",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/675e1f86ace7510a9d9744db3d88773a862d254c",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/675e1f86ace7510a9d9744db3d88773a862d254c"
+      },
+      {
+        "sha": "c7449d06738db5a2b322dbfeba544f321c09af2e",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/c7449d06738db5a2b322dbfeba544f321c09af2e",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/c7449d06738db5a2b322dbfeba544f321c09af2e"
+      },
+      {
+        "sha": "edce4592e010dba4eb6559b76e0e69be4de85953",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/edce4592e010dba4eb6559b76e0e69be4de85953",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/edce4592e010dba4eb6559b76e0e69be4de85953"
+      },
+      {
+        "sha": "98403f2cab6becebe5225d0a9c95fe9ee556ec26",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/98403f2cab6becebe5225d0a9c95fe9ee556ec26",
+        "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/98403f2cab6becebe5225d0a9c95fe9ee556ec26"
+      }
+    ],
+    "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null,
+      "verified_at": null
+    }
+  },
+  "refReadback": {
+    "ref": "refs/heads/codex/p18-final-integration",
+    "node_id": "REF_kwDOU59Ms9oAJnJlZnMvaGVhZHMvY29kZXgvcDE4LWZpbmFsLWludGVncmF0aW9u",
+    "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/codex/p18-final-integration",
+    "object": {
+      "sha": "69122b13e8ac9a02459ab1f9bc0108a25296518e",
+      "type": "commit",
+      "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/69122b13e8ac9a02459ab1f9bc0108a25296518e"
+    }
+  },
+  "refPreflight": {
+    "error": "GitHub API error 404: {\"message\":\"Not Found\",\"documentation_url\":\"https://docs.github.com/rest/git/refs#get-a-reference\",\"status\":\"404\"}",
+    "error_code": "NOT_FOUND",
+    "error_data": {
+      "message": "Not Found",
+      "documentation_url": "https://docs.github.com/rest/git/refs#get-a-reference",
+      "status": "404"
+    }
+  },
+  "branchCreation": {
+    "branch": "codex/p18-final-integration"
+  },
+  "treeTransport": {
+    "verifiedIntermediateTrees": 41,
+    "finalTreeEqualsCanonical": true,
+    "initialRejectedBatch": 4,
+    "sameRequestInlineContentReuseCorrected": true
+  },
+  "pinnedMain": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+  "publicationIndexSha256": "b026bdf4f6bac3916a077149521965640e2ebf92577843de7dafe580e048b032",
+  "qualification": "Exact tree equality to the frozen canonical source; no new qualification run on this commit.",
+  "noMainMerge": true,
+  "noForceUpdate": true,
+  "noPullRequest": true,
+  "independentRootReadback": {
+    "schemaVersion": 1,
+    "observedAt": "2026-10-04T08:07:02.532Z",
+    "method": "Independent root GitHub REST connector commit and ref readback",
+    "expected": {
+      "sourceCommit": "c68c77252cd5469c5aaf0c8318ee28fe2ec3b65d",
+      "sourceTree": "55e5f5c443d15030bc47592e6ba511862812f363",
+      "aggregateCommit": "69122b13e8ac9a02459ab1f9bc0108a25296518e",
+      "orderedParents": [
+        "c542f4f62c0565686637a037e5cb2fef0eed75d1",
+        "8cb83f2a70abf3327032b2a506ced9d03f571c18",
+        "d2f8c4df19338e7435b3b2d5520d4a66030831ed",
+        "54e1ffe6cd4d91fb3b24cf97da6719db1f12811b",
+        "e76d3b000d164217bfc800d5fa9ae00715d869ff",
+        "17fe17a7066123275ea53c3e6170e0d2206c4da9",
+        "64f97b51ed63d1d264a990d08d8686b8141f35fa",
+        "44b499483f3604a451c9f9f5f46571bc3049d1cd",
+        "3c9de732073d374e6dfae291c96a59a0c8b4ab59",
+        "486b19a5177de1be5da630460bcafa733ccf3e44",
+        "371a88fc0b62f2bed86b1cd748900e6e489e2aa6",
+        "75fd6dc0eb76d8d5137109a419f13238903be89d",
+        "30da8452fcf10107d742a12f3f5b3359b4765fc6",
+        "484f1e24b8ee34b40b50aa91cf323ccf00ec06d6",
+        "5860d94dca296b6093ceb3ebebbf0efb2ec6071a",
+        "cccd5dd36ae4b625bc005244fa6af5382b7182ea",
+        "06ed476b97c5d401055d766b593cfe3c48902e33",
+        "75694942b9f12e1b85aac4a8d2c4b84797507106",
+        "1bdf37a8bf0e44b5955182d4f270eaf4dcc47cd1",
+        "3c12c550114c102e6f277cabe525eef0d99413b3",
+        "536287f7c03caf2511de744db6527d6614f1a984",
+        "734500d5545796c89ae8cb059e3d927cb2da04af",
+        "4bcd8cb87caff39624a6e5ffa6240cb495814e55",
+        "aa41c5d7638e3a185bed6ac00ba76313cca5a49b",
+        "d7cf835910f2223fd3afe0745e4b5509e1cc11b3",
+        "a1494556a244f2747ae3e4edf392c0b8718a72de",
+        "106298a1b9ce26c56a4338660831484296c32ee9",
+        "87b56cb43c6776f533e1e2848cef4df635ecd5fe",
+        "f207a3518e8afc7c985b9f4c93cebbcd2b85611e",
+        "9493ec0819aa171e0c421f74b99cb2915c7f2b46",
+        "675e1f86ace7510a9d9744db3d88773a862d254c",
+        "c7449d06738db5a2b322dbfeba544f321c09af2e",
+        "edce4592e010dba4eb6559b76e0e69be4de85953",
+        "98403f2cab6becebe5225d0a9c95fe9ee556ec26"
+      ],
+      "publicationIndexSha256": "b026bdf4f6bac3916a077149521965640e2ebf92577843de7dafe580e048b032"
+    },
+    "actualCommit": {
+      "sha": "69122b13e8ac9a02459ab1f9bc0108a25296518e",
+      "node_id": "C_kwDOU59Ms9oAKDY5MTIyYjEzZThhYzlhMDI0NTlhYjFmOWJjMDEwOGEyNTI5NjUxOGU",
+      "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/69122b13e8ac9a02459ab1f9bc0108a25296518e",
+      "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/69122b13e8ac9a02459ab1f9bc0108a25296518e",
+      "author": {
+        "name": "Wies\u0142aw \u0160olt\u00e9s",
+        "email": "wieslawsoltes@users.noreply.github.com",
+        "date": "2026-10-04T08:04:07Z"
+      },
+      "committer": {
+        "name": "Wies\u0142aw \u0160olt\u00e9s",
+        "email": "wieslawsoltes@users.noreply.github.com",
+        "date": "2026-10-04T08:04:07Z"
+      },
+      "tree": {
+        "sha": "55e5f5c443d15030bc47592e6ba511862812f363",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/trees/55e5f5c443d15030bc47592e6ba511862812f363"
+      },
+      "message": "SF-A23-T12: compose reviewed Project18 feature stacks\n\nExact canonical tree: 55e5f5c443d15030bc47592e6ba511862812f363\nOriginal integration source: c68c77252cd5469c5aaf0c8318ee28fe2ec3b65d\nQualified product/test source: 0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760\nPinned main: 1db2e1d540a78403b7aaddcf472311fcde1a81ef\n\nThe 34 ordered parents are real maximal published feature heads from the sealed 159-PR census. This branch preserves the reviewed resolved composition; individual stacked drafts remain the review units. Original local source identities remain distinct and are preserved in the verified incremental source bundle. No main merge, force update, full-ci label or dispatch is performed.",
+      "parents": [
+        {
+          "sha": "c542f4f62c0565686637a037e5cb2fef0eed75d1",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/c542f4f62c0565686637a037e5cb2fef0eed75d1",
+          "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/c542f4f62c0565686637a037e5cb2fef0eed75d1"
+        },
+        {
+          "sha": "8cb83f2a70abf3327032b2a506ced9d03f571c18",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/8cb83f2a70abf3327032b2a506ced9d03f571c18",
+          "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/8cb83f2a70abf3327032b2a506ced9d03f571c18"
+        },
+        {
+          "sha": "d2f8c4df19338e7435b3b2d5520d4a66030831ed",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/d2f8c4df19338e7435b3b2d5520d4a66030831ed",
+          "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/d2f8c4df19338e7435b3b2d5520d4a66030831ed"
+        },
+        {
+          "sha": "54e1ffe6cd4d91fb3b24cf97da6719db1f12811b",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/54e1ffe6cd4d91fb3b24cf97da6719db1f12811b",
+          "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/54e1ffe6cd4d91fb3b24cf97da6719db1f12811b"
+        },
+        {
+          "sha": "e76d3b000d164217bfc800d5fa9ae00715d869ff",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/e76d3b000d164217bfc800d5fa9ae00715d869ff",
+          "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/e76d3b000d164217bfc800d5fa9ae00715d869ff"
+        },
+        {
+          "sha": "17fe17a7066123275ea53c3e6170e0d2206c4da9",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/17fe17a7066123275ea53c3e6170e0d2206c4da9",
+          "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/17fe17a7066123275ea53c3e6170e0d2206c4da9"
+        },
+        {
+          "sha": "64f97b51ed63d1d264a990d08d8686b8141f35fa",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/64f97b51ed63d1d264a990d08d8686b8141f35fa",
+          "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/64f97b51ed63d1d264a990d08d8686b8141f35fa"
+        },
+        {
+          "sha": "44b499483f3604a451c9f9f5f46571bc3049d1cd",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/44b499483f3604a451c9f9f5f46571bc3049d1cd",
+          "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/44b499483f3604a451c9f9f5f46571bc3049d1cd"
+        },
+        {
+          "sha": "3c9de732073d374e6dfae291c96a59a0c8b4ab59",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/3c9de732073d374e6dfae291c96a59a0c8b4ab59",
+          "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/3c9de732073d374e6dfae291c96a59a0c8b4ab59"
+        },
+        {
+          "sha": "486b19a5177de1be5da630460bcafa733ccf3e44",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/486b19a5177de1be5da630460bcafa733ccf3e44",
+          "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/486b19a5177de1be5da630460bcafa733ccf3e44"
+        },
+        {
+          "sha": "371a88fc0b62f2bed86b1cd748900e6e489e2aa6",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/371a88fc0b62f2bed86b1cd748900e6e489e2aa6",
+          "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/371a88fc0b62f2bed86b1cd748900e6e489e2aa6"
+        },
+        {
+          "sha": "75fd6dc0eb76d8d5137109a419f13238903be89d",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/75fd6dc0eb76d8d5137109a419f13238903be89d",
+          "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/75fd6dc0eb76d8d5137109a419f13238903be89d"
+        },
+        {
+          "sha": "30da8452fcf10107d742a12f3f5b3359b4765fc6",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/30da8452fcf10107d742a12f3f5b3359b4765fc6",
+          "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/30da8452fcf10107d742a12f3f5b3359b4765fc6"
+        },
+        {
+          "sha": "484f1e24b8ee34b40b50aa91cf323ccf00ec06d6",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/484f1e24b8ee34b40b50aa91cf323ccf00ec06d6",
+          "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/484f1e24b8ee34b40b50aa91cf323ccf00ec06d6"
+        },
+        {
+          "sha": "5860d94dca296b6093ceb3ebebbf0efb2ec6071a",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/5860d94dca296b6093ceb3ebebbf0efb2ec6071a",
+          "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/5860d94dca296b6093ceb3ebebbf0efb2ec6071a"
+        },
+        {
+          "sha": "cccd5dd36ae4b625bc005244fa6af5382b7182ea",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/cccd5dd36ae4b625bc005244fa6af5382b7182ea",
+          "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/cccd5dd36ae4b625bc005244fa6af5382b7182ea"
+        },
+        {
+          "sha": "06ed476b97c5d401055d766b593cfe3c48902e33",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/06ed476b97c5d401055d766b593cfe3c48902e33",
+          "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/06ed476b97c5d401055d766b593cfe3c48902e33"
+        },
+        {
+          "sha": "75694942b9f12e1b85aac4a8d2c4b84797507106",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/75694942b9f12e1b85aac4a8d2c4b84797507106",
+          "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/75694942b9f12e1b85aac4a8d2c4b84797507106"
+        },
+        {
+          "sha": "1bdf37a8bf0e44b5955182d4f270eaf4dcc47cd1",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/1bdf37a8bf0e44b5955182d4f270eaf4dcc47cd1",
+          "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/1bdf37a8bf0e44b5955182d4f270eaf4dcc47cd1"
+        },
+        {
+          "sha": "3c12c550114c102e6f277cabe525eef0d99413b3",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/3c12c550114c102e6f277cabe525eef0d99413b3",
+          "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/3c12c550114c102e6f277cabe525eef0d99413b3"
+        },
+        {
+          "sha": "536287f7c03caf2511de744db6527d6614f1a984",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/536287f7c03caf2511de744db6527d6614f1a984",
+          "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/536287f7c03caf2511de744db6527d6614f1a984"
+        },
+        {
+          "sha": "734500d5545796c89ae8cb059e3d927cb2da04af",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/734500d5545796c89ae8cb059e3d927cb2da04af",
+          "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/734500d5545796c89ae8cb059e3d927cb2da04af"
+        },
+        {
+          "sha": "4bcd8cb87caff39624a6e5ffa6240cb495814e55",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/4bcd8cb87caff39624a6e5ffa6240cb495814e55",
+          "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/4bcd8cb87caff39624a6e5ffa6240cb495814e55"
+        },
+        {
+          "sha": "aa41c5d7638e3a185bed6ac00ba76313cca5a49b",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/aa41c5d7638e3a185bed6ac00ba76313cca5a49b",
+          "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/aa41c5d7638e3a185bed6ac00ba76313cca5a49b"
+        },
+        {
+          "sha": "d7cf835910f2223fd3afe0745e4b5509e1cc11b3",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/d7cf835910f2223fd3afe0745e4b5509e1cc11b3",
+          "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/d7cf835910f2223fd3afe0745e4b5509e1cc11b3"
+        },
+        {
+          "sha": "a1494556a244f2747ae3e4edf392c0b8718a72de",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/a1494556a244f2747ae3e4edf392c0b8718a72de",
+          "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/a1494556a244f2747ae3e4edf392c0b8718a72de"
+        },
+        {
+          "sha": "106298a1b9ce26c56a4338660831484296c32ee9",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/106298a1b9ce26c56a4338660831484296c32ee9",
+          "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/106298a1b9ce26c56a4338660831484296c32ee9"
+        },
+        {
+          "sha": "87b56cb43c6776f533e1e2848cef4df635ecd5fe",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/87b56cb43c6776f533e1e2848cef4df635ecd5fe",
+          "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/87b56cb43c6776f533e1e2848cef4df635ecd5fe"
+        },
+        {
+          "sha": "f207a3518e8afc7c985b9f4c93cebbcd2b85611e",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/f207a3518e8afc7c985b9f4c93cebbcd2b85611e",
+          "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/f207a3518e8afc7c985b9f4c93cebbcd2b85611e"
+        },
+        {
+          "sha": "9493ec0819aa171e0c421f74b99cb2915c7f2b46",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/9493ec0819aa171e0c421f74b99cb2915c7f2b46",
+          "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/9493ec0819aa171e0c421f74b99cb2915c7f2b46"
+        },
+        {
+          "sha": "675e1f86ace7510a9d9744db3d88773a862d254c",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/675e1f86ace7510a9d9744db3d88773a862d254c",
+          "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/675e1f86ace7510a9d9744db3d88773a862d254c"
+        },
+        {
+          "sha": "c7449d06738db5a2b322dbfeba544f321c09af2e",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/c7449d06738db5a2b322dbfeba544f321c09af2e",
+          "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/c7449d06738db5a2b322dbfeba544f321c09af2e"
+        },
+        {
+          "sha": "edce4592e010dba4eb6559b76e0e69be4de85953",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/edce4592e010dba4eb6559b76e0e69be4de85953",
+          "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/edce4592e010dba4eb6559b76e0e69be4de85953"
+        },
+        {
+          "sha": "98403f2cab6becebe5225d0a9c95fe9ee556ec26",
+          "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/98403f2cab6becebe5225d0a9c95fe9ee556ec26",
+          "html_url": "https://github.com/wieslawsoltes/SharpForge/commit/98403f2cab6becebe5225d0a9c95fe9ee556ec26"
+        }
+      ],
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    "actualRef": {
+      "ref": "refs/heads/codex/p18-final-integration",
+      "node_id": "REF_kwDOU59Ms9oAJnJlZnMvaGVhZHMvY29kZXgvcDE4LWZpbmFsLWludGVncmF0aW9u",
+      "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/refs/heads/codex/p18-final-integration",
+      "object": {
+        "sha": "69122b13e8ac9a02459ab1f9bc0108a25296518e",
+        "type": "commit",
+        "url": "https://api.github.com/repos/wieslawsoltes/SharpForge/git/commits/69122b13e8ac9a02459ab1f9bc0108a25296518e"
+      }
+    },
+    "checks": {
+      "commit": true,
+      "tree": true,
+      "orderedParents": true,
+      "parentCount": 34,
+      "ref": true
+    },
+    "qualification": "Read-only publication verification; no source, test, build, or protected-path action."
+  }
+}
