@@ -5,14 +5,16 @@ export const workspaceStateFields = Object.freeze({
   documents: Object.freeze([
     'files', 'tabs', 'active', 'dirtyFiles', 'revision', 'disk', 'diskRevision', 'extraFiles', 'folders', 'membershipDirty',
     'projectSystem', 'projectSnapshot', 'startupProject', 'workspaceEpoch', 'workspaceMode', 'applyingEdits', 'name',
-    'configuration', 'nativeMode', 'nativeWorkspace', 'nativeStartup', 'nativeJob', 'itemSelection', 'breakpoints', 'functionBreakpoints'
+    'configuration', 'nativeMode', 'nativeWorkspace', 'nativeStartup', 'nativeJob', 'itemSelection', 'breakpoints', 'functionBreakpoints',
+    'recoveryReadOnly', 'recoveryEntry', 'recoveryMetadata'
   ]),
   build: Object.freeze([
     'result', 'image', 'assembly', 'pdb', 'buildDirty', 'compileBusy', 'projectDiagnostics', 'toolReferences', 'extensionConfig',
     'importedAssembly', 'selectedMethod', 'ilDump', 'disassemblyFormat', 'analyzeTimer', 'langVersion'
   ]),
   sessions: Object.freeze([
-    'debug', 'programOutput', 'frameId', 'debugSources', 'runtimeSession', 'watchResults', 'watches', 'watchEpoch', 'debugSettings',
+    'debug', 'programOutput', 'frameId', 'debugSources', 'debugSourceRecords', 'debugSourceOriginals',
+    'runtimeSession', 'watchResults', 'watches', 'watchEpoch', 'debugSettings',
     'runtimeSettings', 'launchEpoch', 'launchBusy', 'controlBusy', 'hotEdit', 'immediateHistory', 'lastManagedLaunch',
     'inspectedLocals', 'inspectedThreadFrames', 'inspectedThreadId', 'objectContext', 'functionEvaluationEnabled',
     'functionEvaluationRollback', 'readOnly', 'renderedBreakpoints'
@@ -61,7 +63,12 @@ export function createWorkspaceState(initial = {}, services = {}) {
           if (key === 'runtimeSession') return sessions.active.identity;
           return sessions.active[key];
         }
-        if (key === 'readOnly' && services.locks && documents?.active) return services.locks.isDocumentLocked(documents.active);
+        if (key === 'readOnly') {
+          if (slices.documents.recoveryReadOnly) return true;
+          if (services.locks && documents?.active) {
+            return services.locks.isDocumentExecutionLocked?.(documents.active) ?? services.locks.isDocumentLocked(documents.active);
+          }
+        }
         return slices[slice][key];
       },
       set(value) {
@@ -81,9 +88,11 @@ export function createWorkspaceState(initial = {}, services = {}) {
             if (key === 'hotEdit') sessions.active.emit('editability');
           }
         } else slices[slice][key] = value;
+        if (key === 'recoveryReadOnly') services.locks?.apply();
         if (previous !== value) events.emit({ type: 'changed', slice, key, previous, value });
       }
     });
   }
+  services.locks?.setReadOnlyPolicy?.(() => slices.documents.recoveryReadOnly === true);
   return { state, slices, subscribe: (listener, options) => events.subscribe(listener, options), dispose: () => events.dispose() };
 }
