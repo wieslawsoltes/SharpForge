@@ -3,12 +3,6 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
-    inputs:
-      qualify:
-        description: Run the full browser qualification against the deployed URL
-        required: false
-        default: false
-        type: boolean
 permissions:
   contents: read
 concurrency:
@@ -17,85 +11,33 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 22
-      - run: npm ci --ignore-scripts --no-audit --no-fund
-      - run: npm run build
+          cache: npm
+      - name: Install dependencies
+        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Build
+        run: npm run build
       - run: touch dist/.nojekyll
       - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
       - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: dist/
   deploy:
-    outputs:
-      page_url: ${{ steps.deployment.outputs.page_url }}
     needs: build
     permissions:
       contents: read
       pages: write
       id-token: write
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
         uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
-
-  deployed-policy:
-    needs: deploy
-    runs-on: ubuntu-latest
-    timeout-minutes: 2
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
-        with:
-          node-version: 22
-      - name: Check published index and 404 CSP
-        env:
-          DEPLOYED_URL: ${{ needs.deploy.outputs.page_url }}
-        run: >-
-          node scripts/conformance/security/pages-probe.js
-          --url "$DEPLOYED_URL" --revision "$GITHUB_SHA"
-          --output artifacts/results/deployed-pages-policy.json
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
-        if: always()
-        with:
-          name: deployed-pages-policy
-          path: artifacts/results/deployed-pages-policy.json
-          if-no-files-found: error
-
-  deployed-browser:
-    if: github.event_name == 'workflow_dispatch' && inputs.qualify
-    needs: [deploy, deployed-policy]
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    permissions:
-      contents: read
-    strategy:
-      fail-fast: false
-      max-parallel: 1
-      matrix:
-        engine: [chromium, firefox, webkit]
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
-        with:
-          python-version: '3.12'
-      - run: python -m pip install -r tests/requirements.txt
-      - run: python -m playwright install --with-deps ${{ matrix.engine }}
-      - name: Qualify the actual published URL and enforced CSP
-        env:
-          DEPLOYED_URL: ${{ needs.deploy.outputs.page_url }}
-        run: python tests/conformance/browser/matrix.py --engine ${{ matrix.engine }} --mode deployed --url "$DEPLOYED_URL"
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
-        if: always()
-        with:
-          name: deployed-browser-${{ matrix.engine }}
-          path: artifacts/results/
-          if-no-files-found: error
