@@ -1,0 +1,47 @@
+{
+  "label": "resolve-array-acyclic-expansion",
+  "argv": [
+    "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+    "exec",
+    "--runtimeconfig",
+    "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/pinned.runtimeconfig.json",
+    "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/images/GenericClosureOracle.dll",
+    "observe",
+    "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/images",
+    "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/source/packages/clr/interop/GenericClosure",
+    "resolve-array-acyclic-expansion",
+    "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/progress/resolve-array-acyclic-expansion.jsonl"
+  ],
+  "cwd": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace",
+  "environment": {
+    "PATH": "/root/.codex/tmp/arg0/codex-arg0FW6Pa9:/opt/codex/codex-path:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "DOTNET_CLI_TELEMETRY_OPTOUT": "1",
+    "DOTNET_SKIP_FIRST_TIME_EXPERIENCE": "1",
+    "DOTNET_NOLOGO": "1",
+    "DOTNET_MULTILEVEL_LOOKUP": "0",
+    "DOTNET_CLI_WORKLOAD_UPDATE_NOTIFY_DISABLE": "1",
+    "DOTNET_CLI_HOME": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/workspace/cli-home"
+  },
+  "startedUtc": "2026-10-04T20:14:29.250Z",
+  "limits": {
+    "timeoutMilliseconds": 120000,
+    "maximumBufferedBytes": 33554432
+  },
+  "status": "exited",
+  "finishedUtc": "2026-10-04T20:14:29.366Z",
+  "exitCode": 0,
+  "signal": null,
+  "error": null,
+  "stdout": {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/19-resolve-array-acyclic-expansion.stdout",
+    "bytes": 3659,
+    "sha256": "60cdc2358a9fac79835bc495591ec723d4ab4813ea4fac5cea11d68dfe870e6d"
+  },
+  "stderr": {
+    "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence/19-resolve-array-acyclic-expansion.stderr",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

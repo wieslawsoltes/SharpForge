@@ -1,0 +1,1179 @@
+{
+  "format": "sharpforge.project6.generic-instantiation-validation-plan",
+  "schemaVersion": 1,
+  "preparedUtc": "2026-10-04T16:45:36.852256+00:00",
+  "status": "prepared-source-only",
+  "executed": false,
+  "issue": 2460,
+  "task": "SF-A04-T05.1",
+  "executionOwnership": "Root exclusively schedules installation, capture, tests and benchmarks. This plan performs none.",
+  "candidate": {
+    "workspace": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation",
+    "branch": "codex/project6-a04-generic-instantiation",
+    "head": "2042ca6bd4f6bb4db0c2a4927dfde15cb804efb2",
+    "repositoryTree": "a60c75bd3d4dfe7fd3c7866e25596f7a758b1b24",
+    "cleanAtPreparation": true,
+    "sourceDirectories": [
+      {
+        "directory": "packages/archive/src",
+        "gitTree": "efc7f1f82e3401599f470905d812b398a7647280",
+        "files": 4,
+        "logicalBytes": 21541,
+        "contentSha256": "4c40c86524f7ee2440952010c4efb15068d3b3885084391cd892fe379b8fcdfd",
+        "hashConvention": "For each git ls-files path in order, SHA256 of UTF-8 path + NUL + decimal byte length + NUL + exact file bytes."
+      },
+      {
+        "directory": "packages/bcl-core/src",
+        "gitTree": "5720bb411ce77e9ed0b263e61139dc318e798dc6",
+        "files": 49,
+        "logicalBytes": 148845,
+        "contentSha256": "8fa4c5ad01894c78a7a504403627dfd4ea5b0cf9d30a0f62874daf6dca609e98",
+        "hashConvention": "For each git ls-files path in order, SHA256 of UTF-8 path + NUL + decimal byte length + NUL + exact file bytes."
+      },
+      {
+        "directory": "packages/bcl-collections/src",
+        "gitTree": "92f21ecaf0155213c86c5e82d1c890366028a926",
+        "files": 18,
+        "logicalBytes": 33983,
+        "contentSha256": "91d5a80355e1ca84480790f4b9a3947fd2704962fbe049d09647abe632bbdae4",
+        "hashConvention": "For each git ls-files path in order, SHA256 of UTF-8 path + NUL + decimal byte length + NUL + exact file bytes."
+      },
+      {
+        "directory": "packages/framework/src",
+        "gitTree": "a28f688cf4c0a540a2f6518777f84f7cd0ff3623",
+        "files": 18,
+        "logicalBytes": 64373,
+        "contentSha256": "1750687bb93d110866f8f5623d617b9e64c215c2dd333bb2d37110a337f08dc6",
+        "hashConvention": "For each git ls-files path in order, SHA256 of UTF-8 path + NUL + decimal byte length + NUL + exact file bytes."
+      },
+      {
+        "directory": "packages/bytecode/src",
+        "gitTree": "e929355514cad0a058982101fa52f975a2ea1f55",
+        "files": 31,
+        "logicalBytes": 78553,
+        "contentSha256": "57f4e74ca2cf10530f35c85818320ba17ddb87f979af2a73d6bafd9181779907",
+        "hashConvention": "For each git ls-files path in order, SHA256 of UTF-8 path + NUL + decimal byte length + NUL + exact file bytes."
+      },
+      {
+        "directory": "packages/cil/src",
+        "gitTree": "8f1711276d10bcaa62cc711ff9d070a97e056993",
+        "files": 225,
+        "logicalBytes": 742481,
+        "contentSha256": "07ce74b9d40032e1fc0b988f794f3286954b61145d0a5dc1154d14b06bd8f93b",
+        "hashConvention": "For each git ls-files path in order, SHA256 of UTF-8 path + NUL + decimal byte length + NUL + exact file bytes."
+      },
+      {
+        "directory": "packages/clr/src",
+        "gitTree": "7054ca7157a723e09fef8e5df3b468925b8faad5",
+        "files": 64,
+        "logicalBytes": 262003,
+        "contentSha256": "0011a9d8d20752ef486f17afb4a7f2a836a5ae3e39c67136b879f6a2ba4756c4",
+        "hashConvention": "For each git ls-files path in order, SHA256 of UTF-8 path + NUL + decimal byte length + NUL + exact file bytes."
+      }
+    ],
+    "filePins": [
+      {
+        "path": "package.json",
+        "bytes": 3136,
+        "sha256": "9ed396895997e7afbdb0951b22f56210ed9a66efc19753609107d0a4240ecfe8"
+      },
+      {
+        "path": "packages/archive/package.json",
+        "bytes": 355,
+        "sha256": "e67cb79a2461944333ebe3f583705c2ba499dbc542f9ec34be8fa355e0264221"
+      },
+      {
+        "path": "packages/bcl-collections/package.json",
+        "bytes": 411,
+        "sha256": "225ea8f0758022cd3c8c3217d224cdbea98602b7258de9f4c7d16387fc55041e"
+      },
+      {
+        "path": "packages/bcl-core/package.json",
+        "bytes": 339,
+        "sha256": "b5c0b3309973d0258ca62e584c34d98b0bbbd9e55802a368bc36388ca70ac253"
+      },
+      {
+        "path": "packages/bytecode/package.json",
+        "bytes": 441,
+        "sha256": "3a4815e50844cb30c392ba0e58266a8dc27ab39ce8897972a4cbf4354a65b27a"
+      },
+      {
+        "path": "packages/cil/package.json",
+        "bytes": 490,
+        "sha256": "6285282a5ce21823ef4a2e93e0e8173160503f857152bd546f638fa28f353429"
+      },
+      {
+        "path": "packages/clr/GENERICS.md",
+        "bytes": 4477,
+        "sha256": "84c51304b39ece32b3d7e1c6c7421cf8740296c5051469ea5873f76c1d4ddbe7"
+      },
+      {
+        "path": "packages/clr/INSTANTIATION.md",
+        "bytes": 19134,
+        "sha256": "9628a0ae7e5e9f1d283f3050867e604b592eb58bb21e23d0057b9c2b55f1de32"
+      },
+      {
+        "path": "packages/clr/README.md",
+        "bytes": 10593,
+        "sha256": "d34ab7f81ee0bf26863483cfa46a3a8860daf0f5edff59117b47dd0c5245a5ab"
+      },
+      {
+        "path": "packages/clr/interop/GenericInstantiation/CaseMatrix.cs",
+        "bytes": 16464,
+        "sha256": "66488919a34cd4c9fe418f9bdf37437c46d665354729146bf73a3f4deb6b7675"
+      },
+      {
+        "path": "packages/clr/interop/GenericInstantiation/FixtureTypes.cs",
+        "bytes": 1042,
+        "sha256": "d9d8f7f70ed1cb01530ae117ec6f6799d80935278205e216f12ebada5006ebd7"
+      },
+      {
+        "path": "packages/clr/interop/GenericInstantiation/LifetimeObservations.cs",
+        "bytes": 4370,
+        "sha256": "f45b2a31fccf25afcfd7825f8662d54793762a0fabd70d8e4b5520181d0ed892"
+      },
+      {
+        "path": "packages/clr/interop/GenericInstantiation/MetadataImages.cs",
+        "bytes": 9927,
+        "sha256": "b5ee006415aa68ae6255525a17e1f2a5a1dcb5070fccea392f6054836eaf58c6"
+      },
+      {
+        "path": "packages/clr/interop/GenericInstantiation/Program.cs",
+        "bytes": 3527,
+        "sha256": "c12e4bb85cb5888a2cf57abb2ee13ac253325a7a2557fa094e14c8edda3d3542"
+      },
+      {
+        "path": "packages/clr/interop/GenericInstantiation/SignatureObservations.cs",
+        "bytes": 3949,
+        "sha256": "c20bd14a890d45c24e83ec8b33faad1dcb266a08c9d613a00f52430296b9ea51"
+      },
+      {
+        "path": "packages/clr/interop/GenericInstantiation/TypeObservations.cs",
+        "bytes": 8356,
+        "sha256": "89d2942aeec005786a2853dc2e4cbfa585ebf8039ffa47b567208fd1a7570bd9"
+      },
+      {
+        "path": "packages/clr/package.json",
+        "bytes": 426,
+        "sha256": "89117c4906ef12c285a81f8d532baa3260d0b0a8a6d1ff4f626f04be9383a3af"
+      },
+      {
+        "path": "packages/clr/src/app-domain.js",
+        "bytes": 1999,
+        "sha256": "666bdb3c801d9c9f6ed3ef8721ca8a062de1544aa335748999609dc97855cde2"
+      },
+      {
+        "path": "packages/clr/src/assembly-name.js",
+        "bytes": 5638,
+        "sha256": "e53c1cdedd91d189319515173fdd28e583964c818643100812443f7a749e4044"
+      },
+      {
+        "path": "packages/clr/src/assembly.js",
+        "bytes": 15445,
+        "sha256": "3ab701d91a38cac6abb3fb05138a79a91148edd966d44dd807b076ff9875e81b"
+      },
+      {
+        "path": "packages/clr/src/binding-wait.js",
+        "bytes": 846,
+        "sha256": "8053dd2601d7ce927e850876c0a466251df4f0746360f0ef4deb1ae446b3b54f"
+      },
+      {
+        "path": "packages/clr/src/context-events.js",
+        "bytes": 973,
+        "sha256": "09324de1c7717fcfa67e2e1e617c4a7d52ad5ee68a1531792cffd8c7a677278f"
+      },
+      {
+        "path": "packages/clr/src/dependency-graph.js",
+        "bytes": 2039,
+        "sha256": "de19d1c5a5b6a7868d835204355eef1cd59a725ce435be40e774d45f2e2bd01b"
+      },
+      {
+        "path": "packages/clr/src/deps-json.js",
+        "bytes": 4249,
+        "sha256": "0abbfeea8b808317106e4db8f72d7be78999f0a064c0288ec9ae91cac15925e6"
+      },
+      {
+        "path": "packages/clr/src/display-name-tokens.js",
+        "bytes": 2152,
+        "sha256": "a0ba987d54d4e092887c12b1fb643c2053f9187744a5b2f23d27b0d984a7e10d"
+      },
+      {
+        "path": "packages/clr/src/generics/context-lifetime.js",
+        "bytes": 1378,
+        "sha256": "178937234438145cb63537f91662adf8f8f74dfcc351aa77fc94c76b1474dd69"
+      },
+      {
+        "path": "packages/clr/src/generics/instantiation.js",
+        "bytes": 5387,
+        "sha256": "29b4e05bff0f8a97cb3b24bd035e9e7134b48db91bf30326045fea1c8c440311"
+      },
+      {
+        "path": "packages/clr/src/generics/resolution-context.js",
+        "bytes": 4766,
+        "sha256": "64006001b3c43808c57d87163401160cc1d26d0f9ca688e6faa9c792e15e280e"
+      },
+      {
+        "path": "packages/clr/src/generics/signature-types.js",
+        "bytes": 1238,
+        "sha256": "bd64afae88dfe9430cf732d553eefff8a0437edaae1841b16d507a24160cb450"
+      },
+      {
+        "path": "packages/clr/src/generics/substitution.js",
+        "bytes": 4682,
+        "sha256": "9edc56eb75e7cc43cd81c9cc22c23b75354d5deac41e87d2581171a1b5c991ac"
+      },
+      {
+        "path": "packages/clr/src/generics/type-shapes.js",
+        "bytes": 1556,
+        "sha256": "a7a7dd059aea4dad30ed5ab48759aed144c1666fef13ba8d7012b7f8f3db4fc9"
+      },
+      {
+        "path": "packages/clr/src/generics/type-substitution.js",
+        "bytes": 2298,
+        "sha256": "1a0cce20d5133d1152f0b0098d98d419ae3196d84be6a2cbb907e8af0e35f560"
+      },
+      {
+        "path": "packages/clr/src/identity.js",
+        "bytes": 4949,
+        "sha256": "f3858cdf990774e5bb3ace749b0c8843373c6141249df3d724f4c4b62f6d5fd1"
+      },
+      {
+        "path": "packages/clr/src/index.js",
+        "bytes": 1736,
+        "sha256": "c394f45b9ac41acec81e8ffe0227648450f6e3de4f5df15a04e904f8ca016684"
+      },
+      {
+        "path": "packages/clr/src/load-context.js",
+        "bytes": 9981,
+        "sha256": "687a9112bd6d4b3ee9cb23502c3f974f8e7bb8309d7c3eb9f56dba39947b1129"
+      },
+      {
+        "path": "packages/clr/src/load-errors.js",
+        "bytes": 1973,
+        "sha256": "3753a0e3270274bf07feb9c976ffedb12bc485890775d50f013f1041ba6ffc1d"
+      },
+      {
+        "path": "packages/clr/src/nuget-assets.js",
+        "bytes": 5724,
+        "sha256": "f5e98880606d8e928a03c5014d417ac61c9a3ac083c75e18466d001df03ff66b"
+      },
+      {
+        "path": "packages/clr/src/nuget-package.js",
+        "bytes": 906,
+        "sha256": "07f070729e4773ca77786baa57e943d347d27faec2457c12fdb3fdeec48e6ba1"
+      },
+      {
+        "path": "packages/clr/src/probing-paths.js",
+        "bytes": 2425,
+        "sha256": "c39e6e1e464aef20f85d2d99d1066235d67d6fc36c5c8d91fb55aa8f8a15453f"
+      },
+      {
+        "path": "packages/clr/src/reflection/usage-budget.js",
+        "bytes": 3078,
+        "sha256": "f0b7263b1618ca3493c505af4197c1dffd3c7fd214428a61365ef2aa291e4478"
+      },
+      {
+        "path": "packages/clr/src/reflection/usage-interface-maps.js",
+        "bytes": 4271,
+        "sha256": "0bbc8f0fcc175eb452b7d7431d9530b275da378a68fa71f231bad9b18c1afae5"
+      },
+      {
+        "path": "packages/clr/src/reflection/usage-metadata.js",
+        "bytes": 10290,
+        "sha256": "d555ef6aec0cacec70c16e0431aedeb8a23af7efa2f03393e0ce12323341c13f"
+      },
+      {
+        "path": "packages/clr/src/reflection/usage-relations.js",
+        "bytes": 4769,
+        "sha256": "e37670ca34fa3669ddc8a40411108cfe296c04e04449756c8e8c9a3786b3e51d"
+      },
+      {
+        "path": "packages/clr/src/resolve/forwarders.js",
+        "bytes": 7005,
+        "sha256": "bfc178c64680098b6915878293b10c6a8b21147a609873fe5486ab412219f496"
+      },
+      {
+        "path": "packages/clr/src/resolver.js",
+        "bytes": 4956,
+        "sha256": "6dabceef92566a3aa15a51f74191a51be2225b5b0e4ce8e2344729236e889d5b"
+      },
+      {
+        "path": "packages/clr/src/resources/resource-codec.js",
+        "bytes": 3427,
+        "sha256": "8787fb7e27c4fe9cf33509528136c5db72c813215bb1dbf0e1dc4fa873ee3c7b"
+      },
+      {
+        "path": "packages/clr/src/resources/resource-index.js",
+        "bytes": 5027,
+        "sha256": "ee5e9ce8cd831d95beea619752e4c233a544d2d033a373b0530482cbb6bd25bc"
+      },
+      {
+        "path": "packages/clr/src/resources/resource-reader.js",
+        "bytes": 4031,
+        "sha256": "70cc45239a57a2849aea7d357bd4d51650d343360485ab7cadb222c457d36eb0"
+      },
+      {
+        "path": "packages/clr/src/resources/resource-values.js",
+        "bytes": 4226,
+        "sha256": "1f95f1767bd548a38cde344d7684e3b6762da515db90c242d8c9e46ebeeea33b"
+      },
+      {
+        "path": "packages/clr/src/type-system/casting.js",
+        "bytes": 5525,
+        "sha256": "20a4dc6b2183dbf4dbf1acf0882a7e2b90e03f01816aac8f363d556d3e5163f6"
+      },
+      {
+        "path": "packages/clr/src/type-system/constructed-type-cache.js",
+        "bytes": 1980,
+        "sha256": "3836d8830d7155d115df344dc0c3d4c17b27f1c445c234cd292574527910251d"
+      },
+      {
+        "path": "packages/clr/src/type-system/constructed-types.js",
+        "bytes": 7241,
+        "sha256": "d51738fee01ccef5ebc8429a269e150906784547e6128c80fbb584eeb1e18676"
+      },
+      {
+        "path": "packages/clr/src/type-system/custom-modifiers.js",
+        "bytes": 1689,
+        "sha256": "bbd396507ef10f7791095f50cb570bc532111f1cab9011bb5b2fb1317cb17eb5"
+      },
+      {
+        "path": "packages/clr/src/type-system/event-desc.js",
+        "bytes": 1766,
+        "sha256": "9608dd246cc3149b90bd25add34f9d7fcae8f275763fe3bc25540a1058e3f76c"
+      },
+      {
+        "path": "packages/clr/src/type-system/field-desc.js",
+        "bytes": 1704,
+        "sha256": "833783b707e95a0e7c808b3d5dd28bd5000ad41b8ffdce55b01577c574634940"
+      },
+      {
+        "path": "packages/clr/src/type-system/frozen-signature.js",
+        "bytes": 969,
+        "sha256": "855083074fb9cd4e9acd58dbbecbde9bc57f153e6dd96ee72d58a549016501c6"
+      },
+      {
+        "path": "packages/clr/src/type-system/generic-override-definitions.js",
+        "bytes": 2231,
+        "sha256": "6678c0941341d42097f70730f66bb266a339e1bbb16f4b89b39d55a353aef383"
+      },
+      {
+        "path": "packages/clr/src/type-system/interface-method-impl.js",
+        "bytes": 3544,
+        "sha256": "eaad05af6b484cda8b93a97e1d6817740487d94eb6aad1998e84d7a3bcbdbb36"
+      },
+      {
+        "path": "packages/clr/src/type-system/metadata-accessors.js",
+        "bytes": 4016,
+        "sha256": "d8b120257e7b8b0f7519a7e2cfd00e9336a6402bd0610cfd81fe8bc8cd7558a1"
+      },
+      {
+        "path": "packages/clr/src/type-system/metadata-constants.js",
+        "bytes": 2928,
+        "sha256": "731ad5055302bc3441b5fb63235a594a4fdec712fa7d171152838a1b3ee0f735"
+      },
+      {
+        "path": "packages/clr/src/type-system/metadata-generic-parameters.js",
+        "bytes": 5245,
+        "sha256": "8071d5e8ca288112b008eabe9669dfcb1a6c8f014c92ed4b5bfd4b5eed18a3e3"
+      },
+      {
+        "path": "packages/clr/src/type-system/metadata-member-definitions.js",
+        "bytes": 5423,
+        "sha256": "288d3601a4167174d4be9790fbe7ea798fcb63737c261c3c45cf642489c85b74"
+      },
+      {
+        "path": "packages/clr/src/type-system/metadata-parameters.js",
+        "bytes": 3145,
+        "sha256": "f74023ddcc3f5970b850db94801251fd50950ef7ff425ee7fb7c7108d5774d96"
+      },
+      {
+        "path": "packages/clr/src/type-system/metadata-property-parameters.js",
+        "bytes": 1690,
+        "sha256": "931c1bd3b0d413e06a8282fefc89d2f4b071e4ac93a39cf3d6aebe7f7852bcb0"
+      },
+      {
+        "path": "packages/clr/src/type-system/metadata-type-definitions.js",
+        "bytes": 2489,
+        "sha256": "028160c89f3cdac13be833e4e8c3d9a13ba71b28de4933910d6e19c81f80925d"
+      },
+      {
+        "path": "packages/clr/src/type-system/method-base-definition.js",
+        "bytes": 4031,
+        "sha256": "1a6778aa9df9a151b771396b46e373cc4303c1ffe5dbf0950b5d165ba5d191fa"
+      },
+      {
+        "path": "packages/clr/src/type-system/method-desc.js",
+        "bytes": 3738,
+        "sha256": "3b74ccdf4515deb210324d826b57ebb69f2b463fe38ce7825b90f2b47d0d1ad6"
+      },
+      {
+        "path": "packages/clr/src/type-system/method-display.js",
+        "bytes": 7147,
+        "sha256": "de74f7fbefc2a2486bc0ef13b3fc109a3d1abbe671a1ec39e30e18af960ea906"
+      },
+      {
+        "path": "packages/clr/src/type-system/method-impl-rows.js",
+        "bytes": 1918,
+        "sha256": "c8ee9e319898301c03af35556f1c75b3a3b8dd580b6d5aa81be5e0a91df45aa5"
+      },
+      {
+        "path": "packages/clr/src/type-system/override-constraints.js",
+        "bytes": 3126,
+        "sha256": "093a3db1e090c10845306629afbcb57264135d3a516bb9c234d0aa0bb47af11e"
+      },
+      {
+        "path": "packages/clr/src/type-system/override-signature.js",
+        "bytes": 5958,
+        "sha256": "c0e90858ddda33e82d3b33953b6553ec21c2f3fc7c320a7733e07d1b7d7be13d"
+      },
+      {
+        "path": "packages/clr/src/type-system/parameter-desc.js",
+        "bytes": 2488,
+        "sha256": "0145390df2281f16c978086ffd6010a15c6d2f7ae1a0f9eb0d16b98e0cb1660e"
+      },
+      {
+        "path": "packages/clr/src/type-system/parameter-display.js",
+        "bytes": 791,
+        "sha256": "e3e554de715ee559e0af8bfde7cc504d8f8f8391ec23a6da8bb58c9c4526e6b0"
+      },
+      {
+        "path": "packages/clr/src/type-system/property-desc.js",
+        "bytes": 2012,
+        "sha256": "75fa5f1dbbe89dd4897415f35699bce03d5f7a2cf6d10fb3b4a71d4422cf1cb9"
+      },
+      {
+        "path": "packages/clr/src/type-system/signature-types.js",
+        "bytes": 2544,
+        "sha256": "5b948f49ef31ac9a52ee0280e03c195ced20486d297645f1ba262bd6c7044eeb"
+      },
+      {
+        "path": "packages/clr/src/type-system/strict-override-access.js",
+        "bytes": 3601,
+        "sha256": "fb9b8299f5eca65c130719cbe515716d53ca1965118965bf2b1f7b66a442397f"
+      },
+      {
+        "path": "packages/clr/src/type-system/type-desc.js",
+        "bytes": 3368,
+        "sha256": "8014b578fbfc78c38ad8328d0a2b2a4e282eaeb130e7b459fdb81b74d5694e44"
+      },
+      {
+        "path": "packages/clr/src/type-system/type-loader.js",
+        "bytes": 25750,
+        "sha256": "912448ca687a73575f9f8c3dc3bdfd5958a217f2c8a433f18eb39b7885257533"
+      },
+      {
+        "path": "packages/clr/src/type-system/type-specifications.js",
+        "bytes": 4365,
+        "sha256": "c5b2e2aae5be6cbf9307ee603b99d637c0d1050cb44de255458c6ab5081a3ce8"
+      },
+      {
+        "path": "packages/clr/src/unload.js",
+        "bytes": 2129,
+        "sha256": "b73eac179efa5ca5c8a8ba579f66764e0ae1d726040f8336687b74a92f9911e0"
+      },
+      {
+        "path": "packages/clr/src/verification/core-types.js",
+        "bytes": 4032,
+        "sha256": "25ff147963b2536f214baf04ee890985fa20b4c4ea16ae2118f3c7b6eff337c2"
+      },
+      {
+        "path": "packages/clr/tools/benchmark-generic-instantiation.mjs",
+        "bytes": 15495,
+        "sha256": "435545681efeacd533534203b8e0ae3c5d5493325dacaa32e40fac3f7b562da6"
+      },
+      {
+        "path": "packages/clr/tools/capture-generic-instantiation.mjs",
+        "bytes": 10684,
+        "sha256": "16b9a98d370a26d824ac19ef0d22a8f451c5c6fa2b45854755829644a5ca29b8"
+      },
+      {
+        "path": "packages/framework/package.json",
+        "bytes": 481,
+        "sha256": "ee9eb72f27365f10d83bc1e3ac096ff939c125a5c0a01643c6e90637f57c21a3"
+      },
+      {
+        "path": "scripts/limited.js",
+        "bytes": 1280,
+        "sha256": "d60fa1310cc85ce9426914dd4b79b1b500dcb2eab0928b422d24994d90a650f7"
+      },
+      {
+        "path": "scripts/planning/lib/resource-limits.js",
+        "bytes": 3850,
+        "sha256": "f70d0f2862ad4a5e0afce5e47ecf8e055cf82aefc44fefc96a3b4989293ee382"
+      },
+      {
+        "path": "tests/clr-forwarders-fixtures.js",
+        "bytes": 3452,
+        "sha256": "98a7fe1cec2363030dc6a3e1cd63ea08bff63d5bdba71ad45af64c70a43b1964"
+      },
+      {
+        "path": "tests/clr-generics-instantiation-bounds.test.js",
+        "bytes": 7812,
+        "sha256": "d329f3fba72e126583a6ccd2742663f9d75844dbb25f1930ea4726a1bf271826"
+      },
+      {
+        "path": "tests/clr-generics-instantiation-fixtures.js",
+        "bytes": 6901,
+        "sha256": "94ba493fdee3b91877480db8adcf30af61d08f0b5d4ff0141b3b211e357e1faf"
+      },
+      {
+        "path": "tests/clr-generics-instantiation-gc-fixture.js",
+        "bytes": 4122,
+        "sha256": "ca1c7f6631945d3bd91d33b00a3517c03e587976194ce0eec46857d759d90961"
+      },
+      {
+        "path": "tests/clr-generics-instantiation-gc.test.js",
+        "bytes": 1192,
+        "sha256": "06c7afe7686be137f1dffddd3bcf23a067f730626424087e8cef3b83a69d8869"
+      },
+      {
+        "path": "tests/clr-generics-instantiation-graphs.test.js",
+        "bytes": 5390,
+        "sha256": "ca688614fa91fd972ea952b46fd4e3a42e6e9b78407c7e1df222598452e7b260"
+      },
+      {
+        "path": "tests/clr-generics-instantiation-lifetime.test.js",
+        "bytes": 19165,
+        "sha256": "0b3740476db2a04152a39ed7262b97c319d7ab4e809c0eb350dc772426102001"
+      },
+      {
+        "path": "tests/clr-generics-instantiation-native.js",
+        "bytes": 11432,
+        "sha256": "9e40b3933c4851abcc71c5ca871497a3f751a6b1742d3caa0796f57559f00a07"
+      },
+      {
+        "path": "tests/clr-generics-instantiation-projections.js",
+        "bytes": 6040,
+        "sha256": "35e6d98d9c284735293d60dbc3b31476ce17ec85afb9dffa511377780d851fa5"
+      },
+      {
+        "path": "tests/clr-generics-instantiation-reference.test.js",
+        "bytes": 8874,
+        "sha256": "c94c69199dc71149e4802734ec080c39a68bdef665805dc0b3354bace2d5ff31"
+      },
+      {
+        "path": "tests/clr-generics-instantiation-scopes.test.js",
+        "bytes": 4920,
+        "sha256": "5388829cbb2b6404bc7fbf29348b4d55ad311c69e8053779f73c6c6167d20bf6"
+      },
+      {
+        "path": "tests/clr-generics-instantiation.test.js",
+        "bytes": 5697,
+        "sha256": "2062ff8cc8effc4bc0acd60f46944006e8f74faeb6ebb473855e346112dc3672"
+      },
+      {
+        "path": "tests/clr-generics-substitution-reference.test.js",
+        "bytes": 1216,
+        "sha256": "2d873a441b98ed5cd0189113aadf8402e1f5dcd7a9dcf0fec84843fae41483df"
+      },
+      {
+        "path": "tests/clr-generics-substitution.test.js",
+        "bytes": 7087,
+        "sha256": "94fe8e9a5bbe8b7e86f72f872f701c8d6a7ccb6e13751bc1c827cc2e866f5e33"
+      },
+      {
+        "path": "tests/clr-types-array-fixtures.js",
+        "bytes": 1994,
+        "sha256": "d9a96c81fdc8f16d15649cd913243b87a5b0d565f061eb7ca5f224a9b88a8480"
+      },
+      {
+        "path": "tests/clr-types-arrays-reference.test.js",
+        "bytes": 2684,
+        "sha256": "c3998816aef6a2e5a9b8741fed523cb4eeb28307d7653d501487032a7c592d04"
+      },
+      {
+        "path": "tests/clr-types-assignability-fixtures.js",
+        "bytes": 1979,
+        "sha256": "4edc3e5a5502ebc45f721597ab749bcbdce27a7a073406ccae0b8e08fa39c65c"
+      },
+      {
+        "path": "tests/clr-types-assignability.test.js",
+        "bytes": 3597,
+        "sha256": "b57e785e8a85ad14b1b0760297cedf193a9ed73f423003c365ffcc3e65a9e941"
+      },
+      {
+        "path": "tests/clr-types-constructed.test.js",
+        "bytes": 5201,
+        "sha256": "7f57a9dafa86acc8cc670f64a1359df6fbd9cb3db574a7381206bf4be969c30b"
+      },
+      {
+        "path": "tests/clr-types-forwarders-cache.test.js",
+        "bytes": 1666,
+        "sha256": "7357aa1a9ee9194f29e69783332ec4f6b6fab8e7b9b11fef4a02d70f13e3d4a4"
+      },
+      {
+        "path": "tests/clr-types-forwarders-reference.test.js",
+        "bytes": 1942,
+        "sha256": "981a7c9ca4f5200733ccd37893835244aa715c1530d15d766675dfd78c61cc17"
+      },
+      {
+        "path": "tests/clr-types-forwarders.test.js",
+        "bytes": 8265,
+        "sha256": "fb0dc7b41e638426e1460c353b0bddb6f4e1fd3d059c3bda4741bcf5c7017884"
+      },
+      {
+        "path": "tests/clr-types-generic-parameters.test.js",
+        "bytes": 6094,
+        "sha256": "8ef5b1d89c239c226b04d458cdc99da21f2e2798c2083820152efbc21279a349"
+      },
+      {
+        "path": "tests/clr-types-graph-fixtures.js",
+        "bytes": 1565,
+        "sha256": "ca722224ce31e00047c9e358a07af82147abc6b503a37f4b6e3a9870cefcbd41"
+      },
+      {
+        "path": "tests/clr-types-graphs.test.js",
+        "bytes": 5235,
+        "sha256": "09b64f8d7876854f63902feaa251c7be03d5316ab0c59649b933461f8da4a9b5"
+      },
+      {
+        "path": "tests/clr-types-identity.test.js",
+        "bytes": 4062,
+        "sha256": "c4efe31117bbebd00a50a2ef25480ea2dc9dad7720cae8ed7658de86dd996e39"
+      },
+      {
+        "path": "tests/clr-types-parameter-cache.test.js",
+        "bytes": 707,
+        "sha256": "e9ed7064d95bac8f09c74c053ccb804f08566771ce3a7c3551ed05c02d9c8e7f"
+      },
+      {
+        "path": "tests/clr-types-verification-core.test.js",
+        "bytes": 8807,
+        "sha256": "275d678171524ca2b898289d2aac334d4777efb70a3a6fb913b89a1a10416f8d"
+      },
+      {
+        "path": "tests/clr-types-warm-loading.test.js",
+        "bytes": 2102,
+        "sha256": "2d963f67e06282fb82e5a0ce99d5396f0a4f01ed2754e7ae9b8cfc992c31a32c"
+      },
+      {
+        "path": "tests/fixtures/a03-metadata/fixture.js",
+        "bytes": 3944,
+        "sha256": "be9d1a02714df408b052a266fccd97df547f62b1199d734088439940b77c7594"
+      },
+      {
+        "path": "tests/fixtures/clr-assignability/Program.cs",
+        "bytes": 2635,
+        "sha256": "8bfac5567b002e27a9ed08b28bb3149e7e2ff4dec83f512b5c7b32ace2d397ef"
+      },
+      {
+        "path": "tests/fixtures/clr-assignability/native-assignability.json",
+        "bytes": 16644,
+        "sha256": "9411c8cd91403de9de7f10689d44e05e89dbfeee3fbb719b6788d3cb0c9c9769"
+      },
+      {
+        "path": "tests/fixtures/clr-constructed-types/Program.cs",
+        "bytes": 1473,
+        "sha256": "31d21764a027e7899ea261402be7f235206901d6b18cd65ae1bfdfeccb7a205e"
+      },
+      {
+        "path": "tests/fixtures/clr-constructed-types/native-arrays.json",
+        "bytes": 22927,
+        "sha256": "8839d4d4748b6f5e9da7a0e117b0e754b38a2598b5630b19631dcdea2dd65167"
+      },
+      {
+        "path": "tests/fixtures/clr-contexts/Program.cs",
+        "bytes": 2271,
+        "sha256": "2d4dca383f211ad5409446a3f5efa047b157072fddbab41e3458dfaa8fd99e6a"
+      },
+      {
+        "path": "tests/fixtures/clr-contexts/native-contexts.json",
+        "bytes": 11830,
+        "sha256": "4b7e06f6ec7ae0ea16c0c8a6b284e73a494cede957319d808b8ba67239e5410f"
+      },
+      {
+        "path": "tests/fixtures/clr-forwarders/Program.cs",
+        "bytes": 1513,
+        "sha256": "80ba71c161fc5c842aec874145ab0aa20dc96fad473092480401668a673fde98"
+      },
+      {
+        "path": "tests/fixtures/clr-forwarders/native-forwarders.json",
+        "bytes": 3627,
+        "sha256": "63d0da17f1b105f27c5cd89e113b241fe9e3238dd40a40cf930e9e93faf82146"
+      },
+      {
+        "path": "tests/fixtures/clr-generic-instantiation/README.md",
+        "bytes": 10075,
+        "sha256": "cd258e52bc29902283e138d593d244b2708c55579e863aa7b26d5b5658a6323c"
+      },
+      {
+        "path": "tests/fixtures/clr-generic-parameters/Program.cs",
+        "bytes": 2584,
+        "sha256": "75402534ff07efc54deeaf759cef97e2dbb25cdfb11cdde17cc876a8fb69a0ff"
+      },
+      {
+        "path": "tests/fixtures/clr-generic-parameters/native-parameters.json",
+        "bytes": 26065,
+        "sha256": "e449293a14f381d9db07865b0a69b523fc6b774510b5d9eaba9583f5fe627ab2"
+      },
+      {
+        "path": "tests/fixtures/clr-substitution/Program.cs",
+        "bytes": 5534,
+        "sha256": "b9f73316ce011707abe38bdfce0216fe0dbc1212f633190577b09aaccae847c4"
+      },
+      {
+        "path": "tests/fixtures/clr-substitution/native-signatures.json",
+        "bytes": 5429,
+        "sha256": "c83afc26e4001870a7309efaff841d86e2e48c7f1bf665fe07e3c106baa29b97"
+      },
+      {
+        "path": "tests/fixtures/clr-type-graphs/Program.cs",
+        "bytes": 1559,
+        "sha256": "634af7b5dbcba8af05e3e39097af34c7fd543ac833c4c4198cc10cdeb1672188"
+      },
+      {
+        "path": "tests/fixtures/clr-type-graphs/native-graphs.json",
+        "bytes": 17029,
+        "sha256": "529a5c0cbfcd979f8e7756ac8dd8e77bf270d67924e967e87c8def769863f96b"
+      },
+      {
+        "path": "tests/helpers/clr-verification-core-types.js",
+        "bytes": 3232,
+        "sha256": "26b803958694297726dc924e1abbb00d7fcc2f8758dba0448ab8baecb952e4e9"
+      },
+      {
+        "path": "tests/managed-fixtures.js",
+        "bytes": 3044,
+        "sha256": "53b6e844b4a1dccd707aed5ffa0e0e4840558ed4bb67adc9b9ae04ed7573e7fd"
+      }
+    ],
+    "pinPolicy": "Before every launch, verify all pinned paths and source-directory contents. Evidence-only descendants may retain these input pins; any product, fixture, driver or dependency-source change requires a revised plan and source revision. Preserve exact actual HEAD in each run record."
+  },
+  "qualificationDirectory": "/workspace/scratch/7e3d2a445c44/generic-qualification-f551d51c",
+  "preflight": {
+    "nodeRequirement": {
+      "node": ">=22"
+    },
+    "nodeVersion": "Not executed or verified by this author; record node --version and runtime/V8 metadata during root qualification.",
+    "workspaceCleanChecks": [
+      "all seven dependency src directories and package manifests",
+      "all filePins",
+      "no preexisting output paths"
+    ],
+    "captureHost": {
+      "path": "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+      "fileExistsAtPreparation": true,
+      "pin": {
+        "sdk": "10.0.201",
+        "runtime": "10.0.5",
+        "referencePack": "10.0.5",
+        "framework": "net10.0",
+        "languageVersion": "14.0"
+      },
+      "verification": "Capture verifies exact selected SDK/runtime/architecture, compiler identity/hash and every reference assembly hash; host presence is not version qualification."
+    },
+    "resourcePolicy": "Use scripts/limited.js for every heavy command; fixed test concurrency 1 for this plan. It acquires the shared machine slot and applies the repository heap cap. Keep native/process output and exit status even on failure.",
+    "prepareOutput": "Create the qualification parent only after asserting it does not already exist. Leave native-first absent so the capture owns creation. Never delete or overwrite failed attempts.",
+    "nativeDestinationSemantics": {
+      "rejectedExistingNames": [
+        "native-instantiation.json",
+        "capture-inputs.json",
+        "capture-status.json"
+      ],
+      "authoredReadmeAllowedByDriver": true,
+      "planUsesFreshExternalDirectory": true,
+      "reason": "Retain an immutable first attempt and review native evidence before importing exact bytes for strict replay."
+    }
+  },
+  "workspaceDependencies": {
+    "strategy": "Seven local @sharpforge package aliases per worktree; no third-party dependency occurs in the statically inspected CLR dependency closure. No npm install is required for these focused capture/test/benchmark commands.",
+    "aliases": [
+      {
+        "name": "@sharpforge/archive",
+        "path": "node_modules/@sharpforge/archive",
+        "relativeTarget": "../../packages/archive"
+      },
+      {
+        "name": "@sharpforge/bcl-core",
+        "path": "node_modules/@sharpforge/bcl-core",
+        "relativeTarget": "../../packages/bcl-core"
+      },
+      {
+        "name": "@sharpforge/bcl-collections",
+        "path": "node_modules/@sharpforge/bcl-collections",
+        "relativeTarget": "../../packages/bcl-collections"
+      },
+      {
+        "name": "@sharpforge/framework",
+        "path": "node_modules/@sharpforge/framework",
+        "relativeTarget": "../../packages/framework"
+      },
+      {
+        "name": "@sharpforge/bytecode",
+        "path": "node_modules/@sharpforge/bytecode",
+        "relativeTarget": "../../packages/bytecode"
+      },
+      {
+        "name": "@sharpforge/cil",
+        "path": "node_modules/@sharpforge/cil",
+        "relativeTarget": "../../packages/cil"
+      },
+      {
+        "name": "@sharpforge/clr",
+        "path": "node_modules/@sharpforge/clr",
+        "relativeTarget": "../../packages/clr"
+      }
+    ],
+    "requirements": [
+      "Create aliases only inside the selected candidate or new baseline tree; reject an existing alias that resolves elsewhere.",
+      "Do not symlink another worktree entire node_modules: its @sharpforge links resolve to the wrong source tree.",
+      "Verify every alias realpath, package manifest hash and package entrypoint against the selected worktree before launch.",
+      "No dependency installation, alias mutation or baseline creation has been performed by this author."
+    ],
+    "baseline": {
+      "path": "/workspace/scratch/7e3d2a445c44/sf6-generic-baseline-df5bbff9",
+      "commit": "df5bbff9c9affa45808e9f737ef4751b55c9337a",
+      "purpose": "Existing non-generic operations only; no previous generic-instantiation service exists.",
+      "mustStartAbsent": true,
+      "createArgv": [
+        "git",
+        "worktree",
+        "add",
+        "--detach",
+        "--no-checkout",
+        "/workspace/scratch/7e3d2a445c44/sf6-generic-baseline-df5bbff9",
+        "df5bbff9c9affa45808e9f737ef4751b55c9337a"
+      ],
+      "sparseSetArgv": [
+        "git",
+        "-C",
+        "/workspace/scratch/7e3d2a445c44/sf6-generic-baseline-df5bbff9",
+        "sparse-checkout",
+        "set",
+        "--no-cone",
+        "--stdin"
+      ],
+      "sparseSetStdin": "/package.json\n/CONTRIBUTING.md\n/packages/archive/\n/packages/bcl-core/\n/packages/bcl-collections/\n/packages/framework/\n/packages/bytecode/\n/packages/cil/\n/packages/clr/\n/tests/clr-types-array-fixtures.js\n/tests/clr-types-graph-fixtures.js\n/tests/managed-fixtures.js\n",
+      "trackedFiles": 936,
+      "logicalTrackedBytes": 8301867,
+      "measurement": "git ls-tree metadata only; no baseline has been materialized. Allocated blocks, index/shared object database and promisor fetch bytes are excluded.",
+      "packageSourceTrees": [
+        {
+          "directory": "packages/archive/src",
+          "gitTree": "efc7f1f82e3401599f470905d812b398a7647280"
+        },
+        {
+          "directory": "packages/bcl-core/src",
+          "gitTree": "5720bb411ce77e9ed0b263e61139dc318e798dc6"
+        },
+        {
+          "directory": "packages/bcl-collections/src",
+          "gitTree": "92f21ecaf0155213c86c5e82d1c890366028a926"
+        },
+        {
+          "directory": "packages/framework/src",
+          "gitTree": "a28f688cf4c0a540a2f6518777f84f7cd0ff3623"
+        },
+        {
+          "directory": "packages/bytecode/src",
+          "gitTree": "e929355514cad0a058982101fa52f975a2ea1f55"
+        },
+        {
+          "directory": "packages/cil/src",
+          "gitTree": "8f1711276d10bcaa62cc711ff9d070a97e056993"
+        },
+        {
+          "directory": "packages/clr/src",
+          "gitTree": "093857d538a72e3dcfc264fd374fb4ab3a9d03b2"
+        }
+      ],
+      "driverOrigin": "Candidate frozen driver, limited wrapper and generic helper; dynamic CLR import and array/graph helpers come from this exact baseline."
+    }
+  },
+  "steps": [
+    {
+      "id": "native-capture-first",
+      "status": "pending",
+      "executed": false,
+      "owner": "root exclusive validation slot",
+      "cwd": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation",
+      "argv": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "packages/clr/tools/capture-generic-instantiation.mjs",
+        "--dotnet",
+        "/workspace/scratch/7e3d2a445c44/dotnet-10.0.201/dotnet",
+        "--output",
+        "/workspace/scratch/7e3d2a445c44/generic-qualification-f551d51c/native-first"
+      ],
+      "environment": {
+        "SHARPFORGE_TEST_CONCURRENCY": "1"
+      },
+      "stdout": "/workspace/scratch/7e3d2a445c44/generic-qualification-f551d51c/native-capture.stdout.txt",
+      "stderr": "/workspace/scratch/7e3d2a445c44/generic-qualification-f551d51c/native-capture.stderr.txt",
+      "recordExitStatus": true,
+      "recordStartedAndFinishedUtc": true,
+      "requires": [
+        "preflight",
+        "tree-local candidate aliases",
+        "fresh output directory"
+      ]
+    },
+    {
+      "id": "review-and-import-native",
+      "status": "pending",
+      "executed": false,
+      "owner": "root",
+      "source": "/workspace/scratch/7e3d2a445c44/generic-qualification-f551d51c/native-first",
+      "destination": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/tests/fixtures/clr-generic-instantiation",
+      "files": [
+        "sdk-version.stdout.txt",
+        "sdk-version.stderr.txt",
+        "sdk-list.stdout.txt",
+        "sdk-list.stderr.txt",
+        "compiler-version.stdout.txt",
+        "compiler-version.stderr.txt",
+        "compile-fixture.stdout.txt",
+        "compile-fixture.stderr.txt",
+        "compile-observer.stdout.txt",
+        "compile-observer.stderr.txt",
+        "native-observer.stdout.txt",
+        "native-observer.stderr.txt",
+        "native-instantiation.json",
+        "capture-inputs.json",
+        "capture-status.json",
+        "Fixture.dll",
+        "GenericConsumerA.dll",
+        "GenericConsumerB.dll",
+        "MalformedGenerics.dll",
+        "NestedGenericMetadata.dll",
+        "CircularGenericMetadata.dll",
+        "GenericInstantiationOracle.dll",
+        "GenericInstantiationOracle.runtimeconfig.json"
+      ],
+      "requirements": [
+        "Require capture-status.json status passed and six native command records with exitCode 0.",
+        "Require 101 distinct main cases and 7 lifetime cases; preserve original case outcomes and comparison labels.",
+        "Verify capture sources match the plan source pins, generated image/observer/runtimeconfig hashes match exact captured bytes, and inputs pin the actual source HEAD.",
+        "Preserve complete raw native-observer.stdout.txt, all other command logs and command/status metadata beside the source capture.",
+        "Copy all 23 files byte-for-byte; reject any destination collision. Preserve authored README.md. Record a source/destination SHA256 manifest.",
+        "Do not fabricate missing values, edit native outcomes to satisfy replay, skip missing references or overwrite an unsuccessful attempt.",
+        "If capture fails, preserve all output and stop dependent replay; a changed source requires a new plan/revision and fresh capture path."
+      ]
+    },
+    {
+      "id": "focused-node",
+      "status": "pending",
+      "executed": false,
+      "owner": "root exclusive validation slot",
+      "cwd": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation",
+      "argv": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-reporter=tap",
+        "tests/clr-generics-instantiation-bounds.test.js",
+        "tests/clr-generics-instantiation-gc.test.js",
+        "tests/clr-generics-instantiation-graphs.test.js",
+        "tests/clr-generics-instantiation-lifetime.test.js",
+        "tests/clr-generics-instantiation-reference.test.js",
+        "tests/clr-generics-instantiation-scopes.test.js",
+        "tests/clr-generics-instantiation.test.js",
+        "tests/clr-generics-substitution-reference.test.js",
+        "tests/clr-generics-substitution.test.js",
+        "tests/clr-types-arrays-reference.test.js",
+        "tests/clr-types-assignability.test.js",
+        "tests/clr-types-constructed.test.js",
+        "tests/clr-types-forwarders-cache.test.js",
+        "tests/clr-types-forwarders-reference.test.js",
+        "tests/clr-types-forwarders.test.js",
+        "tests/clr-types-generic-parameters.test.js",
+        "tests/clr-types-graphs.test.js",
+        "tests/clr-types-identity.test.js",
+        "tests/clr-types-parameter-cache.test.js",
+        "tests/clr-types-verification-core.test.js",
+        "tests/clr-types-warm-loading.test.js"
+      ],
+      "environment": {
+        "SHARPFORGE_TEST_CONCURRENCY": "1"
+      },
+      "stdout": "/workspace/scratch/7e3d2a445c44/generic-qualification-f551d51c/focused.tap",
+      "stderr": "/workspace/scratch/7e3d2a445c44/generic-qualification-f551d51c/focused.stderr.txt",
+      "recordExitStatus": true,
+      "recordStartedAndFinishedUtc": true,
+      "requires": [
+        "successful native capture",
+        "review-and-import-native"
+      ]
+    }
+  ],
+  "focusedTests": {
+    "count": 21,
+    "files": [
+      "tests/clr-generics-instantiation-bounds.test.js",
+      "tests/clr-generics-instantiation-gc.test.js",
+      "tests/clr-generics-instantiation-graphs.test.js",
+      "tests/clr-generics-instantiation-lifetime.test.js",
+      "tests/clr-generics-instantiation-reference.test.js",
+      "tests/clr-generics-instantiation-scopes.test.js",
+      "tests/clr-generics-instantiation.test.js",
+      "tests/clr-generics-substitution-reference.test.js",
+      "tests/clr-generics-substitution.test.js",
+      "tests/clr-types-arrays-reference.test.js",
+      "tests/clr-types-assignability.test.js",
+      "tests/clr-types-constructed.test.js",
+      "tests/clr-types-forwarders-cache.test.js",
+      "tests/clr-types-forwarders-reference.test.js",
+      "tests/clr-types-forwarders.test.js",
+      "tests/clr-types-generic-parameters.test.js",
+      "tests/clr-types-graphs.test.js",
+      "tests/clr-types-identity.test.js",
+      "tests/clr-types-parameter-cache.test.js",
+      "tests/clr-types-verification-core.test.js",
+      "tests/clr-types-warm-loading.test.js"
+    ],
+    "newAuthoredTests": 39,
+    "executedCount": 0,
+    "gcProbe": {
+      "test": "tests/clr-generics-instantiation-gc.test.js",
+      "child": "tests/clr-generics-instantiation-gc-fixture.js",
+      "childArgv": [
+        "process.execPath",
+        "--expose-gc",
+        "absolute probe file URL path"
+      ],
+      "outerExposeGcRequired": false,
+      "childTimeoutMs": 45000,
+      "testTimeoutMs": 60000,
+      "childMaxBufferBytes": 1048576,
+      "cases": 10,
+      "maximumAttempts": 40,
+      "skipIfUnavailable": false,
+      "explanation": "The test explicitly spawns the child with --expose-gc and the child asserts globalThis.gc exists. The ordinary outer node --test command is sufficient."
+    },
+    "completionRequirements": [
+      "exit status 0",
+      "record exact tests/pass/fail/skip/cancel counts from TAP",
+      "zero missing-fixture or GC skips",
+      "retain stdout and stderr on failure"
+    ]
+  },
+  "nativeCapture": {
+    "strictPlannedCases": {
+      "main": 101,
+      "lifetime": 7
+    },
+    "executedCases": 0,
+    "expectedSuccessfulOutputs": [
+      "sdk-version.stdout.txt",
+      "sdk-version.stderr.txt",
+      "sdk-list.stdout.txt",
+      "sdk-list.stderr.txt",
+      "compiler-version.stdout.txt",
+      "compiler-version.stderr.txt",
+      "compile-fixture.stdout.txt",
+      "compile-fixture.stderr.txt",
+      "compile-observer.stdout.txt",
+      "compile-observer.stderr.txt",
+      "native-observer.stdout.txt",
+      "native-observer.stderr.txt",
+      "native-instantiation.json",
+      "capture-inputs.json",
+      "capture-status.json",
+      "Fixture.dll",
+      "GenericConsumerA.dll",
+      "GenericConsumerB.dll",
+      "MalformedGenerics.dll",
+      "NestedGenericMetadata.dll",
+      "CircularGenericMetadata.dll",
+      "GenericInstantiationOracle.dll",
+      "GenericInstantiationOracle.runtimeconfig.json"
+    ],
+    "nativeCommandLabels": [
+      "sdk-version",
+      "sdk-list",
+      "compiler-version",
+      "compile-fixture",
+      "compile-observer",
+      "native-observer"
+    ],
+    "perNativeCommandTimeoutMs": 120000,
+    "perNativeCommandMaxBufferBytes": 8388608,
+    "temporaryStorage": "One mkdtemp sharpforge-generic-instantiation directory under OS tmpdir; source copies and compiler outputs; driver removes only its own temporary directory in finally.",
+    "externalEvidenceRetention": "Keep every attempt indefinitely for root publication; a failure does not authorize deletion, fallback fixture synthesis or test skips.",
+    "comparisonBoundaries": [
+      "Constrained target definitions deliberately reject with SFCLR013 pending #2463, including native valid/invalid observations.",
+      "Full BCL graph, reflection formatted names, MethodSpec/member execution and function-pointer reflection flag parity are not claimed.",
+      "Native collection timing is retained as an observation; deterministic identity/lifetime and the separate strict Node collection probe are the product gates.",
+      "Specific class/value signature integrity and TypeSpec byref boundaries retain documented explicit comparison labels; no broad native-compatibility skip is allowed."
+    ]
+  },
+  "benchmarks": {
+    "driver": "packages/clr/tools/benchmark-generic-instantiation.mjs",
+    "warmups": 10,
+    "samples": 100,
+    "controlCohorts": 7,
+    "serviceCohorts": 8,
+    "summary": [
+      "median of middle two samples",
+      "p95 nearest rank sample 95"
+    ],
+    "retain": [
+      "all chronological warmups",
+      "all chronological samples",
+      "per-cohort validation counts",
+      "source/driver/input hashes",
+      "host Node/V8/CPU/OS data",
+      "stdout/stderr and exit/status record"
+    ],
+    "correctness": "Each measured result is checked outside the timed batch for the relevant canonical identity, metadata token, graph/shape, collectible ownership and/or no method-body-read property.",
+    "outputPolicy": "Output parent must exist and every JSON/stdout/stderr target must be fresh; driver would otherwise overwrite a JSON path, so root must enforce no overwrite.",
+    "interpretation": [
+      "Existing controls allow before/after comparison; new service timings are absolute measurements only.",
+      "Report observed source overhead and all raw cohorts; do not discard unfavorable samples or call host variability a performance pass.",
+      "No forced GC, allocation counts, concurrent-host-activity measurement or p99 summary is implemented by the frozen driver.",
+      "Parent #64 allocation/p99 expectations are not fully supplied by this prepared driver; any additional approved measurement requires an explicit supplementary protocol."
+    ],
+    "performancePassClaim": false
+  },
+  "disk": {
+    "observedAtPreparation": {
+      "totalBytes": 33770192896,
+      "usedBytes": 31683821568,
+      "availableBytes": 351608832
+    },
+    "baselineLogicalBytes": 8301867,
+    "baselineExpectedAllocatedBudgetBytes": 33554432,
+    "nativeAndImportExpectedRangeBytes": [
+      4194304,
+      33554432
+    ],
+    "benchmarkAndTestExpectedLogBudgetBytes": 16777216,
+    "expectedRangesAreEstimates": true,
+    "nativeLogConservativeEnvelopeBytes": 201326592,
+    "nativeLogEnvelopeExplanation": "Six commands times two streams times 8 MiB, then two retained copies, is a conservative 192 MiB log envelope. It is not a measured output size or complete disk upper bound; generated images/JSON and temporary copies are additional.",
+    "recommendedFreeHeadroomBeforeStartBytes": 402653184,
+    "notes": [
+      "Recheck free space immediately before root starts: other lanes may consume it.",
+      "Reuse installed pinned SDK/reference pack. Do not download or extract another SDK for this plan.",
+      "Minimal sparse baseline and seven aliases avoid dependency-install duplication.",
+      "No deletion or pruning is requested or performed. Root may preserve/reclaim only its own verified idle reproducible material under its existing policy."
+    ]
+  },
+  "failurePolicy": "Retain first failure and source pins. Diagnose concrete failures before changed inputs or additional attempts; dependent steps stay pending. Root controls revisions and the next exclusive slot.",
+  "authorActions": [
+    "Read-only source/Git inspection",
+    "Static path expansion and SHA256 hashing",
+    "Wrote this external preparation artifact"
+  ],
+  "notPerformed": [
+    "product code execution",
+    "Node imports or syntax execution",
+    "native compile/capture",
+    "tests",
+    "benchmark",
+    "worktree creation",
+    "dependency installation",
+    "claim or PR mutation"
+  ],
+  "sourceRevision": {
+    "originalPlanSha256": "876d7cfd763c9a7d9057775450563f3978a97f051d23798335ad37fa4c73895a",
+    "revisionReceiptSha256": "ecd549deb5690367af02a135dd0437fa06c28f5e11bdc73afbb2b6b04d703b9c",
+    "head": "f551d51c26ccb4460c0300cea5069a77e8b34a8a",
+    "productUnchanged": true,
+    "purpose": "Revised native observation and retained current-product mismatch; benchmark remains deferred."
+  }
+}

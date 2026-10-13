@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "cases": 101,
+  "lifetimeCases": 7,
+  "output": "/workspace/scratch/7e3d2a445c44/generic-qualification-f551d51c/native-first"
+}

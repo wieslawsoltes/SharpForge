@@ -1,0 +1,394 @@
+{
+  "schemaVersion": 1,
+  "images": [
+    {
+      "id": "simple-self-base",
+      "assemblyName": "Closure_simple_self_base",
+      "namespace": "Closure.Shared",
+      "definitions": [
+        {"id": "Box","name": "Box","arity": 1,"kind": "class"},
+        {"id": "Wrap","name": "Wrap","arity": 1,"kind": "class"},
+        {
+          "id": "C",
+          "name": "C",
+          "arity": 1,
+          "kind": "class",
+          "base": {
+            "kind": "generic",
+            "definition": "Box",
+            "arguments": [{"kind": "generic","definition": "C","arguments": [{"kind": "parameter","index": 0}]}]
+          }
+        }
+      ],
+      "specifications": [{"id": "closed-root","type": {"kind": "generic","definition": "C","arguments": [{"kind": "primitive","code": 8}]}}]
+    },
+    {
+      "id": "expanding-self-base",
+      "assemblyName": "Closure_expanding_self_base",
+      "namespace": "Closure.Shared",
+      "definitions": [
+        {"id": "Box","name": "Box","arity": 1,"kind": "class"},
+        {"id": "Wrap","name": "Wrap","arity": 1,"kind": "class"},
+        {
+          "id": "C",
+          "name": "C",
+          "arity": 1,
+          "kind": "class",
+          "base": {
+            "kind": "generic",
+            "definition": "Box",
+            "arguments": [
+              {"kind": "generic","definition": "C","arguments": [{"kind": "generic","definition": "C","arguments": [{"kind": "parameter","index": 0}]}]}
+            ]
+          }
+        }
+      ],
+      "specifications": [{"id": "closed-root","type": {"kind": "generic","definition": "C","arguments": [{"kind": "primitive","code": 8}]}}]
+    },
+    {
+      "id": "permuted-mutual",
+      "assemblyName": "Closure_permuted_mutual",
+      "namespace": "Closure.Shared",
+      "definitions": [
+        {"id": "Box","name": "Box","arity": 1,"kind": "class"},
+        {"id": "Wrap","name": "Wrap","arity": 1,"kind": "class"},
+        {
+          "id": "A",
+          "name": "A",
+          "arity": 2,
+          "kind": "class",
+          "base": {
+            "kind": "generic",
+            "definition": "Box",
+            "arguments": [{"kind": "generic","definition": "B","arguments": [{"kind": "parameter","index": 1},{"kind": "parameter","index": 0}]}]
+          }
+        },
+        {
+          "id": "B",
+          "name": "B",
+          "arity": 2,
+          "kind": "class",
+          "base": {
+            "kind": "generic",
+            "definition": "Box",
+            "arguments": [{"kind": "generic","definition": "A","arguments": [{"kind": "parameter","index": 1},{"kind": "parameter","index": 0}]}]
+          }
+        }
+      ],
+      "specifications": [
+        {"id": "closed-root","type": {"kind": "generic","definition": "A","arguments": [{"kind": "primitive","code": 8},{"kind": "primitive","code": 14}]}}
+      ]
+    },
+    {
+      "id": "indirect-expanding",
+      "assemblyName": "Closure_indirect_expanding",
+      "namespace": "Closure.Shared",
+      "definitions": [
+        {"id": "Box","name": "Box","arity": 1,"kind": "class"},
+        {"id": "Wrap","name": "Wrap","arity": 1,"kind": "class"},
+        {
+          "id": "A",
+          "name": "A",
+          "arity": 1,
+          "kind": "class",
+          "base": {
+            "kind": "generic",
+            "definition": "Box",
+            "arguments": [{"kind": "generic","definition": "B","arguments": [{"kind": "parameter","index": 0}]}]
+          }
+        },
+        {
+          "id": "B",
+          "name": "B",
+          "arity": 1,
+          "kind": "class",
+          "base": {
+            "kind": "generic",
+            "definition": "Box",
+            "arguments": [
+              {"kind": "generic","definition": "C","arguments": [{"kind": "generic","definition": "Wrap","arguments": [{"kind": "parameter","index": 0}]}]}
+            ]
+          }
+        },
+        {
+          "id": "C",
+          "name": "C",
+          "arity": 1,
+          "kind": "class",
+          "base": {
+            "kind": "generic",
+            "definition": "Box",
+            "arguments": [{"kind": "generic","definition": "A","arguments": [{"kind": "parameter","index": 0}]}]
+          }
+        }
+      ],
+      "specifications": [{"id": "closed-root","type": {"kind": "generic","definition": "A","arguments": [{"kind": "primitive","code": 8}]}}]
+    },
+    {
+      "id": "acyclic-expansion",
+      "assemblyName": "Closure_acyclic_expansion",
+      "namespace": "Closure.Shared",
+      "definitions": [
+        {"id": "Box","name": "Box","arity": 1,"kind": "class"},
+        {"id": "Wrap","name": "Wrap","arity": 1,"kind": "class"},
+        {
+          "id": "A",
+          "name": "A",
+          "arity": 1,
+          "kind": "class",
+          "base": {
+            "kind": "generic",
+            "definition": "Box",
+            "arguments": [
+              {"kind": "generic","definition": "B","arguments": [{"kind": "generic","definition": "Wrap","arguments": [{"kind": "parameter","index": 0}]}]}
+            ]
+          }
+        },
+        {"id": "B","name": "B","arity": 1,"kind": "class"}
+      ],
+      "specifications": [{"id": "closed-root","type": {"kind": "generic","definition": "A","arguments": [{"kind": "primitive","code": 8}]}}]
+    },
+    {
+      "id": "array-expanding",
+      "assemblyName": "Closure_array_expanding",
+      "namespace": "Closure.Shared",
+      "definitions": [
+        {"id": "Box","name": "Box","arity": 1,"kind": "class"},
+        {"id": "Wrap","name": "Wrap","arity": 1,"kind": "class"},
+        {
+          "id": "C",
+          "name": "C",
+          "arity": 1,
+          "kind": "class",
+          "base": {
+            "kind": "generic",
+            "definition": "Box",
+            "arguments": [{"kind": "generic","definition": "C","arguments": [{"kind": "szarray","element": {"kind": "parameter","index": 0}}]}]
+          }
+        }
+      ],
+      "specifications": [{"id": "closed-root","type": {"kind": "generic","definition": "C","arguments": [{"kind": "primitive","code": 8}]}}]
+    },
+    {
+      "id": "array-acyclic-expansion",
+      "assemblyName": "Closure_array_acyclic_expansion",
+      "namespace": "Closure.Shared",
+      "definitions": [
+        {"id": "Box","name": "Box","arity": 1,"kind": "class"},
+        {"id": "Wrap","name": "Wrap","arity": 1,"kind": "class"},
+        {
+          "id": "A",
+          "name": "A",
+          "arity": 1,
+          "kind": "class",
+          "base": {
+            "kind": "generic",
+            "definition": "Box",
+            "arguments": [{"kind": "generic","definition": "B","arguments": [{"kind": "szarray","element": {"kind": "parameter","index": 0}}]}]
+          }
+        },
+        {"id": "B","name": "B","arity": 1,"kind": "class"}
+      ],
+      "specifications": [{"id": "closed-root","type": {"kind": "generic","definition": "A","arguments": [{"kind": "primitive","code": 8}]}}]
+    },
+    {
+      "id": "erased-constant-cycle",
+      "assemblyName": "Closure_erased_constant_cycle",
+      "namespace": "Closure.Shared",
+      "definitions": [
+        {"id": "Box","name": "Box","arity": 1,"kind": "class"},
+        {"id": "Wrap","name": "Wrap","arity": 1,"kind": "class"},
+        {"id": "A","name": "A","arity": 1,"kind": "class","base": {"kind": "generic","definition": "B","arguments": [{"kind": "primitive","code": 8}]}},
+        {"id": "B","name": "B","arity": 1,"kind": "class","base": {"kind": "generic","definition": "A","arguments": [{"kind": "primitive","code": 14}]}}
+      ],
+      "specifications": [{"id": "closed-root","type": {"kind": "generic","definition": "A","arguments": [{"kind": "primitive","code": 8}]}}]
+    },
+    {
+      "id": "nested-invalid",
+      "assemblyName": "Closure_nested_invalid",
+      "namespace": "Closure.Shared",
+      "definitions": [
+        {"id": "Box","name": "Box","arity": 1,"kind": "class"},
+        {"id": "Wrap","name": "Wrap","arity": 1,"kind": "class"},
+        {
+          "id": "Bad",
+          "name": "Bad",
+          "arity": 1,
+          "kind": "class",
+          "base": {
+            "kind": "generic",
+            "definition": "Box",
+            "arguments": [
+              {"kind": "generic","definition": "Bad","arguments": [{"kind": "generic","definition": "Bad","arguments": [{"kind": "parameter","index": 0}]}]}
+            ]
+          }
+        },
+        {
+          "id": "Hidden",
+          "name": "Hidden",
+          "arity": 1,
+          "kind": "class",
+          "base": {
+            "kind": "generic",
+            "definition": "Box",
+            "arguments": [{"kind": "generic","definition": "Bad","arguments": [{"kind": "parameter","index": 0}]}]
+          }
+        },
+        {
+          "id": "Good",
+          "name": "Good",
+          "arity": 1,
+          "kind": "class",
+          "base": {"kind": "generic","definition": "Box","arguments": [{"kind": "parameter","index": 0}]}
+        }
+      ],
+      "specifications": [{"id": "closed-root","type": {"kind": "generic","definition": "Hidden","arguments": [{"kind": "primitive","code": 8}]}}]
+    },
+    {
+      "id": "cross-permuted-left",
+      "assemblyName": "Closure_cross_permuted_left",
+      "namespace": "Closure.Shared",
+      "definitions": [
+        {"id": "Box","name": "Box","arity": 1,"kind": "class"},
+        {"id": "Wrap","name": "Wrap","arity": 1,"kind": "class"},
+        {
+          "id": "Same",
+          "name": "Same",
+          "arity": 2,
+          "kind": "class",
+          "base": {
+            "kind": "generic",
+            "definition": "Box",
+            "arguments": [
+              {
+                "kind": "generic",
+                "definition": {"image": "cross-permuted-right","definition": "Same"},
+                "arguments": [{"kind": "parameter","index": 1},{"kind": "parameter","index": 0}]
+              }
+            ]
+          }
+        }
+      ],
+      "specifications": [
+        {
+          "id": "closed-root",
+          "type": {"kind": "generic","definition": "Same","arguments": [{"kind": "primitive","code": 8},{"kind": "primitive","code": 14}]}
+        }
+      ]
+    },
+    {
+      "id": "cross-permuted-right",
+      "assemblyName": "Closure_cross_permuted_right",
+      "namespace": "Closure.Shared",
+      "definitions": [
+        {"id": "Box","name": "Box","arity": 1,"kind": "class"},
+        {"id": "Wrap","name": "Wrap","arity": 1,"kind": "class"},
+        {
+          "id": "Same",
+          "name": "Same",
+          "arity": 2,
+          "kind": "class",
+          "base": {
+            "kind": "generic",
+            "definition": "Box",
+            "arguments": [
+              {
+                "kind": "generic",
+                "definition": {"image": "cross-permuted-left","definition": "Same"},
+                "arguments": [{"kind": "parameter","index": 1},{"kind": "parameter","index": 0}]
+              }
+            ]
+          }
+        }
+      ],
+      "specifications": [
+        {
+          "id": "closed-root",
+          "type": {"kind": "generic","definition": "Same","arguments": [{"kind": "primitive","code": 8},{"kind": "primitive","code": 14}]}
+        }
+      ]
+    },
+    {
+      "id": "cross-expanding-left",
+      "assemblyName": "Closure_cross_expanding_left",
+      "namespace": "Closure.Shared",
+      "definitions": [
+        {"id": "Box","name": "Box","arity": 1,"kind": "class"},
+        {"id": "Wrap","name": "Wrap","arity": 1,"kind": "class"},
+        {
+          "id": "Same",
+          "name": "Same",
+          "arity": 2,
+          "kind": "class",
+          "base": {
+            "kind": "generic",
+            "definition": "Box",
+            "arguments": [
+              {
+                "kind": "generic",
+                "definition": {"image": "cross-expanding-right","definition": "Same"},
+                "arguments": [{"kind": "parameter","index": 1},{"kind": "parameter","index": 0}]
+              }
+            ]
+          }
+        }
+      ],
+      "specifications": [
+        {
+          "id": "closed-root",
+          "type": {"kind": "generic","definition": "Same","arguments": [{"kind": "primitive","code": 8},{"kind": "primitive","code": 14}]}
+        }
+      ]
+    },
+    {
+      "id": "cross-expanding-right",
+      "assemblyName": "Closure_cross_expanding_right",
+      "namespace": "Closure.Shared",
+      "definitions": [
+        {"id": "Box","name": "Box","arity": 1,"kind": "class"},
+        {"id": "Wrap","name": "Wrap","arity": 1,"kind": "class"},
+        {
+          "id": "Same",
+          "name": "Same",
+          "arity": 2,
+          "kind": "class",
+          "base": {
+            "kind": "generic",
+            "definition": "Box",
+            "arguments": [
+              {
+                "kind": "generic",
+                "definition": {"image": "cross-expanding-left","definition": "Same"},
+                "arguments": [{"kind": "generic","definition": "Wrap","arguments": [{"kind": "parameter","index": 1}]},{"kind": "parameter","index": 0}]
+              }
+            ]
+          }
+        }
+      ],
+      "specifications": [
+        {
+          "id": "closed-root",
+          "type": {"kind": "generic","definition": "Same","arguments": [{"kind": "primitive","code": 8},{"kind": "primitive","code": 14}]}
+        }
+      ]
+    },
+    {
+      "id": "non-generic-self-interface",
+      "assemblyName": "Closure_non_generic_self_interface",
+      "namespace": "Closure.Shared",
+      "definitions": [
+        {"id": "Box","name": "Box","arity": 1,"kind": "class"},
+        {"id": "Wrap","name": "Wrap","arity": 1,"kind": "class"},
+        {"id": "I","name": "I","arity": 1,"kind": "interface"},
+        {
+          "id": "C",
+          "name": "C",
+          "arity": 0,
+          "kind": "class",
+          "interfaces": [{"kind": "generic","definition": "I","arguments": [{"kind": "definition","definition": "C"}]}]
+        }
+      ],
+      "specifications": []
+    }
+  ]
+}

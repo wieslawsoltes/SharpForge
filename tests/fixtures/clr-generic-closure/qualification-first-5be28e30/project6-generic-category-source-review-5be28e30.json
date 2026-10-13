@@ -1,0 +1,193 @@
+{
+  "schemaVersion": 1,
+  "kind": "project6-generic-signature-category-independent-source-review",
+  "reviewer": "/root/project6_reconcile",
+  "reviewedAtUtc": "2026-10-04T19:16:23.119278+00:00",
+  "issue": 2460,
+  "worktree": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation",
+  "revision": "5be28e30fa9130bff147b0699f47da0f33d674f0",
+  "parentRevision": "9692d35ff6b259af5a32157a60e839d4b8e641ea",
+  "status": "closure_and_category_product_source_review_passed",
+  "actualExecutionQualification": "pending",
+  "priorClosureCheckpoint": {
+    "path": "/workspace/scratch/7e3d2a445c44/project6-generic-closure-source-review-9692d35f.json",
+    "sha256": "bb443949624147b5307ba5604fdf08388b5acc5b2957416b2a5f2fc1d03356ad",
+    "revision": "9692d35ff6b259af5a32157a60e839d4b8e641ea",
+    "preservedUnchanged": true
+  },
+  "combinedProductSourceAggregate": {
+    "algorithm": "SHA-256 of compact JSON of sorted productSources records with sorted object keys",
+    "sha256": "ff3c8a8052b7f64eb15675af7d692ffec4ca96cab1fa8baaff737aba5a9ab1c8"
+  },
+  "productSources": [
+    {
+      "path": "packages/clr/src/generics/closure-graph.js",
+      "bytes": 2665,
+      "lines": 92,
+      "sha256": "bf8d4e1dfbf115cfd6be7d7124804d74e2eb090fd763e84b51c6c3cd2550ab23"
+    },
+    {
+      "path": "packages/clr/src/generics/definition-bindings.js",
+      "bytes": 3014,
+      "lines": 78,
+      "sha256": "88a6ca59dbe1af2e2e63eee6553936e39f71c9d5659337b52b76b005400caff5"
+    },
+    {
+      "path": "packages/clr/src/generics/instantiation-closure.js",
+      "bytes": 8516,
+      "lines": 234,
+      "sha256": "fa079563976d3a3ed06543946662aafaa1b4728f48d7b5ce98d8b0e3e3482cd7"
+    },
+    {
+      "path": "packages/clr/src/generics/resolution-context.js",
+      "bytes": 5803,
+      "lines": 161,
+      "sha256": "12b2d43284cda494f94b1692af80ae133d714b8beff4ed70f8d1c5376a442e8f"
+    },
+    {
+      "path": "packages/clr/src/generics/signature-categories.js",
+      "bytes": 2078,
+      "lines": 53,
+      "sha256": "4e3ef2a43953461c498e1e0f9c25e5630cfa7b6ac57944730b7b351f7db968c6"
+    },
+    {
+      "path": "packages/clr/src/type-system/type-definition-completion.js",
+      "bytes": 3757,
+      "lines": 61,
+      "sha256": "92044d0b4a3197e70d2c55c521a91be04e08947699a8ee1176d841cc3fc34c82"
+    },
+    {
+      "path": "packages/clr/src/type-system/type-loader.js",
+      "bytes": 25584,
+      "lines": 483,
+      "sha256": "c2a45122c999b6279b36719994892c4c0fb935a93145c9c4f06609390744b8a8"
+    },
+    {
+      "path": "packages/clr/src/type-system/type-specifications.js",
+      "bytes": 2775,
+      "lines": 71,
+      "sha256": "cb9fc24e1beb78975d68bc2eefbef1015669609f9559675638f777b4f5f06ead"
+    }
+  ],
+  "categoryChangedProductPaths": [
+    "packages/clr/src/generics/resolution-context.js",
+    "packages/clr/src/generics/signature-categories.js",
+    "packages/clr/src/type-system/type-loader.js",
+    "packages/clr/src/type-system/type-specifications.js"
+  ],
+  "categoryTests": {
+    "path": "tests/clr-generics-signature-categories.test.js",
+    "bytes": 8736,
+    "lines": 173,
+    "sha256": "9fb0243e0c81a3642d8eb5f0caef7a5024e5abea7321a4c0ffe25f70d286f92f",
+    "authoredTopLevelTests": 8,
+    "executedByReviewer": 0
+  },
+  "documentation": {
+    "path": "packages/clr/INSTANTIATION.md",
+    "bytes": 26991,
+    "lines": 426,
+    "sha256": "a94511f247c35271c6c6ba7997dc96f97f6622e561933e584dcea6d3e091f1ee"
+  },
+  "findings": [
+    {
+      "id": "CATEGORY-01",
+      "status": "resolved_in_reviewed_source",
+      "problem": "An independent raw base read and loader-wide unloaded-category cache could allow a class/valuetype encoding to disagree with the canonical graph later completed for that definition.",
+      "resolution": "Signature traversal records bounded per-root obligations on canonical definitions. Loaded kind or the same immutable direct-binding template used by closure/completion supplies category, recognized through the defining loader's exact intrinsic identity. No speculative unloaded category is shared across roots.",
+      "source": [
+        "packages/clr/src/generics/signature-categories.js",
+        "packages/clr/src/type-system/type-specifications.js",
+        "packages/clr/src/generics/resolution-context.js",
+        "packages/clr/src/type-system/type-loader.js"
+      ]
+    },
+    {
+      "id": "CATEGORY-WRAPPER",
+      "status": "resolved_in_reviewed_source",
+      "problem": "Checking only the completed top-level result would miss nominal encodings inside a born-loaded wrapper whose element definition remains unloaded.",
+      "resolution": "Every encoded nominal occurrence contributes an obligation. Known obligations are validated after closure proof and before loaded return/publication. The root drains unresolved definitions and rejects any still-unresolved category before final return or weak admission."
+    },
+    {
+      "id": "CATEGORY-PLAIN-WAIT",
+      "status": "resolved_in_reviewed_source",
+      "problem": "Starting generic ownership only after a nominal TypeRef handle arrived would leave its initial external wait outside the new category operation's cancellation/lifetime setup.",
+      "resolution": "The nominal token resolver enables the same generic operation before calling the loader, in addition to recording its category after resolution. Plain nongeneric TypeSpecs enter qualification before nominal publication."
+    },
+    {
+      "id": "DOC-WARM-COST",
+      "status": "resolved_in_reviewed_documentation",
+      "problem": "The arity-only warm-instantiation cost sentence did not account for intentionally withheld or unavailable optional proof admission.",
+      "resolution": "Documentation now limits that cost statement to a tuple with an admitted immutable proof and explicitly describes reproof of loaded tuples with unloaded dependencies or no optional admission."
+    }
+  ],
+  "independentBoundaryReview": [
+    "Duplicate encodings of an unloaded canonical definition share a Map entry; contradictory encodings reject before speculative base resolution. A satisfied entry may be removed safely because a later occurrence is checked against the same immutable record or authoritative loaded kind.",
+    "The pending-definition Map iterator remains live across awaited closure work. Newly appended obligations are visited; removed satisfied entries are skipped. Every addition/validation/proof visit consumes the existing bounded root allowance.",
+    "An unknown outer or reentrant obligation is left pending during nested work. validateCategories(true) rejects any unknown obligation at the final root boundary.",
+    "Every satisfaction path polls the operation before reading category facts. After awaited proof/drain work the scalar binding-conflict, cancellation and lifetime gates remain active. The existing publication boundary still checks the publisher's own expected direct record before loaded mutation.",
+    "No parser-time category-base traversal remains, avoiding recursive reads of legal self-referential generic signature templates. Exact owner TypeDesc and intrinsic identities remain distinct across contexts.",
+    "Category records belong only to the root and clear in dispose. They add no loader-wide strong owner registry, category result cache or pending self-promise.",
+    "Existing TypeRef/TypeSpec active-resolution guards, the frozen original Node fixture, native observer/toolchain sources and all retained historical results are unchanged."
+  ],
+  "authoredTestCases": [
+    {
+      "case": "direct changing same-name host binding",
+      "checks": "One selected foreign ValueType handle remains an ordinary Class base under the owner-intrinsic identity rule; completion and encoding agree; later incompatible encoding rejects."
+    },
+    {
+      "case": "array-wrapped unloaded generic definition",
+      "checks": "The first wrapper uses its exact proof category while the element definition remains unloaded; a later canonical value-type completion makes class encoding reject; corrected encoding preserves the existing wrapper identity."
+    },
+    {
+      "case": "reverse binding and retry",
+      "checks": "A failed value encoding does not cache an unloaded classification; a later class encoding rebinds and succeeds to the same canonical shape."
+    },
+    {
+      "case": "wrong direct/wrapped/plain class encodings",
+      "checks": "Value-classified definitions reject before requested nominal publication, including plain nongeneric TypeSpecs."
+    },
+    {
+      "case": "contradictory encodings",
+      "checks": "The same canonical definition encoded both ways rejects without a speculative base callback."
+    },
+    {
+      "case": "concurrent category authority",
+      "checks": "A pending raw read adopts another root's completed Class authority and rejects an incompatible value encoding."
+    },
+    {
+      "case": "plain metadata-base cancellation",
+      "checks": "The pending consumer cancels promptly; late rejection stays observed; no requested type is published and retry succeeds."
+    },
+    {
+      "case": "plain nominal TypeRef cancellation",
+      "checks": "The generic independent wait begins before the external handle arrives; late completion remains observed and retry resolves the canonical intrinsic."
+    }
+  ],
+  "nativeIntegrity": {
+    "unchangedSince": "b29076b1dcc724d03902561d90c75031fb309566",
+    "paths": [
+      "packages/clr/interop/GenericClosure",
+      "packages/clr/tools/capture-generic-closure.mjs",
+      "tests/fixtures/clr-generic-closure",
+      "packages/clr/interop/GenericInstantiation"
+    ],
+    "checkedBy": "git diff --name-only between committed revisions; empty result"
+  },
+  "reviewExecution": {
+    "builds": 0,
+    "captures": 0,
+    "tests": 0,
+    "benchmarks": 0,
+    "productImports": 0,
+    "installs": 0,
+    "remoteWrites": 0,
+    "productEdits": 0
+  },
+  "remainingQualification": [
+    "Root-owned fresh exact SDK 10.0.201 / CoreCLR 10.0.5 closure capture: 34 isolated cases, 71 requests, 38 identity observations, 14 SRM images; retain original f551 evidence unchanged.",
+    "Strict original and closure native replay plus the final focused host/concurrency/cancellation/GC/bounds/category test scope at exact frozen source hashes.",
+    "The unchanged prescribed performance cohort, with retained raw samples and any quantified performance exception decided by root.",
+    "Broader native/platform/browser and other Project #6 acceptance remains separate; source review does not close issue #2460."
+  ]
+}

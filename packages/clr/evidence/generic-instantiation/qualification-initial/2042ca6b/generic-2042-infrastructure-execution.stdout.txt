@@ -1,0 +1,16 @@
+{
+  "status": "prepared-no-execution",
+  "startedUtc": "2026-10-04T17:07:38.080313+00:00",
+  "finishedUtc": "2026-10-04T17:07:39.218244+00:00",
+  "diskBefore": {
+    "total": 33770192896,
+    "used": 31754874880,
+    "free": 280555520
+  },
+  "diskAfter": {
+    "total": 33770192896,
+    "used": 31772704768,
+    "free": 262725632
+  },
+  "error": null
+}

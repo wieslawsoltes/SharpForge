@@ -66,7 +66,7 @@ test('CLR unresolved framework references and generic inheritance stay explicit 
     md.add(27, [md.blob(Uint8Array.of(0x15, 0x12, ((generic & 0xffffff) << 2) | 1, 1, 8))]);
   } });
   const constructedModule = (await unconfigured.loadFromStream(constructed)).manifestModule;
-  await assert.rejects(unconfigured.types.load(constructedModule, 0x1b000001), /generic\/modifier type services/);
+  await assert.rejects(unconfigured.types.load(constructedModule, 0x1b000001), error => error.code === LoadErrorCode.MissingAssembly);
   const cyclic = managedFixture({ name: 'CyclicTypeRef', decorate({ md }) {
     md.rows[1][0][0] = 7;
   } });

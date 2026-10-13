@@ -36,6 +36,9 @@ token scope, or remap tokens beforehand. This API does not bind types, validate
 generic constraints, produce instantiated TypeDesc/MethodDesc objects, perform
 variance/assignability checks, or execute methods. These remain separate A04
 generic services; no generic-definition caching policy is implied here.
+For canonical TypeDesc construction and scoped metadata binding, use the
+separate [generic instantiation service](INSTANTIATION.md), which accepts handles
+and retains their original module/context ownership.
 
 Traversal is linear in the input plus replacement AST sizes and expanded result
 size, with a constant number of codec passes. Defaults are depth 64, 4,096 nodes

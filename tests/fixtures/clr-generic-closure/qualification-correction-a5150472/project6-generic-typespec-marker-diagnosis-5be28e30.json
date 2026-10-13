@@ -1,0 +1,337 @@
+{
+  "schema": 1,
+  "kind": "source-only diagnosis of actual parent-run qualification failure",
+  "recordedAt": "2026-10-04T20:24:23.568345+00:00",
+  "reviewer": "/root/project6_reconcile",
+  "revision": "5be28e30fa9130bff147b0699f47da0f33d674f0",
+  "sources": [
+    {
+      "path": "packages/clr/src/type-system/type-specifications.js",
+      "sha256": "cb9fc24e1beb78975d68bc2eefbef1015669609f9559675638f777b4f5f06ead",
+      "bytes": 2775
+    },
+    {
+      "path": "packages/clr/src/type-system/type-loader.js",
+      "sha256": "c2a45122c999b6279b36719994892c4c0fb935a93145c9c4f06609390744b8a8",
+      "bytes": 25584
+    },
+    {
+      "path": "packages/clr/src/type-system/type-definition-completion.js",
+      "sha256": "92044d0b4a3197e70d2c55c521a91be04e08947699a8ee1176d841cc3fc34c82",
+      "bytes": 3757
+    },
+    {
+      "path": "packages/clr/src/generics/instantiation-closure.js",
+      "sha256": "fa079563976d3a3ed06543946662aafaa1b4728f48d7b5ce98d8b0e3e3482cd7",
+      "bytes": 8516
+    },
+    {
+      "path": "tests/clr-generics-closure.test.js",
+      "sha256": "6875afeff59f9d311fe8900cb2a49a2e48dadea5bed6eb30e69e84193fb22736",
+      "bytes": 6457
+    },
+    {
+      "path": "tests/clr-generics-closure-reference.test.js",
+      "sha256": "1f5abe18e5f399b2130627b4616ca848b87f606960b771543f8c6f4e883494fa",
+      "bytes": 5799
+    },
+    {
+      "path": "tests/clr-generics-closure-fixtures.js",
+      "sha256": "71ca3a9a8ad36390fd8c090f4bc6752c6e4f6cbf093350bed6b3712cb33b68eb",
+      "bytes": 2478
+    }
+  ],
+  "evidence": [
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/focused-node.stdout.txt",
+      "sha256": "1044015dce2dab9015a07e81b61a24cd28705ae5d35825a465c7f11e75239d80",
+      "bytes": 37485
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/focused-node.execution.json",
+      "sha256": "c268f5eaf11938925f3161e5b7158b725deb230aa71f2e7d1558f2397c3192fa",
+      "bytes": 137643
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-closure-first.execution.json",
+      "sha256": "0c6129d7ef7831ca49f53fbeba217e1caf5e95b13f05d210bf19be3e5574be72",
+      "bytes": 146137
+    },
+    {
+      "path": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-output/native-closure.json",
+      "sha256": "6c3fc6ba84f52052679b72075d25a1e854798930e344270319683f96f0967c3f",
+      "bytes": 353615
+    }
+  ],
+  "actualFocusedCounts": {
+    "tests": 122,
+    "suites": 0,
+    "pass": 119,
+    "fail": 3,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "actualNativeCounts": {
+    "cases": 34,
+    "operations": 71,
+    "returned": 43,
+    "identities": 38,
+    "metadataImages": 14
+  },
+  "selectedNativeObservations": [
+    {
+      "id": "resolve-acyclic-expansion",
+      "operations": [
+        {
+          "id": "primary",
+          "request": {
+            "op": "resolve",
+            "image": "acyclic-expansion",
+            "context": "default",
+            "token": 33554436
+          },
+          "stage": "complete",
+          "nativeReturned": true,
+          "descriptionCompleted": true,
+          "error": null,
+          "resultShape": {
+            "kind": "definition",
+            "image": "acyclic-expansion",
+            "context": "default",
+            "token": 33554436
+          },
+          "interfaces": []
+        },
+        {
+          "id": "repeat",
+          "request": {
+            "op": "resolve",
+            "image": "acyclic-expansion",
+            "context": "default",
+            "token": 33554436
+          },
+          "stage": "complete",
+          "nativeReturned": true,
+          "descriptionCompleted": true,
+          "error": null,
+          "resultShape": {
+            "kind": "definition",
+            "image": "acyclic-expansion",
+            "context": "default",
+            "token": 33554436
+          },
+          "interfaces": []
+        }
+      ]
+    },
+    {
+      "id": "instantiate-acyclic-expansion",
+      "operations": [
+        {
+          "id": "primary",
+          "request": {
+            "op": "instantiate",
+            "image": "acyclic-expansion",
+            "context": "default",
+            "token": 33554436,
+            "definition": {
+              "kind": "definition",
+              "image": "acyclic-expansion",
+              "context": "default",
+              "token": 33554436
+            },
+            "arguments": [
+              {
+                "kind": "intrinsic",
+                "name": "System.Int32"
+              }
+            ]
+          },
+          "stage": "complete",
+          "nativeReturned": true,
+          "descriptionCompleted": true,
+          "error": null,
+          "resultShape": {
+            "kind": "generic",
+            "definition": {
+              "kind": "definition",
+              "image": "acyclic-expansion",
+              "context": "default",
+              "token": 33554436
+            },
+            "arguments": [
+              {
+                "kind": "intrinsic",
+                "name": "System.Int32"
+              }
+            ]
+          },
+          "interfaces": []
+        },
+        {
+          "id": "repeat",
+          "request": {
+            "op": "instantiate",
+            "image": "acyclic-expansion",
+            "context": "default",
+            "token": 33554436,
+            "definition": {
+              "kind": "definition",
+              "image": "acyclic-expansion",
+              "context": "default",
+              "token": 33554436
+            },
+            "arguments": [
+              {
+                "kind": "intrinsic",
+                "name": "System.Int32"
+              }
+            ]
+          },
+          "stage": "complete",
+          "nativeReturned": true,
+          "descriptionCompleted": true,
+          "error": null,
+          "resultShape": {
+            "kind": "generic",
+            "definition": {
+              "kind": "definition",
+              "image": "acyclic-expansion",
+              "context": "default",
+              "token": 33554436
+            },
+            "arguments": [
+              {
+                "kind": "intrinsic",
+                "name": "System.Int32"
+              }
+            ]
+          },
+          "interfaces": []
+        }
+      ]
+    },
+    {
+      "id": "resolve-non-generic-self-interface",
+      "operations": [
+        {
+          "id": "primary",
+          "request": {
+            "op": "resolve",
+            "image": "non-generic-self-interface",
+            "context": "default",
+            "token": 33554437
+          },
+          "stage": "complete",
+          "nativeReturned": true,
+          "descriptionCompleted": true,
+          "error": null,
+          "resultShape": {
+            "kind": "definition",
+            "image": "non-generic-self-interface",
+            "context": "default",
+            "token": 33554437
+          },
+          "interfaces": [
+            {
+              "kind": "generic",
+              "definition": {
+                "kind": "definition",
+                "image": "non-generic-self-interface",
+                "context": "default",
+                "token": 33554436
+              },
+              "arguments": [
+                {
+                  "kind": "definition",
+                  "image": "non-generic-self-interface",
+                  "context": "default",
+                  "token": 33554437
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "repeat",
+          "request": {
+            "op": "resolve",
+            "image": "non-generic-self-interface",
+            "context": "default",
+            "token": 33554437
+          },
+          "stage": "complete",
+          "nativeReturned": true,
+          "descriptionCompleted": true,
+          "error": null,
+          "resultShape": {
+            "kind": "definition",
+            "image": "non-generic-self-interface",
+            "context": "default",
+            "token": 33554437
+          },
+          "interfaces": [
+            {
+              "kind": "generic",
+              "definition": {
+                "kind": "definition",
+                "image": "non-generic-self-interface",
+                "context": "default",
+                "token": 33554436
+              },
+              "arguments": [
+                {
+                  "kind": "definition",
+                  "image": "non-generic-self-interface",
+                  "context": "default",
+                  "token": 33554437
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "diagnosis": {
+    "status": "confirmed stale TypeSpec marker lifetime in frozen source; proposed one-line correction not executed",
+    "productDefect": "TypeSpecifications.load keeps its active metadata-specification marker in the operation passed into semantic graph completion, although that TypeSpec signature has already resolved to a canonical TypeDesc.",
+    "mechanism": [
+      "A nongeneric C initially starts ordinary nominal completion before generic closure has been activated.",
+      "C.InterfaceImpl names TypeSpec S encoding I<C>. load(S) creates a scoped active marker and resolves its signature to canonical I<C>.",
+      "The finished signature calls complete(I<C>, nested), where nested still contains S.",
+      "Completing I<C> activates finite closure. The closure follows the C actual argument, then reads C's direct InterfaceImpl record.",
+      "That identity-only read of S encounters the stale marker and throws Circular TypeSpec resolution even though the earlier signature read is no longer active."
+    ],
+    "observedStackAgreement": "Both retained TypeLoad failures pass through TypeSpecifications.load line38, TypeLoader.#closureTemplate and the InterfaceImpl fallback in TypeDefinitionCompletion. The combined closure.test loops acyclic-expansion and non-generic-self-interface without annotating the individual throw, and native replay likewise does not wrap successful-operation throws with case ID; do not assert an individually instrumented failing case.",
+    "independentNativeDecision": "The separate native observer returned the non-generic self-interface definition successfully, as well as the acyclic-expansion controls. Actual raw native output remains authoritative.",
+    "proposedCorrection": "After await signature(module, specification.signature, nested), pass the incoming operation to semantic complete(type, operation). Keep the nested marker through signature binding only. Preserve the identityOnly branch and every other operation field.",
+    "preservedGuards": [
+      "Direct TypeSpec S->S and mutual S->T->S recursion still reenter while signature binding has its active marker.",
+      "Incoming nominal inheritance path stays intact; this is not resetting the full ancestry.",
+      "Scoped marker identities and work charging remain unchanged.",
+      "Encoded category obligations still accumulate on the same root during signature resolution.",
+      "Erased nominal cycles and expanding formal SCCs continue through their independent current checks.",
+      "No resolved TypeSpec-result cache or shared pending promise is introduced."
+    ],
+    "qualificationRequired": [
+      "Dedicated source test for plain C:I<C> requested through the definition and its closed interface TypeSpec",
+      "True self/mutual TypeSpec identity-resolution cycles retain rejection and finite work",
+      "Existing invalid erased/expanding closure tests unchanged",
+      "Original full native replay and existing thirty-file focused scope after root freezes corrected source"
+    ],
+    "authorCoordination": "clr_services separately diagnosed the SFCLR008 unload failure as an invalid test expectation: dependency assembly was not accepted before unload, so subsequent new resolution must reject. No unload product change proposed by this reviewer.",
+    "atomicIntegration": "Constraint composition WIP stays separate. Port the accepted marker fix only after root owns a new upstream correction commit; frozen5be untouched."
+  },
+  "actionsByReviewer": {
+    "productImports": false,
+    "tests": false,
+    "builds": false,
+    "nativeCaptures": false,
+    "benchmarks": false,
+    "productEdits": false,
+    "gitWrites": false,
+    "remoteWrites": false
+  }
+}

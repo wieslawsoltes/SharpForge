@@ -1,0 +1,125 @@
+"""Verify and retain the exact first generic-closure capture, including all evidence."""
+from pathlib import Path
+import collections
+import datetime
+import hashlib
+import json
+
+ROOT = Path('/workspace/scratch/7e3d2a445c44')
+REPO = ROOT / 'sf6-generic-instantiation'
+BASE = ROOT / 'generic-qualification-5be28e30'
+PLAN = json.loads((ROOT / 'generic-5be28e30-validation-plan.json').read_text())
+STEP = next(item for item in PLAN['steps'] if item['id'] == 'review-retain-native')
+OUTPUT = Path(STEP['sourceOutput'])
+EVIDENCE = Path(STEP['sourceEvidence'])
+RECEIPT = Path(STEP['receipt'])
+assert not RECEIPT.exists()
+
+
+def sha(data):
+    return hashlib.sha256(data).hexdigest()
+
+
+def verify(pin, path=None):
+    path = path or Path(pin['path'])
+    assert path.is_relative_to(ROOT), path
+    data = path.read_bytes()
+    if 'bytes' in pin:
+        assert len(data) == pin['bytes'], path
+    assert sha(data) == pin['sha256'], path
+    return data
+
+
+def inventory(directory):
+    result = []
+    for path in sorted(directory.rglob('*')):
+        assert not path.is_symlink(), path
+        if path.is_file():
+            data = path.read_bytes()
+            result.append({'path': str(path.relative_to(directory)), 'bytes': len(data), 'sha256': sha(data)})
+    return result
+
+
+execution = json.loads((BASE / 'native-closure-first.execution.json').read_text())
+assert execution['status'] == 'passed' and execution['exitCode'] == 0 and execution['signal'] is None
+assert execution['sourcesUnchanged'] and not execution['interruptions'] and not execution['inspectionErrors']
+for pin in execution['outputs']:
+    verify(pin)
+status = json.loads((EVIDENCE / 'capture-status.json').read_text())
+assert status['status'] == 'completed'
+assert len(status['steps']) == 40
+native = json.loads(verify(status['result']))
+assert native['sdk'] == '10.0.201' and native['runtime'] == '10.0.5'
+assert native['counts'] == {'cases': 34, 'operations': 71, 'identities': 38, 'images': 14}
+assert len(native['sources']) == 12 and len(native['productSources']) == 70
+assert len(native['toolchain']['referenceAssemblies']) == 167
+matrix = json.loads((REPO / 'packages/clr/interop/GenericClosure/matrix.json').read_text())
+assert [case['id'] for case in native['cases']] == [case['id'] for case in matrix['cases']]
+assert sum(len(case['operations']) for case in native['cases']) == 71
+assert sum(len(case['identities']) for case in native['cases']) == 38
+for index, step in enumerate(status['steps']):
+    assert step['status'] == 'exited' and step['exitCode'] == 0 and step['signal'] is None and step['error'] is None
+    assert step['startedUtc'] <= step['finishedUtc']
+    if index:
+        assert status['steps'][index - 1]['finishedUtc'] <= step['startedUtc']
+    stdout = verify(step['stdout'])
+    verify(step['stderr'])
+    saved = json.loads((EVIDENCE / f"{index + 1:02d}-{step['label']}-execution.json").read_text())
+    assert saved == step
+    if index >= 6:
+        raw = json.loads(stdout)
+        assert raw['runtime'] == '10.0.5' and raw['observations'] == native['cases'][index - 6]
+for pin in native['sources'] + native['productSources']:
+    verify(pin, REPO / pin['path'])
+for pin in native['sources']:
+    verify(pin, EVIDENCE / 'workspace/source' / pin['path'])
+for pin in [native['toolchain']['compiler'], *native['toolchain']['compilerDependencies'],
+            *native['toolchain']['runtimeFiles'], native['observer'], native['runtimeConfig']]:
+    verify(pin)
+for pin in native['toolchain']['referenceAssemblies']:
+    verify(pin, ROOT / 'dotnet-10.0.201/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0' / pin['name'])
+assert len(native['images']) == len(native['metadata']) == 14
+for image in native['images']:
+    verify(image, OUTPUT / image['file'])
+for pin in json.loads((EVIDENCE / 'retained-files.json').read_text()):
+    verify(pin)
+assert sorted(path.name for path in OUTPUT.iterdir()) == sorted(PLAN['nativeCapture']['expectedSuccessfulOutputFiles'])
+files = inventory(OUTPUT)
+evidence_files = inventory(EVIDENCE)
+destination = Path(STEP['fixtureDestination'])
+evidence_destination = Path(STEP['evidenceDestination'])
+assert destination.is_dir() and not evidence_destination.exists()
+assert all(not (destination / item['path']).exists() for item in files)
+record = {'schemaVersion': 1, 'status': 'retaining', 'startedUtc': datetime.datetime.now(datetime.timezone.utc).isoformat(),
+          'sourceHead': PLAN['candidate']['head'], 'native': status['result'], 'counts': native['counts'],
+          'commands': 40, 'rawCommandLogs': 80, 'sourcePins': 12, 'productSourcePins': 70, 'referenceAssemblyPins': 167,
+          'operationOutcomes': dict(collections.Counter(operation['error']['managedType'] if operation['error'] else 'returned'
+              for case in native['cases'] for operation in case['operations'])),
+          'recorderSha256': sha(Path(__file__).read_bytes()), 'files': files, 'evidenceFiles': evidence_files,
+          'copies': []}
+with RECEIPT.open('x') as stream:
+    json.dump(record, stream, indent=2)
+    stream.write('\n')
+try:
+    evidence_destination.mkdir()
+    for source, target, items in [(OUTPUT, destination, files), (EVIDENCE, evidence_destination, evidence_files)]:
+        for pin in items:
+            out = target / pin['path']
+            out.parent.mkdir(parents=True, exist_ok=True)
+            data = verify(pin, source / pin['path'])
+            with out.open('xb') as stream:
+                stream.write(data)
+            verify(pin, out)
+            record['copies'].append({'source': str(source / pin['path']), 'destination': str(out), **pin})
+    assert inventory(EVIDENCE) == evidence_files and inventory(OUTPUT) == files
+    assert inventory(evidence_destination) == evidence_files
+    record['status'] = 'retained-and-verified'
+except BaseException as error:
+    record.update(status='failed', failure={'type': type(error).__name__, 'message': str(error)})
+    raise
+finally:
+    record['finishedUtc'] = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    RECEIPT.write_text(json.dumps(record, indent=2) + '\n')
+print(json.dumps({'status': record['status'], 'files': len(files), 'evidenceFiles': len(evidence_files),
+                  'bytes': sum(pin['bytes'] for pin in files + evidence_files), 'outcomes': record['operationOutcomes'],
+                  'receiptSha256': sha(RECEIPT.read_bytes())}))

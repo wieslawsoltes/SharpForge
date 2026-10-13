@@ -1,0 +1,16 @@
+file:///workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/packages/clr/tools/capture-generic-instantiation.mjs:57
+    throw new Error(label + ': ' + (result.error?.message ?? result.stderr ?? 'native process failed'));
+          ^
+
+Error: native-observer: Unhandled exception. System.TypeLoadException: Could not load type 'Fixture.Node`1' from assembly 'Fixture, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null' because it has recursive generic definition.
+   at GenericInstantiationOracle.CaseMatrix.DefinitionTokens()
+   at GenericInstantiationOracle.CaseMatrix.Definitions()
+   at GenericInstantiationOracle.Program.Main(String[] args)
+
+    at run (file:///workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/packages/clr/tools/capture-generic-instantiation.mjs:57:11)
+    at file:///workspace/scratch/7e3d2a445c44/sf6-generic-instantiation/packages/clr/tools/capture-generic-instantiation.mjs:120:31
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.19.0

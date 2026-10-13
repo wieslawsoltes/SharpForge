@@ -1,0 +1,325 @@
+{
+  "schemaVersion": 1,
+  "kind": "project6-generic-closure-independent-source-review",
+  "reviewer": "/root/project6_reconcile",
+  "reviewedAtUtc": "2026-10-04T19:09:27.467282+00:00",
+  "issue": 2460,
+  "worktree": "/workspace/scratch/7e3d2a445c44/sf6-generic-instantiation",
+  "revision": "9692d35ff6b259af5a32157a60e839d4b8e641ea",
+  "status": "finite_closure_product_source_review_passed",
+  "actualExecutionQualification": "pending",
+  "reviewMethod": [
+    "Read exact product, fixture, test and documentation source; inspect git diffs and committed blobs.",
+    "Reason independently about SCC reduction, owner identity, publication interleavings, cancellation, unload behavior, weak ownership and bounds.",
+    "Hash reviewed committed source bytes without importing or executing product code."
+  ],
+  "prohibitedWorkPerformed": {
+    "builds": 0,
+    "captures": 0,
+    "tests": 0,
+    "benchmarks": 0,
+    "productImports": 0,
+    "installs": 0,
+    "remoteWrites": 0,
+    "productEdits": 0
+  },
+  "productSourceAggregate": {
+    "algorithm": "SHA-256 of compact JSON of sorted productSources records with sorted object keys",
+    "sha256": "160d0a7e896418811c7cc3154417e9f28fc933b34f0e84155101bf66e797718c"
+  },
+  "productSources": [
+    {
+      "path": "packages/clr/src/generics/closure-graph.js",
+      "bytes": 2665,
+      "lines": 92,
+      "sha256": "bf8d4e1dfbf115cfd6be7d7124804d74e2eb090fd763e84b51c6c3cd2550ab23"
+    },
+    {
+      "path": "packages/clr/src/generics/definition-bindings.js",
+      "bytes": 3014,
+      "lines": 78,
+      "sha256": "88a6ca59dbe1af2e2e63eee6553936e39f71c9d5659337b52b76b005400caff5"
+    },
+    {
+      "path": "packages/clr/src/generics/instantiation-closure.js",
+      "bytes": 8516,
+      "lines": 234,
+      "sha256": "fa079563976d3a3ed06543946662aafaa1b4728f48d7b5ce98d8b0e3e3482cd7"
+    },
+    {
+      "path": "packages/clr/src/generics/resolution-context.js",
+      "bytes": 5383,
+      "lines": 151,
+      "sha256": "21e1734e262edf28457b8083f3c58f64f381bd2e6d06274816a3e1181bd53682"
+    },
+    {
+      "path": "packages/clr/src/type-system/type-definition-completion.js",
+      "bytes": 3757,
+      "lines": 61,
+      "sha256": "92044d0b4a3197e70d2c55c521a91be04e08947699a8ee1176d841cc3fc34c82"
+    },
+    {
+      "path": "packages/clr/src/type-system/type-loader.js",
+      "bytes": 25275,
+      "lines": 474,
+      "sha256": "10fb8be4ab4e52ffeab165d98666260a02adf08bf45a293e2b84d67f1e8f71fc"
+    }
+  ],
+  "testSources": [
+    {
+      "path": "tests/clr-generics-closure-authority.test.js",
+      "bytes": 4243,
+      "lines": 82,
+      "sha256": "0591b9476cd79854bb6102b9aa30c51dc9936e539cf31d11646b2aac2472d269",
+      "authoredTopLevelTests": 3
+    },
+    {
+      "path": "tests/clr-generics-closure-bounds.test.js",
+      "bytes": 6759,
+      "lines": 130,
+      "sha256": "5f721d87513a1bd080c771f47a21a842fda37e614a84597a5f1a39102dec5133",
+      "authoredTopLevelTests": 5
+    },
+    {
+      "path": "tests/clr-generics-closure-concurrency.test.js",
+      "bytes": 5525,
+      "lines": 114,
+      "sha256": "31deb70408882451a8ffe164ebb6ec1f584cb9b819034bcaa0edfeca2c328c27",
+      "authoredTopLevelTests": 3
+    },
+    {
+      "path": "tests/clr-generics-closure-external.test.js",
+      "bytes": 9999,
+      "lines": 178,
+      "sha256": "dea2cbf9fc0c44b9f479831c301fad738e5813e59523b613a1993b0d07210235",
+      "authoredTopLevelTests": 6
+    },
+    {
+      "path": "tests/clr-generics-closure-fixtures.js",
+      "bytes": 2478,
+      "lines": 47,
+      "sha256": "71ca3a9a8ad36390fd8c090f4bc6752c6e4f6cbf093350bed6b3712cb33b68eb",
+      "authoredTopLevelTests": 0
+    },
+    {
+      "path": "tests/clr-generics-closure-gc-fixture.js",
+      "bytes": 2548,
+      "lines": 43,
+      "sha256": "e5e3fac88c9c296cc0b64d53894ab08eec74e08763c63758b76707540d1b41db",
+      "authoredTopLevelTests": 0
+    },
+    {
+      "path": "tests/clr-generics-closure-gc.test.js",
+      "bytes": 937,
+      "lines": 19,
+      "sha256": "65e4c7f460f951f8466c360ef66ee68408225c7cd8350af117abce61a8612729",
+      "authoredTopLevelTests": 1
+    },
+    {
+      "path": "tests/clr-generics-closure-lifetime.test.js",
+      "bytes": 5361,
+      "lines": 109,
+      "sha256": "ebd46bdd54b101b646550b699138be0d47a8ddd7db8e890ec1f089ed4f4109aa",
+      "authoredTopLevelTests": 4
+    },
+    {
+      "path": "tests/clr-generics-closure-native.js",
+      "bytes": 4890,
+      "lines": 83,
+      "sha256": "2db79312d23d7ae8930c96fda171afc3583a5e47c6a28c2c25a5990ba865b2fa",
+      "authoredTopLevelTests": 0
+    },
+    {
+      "path": "tests/clr-generics-closure-reference.test.js",
+      "bytes": 5799,
+      "lines": 106,
+      "sha256": "1f5abe18e5f399b2130627b4616ca848b87f606960b771543f8c6f4e883494fa",
+      "authoredTopLevelTests": 2
+    },
+    {
+      "path": "tests/clr-generics-closure.test.js",
+      "bytes": 6457,
+      "lines": 114,
+      "sha256": "6875afeff59f9d311fe8900cb2a49a2e48dadea5bed6eb30e69e84193fb22736",
+      "authoredTopLevelTests": 6
+    },
+    {
+      "path": "tests/clr-generics-instantiation-graphs.test.js",
+      "bytes": 5169,
+      "lines": 77,
+      "sha256": "6df16bd3a7252c19a8331e1ae93d73d9b82a354a5dabcb17006def89f8b49227",
+      "authoredTopLevelTests": 4
+    },
+    {
+      "path": "tests/clr-types-graphs.test.js",
+      "bytes": 5255,
+      "lines": 81,
+      "sha256": "6e61068add682564116c2e7a51a52b7f58ec6c17ee4905dcff2cdbdc7ad583f0",
+      "authoredTopLevelTests": 3
+    }
+  ],
+  "documentation": [
+    {
+      "path": "packages/clr/INSTANTIATION.md",
+      "bytes": 26007,
+      "lines": 413,
+      "sha256": "dedd70db411381f387a35fc537d7323e58b349c22f43773043bfe3eff0729ba3"
+    }
+  ],
+  "sourceConclusions": [
+    "Auxiliary canonical compound vertices preserve formal dependency reachability: containment edges are expanding, actual-to-formal edges are non-expanding. Contracting containment paths recovers the intended occurrence edges. Canonical owner handles prevent equal names, indexes or tokens in other owners/images from conflating formals.",
+    "The iterative SCC passes reject an expanding edge inside a formal component; an independent erased-definition graph rejects ordinary inheritance cycles even when all actual arguments are constants.",
+    "Caller argument shapes discover required definitions without creating inheritance-template edges. Shared DAGs are visited by canonical identity and bounded by charged work instead of occurrence-tree expansion.",
+    "Actual direct interfaces remain separate from flattened inherited interfaces in completed authority. The immediate base and all direct declarations remain available to the proof; no owner-scoped edge depends on reconstructing raw declarations from flattened output.",
+    "Local proof sets are admitted only after full proof completion, and weak success entries only after successful root completion and final cancellation/lifetime polling. Failed/cancelled roots do not publish weak success entries; no negative proof cache is added.",
+    "Only immutable completed binding records are shared; no pending self-promise or partial proof record is accepted as canonical. Registered concurrent roots are invalidated before subsequent successful use of a different canonical publication.",
+    "Depth checks remain bounded, SCC passes are iterative, and both graph work and subscription registration use configured work/capacity limits. Optional admission exhaustion causes reproof rather than unvalidated success."
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "status": "resolved_in_reviewed_source",
+      "problem": "External TypeRef results and born-loaded intrinsic tuples bypassed finite closure.",
+      "resolution": "Non-identity external returns enter #complete; its eligibility includes genericDefinition and wrapper shapes. Identity-only reads remain non-completing.",
+      "evidence": [
+        "packages/clr/src/type-system/type-loader.js",
+        "tests/clr-generics-closure-external.test.js"
+      ]
+    },
+    {
+      "id": "F2",
+      "status": "resolved_in_reviewed_source",
+      "problem": "Proof and completion could independently resolve a TypeRef to different same-name host descriptors.",
+      "resolution": "A root reuses the first fully completed immutable direct-binding record. Alternate reentrant reads are discarded before registration, discovery or completion use. TypeDefinitionCompletion consumes that record.",
+      "evidence": [
+        "packages/clr/src/generics/instantiation-closure.js",
+        "packages/clr/src/type-system/type-definition-completion.js",
+        "tests/clr-generics-closure-bounds.test.js",
+        "tests/clr-generics-closure-external.test.js"
+      ]
+    },
+    {
+      "id": "F3",
+      "status": "resolved_in_reviewed_source",
+      "problem": "A null base consumed an extra closure depth level and rejected a construction at the exact allowed boundary.",
+      "resolution": "Null template edges return before the depth visit; a maxDepth=2 host Box<Leaf> boundary test is authored.",
+      "evidence": [
+        "packages/clr/src/generics/instantiation-closure.js",
+        "tests/clr-generics-closure-bounds.test.js"
+      ]
+    },
+    {
+      "id": "F4",
+      "status": "resolved_in_reviewed_source",
+      "problem": "Loaded metadata tuple and TypeDef fast paths could bypass reproof after weak admission was intentionally withheld for unloaded argument definitions.",
+      "resolution": "Tuple fast return requires actual weak closure admission. Nominal metadata completed through generic work is weak-marked; marked loaded TypeDefs also require admission before fast return.",
+      "evidence": [
+        "packages/clr/src/type-system/type-loader.js",
+        "tests/clr-generics-closure-external.test.js"
+      ]
+    },
+    {
+      "id": "F5",
+      "status": "resolved_in_reviewed_source",
+      "problem": "Concurrent roots could combine incompatible raw C/D bindings and publish an erased cycle that neither stale proof covered.",
+      "resolution": "DefinitionBindings installs canonical direct authority synchronously with publication. Post-read registration adopts any completed authority. Previously registered conflicting consumers receive a scalar failure before any later successful proof/publication/return.",
+      "evidence": [
+        "packages/clr/src/generics/definition-bindings.js",
+        "packages/clr/src/generics/resolution-context.js",
+        "tests/clr-generics-closure-concurrency.test.js",
+        "tests/clr-generics-closure-authority.test.js"
+      ]
+    },
+    {
+      "id": "F6",
+      "status": "resolved_test_fixture",
+      "problem": "The reentrant isolation fixture reused an already-active System.Object TypeRef, hitting the independent Circular TypeRef guard before its intended nested proof.",
+      "resolution": "The nested target is the existing independent empty contract interface. The active TypeRef guard remains unchanged.",
+      "evidence": [
+        "tests/clr-generics-closure-lifetime.test.js",
+        "tests/clr-types-graphs.test.js"
+      ]
+    },
+    {
+      "id": "F7",
+      "status": "resolved_in_reviewed_source",
+      "problem": "A nongeneric completion could enable generic proof later and publish its raw candidate despite a different completed root template.",
+      "resolution": "#publish verifies the publisher's own expected binding before loaded mutation. The regression uses a direct external generic TypeRef, avoiding an unrelated active TypeSpec marker.",
+      "evidence": [
+        "packages/clr/src/type-system/type-loader.js",
+        "packages/clr/src/generics/instantiation-closure.js",
+        "tests/clr-generics-closure-external.test.js"
+      ]
+    },
+    {
+      "id": "F8",
+      "status": "resolved_in_reviewed_source",
+      "problem": "A strong pending observer registry on a permanent definition would newly retain abandoned foreign consumers after failed unload delivery and an indefinitely pending provider.",
+      "resolution": "Pending registries contain WeakRef subscription records only; live roots own the release closures and expected records. Explicit cleanup releases them, and bounded registration sweeps dead weak entries at capacity. Completed weak-keyed records contain only edges already retained by the published descriptor.",
+      "evidence": [
+        "packages/clr/src/generics/definition-bindings.js",
+        "tests/clr-generics-closure-gc-fixture.js",
+        "tests/clr-generics-closure-authority.test.js"
+      ]
+    },
+    {
+      "id": "F9",
+      "status": "resolved_test_fixture",
+      "problem": "The first GC control did not read the intended strong owner after GC and could be defeated by early variable liveness elimination.",
+      "resolution": "The fixture explicitly reads retained.subscription and retained.context.isUnloading after the first forced GC before dropping the owner.",
+      "evidence": [
+        "tests/clr-generics-closure-gc-fixture.js"
+      ]
+    }
+  ],
+  "cleanupSemantics": {
+    "normal": "Cancellation/finally dispose root registrations. Delivered normal unload notification invokes invalidate and releases registrations before provider settlement.",
+    "throwingListener": "AssemblyLoadContext.unload sets unloading and completes its finally cleanup even if an earlier user listener throws; later lifetime callbacks are skipped and events are cleared. No guaranteed internal notification hook was found in the reviewed existing lifetime/event/unload seams.",
+    "retainedPendingConsumer": "No prompt disposal is claimed if its provider never settles and the earlier listener prevented notification. Cancellation or eventual provider settlement reaches disposal/final polling.",
+    "abandonedConsumer": "The new registry does not strongly retain it. Weak subscription entries permit collection and bounded capacity recovery. This remains subject to actual host GC qualification.",
+    "untouchedOwnerHeldPath": "packages/clr/src/unload.js"
+  },
+  "pendingSameIssueFollowup": [
+    {
+      "id": "CATEGORY-01",
+      "status": "root_authorized_separate_correctness_commit",
+      "source": "packages/clr/src/type-system/type-specifications.js",
+      "problem": "Unloaded class/value classification is cached from an independent raw base binding and can disagree with the binding later used for completion. Nested wrapper occurrences also require coherent category validation.",
+      "approvedDesign": "Bounded per-root obligations on canonical definitions; no parser-time category base recursion or loader-wide unloaded-category cache; validate against exact completed root/canonical binding records and loaded kind; drain unresolved obligations before final return/admission.",
+      "reviewStillRequired": true
+    },
+    {
+      "id": "DOC-WARM-COST",
+      "status": "sent_for_next_documentation_commit",
+      "source": "packages/clr/INSTANTIATION.md",
+      "problem": "The arity-only warm-instantiation cost sentence must be conditional on an admitted immutable closure proof. Loaded tuples without admission correctly repeat bounded graph proof."
+    }
+  ],
+  "qualificationBoundary": {
+    "historical": "Prior frozen f551 native capture and the original 84-test 82-pass/2-fail gate remain retained; they are not corrected-source qualification.",
+    "freshClosureNative": {
+      "status": "not_run_by_reviewer",
+      "sdk": "10.0.201",
+      "runtime": "10.0.5",
+      "cases": 34,
+      "operations": 71,
+      "identities": 38,
+      "images": 14,
+      "strictMissingFixtureFailure": true
+    },
+    "remaining": [
+      "Finish and independently review the separately authorized category correction.",
+      "Run the root-owned fresh pinned closure capture and strict replay, preserving all actual accepted/rejected outcomes.",
+      "Run the final agreed focused host/concurrency/cancellation/bounds/GC scope once under the serial heavy-job protocol.",
+      "Run the unchanged prescribed benchmark cohort at exact final source pins and retain unfavorable results.",
+      "Keep full native/platform/browser and other Project #6 acceptance separate from local source approval."
+    ],
+    "newNativeSourcePathsUnchangedFrom": "b29076b1dcc724d03902561d90c75031fb309566",
+    "nativeSourcePaths": [
+      "packages/clr/interop/GenericClosure/",
+      "packages/clr/tools/capture-generic-closure.mjs",
+      "tests/fixtures/clr-generic-closure/",
+      "packages/clr/interop/GenericInstantiation/"
+    ]
+  }
+}

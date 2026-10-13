@@ -25,12 +25,12 @@ enclosing parameters. No base graph or executable method body is loaded.
 Generic metadata indexing is linear, limited to 100,000 parameter/constraint
 rows, 1,024 parameters per owner and 4,096 name characters. Duplicate positions,
 gaps, invalid owners and invalid/duplicate constraint references fail explicitly.
-Constraints remain unresolved tokens: their semantic resolution/enforcement and
-generic instantiation remain separate batches. [Method-owned parameters](METHODS.md)
-reuse the same metadata index and expose a canonical declaring method.
-Metadata generic parameters report `isLoaded: false`; constructing
-arrays/pointers/function pointers from them reports a TypeLoad diagnostic until
-generic type services are available.
+Constraints remain unresolved tokens here; their semantic enforcement remains
+separate. [Generic instantiation](INSTANTIATION.md) supplies canonical open,
+partial and closed constructions. [Method-owned parameters](METHODS.md) reuse
+the same metadata index and expose a canonical declaring method. Metadata generic
+parameters report `isLoaded: false`; the generic service supports their use as
+open arguments and in array, pointer and function-pointer descriptors.
 The independent SDK 10.0.201 / CoreCLR 10.0.5 fixture compares six definitions
 and nine parameters against reflection and SRM constraint tokens. Regenerate
 with `node packages/clr/tools/capture-generic-parameters.mjs
@@ -73,9 +73,10 @@ documented bounds. Relevant metadata rows are indexed in linear time; inherited
 interface output is materialized once per completed definition. Concurrent first
 loads may repeat work but publish the same descriptor.
 
-Generic inheritance/constraints, linked netmodule loading,
-multi-module TypeRefs, layout/dispatch/assignability and full verification remain
-separate batches. Unsupported resolution forms produce explicit TypeLoad errors.
+Generic inheritance is handled by the bounded [instantiation service](INSTANTIATION.md).
+Constraints, linked netmodule loading, multi-module TypeRefs,
+layout/dispatch/assignability and full verification remain separate batches.
+Unsupported resolution forms produce explicit TypeLoad errors.
 The independent native graph fixture covers ordinary C# base/interfaces, nested
 ownership, structs, enums and circular metadata rejection. Regenerate with
 `node packages/clr/tools/capture-type-graphs.mjs tests/fixtures/clr-type-graphs`.
@@ -103,8 +104,9 @@ when another context explicitly shares that element type.
 Hosts explicitly register System.Array, primitive and generic collection types.
 `defineIntrinsic` accepts `genericArity` for those host contracts; generic
 parameters and array interface instantiations have canonical identities. General
-metadata generic instantiation, constraints and modifiers remain unsupported with
-TypeLoad diagnostics. These APIs describe types/members; they do not execute
+metadata generic construction now uses the [instantiation service](INSTANTIATION.md);
+constraints and modified-type reflection retain their explicit unsupported
+boundaries. These APIs describe types/members; they do not execute
 array methods, allocate instances, perform assignability or generate layout.
 
 The constructed-type oracle compares native .NET array interfaces and synthetic

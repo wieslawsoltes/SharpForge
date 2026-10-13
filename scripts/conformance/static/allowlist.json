@@ -2,6 +2,13 @@
   "schemaVersion": 1,
   "allow": [
     {
+      "path": "packages/clr/tools/benchmark-generic-instantiation.mjs",
+      "operation": "dynamic-import",
+      "count": 3,
+      "sha256": "435545681efeacd533534203b8e0ae3c5d5493325dacaa32e40fac3f7b562da6",
+      "reason": "Reviewed developer-only benchmark imports an operator-selected trusted local CLR entry and two fixed test helpers from that checkout. The selected checkout is executable host input; managed metadata and fixture bytes never choose JavaScript modules. This exact source hash and count preserve the measured driver without adding a product dynamic-code surface."
+    },
+    {
       "path": "apps/cli/main.js",
       "operation": "dynamic-import",
       "count": 2,

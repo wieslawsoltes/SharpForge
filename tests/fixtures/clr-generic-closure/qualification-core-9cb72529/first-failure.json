@@ -1,0 +1,309 @@
+{
+  "format": "sharpforge.generic-instantiation-first-core-failure",
+  "version": 1,
+  "recordedAt": "2026-10-05 00:30:23 UTC",
+  "purpose": "Preserve the first required PR core failure before the exact dynamic-import policy correction.",
+  "source": {
+    "head": "9cb725291ef2ae28a68655a5f47901ec73bf068a",
+    "tree": "2fee29b0b06e977e96ea205e43d36f55cf61127b",
+    "localEquivalent": "1b69161ea2ec7c2be3abb773e890e1547afe3e79",
+    "base": "c7e19ec89272f8a3193fc5720e403941e5a0520b",
+    "testedSyntheticMerge": "b715200051132537ea729e924f8259706e199624"
+  },
+  "workflow": {
+    "id": 37246720920,
+    "url": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37246720920",
+    "path": ".github/workflows/ci.yml",
+    "event": "pull_request",
+    "attempt": 1,
+    "headSha": "9cb725291ef2ae28a68655a5f47901ec73bf068a",
+    "status": "completed",
+    "conclusion": "failure",
+    "startedAt": "2026-10-05T00:14:25Z",
+    "updatedAt": "2026-10-05T00:14:48Z",
+    "jobs": [
+      {
+        "id": 111565960135,
+        "name": "core",
+        "status": "completed",
+        "conclusion": "failure",
+        "run_id": 37246720920,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Review contract changes and seam lock against the PR snapshot",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Enforce oracle tool license coverage and committed payload boundaries",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Run npm ci --ignore-scripts --no-audit --no-fund",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6
+          },
+          {
+            "name": "Run npm run check",
+            "status": "completed",
+            "conclusion": "failure",
+            "number": 7
+          },
+          {
+            "name": "Plan affected areas with conservative fallback",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 8
+          },
+          {
+            "name": "Reject expired test quarantines",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 9
+          },
+          {
+            "name": "Run npm test",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 10
+          },
+          {
+            "name": "Run npm run build",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 11
+          },
+          {
+            "name": "Require a clean checkout",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 12
+          },
+          {
+            "name": "Run actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 13
+          },
+          {
+            "name": "Full qualification Python infrastructure regressions",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 14
+          },
+          {
+            "name": "Run ./.github/actions/qualification-evidence",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 15
+          },
+          {
+            "name": "Record provenance for the existing PR preview build",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 16
+          },
+          {
+            "name": "Upload PR preview without a second build or deployment",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 17
+          },
+          {
+            "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 33
+          },
+          {
+            "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 34
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 35
+          }
+        ]
+      },
+      {
+        "id": 111566027542,
+        "name": "core-platforms",
+        "status": "completed",
+        "conclusion": "skipped",
+        "run_id": 37246720920,
+        "logs_url": null,
+        "steps": null
+      },
+      {
+        "id": 111566027667,
+        "name": "packages",
+        "status": "completed",
+        "conclusion": "skipped",
+        "run_id": 37246720920,
+        "logs_url": null,
+        "steps": null
+      },
+      {
+        "id": 111566028047,
+        "name": "build",
+        "status": "completed",
+        "conclusion": "skipped",
+        "run_id": 37246720920,
+        "logs_url": null,
+        "steps": null
+      },
+      {
+        "id": 111566028119,
+        "name": "native-il",
+        "status": "completed",
+        "conclusion": "skipped",
+        "run_id": 37246720920,
+        "logs_url": null,
+        "steps": null
+      },
+      {
+        "id": 111566028166,
+        "name": "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+        "status": "completed",
+        "conclusion": "skipped",
+        "run_id": 37246720920,
+        "logs_url": null,
+        "steps": null
+      },
+      {
+        "id": 111566028773,
+        "name": "clr-wasm",
+        "status": "completed",
+        "conclusion": "skipped",
+        "run_id": 37246720920,
+        "logs_url": null,
+        "steps": null
+      },
+      {
+        "id": 111566028780,
+        "name": "native-msbuild",
+        "status": "completed",
+        "conclusion": "skipped",
+        "run_id": 37246720920,
+        "logs_url": null,
+        "steps": null
+      },
+      {
+        "id": 111566028871,
+        "name": "ci-ok",
+        "status": "completed",
+        "conclusion": "skipped",
+        "run_id": 37246720920,
+        "logs_url": null,
+        "steps": null
+      }
+    ]
+  },
+  "failure": {
+    "jobId": 111565960135,
+    "jobName": "core",
+    "step": "Run npm run check",
+    "exitCode": 1,
+    "path": "packages/clr/tools/benchmark-generic-instantiation.mjs",
+    "operation": "dynamic-import",
+    "count": 3,
+    "lines": [
+      17,
+      18,
+      19
+    ],
+    "sha256": "435545681efeacd533534203b8e0ae3c5d5493325dacaa32e40fac3f7b562da6",
+    "message": "Unreviewed dynamic-code use or changed file",
+    "interpretation": "The measured developer benchmark lacked its exact allowlist entry. No product, benchmark, native-observer or measurement source is changed by this correction.",
+    "downstreamTests": "npm test and npm run build were skipped after check failed. This run is not a test or build pass."
+  },
+  "retainedLog": {
+    "path": "core-111565960135.log.txt",
+    "bytes": 278077,
+    "sha256": "332633ef43cb50e0015bfdf2d100a6b3469d5b2c4cbbc79651f0d297d2f0a120",
+    "provenance": "Exact UTF-8 text returned by github_fetch_workflow_job_logs for job 111565960135; decoded text, not the original transport archive.",
+    "gitBlob": "7c8cc1d1d4f5bdb69636223074d3f53f5d8f94fd"
+  },
+  "correction": {
+    "path": "scripts/conformance/static/allowlist.json",
+    "before": {
+      "bytes": 23216,
+      "sha256": "26b6e27cc56aef6ca23b699d206c10856d878e3c4bbdf4b4cf53067f22224bf7"
+    },
+    "after": {
+      "bytes": 23817,
+      "sha256": "23b36d3a0746e81e32786f0314ba117bee166a3a180dd08c7e02ec53754a866d"
+    },
+    "entry": {
+      "path": "packages/clr/tools/benchmark-generic-instantiation.mjs",
+      "operation": "dynamic-import",
+      "count": 3,
+      "sha256": "435545681efeacd533534203b8e0ae3c5d5493325dacaa32e40fac3f7b562da6",
+      "reason": "Reviewed developer-only benchmark imports an operator-selected trusted local CLR entry and two fixed test helpers from that checkout. The selected checkout is executable host input; managed metadata and fixture bytes never choose JavaScript modules. This exact source hash and count preserve the measured driver without adding a product dynamic-code surface."
+    },
+    "unchangedExistingHeadEntries": 66,
+    "mainComparison": {
+      "commit": "c7e19ec89272f8a3193fc5720e403941e5a0520b",
+      "entries": 81,
+      "unchangedSharedEntriesByPathAndOperation": 66,
+      "additionalMainEntries": 15,
+      "identicalPrefixEntries": 12,
+      "expectedIntegratedEntries": 82
+    },
+    "insertion": "At the beginning of the allow array, before apps/cli/main.js, where main's existing prefix is unchanged. All existing head rows retain their exact content and relative order; all 15 unrelated main rows retain their existing positions on integration.",
+    "codeReview": "Top-level import() calls load an operator-selected CLR entry and two fixed test helpers. Module paths are not derived from managed bytes. The driver's own source snapshot is after imports; the policy makes no pre-import guarantee. The static checker still enforces exact path/hash/count and still links without evaluation.",
+    "limits": "A trusted operator-selected checkout is executable host input. This permission does not make arbitrary JavaScript safe. The measured driver remains byte-identical.",
+    "validationAtRecord": "Source review and exact byte hashes only. The corrected PR core run has not started.",
+    "reviewCorrection": "An initial unpublished proposal used old head index 13. Independent review found additional main rows in that gap; the proposal was changed to index 0 before any Git object or ref mutation.",
+    "independentReview": {
+      "reviewer": "automated project6_reconcile agent",
+      "disposition": "accepted exact source-specific allowance",
+      "sourceOnly": true,
+      "recomputedDriver": {
+        "bytes": 15495,
+        "sha256": "435545681efeacd533534203b8e0ae3c5d5493325dacaa32e40fac3f7b562da6"
+      },
+      "reviewedCheckerFiles": [
+        "scripts/conformance/static/check-imports.js",
+        "scripts/conformance/static/code-tokens.js",
+        "scripts/conformance/static/link-modules.js"
+      ],
+      "checkerBlobsUnchangedBetweenHeadAndBase": true,
+      "reasonAcceptedWithoutChanges": true,
+      "policyInsertionReview": "Index 0 avoids the competing insertion gaps found in the head/main comparison; integrated readback must retain all 81 existing main entries plus the new entry.",
+      "execution": "No filesystem calls, product imports or gates; public GitHub source and policy reads only."
+    }
+  },
+  "workspace": {
+    "state": "execution service disconnected",
+    "localChanges": "Local retention commit 48c3b667a23f97a99b2aba92bac9e2f979716b73 and subsequent documentation edits remain unpublished.",
+    "reconciliation": "Retain both public and local histories. Merge this published correction into the local retention branch after recovery; do not force-push or rebase away either history."
+  }
+}

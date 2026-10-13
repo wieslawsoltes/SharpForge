@@ -1,0 +1,247 @@
+"""Record the additive generic correction focused gate; preserve the original native and failed-gate evidence."""
+import datetime
+import hashlib
+import json
+import os
+import re
+from pathlib import Path
+import shutil
+import signal
+import subprocess
+import sys
+import time
+
+ROOT = Path('/workspace/scratch/7e3d2a445c44')
+PLAN_PATH = ROOT / 'generic-a5150472-focused-validation-plan.json'
+PLAN_BYTES = PLAN_PATH.read_bytes()
+assert hashlib.sha256(PLAN_BYTES).hexdigest() == 'f405265c1163ea27cdbb748d3193f911b623b33b81af40299f8b1b16cc37e983'
+PLAN = json.loads(PLAN_BYTES)
+assert len(sys.argv) == 2 and sys.argv[1] == 'focused-node'
+STEP = next(value for value in PLAN['steps'] if value['id'] == sys.argv[1])
+REPO = Path(STEP['cwd'])
+DESTINATION = Path(PLAN['qualificationDirectory'])
+DESTINATION.mkdir(exist_ok=False)
+RECEIPT = Path(STEP['executionRecord'])
+
+
+def digest(data):
+    return hashlib.sha256(data).hexdigest()
+
+
+def utc():
+    return datetime.datetime.now(datetime.timezone.utc).isoformat()
+
+
+def error_record(error):
+    return {'type': type(error).__name__, 'message': str(error)}
+
+
+def git(*args, repo=REPO):
+    return subprocess.check_output(['git', *args], cwd=repo, text=True, stderr=subprocess.PIPE).strip()
+
+
+def snapshot():
+    facts = {'files': [], 'sources': [], 'aliases': [], 'historical': [], 'inspectionErrors': []}
+
+    def inspect(label, operation):
+        try:
+            return operation()
+        except BaseException as error:
+            facts['inspectionErrors'].append({'inspection': label, **error_record(error)})
+            return None
+
+    facts['head'] = inspect('HEAD', lambda: git('rev-parse', 'HEAD'))
+    facts['tree'] = inspect('tree', lambda: git('rev-parse', 'HEAD^{tree}'))
+    facts['trackedChanges'] = inspect('tracked status', lambda: git('status', '--porcelain=v1', '--untracked-files=no'))
+    facts['status'] = inspect('all status', lambda: git('status', '--porcelain=v1', '--untracked-files=all'))
+    for pin in PLAN['candidate']['filePins']:
+        data = inspect(pin['path'], lambda pin=pin: (REPO / pin['path']).read_bytes())
+        facts['files'].append({'path': pin['path'], 'bytes': None if data is None else len(data),
+                              'sha256': None if data is None else digest(data),
+                              'matches': data is not None and len(data) == pin['bytes'] and digest(data) == pin['sha256']})
+    for pin in PLAN['candidate']['sourceDirectories']:
+        paths = inspect(pin['directory'] + ' roster', lambda pin=pin: git('ls-files', '--', pin['directory']).splitlines())
+        actual = hashlib.sha256()
+        total = 0
+        complete = paths is not None
+        for path in paths or []:
+            data = inspect(path, lambda path=path: (REPO / path).read_bytes())
+            if data is None:
+                complete = False
+                continue
+            actual.update(path.encode() + b'\0' + str(len(data)).encode() + b'\0' + data)
+            total += len(data)
+        tree = inspect(pin['directory'] + ' tree', lambda pin=pin: git('rev-parse', 'HEAD:' + pin['directory']))
+        facts['sources'].append({'path': pin['directory'], 'files': None if paths is None else len(paths),
+                                 'bytes': total, 'sha256': actual.hexdigest(), 'tree': tree,
+                                 'matches': complete and len(paths) == pin['files'] and total == pin['logicalBytes']
+                                 and actual.hexdigest() == pin['contentSha256'] and tree == pin['gitTree']})
+    names = {alias['name'].split('/')[-1] for alias in PLAN['workspaceDependencies']['aliases']}
+    actual_names = inspect('alias roster', lambda: {path.name for path in (REPO / 'node_modules/@sharpforge').iterdir()})
+    facts['aliasRosterMatches'] = actual_names == names
+    for name in sorted(names | (actual_names or set())):
+        path = REPO / 'node_modules/@sharpforge' / name
+        target = inspect('alias ' + name, lambda path=path: str(path.resolve(strict=True)))
+        expected = str(REPO / 'packages' / name)
+        facts['aliases'].append({'name': name, 'target': target, 'expected': expected, 'matches': target == expected})
+    for pin in PLAN['historicalReceiptPins']:
+        data = inspect(pin['path'], lambda pin=pin: Path(pin['path']).read_bytes())
+        facts['historical'].append({'path': pin['path'], 'bytes': None if data is None else len(data),
+                                   'sha256': None if data is None else digest(data),
+                                   'matches': data is not None and len(data) == pin['bytes'] and digest(data) == pin['sha256']})
+    return facts
+
+
+def admit(facts):
+    assert not facts['inspectionErrors'], 'Source inspection failed; actual partial facts retained'
+    assert facts['head'] == PLAN['candidate']['head'] and facts['tree'] == PLAN['candidate']['repositoryTree']
+    assert facts['trackedChanges'] == '', 'Tracked source changes are not admitted'
+    assert facts['aliasRosterMatches'], 'Unexpected or missing workspace alias'
+    for kind in ['files', 'sources', 'aliases', 'historical']:
+        assert all(row['matches'] for row in facts[kind]), 'Mismatched ' + kind + ' identities'
+    assert facts['status'] == '', 'The correction gate requires the exact clean source checkout'
+
+
+environment = dict(os.environ)
+for name in ['CI', 'GITHUB_ACTIONS']:
+    environment.pop(name, None)
+environment.update({'SHARPFORGE_TEST_CONCURRENCY': '1', 'SHARPFORGE_MAX_PARALLEL_RUNS': '1',
+                    'SHARPFORGE_MAX_OLD_SPACE_MB': '2048', 'DOTNET_ROOT': str(ROOT / 'dotnet-10.0.201'),
+                    'SHARPFORGE_ORACLE_DOTNET': str(ROOT / 'dotnet-10.0.201/dotnet')})
+environment.update(STEP.get('environment', {}))
+record = {'schemaVersion': 1, 'step': STEP['id'], 'startedUtc': utc(), 'status': 'running',
+          'planSha256': digest(PLAN_BYTES), 'recorderSha256': digest(Path(__file__).read_bytes()),
+          'argv': STEP['argv'], 'cwd': str(REPO), 'exitCode': None, 'signal': None,
+          'interruptions': [], 'inspectionErrors': [], 'outputs': [],
+          'environment': {name: environment.get(name) for name in ['CI', 'GITHUB_ACTIONS', 'NODE_OPTIONS',
+              'SHARPFORGE_TEST_CONCURRENCY', 'SHARPFORGE_MAX_PARALLEL_RUNS', 'SHARPFORGE_MAX_OLD_SPACE_MB',
+              'DOTNET_ROOT', 'SHARPFORGE_ORACLE_DOTNET', 'SHARPFORGE_GENERIC_CLOSURE_FIXTURES',
+              'SHARPFORGE_GENERIC_CLOSURE_EVIDENCE']},
+          'expectedTapCounts': STEP['expectedTapCounts'],
+          'nativePrerequisite': PLAN['nativePrerequisite']}
+with RECEIPT.open('x') as stream:
+    json.dump(record, stream, indent=2)
+    stream.write('\n')
+active = None
+interrupted_at = None
+primary = None
+
+
+def interrupt(signum, _frame):
+    global interrupted_at
+    record['interruptions'].append({'signal': signum, 'utc': utc()})
+    interrupted_at = interrupted_at or time.monotonic()
+    if active is not None and active.poll() is None:
+        active.send_signal(signal.SIGTERM)
+
+
+def reap():
+    while True:
+        try:
+            return active.wait(timeout=1)
+        except subprocess.TimeoutExpired:
+            if interrupted_at is not None and time.monotonic() - interrupted_at >= 10:
+                record['forcedTermination'] = True
+                try:
+                    if os.name == 'posix':
+                        os.killpg(active.pid, signal.SIGKILL)
+                    else:
+                        active.kill()
+                except ProcessLookupError:
+                    pass
+
+
+handlers = {value: signal.signal(value, interrupt) for value in [signal.SIGINT, signal.SIGTERM]}
+try:
+    record['sourceBefore'] = snapshot()
+    admit(record['sourceBefore'])
+    record['freeBytesBefore'] = shutil.disk_usage(ROOT).free
+    assert record['freeBytesBefore'] >= PLAN['preflight']['minimumFreeBytes']
+    for name, expected in PLAN['preflight']['requiredEnvironment'].items():
+        assert environment.get(name) == expected, 'Unexpected execution environment: ' + name
+    prerequisite = PLAN['nativePrerequisite']
+    native = json.loads(Path(prerequisite['executionReceipt']['path']).read_text())
+    assert all(native[name] == expected for name, expected in prerequisite['executionRequired'].items())
+    retention = json.loads(Path(prerequisite['retentionReceipt']['path']).read_text())
+    assert all(retention[name] == expected for name, expected in prerequisite['retentionRequired'].items())
+    assert retention['counts'] == prerequisite['counts'] and retention['commands'] == prerequisite['commands']
+    if record['interruptions']:
+        raise InterruptedError('Interrupted before child launch')
+    with Path(STEP['stdout']).open('xb') as out, Path(STEP['stderr']).open('xb') as err:
+        active = subprocess.Popen(STEP['argv'], cwd=REPO, env=environment, stdout=out, stderr=err,
+                                  start_new_session=os.name == 'posix')
+        if record['interruptions']:
+            active.send_signal(signal.SIGTERM)
+        result = reap()
+    record['exitCode'] = result if result >= 0 else None
+    record['signal'] = -result if result < 0 else None
+    assert not record['interruptions'], 'Interrupted execution is not a pass'
+    assert result == 0, 'Child failed; retain first failure before further work'
+except BaseException as error:
+    primary = error
+    record['failure'] = error_record(error)
+finally:
+    if active is not None and active.poll() is None:
+        try:
+            interrupt(signal.SIGTERM, None)
+            result = reap()
+            record['exitCode'] = result if result >= 0 else None
+            record['signal'] = -result if result < 0 else None
+        except BaseException as error:
+            record['inspectionErrors'].append({'inspection': 'child reap', **error_record(error)})
+    try:
+        record['sourceAfter'] = snapshot()
+        record['sourcesUnchanged'] = record.get('sourceBefore') == record['sourceAfter']
+        admit(record['sourceAfter'])
+        assert record['sourcesUnchanged'], 'Source identities changed during execution'
+    except BaseException as error:
+        record['inspectionErrors'].append({'inspection': 'source after', **error_record(error)})
+    paths = [Path(STEP[name]) for name in ['stdout', 'stderr']]
+    for path in paths:
+        try:
+            data = path.read_bytes()
+            record['outputs'].append({'path': str(path), 'bytes': len(data), 'sha256': digest(data)})
+        except BaseException as error:
+            record['inspectionErrors'].append({'inspection': str(path), **error_record(error)})
+    if active is not None:
+        try:
+            raw = Path(STEP['stdout']).read_bytes()
+            observed = {name: [int(value) for value in re.findall(
+                rb'^# ' + name.encode() + rb' (\d+)\r?$', raw, re.MULTILINE)]
+                for name in STEP['expectedTapCounts']}
+            plans = [int(value) for value in re.findall(rb'^1\.\.(\d+)\r?$', raw, re.MULTILINE)]
+            complete = all(len(values) == 1 for values in observed.values()) and len(plans) == 1
+            counts = {name: values[0] for name, values in observed.items()} if complete else None
+            record['tapSummary'] = {'observations': observed, 'topLevelPlans': plans, 'complete': complete,
+                                    'counts': counts, 'expected': STEP['expectedTapCounts'],
+                                    'matches': complete and counts == STEP['expectedTapCounts']
+                                    and plans[0] == STEP['expectedTapCounts']['tests']}
+            assert record['tapSummary']['matches'], 'Focused TAP summary does not satisfy the fixed 126-test gate'
+        except BaseException as error:
+            record['inspectionErrors'].append({'inspection': 'TAP summary', **error_record(error)})
+    try:
+        record['freeBytesAfter'] = shutil.disk_usage(ROOT).free
+    except BaseException as error:
+        record['inspectionErrors'].append({'inspection': 'disk after', **error_record(error)})
+    if primary is None and record['interruptions']:
+        primary = InterruptedError('Interrupted during evidence finalization')
+        record['failure'] = error_record(primary)
+    if primary is None and record['inspectionErrors']:
+        primary = RuntimeError('Evidence inspection failed; actual partial facts retained')
+        record['failure'] = error_record(primary)
+    record['status'] = 'failed' if primary else 'passed'
+    record['finishedUtc'] = utc()
+    with RECEIPT.open('w') as stream:
+        json.dump(record, stream, indent=2)
+        stream.write('\n')
+    for value, handler in handlers.items():
+        signal.signal(value, handler)
+    if primary is None and record['interruptions']:
+        primary = InterruptedError('Interrupted during final receipt write')
+        record.update(status='failed', failure=error_record(primary), finishedUtc=utc())
+        with RECEIPT.open('w') as stream:
+            json.dump(record, stream, indent=2)
+            stream.write('\n')
+    print(json.dumps({key: value for key, value in record.items() if key not in ['sourceBefore', 'sourceAfter', 'outputs']}))
+if primary is not None:
+    raise primary

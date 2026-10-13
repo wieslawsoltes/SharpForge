@@ -1,0 +1,346 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "id": "resolve-simple-self-base",
+      "group": "simple-self-base",
+      "comparison": "native-parity",
+      "request": {"op": "resolve","image": "simple-self-base","context": "default","definition": "C"}
+    },
+    {
+      "id": "instantiate-simple-self-base",
+      "group": "simple-self-base",
+      "comparison": "native-parity",
+      "request": {
+        "op": "instantiate",
+        "image": "simple-self-base",
+        "context": "default",
+        "definition": "C",
+        "arguments": [{"kind": "intrinsic","name": "System.Int32"}]
+      }
+    },
+    {
+      "id": "resolve-expanding-self-base",
+      "group": "expanding-self-base",
+      "comparison": "native-parity",
+      "request": {"op": "resolve","image": "expanding-self-base","context": "default","definition": "C"}
+    },
+    {
+      "id": "instantiate-expanding-self-base",
+      "group": "expanding-self-base",
+      "comparison": "native-parity",
+      "request": {
+        "op": "instantiate",
+        "image": "expanding-self-base",
+        "context": "default",
+        "definition": "C",
+        "arguments": [{"kind": "intrinsic","name": "System.Int32"}]
+      }
+    },
+    {
+      "id": "resolve-permuted-mutual",
+      "group": "permuted-mutual",
+      "comparison": "native-parity",
+      "request": {"op": "resolve","image": "permuted-mutual","context": "default","definition": "A"}
+    },
+    {
+      "id": "instantiate-permuted-mutual",
+      "group": "permuted-mutual",
+      "comparison": "native-parity",
+      "request": {
+        "op": "instantiate",
+        "image": "permuted-mutual",
+        "context": "default",
+        "definition": "A",
+        "arguments": [{"kind": "intrinsic","name": "System.Int32"},{"kind": "intrinsic","name": "System.String"}]
+      }
+    },
+    {
+      "id": "resolve-indirect-expanding",
+      "group": "indirect-expanding",
+      "comparison": "native-parity",
+      "request": {"op": "resolve","image": "indirect-expanding","context": "default","definition": "A"}
+    },
+    {
+      "id": "instantiate-indirect-expanding",
+      "group": "indirect-expanding",
+      "comparison": "native-parity",
+      "request": {
+        "op": "instantiate",
+        "image": "indirect-expanding",
+        "context": "default",
+        "definition": "A",
+        "arguments": [{"kind": "intrinsic","name": "System.Int32"}]
+      }
+    },
+    {
+      "id": "resolve-acyclic-expansion",
+      "group": "acyclic-expansion",
+      "comparison": "native-parity",
+      "request": {"op": "resolve","image": "acyclic-expansion","context": "default","definition": "A"}
+    },
+    {
+      "id": "instantiate-acyclic-expansion",
+      "group": "acyclic-expansion",
+      "comparison": "native-parity",
+      "request": {
+        "op": "instantiate",
+        "image": "acyclic-expansion",
+        "context": "default",
+        "definition": "A",
+        "arguments": [{"kind": "intrinsic","name": "System.Int32"}]
+      }
+    },
+    {
+      "id": "resolve-array-expanding",
+      "group": "array-expanding",
+      "comparison": "native-parity",
+      "request": {"op": "resolve","image": "array-expanding","context": "default","definition": "C"}
+    },
+    {
+      "id": "instantiate-array-expanding",
+      "group": "array-expanding",
+      "comparison": "native-parity",
+      "request": {
+        "op": "instantiate",
+        "image": "array-expanding",
+        "context": "default",
+        "definition": "C",
+        "arguments": [{"kind": "intrinsic","name": "System.Int32"}]
+      }
+    },
+    {
+      "id": "resolve-array-acyclic-expansion",
+      "group": "array-acyclic-expansion",
+      "comparison": "native-parity",
+      "request": {"op": "resolve","image": "array-acyclic-expansion","context": "default","definition": "A"}
+    },
+    {
+      "id": "instantiate-array-acyclic-expansion",
+      "group": "array-acyclic-expansion",
+      "comparison": "native-parity",
+      "request": {
+        "op": "instantiate",
+        "image": "array-acyclic-expansion",
+        "context": "default",
+        "definition": "A",
+        "arguments": [{"kind": "intrinsic","name": "System.Int32"}]
+      }
+    },
+    {
+      "id": "resolve-erased-constant-cycle",
+      "group": "erased-constant-cycle",
+      "comparison": "native-parity",
+      "request": {"op": "resolve","image": "erased-constant-cycle","context": "default","definition": "A"}
+    },
+    {
+      "id": "instantiate-erased-constant-cycle",
+      "group": "erased-constant-cycle",
+      "comparison": "native-parity",
+      "request": {
+        "op": "instantiate",
+        "image": "erased-constant-cycle",
+        "context": "default",
+        "definition": "A",
+        "arguments": [{"kind": "intrinsic","name": "System.Int32"}]
+      }
+    },
+    {
+      "id": "resolve-hidden-invalid-argument",
+      "group": "hidden-invalid-argument",
+      "comparison": "native-parity",
+      "request": {"op": "resolve","image": "nested-invalid","context": "default","definition": "Hidden"}
+    },
+    {
+      "id": "instantiate-hidden-invalid-argument",
+      "group": "hidden-invalid-argument",
+      "comparison": "native-parity",
+      "request": {
+        "op": "instantiate",
+        "image": "nested-invalid",
+        "context": "default",
+        "definition": "Hidden",
+        "arguments": [{"kind": "intrinsic","name": "System.Int32"}]
+      }
+    },
+    {
+      "id": "resolve-unrelated-invalid",
+      "group": "unrelated-invalid",
+      "comparison": "native-parity",
+      "request": {"op": "resolve","image": "nested-invalid","context": "default","definition": "Good"}
+    },
+    {
+      "id": "instantiate-unrelated-invalid",
+      "group": "unrelated-invalid",
+      "comparison": "native-parity",
+      "request": {
+        "op": "instantiate",
+        "image": "nested-invalid",
+        "context": "default",
+        "definition": "Good",
+        "arguments": [{"kind": "intrinsic","name": "System.Int32"}]
+      }
+    },
+    {
+      "id": "resolve-cross-module-permuted",
+      "group": "cross-module-permuted",
+      "comparison": "native-parity",
+      "request": {"op": "resolve","image": "cross-permuted-left","context": "default","definition": "Same"}
+    },
+    {
+      "id": "instantiate-cross-module-permuted",
+      "group": "cross-module-permuted",
+      "comparison": "native-parity",
+      "request": {
+        "op": "instantiate",
+        "image": "cross-permuted-left",
+        "context": "default",
+        "definition": "Same",
+        "arguments": [{"kind": "intrinsic","name": "System.Int32"},{"kind": "intrinsic","name": "System.String"}]
+      }
+    },
+    {
+      "id": "resolve-cross-module-expanding",
+      "group": "cross-module-expanding",
+      "comparison": "native-parity",
+      "request": {"op": "resolve","image": "cross-expanding-left","context": "default","definition": "Same"}
+    },
+    {
+      "id": "instantiate-cross-module-expanding",
+      "group": "cross-module-expanding",
+      "comparison": "native-parity",
+      "request": {
+        "op": "instantiate",
+        "image": "cross-expanding-left",
+        "context": "default",
+        "definition": "Same",
+        "arguments": [{"kind": "intrinsic","name": "System.Int32"},{"kind": "intrinsic","name": "System.String"}]
+      }
+    },
+    {
+      "id": "resolve-non-generic-self-interface",
+      "group": "non-generic-self-interface",
+      "comparison": "native-parity",
+      "request": {"op": "resolve","image": "non-generic-self-interface","context": "default","definition": "C"}
+    },
+    {
+      "id": "instantiate-partial-permuted-mutual",
+      "group": "permuted-mutual",
+      "comparison": "native-parity",
+      "request": {
+        "op": "instantiate",
+        "image": "permuted-mutual",
+        "context": "default",
+        "definition": "A",
+        "arguments": [
+          {"kind": "parameter","image": "permuted-mutual","owner": "A","scope": "type","index": 0},
+          {"kind": "intrinsic","name": "System.String"}
+        ]
+      }
+    },
+    {
+      "id": "instantiate-partial-cross-module-permuted",
+      "group": "cross-module-permuted",
+      "comparison": "native-parity",
+      "request": {
+        "op": "instantiate",
+        "image": "cross-permuted-left",
+        "context": "default",
+        "definition": "Same",
+        "arguments": [
+          {"kind": "parameter","image": "cross-permuted-left","owner": "Same","scope": "type","index": 0},
+          {"kind": "intrinsic","name": "System.String"}
+        ]
+      }
+    },
+    {
+      "id": "instantiate-own-parameters-permuted-mutual",
+      "group": "permuted-mutual",
+      "comparison": "native-parity",
+      "request": {
+        "op": "instantiate",
+        "image": "permuted-mutual",
+        "context": "default",
+        "definition": "A",
+        "arguments": [
+          {"kind": "parameter","image": "permuted-mutual","owner": "A","scope": "type","index": 0},
+          {"kind": "parameter","image": "permuted-mutual","owner": "A","scope": "type","index": 1}
+        ]
+      },
+      "companions": [{"id": "definition","op": "resolve","image": "permuted-mutual","context": "default","definition": "A"}],
+      "identities": [
+        {"id": "definition-identity","left": {"operation": "primary","selection": "type"},"right": {"operation": "definition","selection": "type"}}
+      ]
+    },
+    {
+      "id": "resolve-cross-module-owner-identity",
+      "group": "cross-module-permuted",
+      "comparison": "owner-identity",
+      "request": {"op": "resolve","image": "cross-permuted-left","context": "default","definition": "Same"},
+      "companions": [{"id": "other-owner","op": "resolve","image": "cross-permuted-right","context": "default","definition": "Same"}],
+      "identities": [
+        {"id": "distinct-type-owners","left": {"operation": "primary","selection": "type"},"right": {"operation": "other-owner","selection": "type"}},
+        {
+          "id": "distinct-formal-owners",
+          "left": {"operation": "primary","selection": "genericArgument","index": 0},
+          "right": {"operation": "other-owner","selection": "genericArgument","index": 0}
+        }
+      ]
+    },
+    {
+      "id": "instantiate-cross-module-formal-identity",
+      "group": "cross-module-permuted",
+      "comparison": "owner-identity",
+      "request": {
+        "op": "instantiate",
+        "image": "cross-permuted-left",
+        "context": "default",
+        "definition": "Same",
+        "arguments": [
+          {"kind": "parameter","image": "cross-permuted-left","owner": "Same","scope": "type","index": 0},
+          {"kind": "intrinsic","name": "System.String"}
+        ]
+      },
+      "companions": [
+        {
+          "id": "other-formal",
+          "op": "instantiate",
+          "image": "cross-permuted-left",
+          "context": "default",
+          "definition": "Same",
+          "arguments": [
+            {"kind": "parameter","image": "cross-permuted-right","owner": "Same","scope": "type","index": 0},
+            {"kind": "intrinsic","name": "System.String"}
+          ]
+        }
+      ],
+      "identities": [
+        {"id": "distinct-open-tuples","left": {"operation": "primary","selection": "type"},"right": {"operation": "other-formal","selection": "type"}}
+      ]
+    },
+    {
+      "id": "resolve-typespec-simple-self-base",
+      "group": "simple-self-base",
+      "comparison": "native-parity",
+      "request": {"op": "resolve","image": "simple-self-base","context": "default","specification": "closed-root"}
+    },
+    {
+      "id": "resolve-typespec-expanding-self-base",
+      "group": "expanding-self-base",
+      "comparison": "native-parity",
+      "request": {"op": "resolve","image": "expanding-self-base","context": "default","specification": "closed-root"}
+    },
+    {
+      "id": "resolve-typespec-cross-permuted-left",
+      "group": "cross-permuted-left",
+      "comparison": "native-parity",
+      "request": {"op": "resolve","image": "cross-permuted-left","context": "default","specification": "closed-root"}
+    },
+    {
+      "id": "resolve-hidden-invalid-control",
+      "group": "hidden-invalid-argument",
+      "comparison": "native-parity",
+      "request": {"op": "resolve","image": "nested-invalid","context": "default","definition": "Bad"}
+    }
+  ]
+}

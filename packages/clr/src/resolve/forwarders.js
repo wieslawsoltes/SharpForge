@@ -126,7 +126,7 @@ export class TypeForwarders {
   }
 
   /** Resolve one exact metadata name through AssemblyRef forwarders; failures and cancellation are never cached. */
-  async resolve(module, fullName, lookupDefinition, { signal } = {}) {
+  async resolve(module, fullName, lookupDefinition, { signal, resolveReference } = {}) {
     const path = [];
     const visited = new Set();
     while (true) {
@@ -153,7 +153,9 @@ export class TypeForwarders {
       if (path.length >= this.#maxHops) throw limit(`Type forwarder hop limit exceeded for ${fullName}`);
       visited.add(module);
       path.push(module);
-      module = (await module.assembly.resolveReference(entry.reference, { signal })).manifestModule;
+      const assembly = resolveReference ? await resolveReference(module.assembly, entry.reference)
+        : await module.assembly.resolveReference(entry.reference, { signal });
+      module = assembly.manifestModule;
     }
   }
 }

@@ -1,0 +1,11 @@
+{
+  "status": "completed",
+  "output": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-output",
+  "evidence": "/workspace/scratch/7e3d2a445c44/generic-qualification-5be28e30/native-evidence",
+  "counts": {
+    "cases": 34,
+    "operations": 71,
+    "identities": 38,
+    "images": 14
+  }
+}
