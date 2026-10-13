@@ -1,0 +1,36 @@
+{
+  "format": "SharpForge.Project18ProjectionEvidence/1",
+  "productSource": "3f27179225cfc6fab8b13b919bf8bb695831efa1",
+  "productFiles": {
+    "apps/studio/native-build/workspace-state.js": "bf92e02586abe6c84d1f3c4ac06c0bbe859bde26"
+  },
+  "originalTestFile": "tests/a23-studio-native-contexts.test.js",
+  "priorQualification": {
+    "scopePassed": 106,
+    "scopeFailed": 0,
+    "nodes": [
+      "22.23.3",
+      "26.10.0"
+    ],
+    "captures": [
+      "planning/evidence/project18/native-studio/node22.log",
+      "planning/evidence/project18/native-studio/node26.log"
+    ],
+    "node22CaptureSha256": "271a15a28b3675c08441960dfdbe519bcedbfa7a47719c757ca887fc311f3a03",
+    "unchangedSelectedCase": "context application preserves edits made while reads are in flight and keeps generated source immutable",
+    "selectedPassed": 1,
+    "selectedFailed": 0
+  },
+  "publicationTests": {
+    "path": "tests/a23-native-workspace-state.test.js",
+    "cases": 7,
+    "unchangedExtracted": 1,
+    "new": 6,
+    "status": "pending scheduled parent qualification"
+  },
+  "boundaries": [
+    "No application-entry registration in this foundation",
+    "Native context hydration and authorization remain the caller responsibility",
+    "No duplicate source qualification run claimed"
+  ]
+}
