@@ -7,7 +7,7 @@ import {registerCoreControls12} from './core-controls-12.js';
 import {registerBcl, registerBclCollectionExtensions} from '../bcl-contracts.js';
 import {registerWinUI13} from '../winui13-contracts.js';
 import {registerRuntime14} from '../runtime14-contracts.js';
-import {jsonExtensionContribution} from './json.js';
+import {ioSerializationContribution} from './io-serialization.js';
 import {numericTypeContribution} from './numeric.js';
 /** Released ranges are exact; additions belong in an independently reserved area. */
 export const contributionManifest=Object.freeze([
@@ -31,7 +31,7 @@ export const collectionExtensionContribution=Object.freeze({name:'A08', register
 export function createFrameworkRegistry() {
   const registry=createRegistry({reservations:idReservations});
   registry.registerAll([
-    ...contributionManifest,bclExtensionContribution,collectionExtensionContribution,jsonExtensionContribution,
+    ...contributionManifest,bclExtensionContribution,collectionExtensionContribution,ioSerializationContribution,
     numericTypeContribution
   ]);
   return registry;

@@ -5,7 +5,8 @@
     "tests/a09-json-escaping.test.js",
     "tests/a09-json-number-formatting.test.js",
     "tests/a09-json-integer-keys.test.js",
-    "tests/a09-json-int64.test.js"
+    "tests/a09-json-int64.test.js",
+    "tests/a09-string-reader.test.js"
   ],
   "browserScripts": [],
   "requiredServices": [],
