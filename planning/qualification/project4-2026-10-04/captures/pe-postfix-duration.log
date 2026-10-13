@@ -1,0 +1,45 @@
+{
+  "status": "passed",
+  "qualified": true,
+  "source": "d64188af91f03d02041316bdde2ee64fd0634be0",
+  "targets": [
+    {
+      "targetId": "pe-loader",
+      "status": "passed",
+      "requestedCases": 512,
+      "completedCases": 512,
+      "counts": {
+        "accepted": 2,
+        "rejected": 510,
+        "unsupported": 0,
+        "findings": 0,
+        "cancelled": 0
+      }
+    }
+  ],
+  "output": "/dev/shm/sharpforge-p4/artifacts/fuzz/project4-pe-postfix-seed1"
+}
+{"completedCampaign": 1, "durationMs": 350764, "status": "passed", "counts": {"accepted": 2, "rejected": 510, "unsupported": 0, "findings": 0, "cancelled": 0}}
+{
+  "status": "passed",
+  "qualified": true,
+  "source": "d64188af91f03d02041316bdde2ee64fd0634be0",
+  "targets": [
+    {
+      "targetId": "pe-loader",
+      "status": "passed",
+      "requestedCases": 512,
+      "completedCases": 512,
+      "counts": {
+        "accepted": 2,
+        "rejected": 510,
+        "unsupported": 0,
+        "findings": 0,
+        "cancelled": 0
+      }
+    }
+  ],
+  "output": "/dev/shm/sharpforge-p4/artifacts/fuzz/project4-pe-postfix-seed2"
+}
+{"completedCampaign": 2, "durationMs": 714755, "status": "passed", "counts": {"accepted": 4, "rejected": 1020, "unsupported": 0, "findings": 0, "cancelled": 0}}
+{"qualification": "passed", "durationMs": 714755, "counts": {"accepted": 4, "rejected": 1020, "unsupported": 0, "findings": 0, "cancelled": 0}}

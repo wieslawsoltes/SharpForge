@@ -1,0 +1,319 @@
+TAP version 13
+# Subtest: comment IDs order releases and reclaims sharing one timestamp without comparing generation sequences
+not ok 1 - comment IDs order releases and reclaims sharing one timestamp without comparing generation sequences
+  ---
+  duration_ms: 10.760299
+  type: 'test'
+  location: '/workspace/scratch/18022b90e5ec/SharpForge-p4-a00-baseline/planning/contracts/tests/audit-history.test.js:22:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + [
+    +   'claim by codex-owner before codex-replacement released',
+    +   'lock has no matching claim generation'
+    + ]
+    - []
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+    0: 'claim by codex-owner before codex-replacement released'
+    1: 'lock has no matching claim generation'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/18022b90e5ec/SharpForge-p4-a00-baseline/planning/contracts/tests/audit-history.test.js:32:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.start (node:internal/test_runner/test:1242:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+  ...
+# Subtest: actual fake API release/reclaim comments preserve their owner at a fixed clock
+not ok 2 - actual fake API release/reclaim comments preserve their owner at a fixed clock
+  ---
+  duration_ms: 23.50146
+  type: 'test'
+  location: '/workspace/scratch/18022b90e5ec/SharpForge-p4-a00-baseline/planning/contracts/tests/audit-history.test.js:40:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    claim by codex-replacement before codex-owner released
+    lock has no matching claim generation
+    release has no matching claim generation
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/18022b90e5ec/SharpForge-p4-a00-baseline/planning/contracts/tests/audit-history.test.js:53:10)
+    async Test.run (node:internal/test_runner/test:1389:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: same-generation histories without IDs retain sequence ordering and quiet-heartbeat gaps
+ok 3 - same-generation histories without IDs retain sequence ordering and quiet-heartbeat gaps
+  ---
+  duration_ms: 0.783883
+  type: 'test'
+  ...
+# Subtest: different generations with distinct timestamps can be ordered without comment IDs
+ok 4 - different generations with distinct timestamps can be ordered without comment IDs
+  ---
+  duration_ms: 0.300542
+  type: 'test'
+  ...
+# Subtest: mixed-generation ties without complete IDs preserve input order and report ambiguity
+not ok 5 - mixed-generation ties without complete IDs preserve input order and report ambiguity
+  ---
+  duration_ms: 0.577229
+  type: 'test'
+  location: '/workspace/scratch/18022b90e5ec/SharpForge-p4-a00-baseline/planning/contracts/tests/audit-history.test.js:79:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /Ambiguous event order/. Input:
+    
+    'claim by codex-replacement before codex-owner released\n' +
+      'lock has no matching claim generation\n' +
+      'release has no matching claim generation'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    claim by codex-replacement before codex-owner released
+    lock has no matching claim generation
+    release has no matching claim generation
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/18022b90e5ec/SharpForge-p4-a00-baseline/planning/contracts/tests/audit-history.test.js:85:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: chronological string IDs retain integer precision and invalid or duplicate IDs stay incomplete
+not ok 6 - chronological string IDs retain integer precision and invalid or duplicate IDs stay incomplete
+  ---
+  duration_ms: 0.578531
+  type: 'test'
+  location: '/workspace/scratch/18022b90e5ec/SharpForge-p4-a00-baseline/planning/contracts/tests/audit-history.test.js:93:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    claim by codex-owner before codex-replacement released
+    
+    false !== true
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/18022b90e5ec/SharpForge-p4-a00-baseline/planning/contracts/tests/audit-history.test.js:97:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: malformed structured records remain visible and never clear established ownership
+not ok 7 - malformed structured records remain visible and never clear established ownership
+  ---
+  duration_ms: 0.332058
+  type: 'test'
+  location: '/workspace/scratch/18022b90e5ec/SharpForge-p4-a00-baseline/planning/contracts/tests/audit-history.test.js:112:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    null
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/18022b90e5ec/SharpForge-p4-a00-baseline/planning/contracts/tests/audit-history.test.js:127:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: malformed JSON and unsupported markers are recorded while ordinary discussion is ignored
+not ok 8 - malformed JSON and unsupported markers are recorded while ordinary discussion is ignored
+  ---
+  duration_ms: 2.382032
+  type: 'test'
+  location: '/workspace/scratch/18022b90e5ec/SharpForge-p4-a00-baseline/planning/contracts/tests/audit-history.test.js:134:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/18022b90e5ec/SharpForge-p4-a00-baseline/planning/contracts/tests/audit-history.test.js:142:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: mismatched generation and agent events cannot change current owner or locks
+not ok 9 - mismatched generation and agent events cannot change current owner or locks
+  ---
+  duration_ms: 0.380289
+  type: 'test'
+  location: '/workspace/scratch/18022b90e5ec/SharpForge-p4-a00-baseline/planning/contracts/tests/audit-history.test.js:154:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    heartbeat: {"agent":"codex-unrelated"}
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/18022b90e5ec/SharpForge-p4-a00-baseline/planning/contracts/tests/audit-history.test.js:158:14)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: overlapping and reused claims are rejected without adopting their owner or dropping locks
+not ok 10 - overlapping and reused claims are rejected without adopting their owner or dropping locks
+  ---
+  duration_ms: 0.490982
+  type: 'test'
+  location: '/workspace/scratch/18022b90e5ec/SharpForge-p4-a00-baseline/planning/contracts/tests/audit-history.test.js:165:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + null
+    - 'codex-owner'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'codex-owner'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    assertActive (file:///workspace/scratch/18022b90e5ec/SharpForge-p4-a00-baseline/planning/contracts/tests/audit-history.test.js:18:10)
+    TestContext.<anonymous> (file:///workspace/scratch/18022b90e5ec/SharpForge-p4-a00-baseline/planning/contracts/tests/audit-history.test.js:169:3)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: duplicate or backwards sequences and unrecorded unlocks preserve the established lock set
+not ok 11 - duplicate or backwards sequences and unrecorded unlocks preserve the established lock set
+  ---
+  duration_ms: 0.246402
+  type: 'test'
+  location: '/workspace/scratch/18022b90e5ec/SharpForge-p4-a00-baseline/planning/contracts/tests/audit-history.test.js:177:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/18022b90e5ec/SharpForge-p4-a00-baseline/planning/contracts/tests/audit-history.test.js:181:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: a copied event from another task or issue cannot release the current claim
+not ok 12 - a copied event from another task or issue cannot release the current claim
+  ---
+  duration_ms: 0.236498
+  type: 'test'
+  location: '/workspace/scratch/18022b90e5ec/SharpForge-p4-a00-baseline/planning/contracts/tests/audit-history.test.js:187:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    true !== false
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///workspace/scratch/18022b90e5ec/SharpForge-p4-a00-baseline/planning/contracts/tests/audit-history.test.js:190:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: field history remains informational even when its data resembles claim or release events
+ok 13 - field history remains informational even when its data resembles claim or release events
+  ---
+  duration_ms: 3.938379
+  type: 'test'
+  ...
+# Subtest: malformed field history and comment containers fail visibly without throwing or inventing owners
+not ok 14 - malformed field history and comment containers fail visibly without throwing or inventing owners
+  ---
+  duration_ms: 0.259752
+  type: 'test'
+  location: '/workspace/scratch/18022b90e5ec/SharpForge-p4-a00-baseline/planning/contracts/tests/audit-history.test.js:211:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of null (reading 'map')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    reconstructAudit (file:///workspace/scratch/18022b90e5ec/SharpForge-p4-a00-baseline/scripts/planning/audit.js:7:27)
+    TestContext.<anonymous> (file:///workspace/scratch/18022b90e5ec/SharpForge-p4-a00-baseline/planning/contracts/tests/audit-history.test.js:213:19)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 3
+# fail 11
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 180.493938

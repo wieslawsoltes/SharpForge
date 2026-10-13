@@ -1,0 +1,1591 @@
+{
+  "schemaVersion": 1,
+  "status": "unsupported",
+  "requestedCases": 32,
+  "completedCases": 32,
+  "counts": {
+    "accepted": 10,
+    "rejected": 16,
+    "unsupported": 6,
+    "findings": 0,
+    "cancelled": 0
+  },
+  "cases": [
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 0,
+      "inputBytes": 311,
+      "inputSHA256": "ee505e3b7a3b7d136a826a96fe29d566177a60c277c7673df27ffdbf53775be3",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "BYTECODE_VERIFIED_BOUNDED_EXECUTED",
+      "detail": "{\"profile\":\"bounded-managed-int-v1\",\"exitCode\":40,\"instructions\":2,\"heapPeakBytes\":0,\"heapAllocations\":0,\"maxInstructions\":1024,\"maxFrames\":4,\"maxStackBytes\":4096,\"maxBytes\":8192,\"externalOperations\":0,\"disposed\":true}",
+      "metrics": {
+        "processElapsedMs": 698.6243940000022,
+        "sampledRssBytes": 0,
+        "elapsedMs": 4.767260999999962,
+        "baselineHeapBytes": 41087112,
+        "heapUsedBytes": 41310736,
+        "heapGrowthBytes": 223624,
+        "externalGrowthBytes": 375,
+        "arrayBufferGrowthBytes": 335,
+        "observedGrowthBytes": 223999,
+        "peakRssBytes": 94359552
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "return-constant",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 1,
+      "inputBytes": 324,
+      "inputSHA256": "4b7d7f4a7c5cc2eaa4ca1df3c9d1c7d03fed7ebf176a4d16493d830095f23687",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "BYTECODE_VERIFIED_BOUNDED_EXECUTED",
+      "detail": "{\"profile\":\"bounded-managed-int-v1\",\"exitCode\":42,\"instructions\":4,\"heapPeakBytes\":0,\"heapAllocations\":0,\"maxInstructions\":1024,\"maxFrames\":4,\"maxStackBytes\":4096,\"maxBytes\":8192,\"externalOperations\":0,\"disposed\":true}",
+      "metrics": {
+        "processElapsedMs": 715.2362920000014,
+        "sampledRssBytes": 0,
+        "elapsedMs": 6.188243999999941,
+        "baselineHeapBytes": 41704808,
+        "heapUsedBytes": 41942544,
+        "heapGrowthBytes": 237736,
+        "externalGrowthBytes": 412,
+        "arrayBufferGrowthBytes": 372,
+        "observedGrowthBytes": 238148,
+        "peakRssBytes": 94040064
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "add-two-integers",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 2,
+      "inputBytes": 570,
+      "inputSHA256": "cee24508cc8d2ba94e3dbe40878ac8973ecbaa734b001f12694cd63471e41f19",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "BYTECODE_VERIFIED_BOUNDED_EXECUTED",
+      "detail": "{\"profile\":\"bounded-managed-int-v1\",\"exitCode\":42,\"instructions\":8,\"heapPeakBytes\":0,\"heapAllocations\":0,\"maxInstructions\":1024,\"maxFrames\":4,\"maxStackBytes\":4096,\"maxBytes\":8192,\"externalOperations\":0,\"disposed\":true}",
+      "metrics": {
+        "processElapsedMs": 707.924167000001,
+        "sampledRssBytes": 0,
+        "elapsedMs": 8.59674199999995,
+        "baselineHeapBytes": 41919832,
+        "heapUsedBytes": 42321544,
+        "heapGrowthBytes": 401712,
+        "externalGrowthBytes": 706,
+        "arrayBufferGrowthBytes": 666,
+        "observedGrowthBytes": 402418,
+        "peakRssBytes": 94400512
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "call-two-integers",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 3,
+      "inputBytes": 839,
+      "inputSHA256": "1014bd45d50c48650ee72f2abd5113b17eb758718dc6aae08d2a92066ef2c735",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "BYTECODE_VERIFIED_BOUNDED_EXECUTED",
+      "detail": "{\"profile\":\"bounded-managed-int-v1\",\"exitCode\":40,\"instructions\":8,\"heapPeakBytes\":0,\"heapAllocations\":0,\"maxInstructions\":1024,\"maxFrames\":4,\"maxStackBytes\":4096,\"maxBytes\":8192,\"externalOperations\":0,\"disposed\":true}",
+      "metrics": {
+        "processElapsedMs": 732.369705000001,
+        "sampledRssBytes": 0,
+        "elapsedMs": 5.054067000000032,
+        "baselineHeapBytes": 40907096,
+        "heapUsedBytes": 41225024,
+        "heapGrowthBytes": 317928,
+        "externalGrowthBytes": 975,
+        "arrayBufferGrowthBytes": 935,
+        "observedGrowthBytes": 318903,
+        "peakRssBytes": 93831168
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "four-static-call-frames",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 4,
+      "inputBytes": 384,
+      "inputSHA256": "6558adc4f28b67829f76d7fabe670ac6765df023cab489bb37003f7745c7c834",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "BYTECODE_VERIFIED_BOUNDED_EXECUTED",
+      "detail": "{\"profile\":\"bounded-managed-int-v1\",\"exitCode\":42,\"instructions\":7,\"heapPeakBytes\":0,\"heapAllocations\":0,\"maxInstructions\":1024,\"maxFrames\":4,\"maxStackBytes\":4096,\"maxBytes\":8192,\"externalOperations\":0,\"disposed\":true}",
+      "metrics": {
+        "processElapsedMs": 741.2529639999993,
+        "sampledRssBytes": 0,
+        "elapsedMs": 4.946902999999907,
+        "baselineHeapBytes": 41196880,
+        "heapUsedBytes": 41446392,
+        "heapGrowthBytes": 249512,
+        "externalGrowthBytes": 592,
+        "arrayBufferGrowthBytes": 552,
+        "observedGrowthBytes": 250104,
+        "peakRssBytes": 94162944
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "static-read-write",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 5,
+      "inputBytes": 445,
+      "inputSHA256": "f1c95f0fa78bfc50fabe685b0cfb6db09fb9be42f76dfcb83ff4f2cd1b4527bf",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "BYTECODE_VERIFIED_BOUNDED_EXECUTED",
+      "detail": "{\"profile\":\"bounded-managed-int-v1\",\"exitCode\":42,\"instructions\":10,\"heapPeakBytes\":40,\"heapAllocations\":1,\"maxInstructions\":1024,\"maxFrames\":4,\"maxStackBytes\":4096,\"maxBytes\":8192,\"externalOperations\":0,\"disposed\":true}",
+      "metrics": {
+        "processElapsedMs": 663.5765229999997,
+        "sampledRssBytes": 0,
+        "elapsedMs": 7.813730999999962,
+        "baselineHeapBytes": 40955504,
+        "heapUsedBytes": 41371352,
+        "heapGrowthBytes": 415848,
+        "externalGrowthBytes": 725,
+        "arrayBufferGrowthBytes": 685,
+        "observedGrowthBytes": 416573,
+        "peakRssBytes": 94056448
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "fixed-object-field",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 6,
+      "inputBytes": 412,
+      "inputSHA256": "6bca67f8080029daf114862e6412eb8d198409911c71f5ff2b2b2895372e0c15",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "BYTECODE_VERIFIED_BOUNDED_EXECUTED",
+      "detail": "{\"profile\":\"bounded-managed-int-v1\",\"exitCode\":42,\"instructions\":14,\"heapPeakBytes\":48,\"heapAllocations\":1,\"maxInstructions\":1024,\"maxFrames\":4,\"maxStackBytes\":4096,\"maxBytes\":8192,\"externalOperations\":0,\"disposed\":true}",
+      "metrics": {
+        "processElapsedMs": 744.1107479999991,
+        "sampledRssBytes": 0,
+        "elapsedMs": 8.51554299999998,
+        "baselineHeapBytes": 41258296,
+        "heapUsedBytes": 41855024,
+        "heapGrowthBytes": 596728,
+        "externalGrowthBytes": 788,
+        "arrayBufferGrowthBytes": 748,
+        "observedGrowthBytes": 597516,
+        "peakRssBytes": 93933568
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "int-array-store-load-length",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 7,
+      "inputBytes": 333,
+      "inputSHA256": "8f3abf7e57633fa4285ad77947b4c4a64c701eacc90e0f354694c7882fb15d0a",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "BYTECODE_VERIFIED_BOUNDED_EXECUTED",
+      "detail": "{\"profile\":\"bounded-managed-int-v1\",\"exitCode\":0,\"instructions\":4,\"heapPeakBytes\":32,\"heapAllocations\":1,\"maxInstructions\":1024,\"maxFrames\":4,\"maxStackBytes\":4096,\"maxBytes\":8192,\"externalOperations\":0,\"disposed\":true}",
+      "metrics": {
+        "processElapsedMs": 754.3206839999984,
+        "sampledRssBytes": 0,
+        "elapsedMs": 8.014287000000081,
+        "baselineHeapBytes": 42560040,
+        "heapUsedBytes": 43105832,
+        "heapGrowthBytes": 545792,
+        "externalGrowthBytes": 421,
+        "arrayBufferGrowthBytes": 381,
+        "observedGrowthBytes": 546213,
+        "peakRssBytes": 94957568
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "empty-int-array",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 8,
+      "inputBytes": 336,
+      "inputSHA256": "4a04f07da73b917b64ca4fad6c8c46f3c899e327e377a1a748b0ac2ce9b349d9",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "BYTECODE_VERIFIED_BOUNDED_EXECUTED",
+      "detail": "{\"profile\":\"bounded-managed-int-v1\",\"exitCode\":1020,\"instructions\":4,\"heapPeakBytes\":8192,\"heapAllocations\":1,\"maxInstructions\":1024,\"maxFrames\":4,\"maxStackBytes\":4096,\"maxBytes\":8192,\"externalOperations\":0,\"disposed\":true}",
+      "metrics": {
+        "processElapsedMs": 682.1619559999999,
+        "sampledRssBytes": 0,
+        "elapsedMs": 7.528442000000041,
+        "baselineHeapBytes": 41153944,
+        "heapUsedBytes": 41703816,
+        "heapGrowthBytes": 549872,
+        "externalGrowthBytes": 424,
+        "arrayBufferGrowthBytes": 384,
+        "observedGrowthBytes": 550296,
+        "peakRssBytes": 93978624
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "int-array-at-heap-budget",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 9,
+      "inputBytes": 326,
+      "inputSHA256": "0df3acdd87e3811df532d755a4c9871a5a564fb66afc22ea285fe7fb753d7ee1",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "unsupported",
+      "code": "BYTECODE_EXECUTION_PROFILE",
+      "detail": "Verified; bounded managed profile excluded this image",
+      "metrics": {
+        "processElapsedMs": 665.6610440000004,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.3908250000000635,
+        "baselineHeapBytes": 41780600,
+        "heapUsedBytes": 41841536,
+        "heapGrowthBytes": 60936,
+        "externalGrowthBytes": 366,
+        "arrayBufferGrowthBytes": 326,
+        "observedGrowthBytes": 61302,
+        "peakRssBytes": 93790208
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "return-constant",
+      "mutation": "duplicate"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 10,
+      "inputBytes": 324,
+      "inputSHA256": "8c2f1d05cc9ca4c60c0e06f812d4ac7f7abd2c4501252d2c2bfc3b2dc2df88b5",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_JSON",
+      "detail": "Expected ',' or '}' after property value in JSON at position 164 (line 1 column 165)",
+      "metrics": {
+        "processElapsedMs": 698.1006749999979,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.5614450000000488,
+        "baselineHeapBytes": 41295072,
+        "heapUsedBytes": 41316184,
+        "heapGrowthBytes": 21112,
+        "externalGrowthBytes": 364,
+        "arrayBufferGrowthBytes": 324,
+        "observedGrowthBytes": 21476,
+        "peakRssBytes": 94437376
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "add-two-integers",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 11,
+      "inputBytes": 512,
+      "inputSHA256": "d61bc82306b6a8cc15139f035cf65ad23ccb88fcf69efb666701b2e53b01c232",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_JSON",
+      "detail": "Unterminated string in JSON at position 512 (line 1 column 513)",
+      "metrics": {
+        "processElapsedMs": 642.4509120000002,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.45952599999998256,
+        "baselineHeapBytes": 41743184,
+        "heapUsedBytes": 41764888,
+        "heapGrowthBytes": 21704,
+        "externalGrowthBytes": 552,
+        "arrayBufferGrowthBytes": 512,
+        "observedGrowthBytes": 22256,
+        "peakRssBytes": 93855744
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "call-two-integers",
+      "mutation": "truncate"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 12,
+      "inputBytes": 832,
+      "inputSHA256": "84e2b406eb9d7b236bb33341dd6a636ca936bc37374d53f07424877821291b5c",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_JSON",
+      "detail": "Expected ',' or ']' after array element in JSON at position 829 (line 1 column 830)",
+      "metrics": {
+        "processElapsedMs": 649.0021089999973,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.5083080000000564,
+        "baselineHeapBytes": 41404304,
+        "heapUsedBytes": 41430072,
+        "heapGrowthBytes": 25768,
+        "externalGrowthBytes": 872,
+        "arrayBufferGrowthBytes": 832,
+        "observedGrowthBytes": 26640,
+        "peakRssBytes": 93388800
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "four-static-call-frames",
+      "mutation": "delete"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 13,
+      "inputBytes": 387,
+      "inputSHA256": "1cd0a9d8c2c2bdb6d8e68b0b06c78e1313d3c478994f933a7575367dfb730a89",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_UTF8",
+      "metrics": {
+        "processElapsedMs": 783.975821,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.41278700000009394,
+        "baselineHeapBytes": 41189416,
+        "heapUsedBytes": 41206568,
+        "heapGrowthBytes": 17152,
+        "externalGrowthBytes": 427,
+        "arrayBufferGrowthBytes": 387,
+        "observedGrowthBytes": 17579,
+        "peakRssBytes": 94625792
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "static-read-write",
+      "mutation": "insert"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 14,
+      "inputBytes": 459,
+      "inputSHA256": "c3a501db75e28b94bf41a7a7b063788821e72ce2d8137134836873bbddf6c6fb",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_JSON",
+      "detail": "Unexpected token 'p', ...\"ants\":[40,ph]o,:ic\"\"\"... is not valid JSON",
+      "metrics": {
+        "processElapsedMs": 757.4508649999989,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.4716329999999971,
+        "baselineHeapBytes": 41788328,
+        "heapUsedBytes": 41807208,
+        "heapGrowthBytes": 18880,
+        "externalGrowthBytes": 499,
+        "arrayBufferGrowthBytes": 459,
+        "observedGrowthBytes": 19379,
+        "peakRssBytes": 93949952
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "fixed-object-field",
+      "mutation": "duplicate"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 15,
+      "inputBytes": 412,
+      "inputSHA256": "046fe39240f53b2f06821b2086ee9f83fe13a93ebb9852e88a47f0f62cfd419e",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "unsupported",
+      "code": "BYTECODE_FORMAT_VERSION",
+      "metrics": {
+        "processElapsedMs": 714.7499800000005,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.8042420000000448,
+        "baselineHeapBytes": 41782840,
+        "heapUsedBytes": 41828888,
+        "heapGrowthBytes": 46048,
+        "externalGrowthBytes": 620,
+        "arrayBufferGrowthBytes": 580,
+        "observedGrowthBytes": 46668,
+        "peakRssBytes": 93900800
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "int-array-store-load-length",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 16,
+      "inputBytes": 51,
+      "inputSHA256": "f1f5571fc9ab713a1fed0cbe9ebbdf85c657c658da8249ca3f8702b10b7e008e",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_JSON",
+      "detail": "Expected ':' after property name in JSON at position 51 (line 1 column 52)",
+      "metrics": {
+        "processElapsedMs": 689.8846360000025,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.37226799999996274,
+        "baselineHeapBytes": 41215896,
+        "heapUsedBytes": 41233824,
+        "heapGrowthBytes": 17928,
+        "externalGrowthBytes": 91,
+        "arrayBufferGrowthBytes": 51,
+        "observedGrowthBytes": 18019,
+        "peakRssBytes": 93552640
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "empty-int-array",
+      "mutation": "truncate"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 17,
+      "inputBytes": 322,
+      "inputSHA256": "5b81bb3a1128952b5a22479280f4e9cadd4e39284640ca951fb9b5714c375090",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "unsupported",
+      "code": "BYTECODE_FORMAT_VERSION",
+      "metrics": {
+        "processElapsedMs": 714.9048229999971,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.0741590000000087,
+        "baselineHeapBytes": 41972048,
+        "heapUsedBytes": 42011568,
+        "heapGrowthBytes": 39520,
+        "externalGrowthBytes": 362,
+        "arrayBufferGrowthBytes": 322,
+        "observedGrowthBytes": 39882,
+        "peakRssBytes": 93020160
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "int-array-at-heap-budget",
+      "mutation": "delete"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 18,
+      "inputBytes": 313,
+      "inputSHA256": "6cf807b32bd4d8861e2fc062e65e21d73b33aba849718b1834a8ca5b00e9f87b",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_UTF8",
+      "metrics": {
+        "processElapsedMs": 666.8494799999971,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.3288440000000037,
+        "baselineHeapBytes": 41186448,
+        "heapUsedBytes": 41203504,
+        "heapGrowthBytes": 17056,
+        "externalGrowthBytes": 353,
+        "arrayBufferGrowthBytes": 313,
+        "observedGrowthBytes": 17409,
+        "peakRssBytes": 93405184
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "return-constant",
+      "mutation": "insert"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 19,
+      "inputBytes": 325,
+      "inputSHA256": "3abf43d8418e1ea05bffceed66894ceb7f49780361ee01bbec432b3f1be1d630",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_JSON",
+      "detail": "Expected ':' after property name in JSON at position 236 (line 1 column 237)",
+      "metrics": {
+        "processElapsedMs": 704.6796350000004,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.473557000000028,
+        "baselineHeapBytes": 41803256,
+        "heapUsedBytes": 41821960,
+        "heapGrowthBytes": 18704,
+        "externalGrowthBytes": 365,
+        "arrayBufferGrowthBytes": 325,
+        "observedGrowthBytes": 19069,
+        "peakRssBytes": 94044160
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "add-two-integers",
+      "mutation": "duplicate"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 20,
+      "inputBytes": 570,
+      "inputSHA256": "80206bf849ed1fa8ab62dc73ea75c76b7568df421a90d61e3be91f10aa6e6108",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_JSON",
+      "detail": "Expected ',' or ']' after array element in JSON at position 545 (line 1 column 546)",
+      "metrics": {
+        "processElapsedMs": 664.9646339999963,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.3625329999999849,
+        "baselineHeapBytes": 41174640,
+        "heapUsedBytes": 41198936,
+        "heapGrowthBytes": 24296,
+        "externalGrowthBytes": 610,
+        "arrayBufferGrowthBytes": 570,
+        "observedGrowthBytes": 24906,
+        "peakRssBytes": 93343744
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "call-two-integers",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 21,
+      "inputBytes": 42,
+      "inputSHA256": "f62c02d83970d21b4af17762f0fa74266bf24c8edc744069766021137a81868d",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_JSON",
+      "detail": "Unterminated string in JSON at position 42 (line 1 column 43)",
+      "metrics": {
+        "processElapsedMs": 694.8082300000024,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.5256530000000339,
+        "baselineHeapBytes": 41243344,
+        "heapUsedBytes": 41261248,
+        "heapGrowthBytes": 17904,
+        "externalGrowthBytes": 82,
+        "arrayBufferGrowthBytes": 42,
+        "observedGrowthBytes": 17986,
+        "peakRssBytes": 93839360
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "four-static-call-frames",
+      "mutation": "truncate"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 22,
+      "inputBytes": 383,
+      "inputSHA256": "4fadeb53ee9a73f603b1a20422ef81265beb492d212524e711c962d09a1c3b9a",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_JSON",
+      "detail": "Expected ':' after property name in JSON at position 103 (line 1 column 104)",
+      "metrics": {
+        "processElapsedMs": 644.4063170000009,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.4271079999999756,
+        "baselineHeapBytes": 41906424,
+        "heapUsedBytes": 41928128,
+        "heapGrowthBytes": 21704,
+        "externalGrowthBytes": 423,
+        "arrayBufferGrowthBytes": 383,
+        "observedGrowthBytes": 22127,
+        "peakRssBytes": 93290496
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "static-read-write",
+      "mutation": "delete"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 23,
+      "inputBytes": 450,
+      "inputSHA256": "658dce8dd594c4b8ebf1f94bd27bfd2e0c851edde4e841624a293475075239ea",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_UTF8",
+      "metrics": {
+        "processElapsedMs": 667.5847930000018,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.3399299999999812,
+        "baselineHeapBytes": 41008664,
+        "heapUsedBytes": 41035240,
+        "heapGrowthBytes": 26576,
+        "externalGrowthBytes": 490,
+        "arrayBufferGrowthBytes": 450,
+        "observedGrowthBytes": 27066,
+        "peakRssBytes": 94019584
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "fixed-object-field",
+      "mutation": "insert"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 24,
+      "inputBytes": 428,
+      "inputSHA256": "e204de9e5f6f770708604f862ef78ff1a5db8d5051b293fdeff646426fbf0377",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_JSON",
+      "detail": "Expected double-quoted property name in JSON at position 138 (line 1 column 139)",
+      "metrics": {
+        "processElapsedMs": 640.6755370000028,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.487777000000051,
+        "baselineHeapBytes": 41816744,
+        "heapUsedBytes": 41835664,
+        "heapGrowthBytes": 18920,
+        "externalGrowthBytes": 468,
+        "arrayBufferGrowthBytes": 428,
+        "observedGrowthBytes": 19388,
+        "peakRssBytes": 93945856
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "int-array-store-load-length",
+      "mutation": "duplicate"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 25,
+      "inputBytes": 333,
+      "inputSHA256": "e2956f4e24759da25b0558b5385bc4e444da52873fc5fd56c111b0244748d30b",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "unsupported",
+      "code": "BYTECODE_EXECUTION_PROFILE",
+      "detail": "Verified; bounded managed profile excluded this image",
+      "metrics": {
+        "processElapsedMs": 628.9063810000007,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.4104939999999715,
+        "baselineHeapBytes": 41815296,
+        "heapUsedBytes": 41875704,
+        "heapGrowthBytes": 60408,
+        "externalGrowthBytes": 373,
+        "arrayBufferGrowthBytes": 333,
+        "observedGrowthBytes": 60781,
+        "peakRssBytes": 93773824
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "empty-int-array",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 26,
+      "inputBytes": 281,
+      "inputSHA256": "27dfa31bedb8e0bb5ed305d0083edf0180579dfdb32ef4318d3b29665ca337e2",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_JSON",
+      "detail": "Unterminated string in JSON at position 281 (line 1 column 282)",
+      "metrics": {
+        "processElapsedMs": 634.940413999997,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.3314869999999246,
+        "baselineHeapBytes": 41267080,
+        "heapUsedBytes": 41285704,
+        "heapGrowthBytes": 18624,
+        "externalGrowthBytes": 321,
+        "arrayBufferGrowthBytes": 281,
+        "observedGrowthBytes": 18945,
+        "peakRssBytes": 94437376
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "int-array-at-heap-budget",
+      "mutation": "truncate"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 27,
+      "inputBytes": 303,
+      "inputSHA256": "c3e9a3d68fa8e3537fb2c00906a7dcb0e1b460f6c3f7ac4525c1646711574a47",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "unsupported",
+      "code": "BYTECODE_EXECUTION_PROFILE",
+      "detail": "Verified; bounded managed profile excluded this image",
+      "metrics": {
+        "processElapsedMs": 688.9059310000011,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.4362219999999297,
+        "baselineHeapBytes": 40951016,
+        "heapUsedBytes": 41009896,
+        "heapGrowthBytes": 58880,
+        "externalGrowthBytes": 343,
+        "arrayBufferGrowthBytes": 303,
+        "observedGrowthBytes": 59223,
+        "peakRssBytes": 94060544
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "return-constant",
+      "mutation": "delete"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 28,
+      "inputBytes": 328,
+      "inputSHA256": "a898651524ce30983f79aa323fb7d548cbce87dd0f20d2e7d2d060fd6e96ab93",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_UTF8",
+      "metrics": {
+        "processElapsedMs": 677.9516230000008,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.4163029999999708,
+        "baselineHeapBytes": 41985320,
+        "heapUsedBytes": 42005360,
+        "heapGrowthBytes": 20040,
+        "externalGrowthBytes": 368,
+        "arrayBufferGrowthBytes": 328,
+        "observedGrowthBytes": 20408,
+        "peakRssBytes": 93388800
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "add-two-integers",
+      "mutation": "insert"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 29,
+      "inputBytes": 573,
+      "inputSHA256": "f3d5c63762f92ed787362d98677c0c9f416a80e7a81d331f50ecaff596af26ce",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "unsupported",
+      "code": "BYTECODE_EXECUTION_PROFILE",
+      "detail": "Verified; bounded managed profile excluded this image",
+      "metrics": {
+        "processElapsedMs": 676.2967999999964,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.3958229999999503,
+        "baselineHeapBytes": 41798024,
+        "heapUsedBytes": 41865040,
+        "heapGrowthBytes": 67016,
+        "externalGrowthBytes": 613,
+        "arrayBufferGrowthBytes": 573,
+        "observedGrowthBytes": 67629,
+        "peakRssBytes": 93114368
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "call-two-integers",
+      "mutation": "duplicate"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 30,
+      "inputBytes": 839,
+      "inputSHA256": "b82eebe6f28008a7a96a4dd9ab4452118d1cce19217490c5c31bbf25d4361901",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "BYTECODE_VERIFIED_BOUNDED_EXECUTED",
+      "detail": "{\"profile\":\"bounded-managed-int-v1\",\"exitCode\":41,\"instructions\":8,\"heapPeakBytes\":0,\"heapAllocations\":0,\"maxInstructions\":1024,\"maxFrames\":4,\"maxStackBytes\":4096,\"maxBytes\":8192,\"externalOperations\":0,\"disposed\":true}",
+      "metrics": {
+        "processElapsedMs": 640.6015289999996,
+        "sampledRssBytes": 0,
+        "elapsedMs": 5.4759630000000925,
+        "baselineHeapBytes": 41896808,
+        "heapUsedBytes": 42169736,
+        "heapGrowthBytes": 272928,
+        "externalGrowthBytes": 975,
+        "arrayBufferGrowthBytes": 935,
+        "observedGrowthBytes": 273903,
+        "peakRssBytes": 94646272
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "four-static-call-frames",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 31,
+      "inputBytes": 86,
+      "inputSHA256": "9c5cea935417252fec4e974a3ff2a45d54d1880c8295c3287b4fc47ad1a99f63",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_JSON",
+      "detail": "Unterminated string in JSON at position 86 (line 1 column 87)",
+      "metrics": {
+        "processElapsedMs": 613.355273000001,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.31878899999992427,
+        "baselineHeapBytes": 41195480,
+        "heapUsedBytes": 41213472,
+        "heapGrowthBytes": 17992,
+        "externalGrowthBytes": 126,
+        "arrayBufferGrowthBytes": 86,
+        "observedGrowthBytes": 18118,
+        "peakRssBytes": 93458432
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "static-read-write",
+      "mutation": "truncate"
+    }
+  ],
+  "artifacts": [],
+  "budgets": {
+    "maxCases": 32,
+    "caseTimeoutMs": 1000,
+    "startupTimeoutMs": 5000,
+    "campaignTimeoutMs": 30000,
+    "maxInputBytes": 65536,
+    "maxOutputBytes": 65536,
+    "heapGrowthBytes": 16777216,
+    "v8HeapMb": 128,
+    "rssBytes": 268435456,
+    "maxCorpusCases": 128,
+    "maxCorpusBytes": 8388608
+  },
+  "environment": {
+    "node": "v24.19.0",
+    "platform": "linux",
+    "arch": "x64"
+  },
+  "targetId": "bytecode-image",
+  "seed": 1,
+  "sourceIdentity": {
+    "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+    "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+    "clean": true
+  },
+  "seedAcquisition": {
+    "status": "accepted",
+    "metrics": {
+      "processElapsedMs": 717.1812940000018,
+      "sampledRssBytes": 0,
+      "elapsedMs": 0.759796999999935,
+      "baselineHeapBytes": 41006760,
+      "heapUsedBytes": 41623768,
+      "heapGrowthBytes": 617008,
+      "externalGrowthBytes": 4366,
+      "arrayBufferGrowthBytes": 4326,
+      "observedGrowthBytes": 621374,
+      "peakRssBytes": 93810688
+    },
+    "isolation": {
+      "v8OldSpaceMb": 128,
+      "rssGuard": "not-observed",
+      "osMemorySandbox": false
+    }
+  }
+}

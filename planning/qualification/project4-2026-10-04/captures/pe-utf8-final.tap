@@ -1,0 +1,214 @@
+TAP version 13
+# Subtest: public CIL text preserves Unicode, exact BufferSource views, initial BOM handling and empty input
+ok 1 - public CIL text preserves Unicode, exact BufferSource views, initial BOM handling and empty input
+  ---
+  duration_ms: 1.505184
+  type: 'test'
+  ...
+# Subtest: public CIL text reports only native invalid-encoding failures as CilError
+ok 2 - public CIL text reports only native invalid-encoding failures as CilError
+  ---
+  duration_ms: 1.11521
+  type: 'test'
+  ...
+# Subtest: public CIL text preserves native detached-buffer behavior without relabeling argument errors
+ok 3 - public CIL text preserves native detached-buffer behavior without relabeling argument errors
+  ---
+  duration_ms: 0.325439
+  type: 'test'
+  ...
+# Subtest: public metadata reading rejects both retained malformed version fields before table decoding
+ok 4 - public metadata reading rejects both retained malformed version fields before table decoding
+  ---
+  duration_ms: 3.918362
+  type: 'test'
+  ...
+# Subtest: public PE reader, inspector and loader reject invalid metadata UTF-8 through the same CilError contract
+ok 5 - public PE reader, inspector and loader reject invalid metadata UTF-8 through the same CilError contract
+  ---
+  duration_ms: 83.983904
+  type: 'test'
+  ...
+# Subtest: public metadata string access rejects invalid UTF-8 without caching replacement characters
+ok 6 - public metadata string access rejects invalid UTF-8 without caching replacement characters
+  ---
+  duration_ms: 0.467468
+  type: 'test'
+  ...
+# Subtest: optional SharpForge debug metadata keeps inspector diagnostics and loader validation behavior
+ok 7 - optional SharpForge debug metadata keeps inspector diagnostics and loader validation behavior
+  ---
+  duration_ms: 4.335436
+  type: 'test'
+  ...
+# Subtest: pe-loader: self-authored seeds are deterministic, owned and accepted
+ok 8 - pe-loader: self-authored seeds are deterministic, owned and accepted
+  ---
+  duration_ms: 98.326217
+  type: 'test'
+  ...
+# Subtest: pe-loader: input boundary and pre-cancellation are controlled
+ok 9 - pe-loader: input boundary and pre-cancellation are controlled
+  ---
+  duration_ms: 6.474372
+  type: 'test'
+  ...
+# Subtest: pe-loader: malformed bytes are controlled; harness contract misuse throws
+ok 10 - pe-loader: malformed bytes are controlled; harness contract misuse throws
+  ---
+  duration_ms: 0.769572
+  type: 'test'
+  ...
+# Subtest: bytecode-image: self-authored seeds are deterministic, owned and accepted
+ok 11 - bytecode-image: self-authored seeds are deterministic, owned and accepted
+  ---
+  duration_ms: 4.192886
+  type: 'test'
+  ...
+# Subtest: bytecode-image: input boundary and pre-cancellation are controlled
+ok 12 - bytecode-image: input boundary and pre-cancellation are controlled
+  ---
+  duration_ms: 0.457242
+  type: 'test'
+  ...
+# Subtest: bytecode-image: malformed bytes are controlled; harness contract misuse throws
+ok 13 - bytecode-image: malformed bytes are controlled; harness contract misuse throws
+  ---
+  duration_ms: 0.168168
+  type: 'test'
+  ...
+# Subtest: portable-pdb: self-authored seeds are deterministic, owned and accepted
+ok 14 - portable-pdb: self-authored seeds are deterministic, owned and accepted
+  ---
+  duration_ms: 7.253017
+  type: 'test'
+  ...
+# Subtest: portable-pdb: input boundary and pre-cancellation are controlled
+ok 15 - portable-pdb: input boundary and pre-cancellation are controlled
+  ---
+  duration_ms: 0.902407
+  type: 'test'
+  ...
+# Subtest: portable-pdb: malformed bytes are controlled; harness contract misuse throws
+ok 16 - portable-pdb: malformed bytes are controlled; harness contract misuse throws
+  ---
+  duration_ms: 0.395051
+  type: 'test'
+  ...
+# Subtest: zip-archive: self-authored seeds are deterministic, owned and accepted
+ok 17 - zip-archive: self-authored seeds are deterministic, owned and accepted
+  ---
+  duration_ms: 7.696779
+  type: 'test'
+  ...
+# Subtest: zip-archive: input boundary and pre-cancellation are controlled
+ok 18 - zip-archive: input boundary and pre-cancellation are controlled
+  ---
+  duration_ms: 0.571771
+  type: 'test'
+  ...
+# Subtest: zip-archive: malformed bytes are controlled; harness contract misuse throws
+ok 19 - zip-archive: malformed bytes are controlled; harness contract misuse throws
+  ---
+  duration_ms: 0.231741
+  type: 'test'
+  ...
+# Subtest: PE: malformed magic and truncated extents reach the loader error boundary
+ok 20 - PE: malformed magic and truncated extents reach the loader error boundary
+  ---
+  duration_ms: 4.773199
+  type: 'test'
+  ...
+# Subtest: PE: invalid metadata list ranges reject before loader list expansion
+ok 21 - PE: invalid metadata list ranges reject before loader list expansion
+  ---
+  duration_ms: 4.926655
+  type: 'test'
+  ...
+# Subtest: PE: invalid optional debug UTF-8 is a controlled metadata rejection
+ok 22 - PE: invalid optional debug UTF-8 is a controlled metadata rejection
+  ---
+  duration_ms: 4.270891
+  type: 'test'
+  ...
+# Subtest: bytecode: serialization errors and verifier diagnostics stay separate
+ok 23 - bytecode: serialization errors and verifier diagnostics stay separate
+  ---
+  duration_ms: 0.484022
+  type: 'test'
+  ...
+# Subtest: bytecode: typed-array expansion and recursive reviver work are bounded before deserialization
+ok 24 - bytecode: typed-array expansion and recursive reviver work are bounded before deserialization
+  ---
+  duration_ms: 0.307913
+  type: 'test'
+  ...
+# Subtest: bytecode: a verified scalar loop reaches the fixed instruction budget
+ok 25 - bytecode: a verified scalar loop reaches the fixed instruction budget
+  ---
+  duration_ms: 2.127069
+  type: 'test'
+  ...
+# Subtest: bytecode: verified host-call and library profiles are explicit unsupported cases
+ok 26 - bytecode: verified host-call and library profiles are explicit unsupported cases
+  ---
+  duration_ms: 0.383644
+  type: 'test'
+  ...
+# Subtest: Portable PDB: out-of-range document references retain SymbolError validation
+ok 27 - Portable PDB: out-of-range document references retain SymbolError validation
+  ---
+  duration_ms: 1.427259
+  type: 'test'
+  ...
+# Subtest: Portable PDB: compressed sources respect small decode budgets and unsupported formats stay explicit
+ok 28 - Portable PDB: compressed sources respect small decode budgets and unsupported formats stay explicit
+  ---
+  duration_ms: 0.798965
+  type: 'test'
+  ...
+# Subtest: ZIP: traversal is rejected without filesystem extraction
+ok 29 - ZIP: traversal is rejected without filesystem extraction
+  ---
+  duration_ms: 0.692899
+  type: 'test'
+  ...
+# Subtest: ZIP: duplicate paths and symlink records are rejected as data
+ok 30 - ZIP: duplicate paths and symlink records are rejected as data
+  ---
+  duration_ms: 0.596107
+  type: 'test'
+  ...
+# Subtest: ZIP: stored and deflated payloads enforce actual small output budgets
+ok 31 - ZIP: stored and deflated payloads enforce actual small output budgets
+  ---
+  duration_ms: 1.271429
+  type: 'test'
+  ...
+# Subtest: ZIP: bad checksums and malformed compression are controlled validations
+ok 32 - ZIP: bad checksums and malformed compression are controlled validations
+  ---
+  duration_ms: 1.029725
+  type: 'test'
+  ...
+# Subtest: binary parser errors preserve unknown exceptions as findings
+ok 33 - binary parser errors preserve unknown exceptions as findings
+  ---
+  duration_ms: 0.343425
+  type: 'test'
+  ...
+# Subtest: every reviewed retained input is replayed by the normal A29 Node manifest
+ok 34 - every reviewed retained input is replayed by the normal A29 Node manifest
+  ---
+  duration_ms: 2145.03691
+  type: 'test'
+  ...
+1..34
+# tests 34
+# suites 0
+# pass 34
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3881.360843

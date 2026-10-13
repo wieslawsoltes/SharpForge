@@ -1,0 +1,754 @@
+TAP version 13
+# Subtest: default IL-document body encoding preserves explicit widths, flags and EH fields
+ok 1 - default IL-document body encoding preserves explicit widths, flags and EH fields
+  ---
+  duration_ms: 15.990201
+  type: 'test'
+  ...
+# Subtest: opt-in layout widens edited short branches and preserves native/direct CIL behavior
+ok 2 - opt-in layout widens edited short branches and preserves native/direct CIL behavior
+  ---
+  duration_ms: 34.614714
+  type: 'test'
+  ...
+# Subtest: layout remaps catch/filter starts, ends and handler endpoints with both shrinking and widening
+ok 3 - layout remaps catch/filter starts, ends and handler endpoints with both shrinking and widening
+  ---
+  duration_ms: 6.186623
+  type: 'test'
+  ...
+# Subtest: switch targets and implicit method-end EH labels survive explicit layout
+ok 4 - switch targets and implicit method-end EH labels survive explicit layout
+  ---
+  duration_ms: 8.64741
+  type: 'test'
+  ...
+# Subtest: document layout rejects invalid options and unresolved or end branch labels
+ok 5 - document layout rejects invalid options and unresolved or end branch labels
+  ---
+  duration_ms: 1.814396
+  type: 'test'
+  ...
+# Subtest: new ldstr literal and long loop assemble through shared layout and match native execution
+ok 6 - new ldstr literal and long loop assemble through shared layout and match native execution
+  ---
+  duration_ms: 48.892999
+  type: 'test'
+  ...
+# Subtest: append-only heap preserves old tokens, deduplicates additions and keeps existing metadata rows
+ok 7 - append-only heap preserves old tokens, deduplicates additions and keeps existing metadata rows
+  ---
+  duration_ms: 5.70832
+  type: 'test'
+  ...
+# Subtest: JSON literal escaping preserves UTF-16 including comments, controls and lone surrogates
+ok 8 - JSON literal escaping preserves UTF-16 including comments, controls and lone surrogates
+  ---
+  duration_ms: 34.837411
+  type: 'test'
+  ...
+# Subtest: numeric-token documents keep the previous metadata root and need no \#US growth budget
+ok 9 - numeric-token documents keep the previous metadata root and need no \#US growth budget
+  ---
+  duration_ms: 10.722249
+  type: 'test'
+  ...
+# Subtest: missing \#US, unknown streams and uncompressed table streams survive literal insertion
+ok 10 - missing \#US, unknown streams and uncompressed table streams survive literal insertion
+  ---
+  duration_ms: 3.63335
+  type: 'test'
+  ...
+# Subtest: heap preflight rejects oversized additions and malformed JSON with CilError
+ok 11 - heap preflight rejects oversized additions and malformed JSON with CilError
+  ---
+  duration_ms: 6.22567
+  type: 'test'
+  ...
+# Subtest: literal edits invalidate the original \#SF profile and run through ordinary CIL
+ok 12 - literal edits invalidate the original \#SF profile and run through ordinary CIL
+  ---
+  duration_ms: 70.606902
+  type: 'test'
+  ...
+# Subtest: IL floating negative zero retains its sign through formatting, assembly and the exact fuzz oracle
+ok 13 - IL floating negative zero retains its sign through formatting, assembly and the exact fuzz oracle
+  ---
+  duration_ms: 23.125549
+  type: 'test'
+  ...
+# Subtest: IL floating NaN instructions preserve original signaling, quiet, sign and payload bits in both layout modes
+ok 14 - IL floating NaN instructions preserve original signaling, quiet, sign and payload bits in both layout modes
+  ---
+  duration_ms: 11.236494
+  type: 'test'
+  ...
+# Subtest: IL NaN-to-finite edits at the original instruction label always replace the payload
+ok 15 - IL NaN-to-finite edits at the original instruction label always replace the payload
+  ---
+  duration_ms: 9.155926
+  type: 'test'
+  ...
+# Subtest: IL changing a NaN opcode width or label uses normal new-operand encoding
+ok 16 - IL changing a NaN opcode width or label uses normal new-operand encoding
+  ---
+  duration_ms: 2.344867
+  type: 'test'
+  ...
+# Subtest: IL an inserted branch relocates the original NaN label without changing its payload
+ok 17 - IL an inserted branch relocates the original NaN label without changing its payload
+  ---
+  duration_ms: 13.355419
+  type: 'test'
+  ...
+# Subtest: IL original NaN context cannot bypass malformed operand validation
+ok 18 - IL original NaN context cannot bypass malformed operand validation
+  ---
+  duration_ms: 1.732306
+  type: 'test'
+  ...
+# Subtest: IL no-change images retain fat bodies, padding, checksum and empty method inventories exactly
+ok 19 - IL no-change images retain fat bodies, padding, checksum and empty method inventories exactly
+  ---
+  duration_ms: 13.013706
+  type: 'test'
+  ...
+# Subtest: IL no-change images retain tiny headers rather than replacing them with equivalent fat headers
+ok 20 - IL no-change images retain tiny headers rather than replacing them with equivalent fat headers
+  ---
+  duration_ms: 2.164181
+  type: 'test'
+  ...
+# Subtest: IL no-change images retain small exception sections and their untouched trailing bytes
+ok 21 - IL no-change images retain small exception sections and their untouched trailing bytes
+  ---
+  duration_ms: 2.521816
+  type: 'test'
+  ...
+# Subtest: IL no-change public-sign and debug-profile images preserve identity and both JavaScript execution routes
+ok 22 - IL no-change public-sign and debug-profile images preserve identity and both JavaScript execution routes
+  ---
+  duration_ms: 91.036308
+  type: 'test'
+  ...
+# Subtest: IL actual edits clear signature reservations and stale debug data, then become byte-stable
+ok 23 - IL actual edits clear signature reservations and stale debug data, then become byte-stable
+  ---
+  duration_ms: 9.980448
+  type: 'test'
+  ...
+# Subtest: IL partial edits retain unchanged method RVAs while replacing the edited body
+ok 24 - IL partial edits retain unchanged method RVAs while replacing the edited body
+  ---
+  duration_ms: 2.334471
+  type: 'test'
+  ...
+# Subtest: IL stack, locals, initialization and exception-clause changes cannot take the no-change path
+ok 25 - IL stack, locals, initialization and exception-clause changes cannot take the no-change path
+  ---
+  duration_ms: 23.033113
+  type: 'test'
+  ...
+# Subtest: IL no-change candidate still validates all methods, locals, options, alignment and exception ranges
+ok 26 - IL no-change candidate still validates all methods, locals, options, alignment and exception ranges
+  ---
+  duration_ms: 5.745114
+  type: 'test'
+  ...
+# Subtest: protocol sequences: seeds are deterministic and the byte prefix preserves existing framing mode
+ok 27 - protocol sequences: seeds are deterministic and the byte prefix preserves existing framing mode
+  ---
+  duration_ms: 1.83674
+  type: 'test'
+  ...
+# Subtest: protocol sequences: shipped cases exercise actual handlers and controlled negative responses
+ok 28 - protocol sequences: shipped cases exercise actual handlers and controlled negative responses
+  ---
+  duration_ms: 105.233905
+  type: 'test'
+  ...
+# Subtest: LSP sequences: edits, queries, close and shutdown preserve protocol state and correlation
+ok 29 - LSP sequences: edits, queries, close and shutdown preserve protocol state and correlation
+  ---
+  duration_ms: 22.257632
+  type: 'test'
+  ...
+# Subtest: LSP sequences: owned source variants include diagnostic-producing text without growing document state
+ok 30 - LSP sequences: owned source variants include diagnostic-producing text without growing document state
+  ---
+  duration_ms: 8.816078
+  type: 'test'
+  ...
+# Subtest: DAP sequences: fixed IL launch, stepping, bounded inspection, restart and disposal work in memory
+ok 31 - DAP sequences: fixed IL launch, stepping, bounded inspection, restart and disposal work in memory
+  ---
+  duration_ms: 16.982499
+  type: 'test'
+  ...
+# Subtest: DAP sequences: missing state and malformed owned argument shapes produce explicit error responses
+ok 32 - DAP sequences: missing state and malformed owned argument shapes produce explicit error responses
+  ---
+  duration_ms: 0.611859
+  type: 'test'
+  ...
+# Subtest: DAP sequences: the current null-envelope product defect is surfaced as a finding, never a rejected input
+ok 33 - DAP sequences: the current null-envelope product defect is surfaced as a finding, never a rejected input
+  ---
+  duration_ms: 0.921194
+  type: 'test'
+  ...
+# Subtest: LSP sequences: malformed parameters require explicit validation diagnostics
+ok 34 - LSP sequences: malformed parameters require explicit validation diagnostics
+  ---
+  duration_ms: 0.355132
+  type: 'test'
+  ...
+# Subtest: LSP sequences: missing methods require the precise correlated Invalid Request diagnostic
+ok 35 - LSP sequences: missing methods require the precise correlated Invalid Request diagnostic
+  ---
+  duration_ms: 0.542126
+  type: 'test'
+  ...
+# Subtest: DAP sequences: caught native exceptions from malformed parameters remain findings
+ok 36 - DAP sequences: caught native exceptions from malformed parameters remain findings
+  ---
+  duration_ms: 0.547264
+  type: 'test'
+  ...
+# Subtest: protocol sequences: only precise owned diagnostics qualify as expected negative responses
+ok 37 - protocol sequences: only precise owned diagnostics qualify as expected negative responses
+  ---
+  duration_ms: 0.493726
+  type: 'test'
+  ...
+# Subtest: protocol sequences: unknown profiles, empty programs and excessive operation counts remain bounded
+ok 38 - protocol sequences: unknown profiles, empty programs and excessive operation counts remain bounded
+  ---
+  duration_ms: 3.869056
+  type: 'test'
+  ...
+# Subtest: protocol sequences: byte and output caps are enforced before growing a transcript
+ok 39 - protocol sequences: byte and output caps are enforced before growing a transcript
+  ---
+  duration_ms: 0.341452
+  type: 'test'
+  ...
+# Subtest: protocol sequences: cancellation propagates before and between awaited handlers
+ok 40 - protocol sequences: cancellation propagates before and between awaited handlers
+  ---
+  duration_ms: 0.335313
+  type: 'test'
+  ...
+# Subtest: protocol sequences: malformed server responses and unexpected internal error responses become findings
+ok 41 - protocol sequences: malformed server responses and unexpected internal error responses become findings
+  ---
+  duration_ms: 0.291058
+  type: 'test'
+  ...
+# Subtest: protocol sequences: output callback failures are rethrown after the server error boundary
+ok 42 - protocol sequences: output callback failures are rethrown after the server error boundary
+  ---
+  duration_ms: 0.218401
+  type: 'test'
+  ...
+# Subtest: protocol sequences: event count is capped even when every individual event is small
+ok 43 - protocol sequences: event count is capped even when every individual event is small
+  ---
+  duration_ms: 0.459926
+  type: 'test'
+  ...
+# Subtest: protocol: local seeds are bounded, deterministic and independently owned
+ok 44 - protocol: local seeds are bounded, deterministic and independently owned
+  ---
+  duration_ms: 2.017826
+  type: 'test'
+  ...
+# Subtest: protocol: rejects an input over the configured or hard byte ceiling
+ok 45 - protocol: rejects an input over the configured or hard byte ceiling
+  ---
+  duration_ms: 0.25823
+  type: 'test'
+  ...
+# Subtest: protocol: cancellation and invalid caller contracts propagate
+ok 46 - protocol: cancellation and invalid caller contracts propagate
+  ---
+  duration_ms: 0.466326
+  type: 'test'
+  ...
+# Subtest: il-document: local seeds are bounded, deterministic and independently owned
+ok 47 - il-document: local seeds are bounded, deterministic and independently owned
+  ---
+  duration_ms: 13.889865
+  type: 'test'
+  ...
+# Subtest: il-document: rejects an input over the configured or hard byte ceiling
+ok 48 - il-document: rejects an input over the configured or hard byte ceiling
+  ---
+  duration_ms: 0.200775
+  type: 'test'
+  ...
+# Subtest: il-document: cancellation and invalid caller contracts propagate
+ok 49 - il-document: cancellation and invalid caller contracts propagate
+  ---
+  duration_ms: 0.111394
+  type: 'test'
+  ...
+# Subtest: msbuild-xml: local seeds are bounded, deterministic and independently owned
+ok 50 - msbuild-xml: local seeds are bounded, deterministic and independently owned
+  ---
+  duration_ms: 0.188037
+  type: 'test'
+  ...
+# Subtest: msbuild-xml: rejects an input over the configured or hard byte ceiling
+ok 51 - msbuild-xml: rejects an input over the configured or hard byte ceiling
+  ---
+  duration_ms: 0.138293
+  type: 'test'
+  ...
+# Subtest: msbuild-xml: cancellation and invalid caller contracts propagate
+ok 52 - msbuild-xml: cancellation and invalid caller contracts propagate
+  ---
+  duration_ms: 0.154818
+  type: 'test'
+  ...
+# Subtest: network: local seeds are bounded, deterministic and independently owned
+ok 53 - network: local seeds are bounded, deterministic and independently owned
+  ---
+  duration_ms: 0.552892
+  type: 'test'
+  ...
+# Subtest: network: rejects an input over the configured or hard byte ceiling
+ok 54 - network: rejects an input over the configured or hard byte ceiling
+  ---
+  duration_ms: 0.151082
+  type: 'test'
+  ...
+# Subtest: network: cancellation and invalid caller contracts propagate
+ok 55 - network: cancellation and invalid caller contracts propagate
+  ---
+  duration_ms: 0.180936
+  type: 'test'
+  ...
+# Subtest: protocol: accepts LSP, DAP, Unicode and coalesced frames under incremental parsing
+ok 56 - protocol: accepts LSP, DAP, Unicode and coalesced frames under incremental parsing
+  ---
+  duration_ms: 1.229407
+  type: 'test'
+  ...
+# Subtest: protocol: diagnoses malformed framing, JSON, UTF-8 and incomplete bodies
+ok 57 - protocol: diagnoses malformed framing, JSON, UTF-8 and incomplete bodies
+  ---
+  duration_ms: 0.590798
+  type: 'test'
+  ...
+# Subtest: protocol: encoded messages respect the output byte budget
+ok 58 - protocol: encoded messages respect the output byte budget
+  ---
+  duration_ms: 0.264559
+  type: 'test'
+  ...
+# Subtest: IL document: canonical roundtrips preserve the complete image and literals containing comment text
+ok 59 - IL document: canonical roundtrips preserve the complete image and literals containing comment text
+  ---
+  duration_ms: 12.672625
+  type: 'test'
+  ...
+# Subtest: IL document: generated-input failures propagate outside the first assembly validation boundary
+ok 60 - IL document: generated-input failures propagate outside the first assembly validation boundary
+  ---
+  duration_ms: 0.195798
+  type: 'test'
+  ...
+# Subtest: IL document: reports syntax/scaffold failures and constrains rebuilt output
+ok 61 - IL document: reports syntax/scaffold failures and constrains rebuilt output
+  ---
+  duration_ms: 15.21399
+  type: 'test'
+  ...
+# Subtest: MSBuild XML: parses data and evaluates attributes or standalone conditions without filesystem access
+ok 62 - MSBuild XML: parses data and evaluates attributes or standalone conditions without filesystem access
+  ---
+  duration_ms: 1.982193
+  type: 'test'
+  ...
+# Subtest: MSBuild XML: rejects malformed XML and unsupported data grammar
+ok 63 - MSBuild XML: rejects malformed XML and unsupported data grammar
+  ---
+  duration_ms: 0.744715
+  type: 'test'
+  ...
+# Subtest: network: exact grants, URL normalization and request headers use pure policy APIs
+ok 64 - network: exact grants, URL normalization and request headers use pure policy APIs
+  ---
+  duration_ms: 1.921704
+  type: 'test'
+  ...
+# Subtest: network: malformed local input and output limits remain controlled failures
+ok 65 - network: malformed local input and output limits remain controlled failures
+  ---
+  duration_ms: 0.541596
+  type: 'test'
+  ...
+# Subtest: network: unavailable native host policy surfaces are explicitly unsupported
+ok 66 - network: unavailable native host policy surfaces are explicitly unsupported
+  ---
+  duration_ms: 0.134217
+  type: 'test'
+  ...
+# Subtest: text targets: error classifiers preserve unexpected failures instead of counting them as rejected inputs
+ok 67 - text targets: error classifiers preserve unexpected failures instead of counting them as rejected inputs
+  ---
+  duration_ms: 0.241375
+  type: 'test'
+  ...
+# Subtest: text targets: cancellation observed during a parse is not an input rejection
+ok 68 - text targets: cancellation observed during a parse is not an input rejection
+  ---
+  duration_ms: 0.131994
+  type: 'test'
+  ...
+# Subtest: Managed DLL without \#SF: int output
+ok 69 - Managed DLL without \#SF: int output
+  ---
+  duration_ms: 83.470919
+  type: 'test'
+  ...
+# Subtest: Managed DLL without \#SF: double
+ok 70 - Managed DLL without \#SF: double
+  ---
+  duration_ms: 9.750831
+  type: 'test'
+  ...
+# Subtest: Managed DLL without \#SF: loop
+ok 71 - Managed DLL without \#SF: loop
+  ---
+  duration_ms: 12.154463
+  type: 'test'
+  ...
+# Subtest: Managed DLL without \#SF: call
+ok 72 - Managed DLL without \#SF: call
+  ---
+  duration_ms: 8.30764
+  type: 'test'
+  ...
+# Subtest: Managed DLL without \#SF: object
+ok 73 - Managed DLL without \#SF: object
+  ---
+  duration_ms: 12.481835
+  type: 'test'
+  ...
+# Subtest: Managed DLL without \#SF: array
+ok 74 - Managed DLL without \#SF: array
+  ---
+  duration_ms: 7.6752
+  type: 'test'
+  ...
+# Subtest: Managed DLL without \#SF: throw catch
+ok 75 - Managed DLL without \#SF: throw catch
+  ---
+  duration_ms: 10.399805
+  type: 'test'
+  ...
+# Subtest: Managed DLL without \#SF: null catch
+ok 76 - Managed DLL without \#SF: null catch
+  ---
+  duration_ms: 12.034798
+  type: 'test'
+  ...
+# Subtest: Managed DLL without \#SF: bool boxing
+ok 77 - Managed DLL without \#SF: bool boxing
+  ---
+  duration_ms: 5.390542
+  type: 'test'
+  ...
+# Subtest: Managed DLL without \#SF: empty catch
+ok 78 - Managed DLL without \#SF: empty catch
+  ---
+  duration_ms: 4.726226
+  type: 'test'
+  ...
+# Subtest: Managed DLL without \#SF: string ops
+ok 79 - Managed DLL without \#SF: string ops
+  ---
+  duration_ms: 4.860753
+  type: 'test'
+  ...
+# Subtest: Managed DLL without \#SF: ceil
+ok 80 - Managed DLL without \#SF: ceil
+  ---
+  duration_ms: 3.852662
+  type: 'test'
+  ...
+# Subtest: Independent managed DLL: methods can be invoked without an entry point
+ok 81 - Independent managed DLL: methods can be invoked without an entry point
+  ---
+  duration_ms: 4.03439
+  type: 'test'
+  ...
+# Subtest: Independent managed DLL: 64-bit arithmetic stays exact
+ok 82 - Independent managed DLL: 64-bit arithmetic stays exact
+  ---
+  duration_ms: 0.915215
+  type: 'test'
+  ...
+# Subtest: Independent managed DLL: short floating literal and conversion
+ok 83 - Independent managed DLL: short floating literal and conversion
+  ---
+  duration_ms: 0.850891
+  type: 'test'
+  ...
+# Subtest: Independent managed DLL: switch table dispatch
+ok 84 - Independent managed DLL: switch table dispatch
+  ---
+  duration_ms: 2.439856
+  type: 'test'
+  ...
+# Subtest: Independent managed DLL: managed address into local
+ok 85 - Independent managed DLL: managed address into local
+  ---
+  duration_ms: 1.123201
+  type: 'test'
+  ...
+# Subtest: Independent managed DLL: static initializer executes exactly once
+ok 86 - Independent managed DLL: static initializer executes exactly once
+  ---
+  duration_ms: 1.674181
+  type: 'test'
+  ...
+# Subtest: Independent managed DLL: finally executes on leave
+ok 87 - Independent managed DLL: finally executes on leave
+  ---
+  duration_ms: 1.454117
+  type: 'test'
+  ...
+# Subtest: Independent managed DLL: checked overflow becomes a managed fault
+ok 88 - Independent managed DLL: checked overflow becomes a managed fault
+  ---
+  duration_ms: 0.957617
+  type: 'test'
+  ...
+# Subtest: Independent managed DLL: unsigned division uses unsigned operands
+ok 89 - Independent managed DLL: unsigned division uses unsigned operands
+  ---
+  duration_ms: 2.353048
+  type: 'test'
+  ...
+# Subtest: Direct CIL: hard instruction limit
+ok 90 - Direct CIL: hard instruction limit
+  ---
+  duration_ms: 2.992418
+  type: 'test'
+  ...
+# Subtest: Direct CIL: hard output limit
+ok 91 - Direct CIL: hard output limit
+  ---
+  duration_ms: 11.500502
+  type: 'test'
+  ...
+# Subtest: Direct CIL: unknown external method is refused before output
+ok 92 - Direct CIL: unknown external method is refused before output
+  ---
+  duration_ms: 3.35436
+  type: 'test'
+  ...
+# Subtest: Direct CIL: native pointer instructions remain inspectable, not executable
+ok 93 - Direct CIL: native pointer instructions remain inspectable, not executable
+  ---
+  duration_ms: 0.741931
+  type: 'test'
+  ...
+# Subtest: Direct CIL: invalid local slot and stack underflow rejected
+ok 94 - Direct CIL: invalid local slot and stack underflow rejected
+  ---
+  duration_ms: 1.377234
+  type: 'test'
+  ...
+# Subtest: Direct CIL: host arguments use strict declared types and arity
+ok 95 - Direct CIL: host arguments use strict declared types and arity
+  ---
+  duration_ms: 3.199072
+  type: 'test'
+  ...
+# Subtest: IL text: every method rebuilt; changed constants actually execute
+ok 96 - IL text: every method rebuilt; changed constants actually execute
+  ---
+  duration_ms: 3.433836
+  type: 'test'
+  ...
+# Subtest: IL text: changed bodies invalidate stale debug-profile metadata
+ok 97 - IL text: changed bodies invalidate stale debug-profile metadata
+  ---
+  duration_ms: 5.738153
+  type: 'test'
+  ...
+# Subtest: IL text: long, branch and switch round trips
+ok 98 - IL text: long, branch and switch round trips
+  ---
+  duration_ms: 2.318437
+  type: 'test'
+  ...
+# Subtest: IL text: catches round trip
+ok 99 - IL text: catches round trip
+  ---
+  duration_ms: 13.579097
+  type: 'test'
+  ...
+# Subtest: IL text: omitted or duplicate methods are never read from image fallback
+ok 100 - IL text: omitted or duplicate methods are never read from image fallback
+  ---
+  duration_ms: 0.817802
+  type: 'test'
+  ...
+# Subtest: IL text: undefined labels and invalid opcodes are rejected
+ok 101 - IL text: undefined labels and invalid opcodes are rejected
+  ---
+  duration_ms: 0.977006
+  type: 'test'
+  ...
+# Subtest: Decompiler: simple independently authored Add is reconstructable C\#
+ok 102 - Decompiler: simple independently authored Add is reconstructable C\#
+  ---
+  duration_ms: 8.689702
+  type: 'test'
+  ...
+# Subtest: Decompiler: mutable local loads captured before writes
+ok 103 - Decompiler: mutable local loads captured before writes
+  ---
+  duration_ms: 1.274744
+  type: 'test'
+  ...
+# Subtest: Decompiler: EH returns full IL and explicit fallback, not fake C\#
+ok 104 - Decompiler: EH returns full IL and explicit fallback, not fake C\#
+  ---
+  duration_ms: 4.030303
+  type: 'test'
+  ...
+# Subtest: Decoder: i64, r4 and standard two-byte operations
+ok 105 - Decoder: i64, r4 and standard two-byte operations
+  ---
+  duration_ms: 0.175778
+  type: 'test'
+  ...
+# Subtest: Decoder: branch into operand rejected
+ok 106 - Decoder: branch into operand rejected
+  ---
+  duration_ms: 0.155859
+  type: 'test'
+  ...
+# Subtest: Metadata: generic method spec signature uses its blob column
+ok 107 - Metadata: generic method spec signature uses its blob column
+  ---
+  duration_ms: 1.028642
+  type: 'test'
+  ...
+# Subtest: Metadata: generic variables, arrays, byrefs and function pointers inspect
+ok 108 - Metadata: generic variables, arrays, byrefs and function pointers inspect
+  ---
+  duration_ms: 0.317917
+  type: 'test'
+  ...
+# Subtest: PE: inspection rejects malformed and truncated user DLLs
+ok 109 - PE: inspection rejects malformed and truncated user DLLs
+  ---
+  duration_ms: 0.466306
+  type: 'test'
+  ...
+# Subtest: GC: strong handles retain; weak handles clear after strong release
+ok 110 - GC: strong handles retain; weak handles clear after strong release
+  ---
+  duration_ms: 0.92494
+  type: 'test'
+  ...
+# Subtest: GC: scratch marks reused; foreign handles rejected
+ok 111 - GC: scratch marks reused; foreign handles rejected
+  ---
+  duration_ms: 0.576757
+  type: 'test'
+  ...
+# Subtest: CLI: inspect, invoke, decompile, editable IL, assemble, exec ordinary DLL
+ok 112 - CLI: inspect, invoke, decompile, editable IL, assemble, exec ordinary DLL
+  ---
+  duration_ms: 4092.974017
+  type: 'test'
+  ...
+# Subtest: Direct CIL storage: byte local truncates and extends
+ok 113 - Direct CIL storage: byte local truncates and extends
+  ---
+  duration_ms: 3.123793
+  type: 'test'
+  ...
+# Subtest: Direct CIL storage: sbyte local truncates and extends
+ok 114 - Direct CIL storage: sbyte local truncates and extends
+  ---
+  duration_ms: 1.733214
+  type: 'test'
+  ...
+# Subtest: Direct CIL storage: ushort local truncates and extends
+ok 115 - Direct CIL storage: ushort local truncates and extends
+  ---
+  duration_ms: 1.356364
+  type: 'test'
+  ...
+# Subtest: Direct CIL storage: short local truncates and extends
+ok 116 - Direct CIL storage: short local truncates and extends
+  ---
+  duration_ms: 0.960743
+  type: 'test'
+  ...
+# Subtest: Direct CIL storage: ldelem.u1 array extends correctly
+ok 117 - Direct CIL storage: ldelem.u1 array extends correctly
+  ---
+  duration_ms: 1.260143
+  type: 'test'
+  ...
+# Subtest: Direct CIL storage: ldelem.i1 array extends correctly
+ok 118 - Direct CIL storage: ldelem.i1 array extends correctly
+  ---
+  duration_ms: 1.182709
+  type: 'test'
+  ...
+# Subtest: Direct CIL storage: indirect byte store truncates before unsigned load
+ok 119 - Direct CIL storage: indirect byte store truncates before unsigned load
+  ---
+  duration_ms: 0.947263
+  type: 'test'
+  ...
+# Subtest: Direct CIL host result keeps uint identity
+ok 120 - Direct CIL host result keeps uint identity
+  ---
+  duration_ms: 1.145344
+  type: 'test'
+  ...
+# Subtest: Direct CIL host result keeps ulong identity
+ok 121 - Direct CIL host result keeps ulong identity
+  ---
+  duration_ms: 0.769441
+  type: 'test'
+  ...
+# Subtest: Direct CIL host result keeps bool identity
+ok 122 - Direct CIL host result keeps bool identity
+  ---
+  duration_ms: 0.715342
+  type: 'test'
+  ...
+# Subtest: Direct CIL: string[] Main defaults to an empty argument array
+ok 123 - Direct CIL: string[] Main defaults to an empty argument array
+  ---
+  duration_ms: 1.242988
+  type: 'test'
+  ...
+# Subtest: CLI: no dummy arguments required for method decompilation or string[] entry point
+ok 124 - CLI: no dummy arguments required for method decompilation or string[] entry point
+  ---
+  duration_ms: 1264.727961
+  type: 'test'
+  ...
+1..124
+# tests 124
+# suites 0
+# pass 124
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 10331.65285

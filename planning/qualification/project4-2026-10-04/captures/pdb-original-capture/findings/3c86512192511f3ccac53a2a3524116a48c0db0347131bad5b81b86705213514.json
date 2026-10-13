@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "targetId": "portable-pdb",
+  "selfTest": false,
+  "seed": 1146,
+  "caseIndex": 0,
+  "inputSHA256": "47aa8600a3eb7b339ac25d68ca91eecfabb45271d943899d875f84c05ffeb29f",
+  "inputBase64": "QlNKQgEAAQAAAAAADAAAAFBEQiB2MS4wAAAAAAAABQBwAAAAJAAAACNQZGIAAAAAlAAAAFQAAAAjfgAA6AAAAAcAAAAjU3RyaW5ncwAAAADwAAAAMAAAACNHVUlEAAAAIAEAAE0AAAAjQmxvYgAAANWfWpymFthPtsRKBXdrZgQ5Hv3CAAAAAEAAAAAAAAAAAQAAAAAAAAACAAABAAAAAAAAjwAAAAAAAADEAAEAAAABAAAAAQAAAAEAAAABAAAACQABAAwAAgABAC0AAQAAAAEAAQAAAAAAAgAAAAAAAAABADYAAwA0AAB2YWx1ZQAAD9ApiLgRE0KHi3cOhZesFvhiUT/GB9MRkFMAwE+jAqEbV4oOJmluRrStirBGEfX+AAdGdXp6LmNzAgABIIzZiPDsUGnovRRTehxxTD4vOk14QMu4TtmxKrkRH1QXBgAAAA4BARgPAAAABw8A8P9pbnQgdmFsdWUgPSA3Owo=",
+  "expectedStatuses": [
+    "accepted",
+    "rejected"
+  ],
+  "originalFinding": {
+    "kind": "unexpected-error",
+    "detail": "Error: Reserved DEFLATE block"
+  },
+  "budgets": {
+    "maxCases": 32,
+    "caseTimeoutMs": 1000,
+    "startupTimeoutMs": 5000,
+    "campaignTimeoutMs": 30000,
+    "maxInputBytes": 65536,
+    "maxOutputBytes": 65536,
+    "heapGrowthBytes": 16777216,
+    "v8HeapMb": 128,
+    "rssBytes": 268435456,
+    "maxCorpusCases": 128,
+    "maxCorpusBytes": 8388608
+  },
+  "sourceIdentity": {
+    "commit": "ad0ea92f16bddcbcfecce884b93579fe94617c04",
+    "tree": "896f9233762f4d93de762b1325a4de9ca81c64d3",
+    "clean": true
+  },
+  "environment": {
+    "node": "v24.19.0",
+    "platform": "linux",
+    "arch": "x64"
+  },
+  "recordSHA256": "3c86512192511f3ccac53a2a3524116a48c0db0347131bad5b81b86705213514"
+}

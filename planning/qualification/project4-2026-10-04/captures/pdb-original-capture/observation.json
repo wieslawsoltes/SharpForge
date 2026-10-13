@@ -1,0 +1,57 @@
+{
+  "source": {
+    "commit": "ad0ea92f16bddcbcfecce884b93579fe94617c04",
+    "tree": "896f9233762f4d93de762b1325a4de9ca81c64d3",
+    "clean": true
+  },
+  "seedName": "invalid-compression-block",
+  "result": {
+    "targetId": "portable-pdb",
+    "seed": 1146,
+    "caseIndex": 0,
+    "inputBytes": 365,
+    "inputSHA256": "47aa8600a3eb7b339ac25d68ca91eecfabb45271d943899d875f84c05ffeb29f",
+    "sourceIdentity": {
+      "commit": "ad0ea92f16bddcbcfecce884b93579fe94617c04",
+      "tree": "896f9233762f4d93de762b1325a4de9ca81c64d3",
+      "clean": true
+    },
+    "budgets": {
+      "maxCases": 32,
+      "caseTimeoutMs": 1000,
+      "startupTimeoutMs": 5000,
+      "campaignTimeoutMs": 30000,
+      "maxInputBytes": 65536,
+      "maxOutputBytes": 65536,
+      "heapGrowthBytes": 16777216,
+      "v8HeapMb": 128,
+      "rssBytes": 268435456,
+      "maxCorpusCases": 128,
+      "maxCorpusBytes": 8388608
+    },
+    "qualification": "node-offline-parser",
+    "status": "finding",
+    "finding": {
+      "kind": "unexpected-error",
+      "detail": "Error: Reserved DEFLATE block"
+    },
+    "metrics": {
+      "processElapsedMs": 722.4230750000002,
+      "sampledRssBytes": 0,
+      "elapsedMs": 3.221461999999974,
+      "baselineHeapBytes": 37944296,
+      "heapUsedBytes": 38248432,
+      "heapGrowthBytes": 304136,
+      "externalGrowthBytes": 41081,
+      "arrayBufferGrowthBytes": 389,
+      "observedGrowthBytes": 345217,
+      "peakRssBytes": 88272896
+    },
+    "isolation": {
+      "v8OldSpaceMb": 128,
+      "rssGuard": "not-observed",
+      "osMemorySandbox": false
+    }
+  },
+  "record": "/workspace/scratch/18022b90e5ec/SharpForge-p4-pdb-observation/artifacts/fuzz/project4-pdb-original/findings/3c86512192511f3ccac53a2a3524116a48c0db0347131bad5b81b86705213514.json"
+}

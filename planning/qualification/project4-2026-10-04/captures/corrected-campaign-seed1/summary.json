@@ -1,0 +1,214 @@
+{
+  "schemaVersion": 1,
+  "kind": "sharpforge-offline-fuzz-campaign",
+  "status": "unsupported",
+  "qualified": false,
+  "qualification": "bounded-node-offline-adapters",
+  "sourceBefore": {
+    "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+    "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+    "clean": true
+  },
+  "sourceAfter": {
+    "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+    "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+    "clean": true
+  },
+  "environment": {
+    "node": "v24.19.0",
+    "platform": "linux",
+    "arch": "x64"
+  },
+  "started": "2026-10-04T13:17:38.108Z",
+  "finished": "2026-10-04T13:20:54.554Z",
+  "seed": 1,
+  "budgets": {
+    "maxCases": 32,
+    "caseTimeoutMs": 1000,
+    "startupTimeoutMs": 5000,
+    "campaignTimeoutMs": 30000,
+    "maxInputBytes": 65536,
+    "maxOutputBytes": 65536,
+    "heapGrowthBytes": 16777216,
+    "v8HeapMb": 128,
+    "rssBytes": 268435456,
+    "maxCorpusCases": 128,
+    "maxCorpusBytes": 8388608
+  },
+  "targets": [
+    {
+      "targetId": "pe-loader",
+      "status": "passed",
+      "requestedCases": 32,
+      "completedCases": 32,
+      "counts": {
+        "accepted": 2,
+        "rejected": 30,
+        "unsupported": 0,
+        "findings": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "targetId": "bytecode-image",
+      "status": "unsupported",
+      "requestedCases": 32,
+      "completedCases": 32,
+      "counts": {
+        "accepted": 4,
+        "rejected": 26,
+        "unsupported": 2,
+        "findings": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "targetId": "portable-pdb",
+      "status": "passed",
+      "requestedCases": 32,
+      "completedCases": 32,
+      "counts": {
+        "accepted": 6,
+        "rejected": 26,
+        "unsupported": 0,
+        "findings": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "targetId": "zip-archive",
+      "status": "passed",
+      "requestedCases": 32,
+      "completedCases": 32,
+      "counts": {
+        "accepted": 6,
+        "rejected": 26,
+        "unsupported": 0,
+        "findings": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "targetId": "protocol",
+      "status": "passed",
+      "requestedCases": 32,
+      "completedCases": 32,
+      "counts": {
+        "accepted": 10,
+        "rejected": 22,
+        "unsupported": 0,
+        "findings": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "targetId": "il-document",
+      "status": "passed",
+      "requestedCases": 32,
+      "completedCases": 32,
+      "counts": {
+        "accepted": 4,
+        "rejected": 28,
+        "unsupported": 0,
+        "findings": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "targetId": "msbuild-xml",
+      "status": "passed",
+      "requestedCases": 32,
+      "completedCases": 32,
+      "counts": {
+        "accepted": 7,
+        "rejected": 25,
+        "unsupported": 0,
+        "findings": 0,
+        "cancelled": 0
+      }
+    },
+    {
+      "targetId": "network",
+      "status": "passed",
+      "requestedCases": 32,
+      "completedCases": 32,
+      "counts": {
+        "accepted": 23,
+        "rejected": 9,
+        "unsupported": 0,
+        "findings": 0,
+        "cancelled": 0
+      }
+    }
+  ],
+  "reports": [
+    {
+      "path": "pe-loader/campaign.json",
+      "bytes": 49839,
+      "sha256": "d5a6d57b1ce7557797c5fe79fce54d5c9c4f7b7394a3c10164b18264382c81e1"
+    },
+    {
+      "path": "bytecode-image/campaign.json",
+      "bytes": 50049,
+      "sha256": "e3f28b98d4b42c878c6efc7602b57d91a27a0ef3251e26421770209d1daca058"
+    },
+    {
+      "path": "portable-pdb/campaign.json",
+      "bytes": 50077,
+      "sha256": "570aedea586db7da856382d90009adc664f9c849f17aae4d72ac6ec7650c1541"
+    },
+    {
+      "path": "zip-archive/campaign.json",
+      "bytes": 49524,
+      "sha256": "3a338b6c2b2a10137c9c23d8ad1316ff2704fa3faae47cfa051691f261ca100c"
+    },
+    {
+      "path": "protocol/campaign.json",
+      "bytes": 47762,
+      "sha256": "edefa4bc6bd11e406a48b15b73d943bad6f8b6b31dd7b9ea9e3f6ad26c93acb4"
+    },
+    {
+      "path": "il-document/campaign.json",
+      "bytes": 47911,
+      "sha256": "acf685d2944317275296d72d90a583813410c1cc57169c952ed0b735a3f6d76c"
+    },
+    {
+      "path": "msbuild-xml/campaign.json",
+      "bytes": 47610,
+      "sha256": "0ad99ecbb4132c14cd9ed228d0f6e5c122344c68945670c0805340dd4914a178"
+    },
+    {
+      "path": "network/campaign.json",
+      "bytes": 63030,
+      "sha256": "b835250893b315c39725198524646e41edc40bb3d45fbe3d667d1193495e5799"
+    }
+  ],
+  "reproduction": {
+    "workingDirectory": "repository-root",
+    "note": "Use the recorded source commit and environment. Each output directory must be new.",
+    "campaign": [
+      "node",
+      "scripts/limited.js",
+      "node",
+      "scripts/conformance/fuzz/run.js",
+      "--target",
+      "all",
+      "--seed",
+      "1",
+      "--cases",
+      "32",
+      "--case-ms",
+      "1000",
+      "--campaign-ms",
+      "30000",
+      "--output",
+      "artifacts/fuzz/project4-corrected-seed1/reproduction"
+    ],
+    "findings": []
+  },
+  "limitations": [
+    "Only the recorded cases and Node adapter profiles were exercised; mutation campaigns cannot prove parser safety.",
+    "V8 heap limits and sampled RSS guards are not an operating-system memory or network sandbox.",
+    "Provider authentication, archive extraction, physical devices, CLR and Rust/Wasm were not exercised."
+  ]
+}

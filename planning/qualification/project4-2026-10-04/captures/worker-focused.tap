@@ -1,0 +1,136 @@
+TAP version 13
+# Subtest: corpus deduplicates exact records and retains original limits and literal bytes
+ok 1 - corpus deduplicates exact records and retains original limits and literal bytes
+  ---
+  duration_ms: 13.709306
+  type: 'test'
+  ...
+# Subtest: finding attribution cannot be switched to another input or source revision
+ok 2 - finding attribution cannot be switched to another input or source revision
+  ---
+  duration_ms: 1.220495
+  type: 'test'
+  ...
+# Subtest: finding persistence retains observed budgets and rejects explicit widening or narrowing
+ok 3 - finding persistence retains observed budgets and rejects explicit widening or narrowing
+  ---
+  duration_ms: 6.744075
+  type: 'test'
+  ...
+# Subtest: corrupted record content and unexpected filenames fail before parser replay
+ok 4 - corrupted record content and unexpected filenames fail before parser replay
+  ---
+  duration_ms: 5.559164
+  type: 'test'
+  ...
+# Subtest: recomputed record checksums cannot bless a different input digest or findings as expected outcomes
+ok 5 - recomputed record checksums cannot bless a different input digest or findings as expected outcomes
+  ---
+  duration_ms: 5.696595
+  type: 'test'
+  ...
+# Subtest: concurrent writers cannot exceed a one-record corpus quota
+ok 6 - concurrent writers cannot exceed a one-record corpus quota
+  ---
+  duration_ms: 2.6863
+  type: 'test'
+  ...
+# Subtest: empty corpus is incomplete and ignored entries cannot evade the directory scan budget
+ok 7 - empty corpus is incomplete and ignored entries cannot evade the directory scan budget
+  ---
+  duration_ms: 5.172986
+  type: 'test'
+  ...
+# Subtest: corpus symlinks are rejected rather than followed
+ok 8 - corpus symlinks are rejected rather than followed
+  ---
+  duration_ms: 1.7006
+  type: 'test'
+  ...
+# Subtest: fixed self-checks distinguish acceptance, controlled rejection and unexpected exceptions
+ok 9 - fixed self-checks distinguish acceptance, controlled rejection and unexpected exceptions
+  ---
+  duration_ms: 103.055584
+  type: 'test'
+  ...
+# Subtest: finite deadline and 4 MiB allocation probes are detected and saved with their exact input
+ok 10 - finite deadline and 4 MiB allocation probes are detected and saved with their exact input
+  ---
+  duration_ms: 105.099569
+  type: 'test'
+  ...
+# Subtest: output overflow and an undisposed finite timer remain findings
+ok 11 - output overflow and an undisposed finite timer remain findings
+  ---
+  duration_ms: 86.716717
+  type: 'test'
+  ...
+# Subtest: pre-launch and active cancellation remain cancellation rather than acceptance
+ok 12 - pre-launch and active cancellation remain cancellation rather than acceptance
+  ---
+  duration_ms: 51.741742
+  type: 'test'
+  ...
+# Subtest: ambient Node options cannot inject arguments into the fixed child
+ok 13 - ambient Node options cannot inject arguments into the fixed child
+  ---
+  duration_ms: 36.125858
+  type: 'test'
+  ...
+# Subtest: normal campaigns cannot select self-checks, arbitrary modules, or bypass low-level caps
+ok 14 - normal campaigns cannot select self-checks, arbitrary modules, or bypass low-level caps
+  ---
+  duration_ms: 0.965049
+  type: 'test'
+  ...
+# Subtest: offline budgets reject unknown, fractional, nonfinite and widened limits
+ok 15 - offline budgets reject unknown, fractional, nonfinite and widened limits
+  ---
+  duration_ms: 2.06146
+  type: 'test'
+  ...
+# Subtest: fixture PRNG preserves its documented sequence and rejects invalid seeds
+ok 16 - fixture PRNG preserves its documented sequence and rejects invalid seeds
+  ---
+  duration_ms: 0.255736
+  type: 'test'
+  ...
+# Subtest: seeded byte variations are repeatable, isolated and always honor the input ceiling
+ok 17 - seeded byte variations are repeatable, isolated and always honor the input ceiling
+  ---
+  duration_ms: 1.535878
+  type: 'test'
+  ...
+# Subtest: worker completion rejects swallowed local cancellation independently of the parent watchdog
+ok 18 - worker completion rejects swallowed local cancellation independently of the parent watchdog
+  ---
+  duration_ms: 0.809481
+  type: 'test'
+  ...
+# Subtest: measured synchronous overrun wins even when the local abort callback could not run
+ok 19 - measured synchronous overrun wins even when the local abort callback could not run
+  ---
+  duration_ms: 0.159765
+  type: 'test'
+  ...
+# Subtest: seed collection observes the same deadline and ordinary bounded outcomes remain unchanged
+ok 20 - seed collection observes the same deadline and ordinary bounded outcomes remain unchanged
+  ---
+  duration_ms: 0.679499
+  type: 'test'
+  ...
+# Subtest: the fixed finite cancellation-rejection fixture remains a finding through process isolation
+ok 21 - the fixed finite cancellation-rejection fixture remains a finding through process isolation
+  ---
+  duration_ms: 60.370167
+  type: 'test'
+  ...
+1..21
+# tests 21
+# suites 0
+# pass 21
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 783.994314

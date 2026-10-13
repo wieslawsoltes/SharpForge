@@ -1,0 +1,1591 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "requestedCases": 32,
+  "completedCases": 32,
+  "counts": {
+    "accepted": 6,
+    "rejected": 26,
+    "unsupported": 0,
+    "findings": 0,
+    "cancelled": 0
+  },
+  "cases": [
+    {
+      "targetId": "portable-pdb",
+      "seed": 1,
+      "caseIndex": 0,
+      "inputBytes": 173,
+      "inputSHA256": "d32ecb9429ed54f7f61ba1fa14e1f898c9f21b0eae26366139fd4a65b9eb169b",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "PORTABLE_PDB_PARSED",
+      "metrics": {
+        "processElapsedMs": 683.7632789999989,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.9081559999999627,
+        "baselineHeapBytes": 40958680,
+        "heapUsedBytes": 41058120,
+        "heapGrowthBytes": 99440,
+        "externalGrowthBytes": 386,
+        "arrayBufferGrowthBytes": 346,
+        "observedGrowthBytes": 99826,
+        "peakRssBytes": 93364224
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "empty-debug",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "portable-pdb",
+      "seed": 1,
+      "caseIndex": 1,
+      "inputBytes": 360,
+      "inputSHA256": "691a0adfb1d75ebfd3b114017faf9789f8770b7fc5c2cf5c07258b8e7670a8bd",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "PORTABLE_PDB_PARSED",
+      "metrics": {
+        "processElapsedMs": 668.6276920000018,
+        "sampledRssBytes": 0,
+        "elapsedMs": 4.334302999999977,
+        "baselineHeapBytes": 41918072,
+        "heapUsedBytes": 42099304,
+        "heapGrowthBytes": 181232,
+        "externalGrowthBytes": 779,
+        "arrayBufferGrowthBytes": 739,
+        "observedGrowthBytes": 182011,
+        "peakRssBytes": 93954048
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "stored-source",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "portable-pdb",
+      "seed": 1,
+      "caseIndex": 2,
+      "inputBytes": 365,
+      "inputSHA256": "a7da89a77211d49f4c0eab83478799e3fb444c3931019685f0828b7f73d05cf9",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "PORTABLE_PDB_PARSED",
+      "metrics": {
+        "processElapsedMs": 654.5345720000041,
+        "sampledRssBytes": 0,
+        "elapsedMs": 3.7639560000000074,
+        "baselineHeapBytes": 41181056,
+        "heapUsedBytes": 41367920,
+        "heapGrowthBytes": 186864,
+        "externalGrowthBytes": 794,
+        "arrayBufferGrowthBytes": 754,
+        "observedGrowthBytes": 187658,
+        "peakRssBytes": 93962240
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "compressed-source",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "portable-pdb",
+      "seed": 1,
+      "caseIndex": 3,
+      "inputBytes": 712,
+      "inputSHA256": "fc1f588948504f3ad379af668dbddeab21e0a27f117c66ded6fba61b85d9f701",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "PORTABLE_PDB_PARSED",
+      "metrics": {
+        "processElapsedMs": 646.8427539999975,
+        "sampledRssBytes": 0,
+        "elapsedMs": 3.987064000000032,
+        "baselineHeapBytes": 41253336,
+        "heapUsedBytes": 41527080,
+        "heapGrowthBytes": 273744,
+        "externalGrowthBytes": 1464,
+        "arrayBufferGrowthBytes": 1424,
+        "observedGrowthBytes": 275208,
+        "peakRssBytes": 94904320
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "dotnet-documents",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "portable-pdb",
+      "seed": 1,
+      "caseIndex": 4,
+      "inputBytes": 185,
+      "inputSHA256": "45edada07b487980a2f4034e3102e64fa82d5718903d8fdb3bc94e30de221620",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PORTABLE_PDB_VALIDATION",
+      "detail": "Invalid Portable PDB: Invalid or duplicate metadata stream",
+      "metrics": {
+        "processElapsedMs": 679.2221229999996,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.3961739999999736,
+        "baselineHeapBytes": 41106752,
+        "heapUsedBytes": 41159176,
+        "heapGrowthBytes": 52424,
+        "externalGrowthBytes": 225,
+        "arrayBufferGrowthBytes": 185,
+        "observedGrowthBytes": 52649,
+        "peakRssBytes": 93691904
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "empty-debug",
+      "mutation": "duplicate"
+    },
+    {
+      "targetId": "portable-pdb",
+      "seed": 1,
+      "caseIndex": 5,
+      "inputBytes": 360,
+      "inputSHA256": "e7523eaa8e86915410ed239da4b85dbe5cc10d35935b5ba5004f33fc6c509fdf",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PORTABLE_PDB_VALIDATION",
+      "detail": "Invalid Portable PDB table 48 GUID reference",
+      "metrics": {
+        "processElapsedMs": 652.3130079999974,
+        "sampledRssBytes": 0,
+        "elapsedMs": 2.604581000000053,
+        "baselineHeapBytes": 41959144,
+        "heapUsedBytes": 42061352,
+        "heapGrowthBytes": 102208,
+        "externalGrowthBytes": 400,
+        "arrayBufferGrowthBytes": 360,
+        "observedGrowthBytes": 102608,
+        "peakRssBytes": 93384704
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "stored-source",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "portable-pdb",
+      "seed": 1,
+      "caseIndex": 6,
+      "inputBytes": 221,
+      "inputSHA256": "eae8fc2457603e1359256b51eae264c8b88e1eac973552eb0d49efcedbda0263",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PORTABLE_PDB_VALIDATION",
+      "detail": "Invalid Portable PDB: Invalid or duplicate metadata stream",
+      "metrics": {
+        "processElapsedMs": 648.1957739999998,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.0607599999999593,
+        "baselineHeapBytes": 41238056,
+        "heapUsedBytes": 41290560,
+        "heapGrowthBytes": 52504,
+        "externalGrowthBytes": 261,
+        "arrayBufferGrowthBytes": 221,
+        "observedGrowthBytes": 52765,
+        "peakRssBytes": 94412800
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "compressed-source",
+      "mutation": "truncate"
+    },
+    {
+      "targetId": "portable-pdb",
+      "seed": 1,
+      "caseIndex": 7,
+      "inputBytes": 708,
+      "inputSHA256": "c7b9144d9212e64f1852cab215065c7621fb40a19e95d19832c06f6fb366e077",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PORTABLE_PDB_VALIDATION",
+      "detail": "Invalid Portable PDB: Invalid or duplicate metadata stream",
+      "metrics": {
+        "processElapsedMs": 686.2690260000018,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.442801999999915,
+        "baselineHeapBytes": 41198312,
+        "heapUsedBytes": 41253304,
+        "heapGrowthBytes": 54992,
+        "externalGrowthBytes": 748,
+        "arrayBufferGrowthBytes": 708,
+        "observedGrowthBytes": 55740,
+        "peakRssBytes": 94289920
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "dotnet-documents",
+      "mutation": "delete"
+    },
+    {
+      "targetId": "portable-pdb",
+      "seed": 1,
+      "caseIndex": 8,
+      "inputBytes": 189,
+      "inputSHA256": "5313fcf8946205a4c3430cba2716db8dca7489902e3f44a92cca856617f7a2ce",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PORTABLE_PDB_VALIDATION",
+      "detail": "Invalid Portable PDB: Truncated binary data at 0x18",
+      "metrics": {
+        "processElapsedMs": 691.1540410000016,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.692929999999933,
+        "baselineHeapBytes": 41164552,
+        "heapUsedBytes": 41223240,
+        "heapGrowthBytes": 58688,
+        "externalGrowthBytes": 229,
+        "arrayBufferGrowthBytes": 189,
+        "observedGrowthBytes": 58917,
+        "peakRssBytes": 93196288
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "empty-debug",
+      "mutation": "insert"
+    },
+    {
+      "targetId": "portable-pdb",
+      "seed": 1,
+      "caseIndex": 9,
+      "inputBytes": 375,
+      "inputSHA256": "d01309530537c271ff44f36035c127437745d9889183d95ddca301b4c201ee5f",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "PORTABLE_PDB_PARSED",
+      "metrics": {
+        "processElapsedMs": 666.9084829999993,
+        "sampledRssBytes": 0,
+        "elapsedMs": 4.049264999999991,
+        "baselineHeapBytes": 41218152,
+        "heapUsedBytes": 41399368,
+        "heapGrowthBytes": 181216,
+        "externalGrowthBytes": 809,
+        "arrayBufferGrowthBytes": 769,
+        "observedGrowthBytes": 182025,
+        "peakRssBytes": 93454336
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "stored-source",
+      "mutation": "duplicate"
+    },
+    {
+      "targetId": "portable-pdb",
+      "seed": 1,
+      "caseIndex": 10,
+      "inputBytes": 365,
+      "inputSHA256": "35feaadda5a26cf5526a5745c4d058bc66755b8625c8dde4c8c69f4b4d0b61d0",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PORTABLE_PDB_VALIDATION",
+      "detail": "Invalid Portable PDB: Metadata row limit exceeded",
+      "metrics": {
+        "processElapsedMs": 634.4773480000003,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.2056029999999964,
+        "baselineHeapBytes": 41100960,
+        "heapUsedBytes": 41160488,
+        "heapGrowthBytes": 59528,
+        "externalGrowthBytes": 405,
+        "arrayBufferGrowthBytes": 365,
+        "observedGrowthBytes": 59933,
+        "peakRssBytes": 94986240
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "compressed-source",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "portable-pdb",
+      "seed": 1,
+      "caseIndex": 11,
+      "inputBytes": 81,
+      "inputSHA256": "6621683b1b4cd90615cc40c6f58d05b639db0f4e25846945940b565561dc9947",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PORTABLE_PDB_VALIDATION",
+      "detail": "Invalid Portable PDB: Invalid or duplicate metadata stream",
+      "metrics": {
+        "processElapsedMs": 624.0801060000013,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.1682779999999866,
+        "baselineHeapBytes": 41195888,
+        "heapUsedBytes": 41247848,
+        "heapGrowthBytes": 51960,
+        "externalGrowthBytes": 121,
+        "arrayBufferGrowthBytes": 81,
+        "observedGrowthBytes": 52081,
+        "peakRssBytes": 93626368
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "dotnet-documents",
+      "mutation": "truncate"
+    },
+    {
+      "targetId": "portable-pdb",
+      "seed": 1,
+      "caseIndex": 12,
+      "inputBytes": 166,
+      "inputSHA256": "944f532d95be2ba0b443c408f6d9e86403368e07de1046ab0b451e50dab66b88",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PORTABLE_PDB_VALIDATION",
+      "detail": "Invalid Portable PDB: Missing metadata tables",
+      "metrics": {
+        "processElapsedMs": 635.4580710000009,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.1860550000000103,
+        "baselineHeapBytes": 40771336,
+        "heapUsedBytes": 40829632,
+        "heapGrowthBytes": 58296,
+        "externalGrowthBytes": 206,
+        "arrayBufferGrowthBytes": 166,
+        "observedGrowthBytes": 58502,
+        "peakRssBytes": 93671424
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "empty-debug",
+      "mutation": "delete"
+    },
+    {
+      "targetId": "portable-pdb",
+      "seed": 1,
+      "caseIndex": 13,
+      "inputBytes": 363,
+      "inputSHA256": "2c02a4dde04a1a1299d80506dccc6d5a8c5353095eb9aa5238492f030c24992a",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PORTABLE_PDB_VALIDATION",
+      "detail": "Invalid Portable PDB: Unsupported metadata table version",
+      "metrics": {
+        "processElapsedMs": 675.3755460000029,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.6705060000000458,
+        "baselineHeapBytes": 41293040,
+        "heapUsedBytes": 41354568,
+        "heapGrowthBytes": 61528,
+        "externalGrowthBytes": 403,
+        "arrayBufferGrowthBytes": 363,
+        "observedGrowthBytes": 61931,
+        "peakRssBytes": 93642752
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "stored-source",
+      "mutation": "insert"
+    },
+    {
+      "targetId": "portable-pdb",
+      "seed": 1,
+      "caseIndex": 14,
+      "inputBytes": 379,
+      "inputSHA256": "b857158d1d182a4bdc14ea4b1cbb5b97d1a2f2c1d4e5246be479c1d1fc0edb11",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PORTABLE_PDB_VALIDATION",
+      "detail": "Invalid Portable PDB: Invalid or duplicate metadata stream",
+      "metrics": {
+        "processElapsedMs": 678.5803460000025,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.0750510000000304,
+        "baselineHeapBytes": 40951728,
+        "heapUsedBytes": 41008976,
+        "heapGrowthBytes": 57248,
+        "externalGrowthBytes": 419,
+        "arrayBufferGrowthBytes": 379,
+        "observedGrowthBytes": 57667,
+        "peakRssBytes": 93974528
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "compressed-source",
+      "mutation": "duplicate"
+    },
+    {
+      "targetId": "portable-pdb",
+      "seed": 1,
+      "caseIndex": 15,
+      "inputBytes": 712,
+      "inputSHA256": "301175df3021fd413562ef0ca85b9a1af2d034d625d955a57afe49bf99bea82e",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PORTABLE_PDB_VALIDATION",
+      "detail": "Invalid Portable PDB: Invalid blob heap index",
+      "metrics": {
+        "processElapsedMs": 718.9389819999997,
+        "sampledRssBytes": 0,
+        "elapsedMs": 3.07396099999994,
+        "baselineHeapBytes": 41914480,
+        "heapUsedBytes": 42110192,
+        "heapGrowthBytes": 195712,
+        "externalGrowthBytes": 752,
+        "arrayBufferGrowthBytes": 712,
+        "observedGrowthBytes": 196464,
+        "peakRssBytes": 93851648
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "dotnet-documents",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "portable-pdb",
+      "seed": 1,
+      "caseIndex": 16,
+      "inputBytes": 29,
+      "inputSHA256": "78f8fcf9bf0ccf77eeb2d8d77ab165daf4ebbcaa0f06cb105e760f8bbe86bba0",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PORTABLE_PDB_VALIDATION",
+      "detail": "Invalid Portable PDB: Truncated binary data at 0x1c",
+      "metrics": {
+        "processElapsedMs": 709.0932380000013,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.084524999999985,
+        "baselineHeapBytes": 41255936,
+        "heapUsedBytes": 41306584,
+        "heapGrowthBytes": 50648,
+        "externalGrowthBytes": 69,
+        "arrayBufferGrowthBytes": 29,
+        "observedGrowthBytes": 50717,
+        "peakRssBytes": 93171712
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "empty-debug",
+      "mutation": "truncate"
+    },
+    {
+      "targetId": "portable-pdb",
+      "seed": 1,
+      "caseIndex": 17,
+      "inputBytes": 346,
+      "inputSHA256": "41d865005abd7058fa5da59f1c2df396eb89373853d2ef1afce1c70dfa27e05b",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PORTABLE_PDB_VALIDATION",
+      "detail": "Invalid Portable PDB: Invalid or duplicate metadata stream",
+      "metrics": {
+        "processElapsedMs": 685.8646419999932,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.297187000000008,
+        "baselineHeapBytes": 41037440,
+        "heapUsedBytes": 41093656,
+        "heapGrowthBytes": 56216,
+        "externalGrowthBytes": 386,
+        "arrayBufferGrowthBytes": 346,
+        "observedGrowthBytes": 56602,
+        "peakRssBytes": 93618176
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "stored-source",
+      "mutation": "delete"
+    },
+    {
+      "targetId": "portable-pdb",
+      "seed": 1,
+      "caseIndex": 18,
+      "inputBytes": 367,
+      "inputSHA256": "5b56d3ff3171455a8ddcebb01bdae44a21f9db7e3b58e4b2ea5aad05c156ee3a",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PORTABLE_PDB_VALIDATION",
+      "detail": "Invalid Portable PDB: Invalid or duplicate metadata stream",
+      "metrics": {
+        "processElapsedMs": 667.670094000001,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.4678089999999884,
+        "baselineHeapBytes": 41429648,
+        "heapUsedBytes": 41486656,
+        "heapGrowthBytes": 57008,
+        "externalGrowthBytes": 407,
+        "arrayBufferGrowthBytes": 367,
+        "observedGrowthBytes": 57415,
+        "peakRssBytes": 94629888
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "compressed-source",
+      "mutation": "insert"
+    },
+    {
+      "targetId": "portable-pdb",
+      "seed": 1,
+      "caseIndex": 19,
+      "inputBytes": 713,
+      "inputSHA256": "a0bffae58f2cd4070eb9d694e41825ff4e1cfab62bbced983d7f42bef54ce29d",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PORTABLE_PDB_VALIDATION",
+      "detail": "Invalid Portable PDB: Truncated binary data at 0xc0",
+      "metrics": {
+        "processElapsedMs": 639.3466120000012,
+        "sampledRssBytes": 0,
+        "elapsedMs": 2.4385160000000496,
+        "baselineHeapBytes": 41227488,
+        "heapUsedBytes": 41332584,
+        "heapGrowthBytes": 105096,
+        "externalGrowthBytes": 753,
+        "arrayBufferGrowthBytes": 713,
+        "observedGrowthBytes": 105849,
+        "peakRssBytes": 94846976
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "dotnet-documents",
+      "mutation": "duplicate"
+    },
+    {
+      "targetId": "portable-pdb",
+      "seed": 1,
+      "caseIndex": 20,
+      "inputBytes": 173,
+      "inputSHA256": "0413e3a82f6be82c60acb757ae0b07adf617d832e3d4fa06341f5a0130850822",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "PORTABLE_PDB_PARSED",
+      "metrics": {
+        "processElapsedMs": 686.4796320000023,
+        "sampledRssBytes": 0,
+        "elapsedMs": 2.5131560000000945,
+        "baselineHeapBytes": 43571112,
+        "heapUsedBytes": 43669528,
+        "heapGrowthBytes": 98416,
+        "externalGrowthBytes": 386,
+        "arrayBufferGrowthBytes": 346,
+        "observedGrowthBytes": 98802,
+        "peakRssBytes": 94195712
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "empty-debug",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "portable-pdb",
+      "seed": 1,
+      "caseIndex": 21,
+      "inputBytes": 17,
+      "inputSHA256": "752e542574c084d694cd3ac5715813a7aeede063a8220c94700841f44be51d16",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PORTABLE_PDB_VALIDATION",
+      "detail": "Invalid Portable PDB: Truncated binary data at 0x10",
+      "metrics": {
+        "processElapsedMs": 663.626943999996,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.51118299999996,
+        "baselineHeapBytes": 43505816,
+        "heapUsedBytes": 43553920,
+        "heapGrowthBytes": 48104,
+        "externalGrowthBytes": 57,
+        "arrayBufferGrowthBytes": 17,
+        "observedGrowthBytes": 48161,
+        "peakRssBytes": 96710656
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "stored-source",
+      "mutation": "truncate"
+    },
+    {
+      "targetId": "portable-pdb",
+      "seed": 1,
+      "caseIndex": 22,
+      "inputBytes": 356,
+      "inputSHA256": "eaa478bc6603eed851aaca26c2b7977159936c939326c1ec5b5aafe076d0ef1b",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PORTABLE_PDB_VALIDATION",
+      "detail": "Invalid Portable PDB: Invalid or duplicate metadata stream",
+      "metrics": {
+        "processElapsedMs": 777.6901490000018,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.5042219999999134,
+        "baselineHeapBytes": 41213064,
+        "heapUsedBytes": 41267112,
+        "heapGrowthBytes": 54048,
+        "externalGrowthBytes": 396,
+        "arrayBufferGrowthBytes": 356,
+        "observedGrowthBytes": 54444,
+        "peakRssBytes": 93900800
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "compressed-source",
+      "mutation": "delete"
+    },
+    {
+      "targetId": "portable-pdb",
+      "seed": 1,
+      "caseIndex": 23,
+      "inputBytes": 717,
+      "inputSHA256": "3535e39ba7e20dc42e27a30cf42ac0b44cf2acad789acedaf750ac694284b64a",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PORTABLE_PDB_VALIDATION",
+      "detail": "Invalid Portable PDB: Unsupported metadata table version",
+      "metrics": {
+        "processElapsedMs": 677.2028839999984,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.5713310000001002,
+        "baselineHeapBytes": 41079048,
+        "heapUsedBytes": 41138296,
+        "heapGrowthBytes": 59248,
+        "externalGrowthBytes": 757,
+        "arrayBufferGrowthBytes": 717,
+        "observedGrowthBytes": 60005,
+        "peakRssBytes": 93102080
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "dotnet-documents",
+      "mutation": "insert"
+    },
+    {
+      "targetId": "portable-pdb",
+      "seed": 1,
+      "caseIndex": 24,
+      "inputBytes": 189,
+      "inputSHA256": "9dc83db762107209cead89e071cee33f7554e3ea7650f8a35329adb2cdbef1d1",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PORTABLE_PDB_VALIDATION",
+      "detail": "Invalid Portable PDB: Invalid or duplicate metadata stream",
+      "metrics": {
+        "processElapsedMs": 695.7187589999958,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.1163320000000567,
+        "baselineHeapBytes": 41214432,
+        "heapUsedBytes": 41266824,
+        "heapGrowthBytes": 52392,
+        "externalGrowthBytes": 229,
+        "arrayBufferGrowthBytes": 189,
+        "observedGrowthBytes": 52621,
+        "peakRssBytes": 94253056
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "empty-debug",
+      "mutation": "duplicate"
+    },
+    {
+      "targetId": "portable-pdb",
+      "seed": 1,
+      "caseIndex": 25,
+      "inputBytes": 360,
+      "inputSHA256": "606ee82b53e68b7e7305f90ef72dffbe87c695eeec2a87048d4d684201ba4ad4",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PORTABLE_PDB_VALIDATION",
+      "detail": "Invalid Portable PDB: Too many metadata streams",
+      "metrics": {
+        "processElapsedMs": 625.230352000006,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.0556930000000193,
+        "baselineHeapBytes": 40808272,
+        "heapUsedBytes": 40865744,
+        "heapGrowthBytes": 57472,
+        "externalGrowthBytes": 400,
+        "arrayBufferGrowthBytes": 360,
+        "observedGrowthBytes": 57872,
+        "peakRssBytes": 94146560
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "stored-source",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "portable-pdb",
+      "seed": 1,
+      "caseIndex": 26,
+      "inputBytes": 293,
+      "inputSHA256": "fef4e07a16387e018896ede8be8df9f2478e7fc387f0a780914db91280764dc1",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PORTABLE_PDB_VALIDATION",
+      "detail": "Invalid Portable PDB: Invalid or duplicate metadata stream",
+      "metrics": {
+        "processElapsedMs": 640.0530060000019,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.1380439999999226,
+        "baselineHeapBytes": 41226512,
+        "heapUsedBytes": 41280512,
+        "heapGrowthBytes": 54000,
+        "externalGrowthBytes": 333,
+        "arrayBufferGrowthBytes": 293,
+        "observedGrowthBytes": 54333,
+        "peakRssBytes": 94834688
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "compressed-source",
+      "mutation": "truncate"
+    },
+    {
+      "targetId": "portable-pdb",
+      "seed": 1,
+      "caseIndex": 27,
+      "inputBytes": 704,
+      "inputSHA256": "e059e73ca83ff43c20718d4b17ea8eadf8a1434a3a7a4e34ef448ef49d5005ce",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PORTABLE_PDB_VALIDATION",
+      "detail": "Invalid Portable PDB: Invalid or duplicate metadata stream",
+      "metrics": {
+        "processElapsedMs": 658.1717599999974,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.2300890000000209,
+        "baselineHeapBytes": 41270648,
+        "heapUsedBytes": 41325640,
+        "heapGrowthBytes": 54992,
+        "externalGrowthBytes": 744,
+        "arrayBufferGrowthBytes": 704,
+        "observedGrowthBytes": 55736,
+        "peakRssBytes": 93986816
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "dotnet-documents",
+      "mutation": "delete"
+    },
+    {
+      "targetId": "portable-pdb",
+      "seed": 1,
+      "caseIndex": 28,
+      "inputBytes": 177,
+      "inputSHA256": "fc416c9493f9a464c5f3e29fff569dda36976443aa1d72d44e61c1838849ec7f",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PORTABLE_PDB_VALIDATION",
+      "detail": "Invalid Portable PDB: Unsupported metadata table version",
+      "metrics": {
+        "processElapsedMs": 663.1907320000028,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.318638999999962,
+        "baselineHeapBytes": 41041048,
+        "heapUsedBytes": 41105552,
+        "heapGrowthBytes": 64504,
+        "externalGrowthBytes": 217,
+        "arrayBufferGrowthBytes": 177,
+        "observedGrowthBytes": 64721,
+        "peakRssBytes": 93782016
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "empty-debug",
+      "mutation": "insert"
+    },
+    {
+      "targetId": "portable-pdb",
+      "seed": 1,
+      "caseIndex": 29,
+      "inputBytes": 363,
+      "inputSHA256": "97eb80766c044720ee00b6ea3f1c31300fe6892cfd4bf7efc545cc15626df94a",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PORTABLE_PDB_VALIDATION",
+      "detail": "Invalid Portable PDB: Truncated binary data at 0x2e",
+      "metrics": {
+        "processElapsedMs": 644.5658580000018,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.9485349999999926,
+        "baselineHeapBytes": 41244576,
+        "heapUsedBytes": 41347832,
+        "heapGrowthBytes": 103256,
+        "externalGrowthBytes": 403,
+        "arrayBufferGrowthBytes": 363,
+        "observedGrowthBytes": 103659,
+        "peakRssBytes": 94314496
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "stored-source",
+      "mutation": "duplicate"
+    },
+    {
+      "targetId": "portable-pdb",
+      "seed": 1,
+      "caseIndex": 30,
+      "inputBytes": 365,
+      "inputSHA256": "81c29ac0b7d9df489335a26b52f64683555c882f7082bd630942ec2f6c0c280b",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PORTABLE_PDB_VALIDATION",
+      "detail": "Invalid embedded source size",
+      "metrics": {
+        "processElapsedMs": 669.2342680000002,
+        "sampledRssBytes": 0,
+        "elapsedMs": 2.3290539999999282,
+        "baselineHeapBytes": 40949000,
+        "heapUsedBytes": 41061288,
+        "heapGrowthBytes": 112288,
+        "externalGrowthBytes": 405,
+        "arrayBufferGrowthBytes": 365,
+        "observedGrowthBytes": 112693,
+        "peakRssBytes": 93249536
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "compressed-source",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "portable-pdb",
+      "seed": 1,
+      "caseIndex": 31,
+      "inputBytes": 543,
+      "inputSHA256": "cd1cf3f5bd480a61fd31ef41991c0f55ba8b99e5634c2e9020abfcaa89fca093",
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "PORTABLE_PDB_VALIDATION",
+      "detail": "Invalid Portable PDB: Invalid or duplicate metadata stream",
+      "metrics": {
+        "processElapsedMs": 694.71905900001,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.1452740000000858,
+        "baselineHeapBytes": 41732856,
+        "heapUsedBytes": 41787672,
+        "heapGrowthBytes": 54816,
+        "externalGrowthBytes": 583,
+        "arrayBufferGrowthBytes": 543,
+        "observedGrowthBytes": 55399,
+        "peakRssBytes": 93253632
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "dotnet-documents",
+      "mutation": "truncate"
+    }
+  ],
+  "artifacts": [],
+  "budgets": {
+    "maxCases": 32,
+    "caseTimeoutMs": 1000,
+    "startupTimeoutMs": 5000,
+    "campaignTimeoutMs": 30000,
+    "maxInputBytes": 65536,
+    "maxOutputBytes": 65536,
+    "heapGrowthBytes": 16777216,
+    "v8HeapMb": 128,
+    "rssBytes": 268435456,
+    "maxCorpusCases": 128,
+    "maxCorpusBytes": 8388608
+  },
+  "environment": {
+    "node": "v24.19.0",
+    "platform": "linux",
+    "arch": "x64"
+  },
+  "targetId": "portable-pdb",
+  "seed": 1,
+  "sourceIdentity": {
+    "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+    "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+    "clean": true
+  },
+  "seedAcquisition": {
+    "status": "accepted",
+    "metrics": {
+      "processElapsedMs": 637.0636759999979,
+      "sampledRssBytes": 0,
+      "elapsedMs": 5.0588690000000724,
+      "baselineHeapBytes": 41237432,
+      "heapUsedBytes": 41587632,
+      "heapGrowthBytes": 350200,
+      "externalGrowthBytes": 17630,
+      "arrayBufferGrowthBytes": 15218,
+      "observedGrowthBytes": 367830,
+      "peakRssBytes": 93556736
+    },
+    "isolation": {
+      "v8OldSpaceMb": 128,
+      "rssGuard": "not-observed",
+      "osMemorySandbox": false
+    }
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "kind": "project4-final-integrated-validation",
+  "sourceBefore": {
+    "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+    "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+    "clean": true
+  },
+  "started": "2026-10-04T13:59:10.918243Z",
+  "commands": [
+    {
+      "argv": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap",
+        "planning/contracts/tests/audit-history.test.js",
+        "planning/contracts/tests/claim-generation-race.test.js",
+        "tests/a03-utf8-validation.test.js",
+        "tests/a13-01-compression-errors.test.js",
+        "tests/a13-01-embedded-compression.test.js",
+        "tests/a21-lsp-parameters.test.js",
+        "tests/protocol-lsp-envelope.test.js",
+        "tests/protocol.test.js",
+        "tests/conformance/release15/session-io.test.js",
+        "tests/a03-il-document-preservation.test.js",
+        "tests/a03-il-document-floats.test.js",
+        "tests/managed-il.test.js",
+        "tests/a03-05-il-document-layout.test.js",
+        "tests/a03-05-il-document-strings.test.js",
+        "tests/conformance/fuzz/binary-targets.test.js",
+        "tests/conformance/fuzz/bytecode-profile.test.js",
+        "tests/conformance/fuzz/campaign-cli.test.js",
+        "tests/conformance/fuzz/campaign-report.test.js",
+        "tests/conformance/fuzz/corpus.test.js",
+        "tests/conformance/fuzz/http-transport-target.test.js",
+        "tests/conformance/fuzz/lifecycle.test.js",
+        "tests/conformance/fuzz/native-host-target.test.js",
+        "tests/conformance/fuzz/portable-pdb-seed.test.js",
+        "tests/conformance/fuzz/primitives.test.js",
+        "tests/conformance/fuzz/protocol-sequences.test.js",
+        "tests/conformance/fuzz/retained-corpus.test.js",
+        "tests/conformance/fuzz/text-targets.test.js",
+        "tests/conformance/fuzz/worker-deadline.test.js",
+        "tests/conformance/fuzz/workspace-archive-target.test.js"
+      ],
+      "capture": "integrated.tap",
+      "exitCode": 0,
+      "started": "2026-10-04T13:59:10.938961Z",
+      "finished": "2026-10-04T13:59:33.339282Z",
+      "sourceBefore": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "sourceAfter": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      }
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/limited.js",
+        "npm",
+        "run",
+        "check"
+      ],
+      "capture": "check.log",
+      "exitCode": 0,
+      "started": "2026-10-04T13:59:33.378577Z",
+      "finished": "2026-10-04T13:59:38.089604Z",
+      "sourceBefore": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "sourceAfter": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      }
+    },
+    {
+      "argv": [
+        "node",
+        "scripts/limited.js",
+        "npm",
+        "run",
+        "build"
+      ],
+      "capture": "build.log",
+      "exitCode": 0,
+      "started": "2026-10-04T13:59:38.132720Z",
+      "finished": "2026-10-04T13:59:44.835158Z",
+      "sourceBefore": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "sourceAfter": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      }
+    }
+  ],
+  "status": "passed",
+  "finished": "2026-10-04T13:59:44.863559Z",
+  "sourceAfter": {
+    "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+    "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+    "clean": true
+  }
+}

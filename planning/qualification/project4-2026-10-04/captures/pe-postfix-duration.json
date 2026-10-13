@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "kind": "sharpforge-pe-postfix-duration-qualification",
+  "status": "passed",
+  "qualified": true,
+  "scope": "bounded-node-linux-x64-pe-loader",
+  "requiredDurationMs": 600000,
+  "recordedCampaignDurationMs": 714755,
+  "sourceIdentity": {
+    "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+    "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+    "clean": true
+  },
+  "counts": {
+    "accepted": 4,
+    "rejected": 1020,
+    "unsupported": 0,
+    "findings": 0,
+    "cancelled": 0
+  },
+  "campaigns": [
+    {
+      "sequence": 1,
+      "argv": [
+        "node",
+        "scripts/conformance/fuzz/run.js",
+        "--target",
+        "pe-loader",
+        "--seed",
+        "1",
+        "--cases",
+        "512",
+        "--case-ms",
+        "1000",
+        "--campaign-ms",
+        "600000",
+        "--output",
+        "artifacts/fuzz/project4-pe-postfix-seed1"
+      ],
+      "exitCode": 0,
+      "output": "artifacts/fuzz/project4-pe-postfix-seed1",
+      "started": "2026-10-04T14:07:41.580Z",
+      "finished": "2026-10-04T14:13:32.344Z",
+      "durationMs": 350764,
+      "status": "passed",
+      "counts": {
+        "accepted": 2,
+        "rejected": 510,
+        "unsupported": 0,
+        "findings": 0,
+        "cancelled": 0
+      },
+      "requestedCases": 512,
+      "completedCases": 512,
+      "sourceBefore": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "sourceAfter": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      }
+    },
+    {
+      "sequence": 2,
+      "argv": [
+        "node",
+        "scripts/conformance/fuzz/run.js",
+        "--target",
+        "pe-loader",
+        "--seed",
+        "2",
+        "--cases",
+        "512",
+        "--case-ms",
+        "1000",
+        "--campaign-ms",
+        "600000",
+        "--output",
+        "artifacts/fuzz/project4-pe-postfix-seed2"
+      ],
+      "exitCode": 0,
+      "output": "artifacts/fuzz/project4-pe-postfix-seed2",
+      "started": "2026-10-04T14:13:32.440Z",
+      "finished": "2026-10-04T14:19:36.431Z",
+      "durationMs": 363991,
+      "status": "passed",
+      "counts": {
+        "accepted": 2,
+        "rejected": 510,
+        "unsupported": 0,
+        "findings": 0,
+        "cancelled": 0
+      },
+      "requestedCases": 512,
+      "completedCases": 512,
+      "sourceBefore": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "sourceAfter": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      }
+    }
+  ],
+  "limitations": [
+    "Duration sums completed CLI campaign windows and excludes gaps between campaigns.",
+    "Recorded accepted and controlled-rejected inputs do not prove universal parser safety.",
+    "No other engine/platform or operating-system sandbox qualification is implied."
+  ]
+}

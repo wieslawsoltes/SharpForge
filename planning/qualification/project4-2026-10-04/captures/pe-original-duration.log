@@ -1,0 +1,23 @@
+{
+  "status": "failed",
+  "qualified": false,
+  "source": "bf85020e6024cdd679a0234d9f050ca7dedddf53",
+  "targets": [
+    {
+      "targetId": "pe-loader",
+      "status": "failed",
+      "requestedCases": 512,
+      "completedCases": 512,
+      "counts": {
+        "accepted": 2,
+        "rejected": 508,
+        "unsupported": 0,
+        "findings": 2,
+        "cancelled": 0
+      }
+    }
+  ],
+  "output": "/dev/shm/sharpforge-p4/artifacts/fuzz/project4-pe-seed1"
+}
+{"completedCampaign": 1, "durationMs": 351421, "status": "failed", "counts": {"accepted": 2, "rejected": 508, "unsupported": 0, "findings": 2, "cancelled": 0}}
+{"qualification": "failed", "durationMs": 351421, "counts": {"accepted": 2, "rejected": 508, "unsupported": 0, "findings": 2, "cancelled": 0}}

@@ -1,0 +1,1587 @@
+{
+  "schemaVersion": 1,
+  "status": "unsupported",
+  "requestedCases": 32,
+  "completedCases": 32,
+  "counts": {
+    "accepted": 4,
+    "rejected": 26,
+    "unsupported": 2,
+    "findings": 0,
+    "cancelled": 0
+  },
+  "cases": [
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 0,
+      "inputBytes": 311,
+      "inputSHA256": "ee505e3b7a3b7d136a826a96fe29d566177a60c277c7673df27ffdbf53775be3",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "BYTECODE_VERIFIED_SCALAR_EXECUTED",
+      "metrics": {
+        "processElapsedMs": 879.633468,
+        "sampledRssBytes": 0,
+        "elapsedMs": 5.06121799999994,
+        "baselineHeapBytes": 40457280,
+        "heapUsedBytes": 40655160,
+        "heapGrowthBytes": 197880,
+        "externalGrowthBytes": 351,
+        "arrayBufferGrowthBytes": 311,
+        "observedGrowthBytes": 198231,
+        "peakRssBytes": 92831744
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "return-constant",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 1,
+      "inputBytes": 324,
+      "inputSHA256": "4b7d7f4a7c5cc2eaa4ca1df3c9d1c7d03fed7ebf176a4d16493d830095f23687",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "BYTECODE_VERIFIED_SCALAR_EXECUTED",
+      "metrics": {
+        "processElapsedMs": 826.1600390000021,
+        "sampledRssBytes": 0,
+        "elapsedMs": 4.047979999999939,
+        "baselineHeapBytes": 40850840,
+        "heapUsedBytes": 41061584,
+        "heapGrowthBytes": 210744,
+        "externalGrowthBytes": 364,
+        "arrayBufferGrowthBytes": 324,
+        "observedGrowthBytes": 211108,
+        "peakRssBytes": 94597120
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "add-two-integers",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 2,
+      "inputBytes": 298,
+      "inputSHA256": "51977c5668b3e7b06f3584d55a4333dae41a550d8e002f1b923293359184cc7c",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_JSON",
+      "detail": "Expected ':' after property name in JSON at position 25 (line 1 column 26)",
+      "metrics": {
+        "processElapsedMs": 697.8724890000012,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.4258360000000039,
+        "baselineHeapBytes": 40478872,
+        "heapUsedBytes": 40510256,
+        "heapGrowthBytes": 31384,
+        "externalGrowthBytes": 338,
+        "arrayBufferGrowthBytes": 298,
+        "observedGrowthBytes": 31722,
+        "peakRssBytes": 93929472
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "return-constant",
+      "mutation": "delete"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 3,
+      "inputBytes": 325,
+      "inputSHA256": "0c997ee81c02923a0dd34041de4defd1384b46cb6a2b1c0611a46dca0726cab9",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_JSON",
+      "detail": "Expected ':' after property name in JSON at position 193 (line 1 column 194)",
+      "metrics": {
+        "processElapsedMs": 680.416280999998,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.5067159999999831,
+        "baselineHeapBytes": 41200504,
+        "heapUsedBytes": 41222432,
+        "heapGrowthBytes": 21928,
+        "externalGrowthBytes": 365,
+        "arrayBufferGrowthBytes": 325,
+        "observedGrowthBytes": 22293,
+        "peakRssBytes": 92557312
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "add-two-integers",
+      "mutation": "insert"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 4,
+      "inputBytes": 323,
+      "inputSHA256": "6f3d85348495344205a371c3433085d85786d397217badaa1ab275d115d40dfc",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_JSON",
+      "detail": "Expected ',' or '}' after property value in JSON at position 37 (line 1 column 38)",
+      "metrics": {
+        "processElapsedMs": 653.6688790000007,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.43671199999994315,
+        "baselineHeapBytes": 43170688,
+        "heapUsedBytes": 43196216,
+        "heapGrowthBytes": 25528,
+        "externalGrowthBytes": 363,
+        "arrayBufferGrowthBytes": 323,
+        "observedGrowthBytes": 25891,
+        "peakRssBytes": 95825920
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "return-constant",
+      "mutation": "duplicate"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 5,
+      "inputBytes": 324,
+      "inputSHA256": "58e789f9ead2f9c0204ffb64d3d9f793233dc12061686659cfab225d7e7382c8",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_JSON",
+      "detail": "Expected ':' after property name in JSON at position 126 (line 1 column 127)",
+      "metrics": {
+        "processElapsedMs": 673.172348,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.38610799999992196,
+        "baselineHeapBytes": 41375824,
+        "heapUsedBytes": 41401120,
+        "heapGrowthBytes": 25296,
+        "externalGrowthBytes": 364,
+        "arrayBufferGrowthBytes": 324,
+        "observedGrowthBytes": 25660,
+        "peakRssBytes": 93028352
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "add-two-integers",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 6,
+      "inputBytes": 5,
+      "inputSHA256": "65bc533dd416e20fd09ab66d39927ac244187edb009780cce90b29f5db0f85b5",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_JSON",
+      "detail": "Unterminated string in JSON at position 5 (line 1 column 6)",
+      "metrics": {
+        "processElapsedMs": 692.8363590000008,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.499704999999949,
+        "baselineHeapBytes": 40870688,
+        "heapUsedBytes": 40891592,
+        "heapGrowthBytes": 20904,
+        "externalGrowthBytes": 45,
+        "arrayBufferGrowthBytes": 5,
+        "observedGrowthBytes": 20949,
+        "peakRssBytes": 94949376
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "return-constant",
+      "mutation": "truncate"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 7,
+      "inputBytes": 320,
+      "inputSHA256": "ee91a632433a29b650ff1cd29f08359dac16ecccd9efb9bb271a852031cb66d1",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "BYTECODE_VERIFIED_SCALAR_EXECUTED",
+      "metrics": {
+        "processElapsedMs": 682.687412000003,
+        "sampledRssBytes": 0,
+        "elapsedMs": 5.089929000000097,
+        "baselineHeapBytes": 43125984,
+        "heapUsedBytes": 43336712,
+        "heapGrowthBytes": 210728,
+        "externalGrowthBytes": 360,
+        "arrayBufferGrowthBytes": 320,
+        "observedGrowthBytes": 211088,
+        "peakRssBytes": 93929472
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "add-two-integers",
+      "mutation": "delete"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 8,
+      "inputBytes": 327,
+      "inputSHA256": "aaee3ddc00fcb7bd438463d41aa25467dce65be8a087f60fa62301efaef0cdd3",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_UTF8",
+      "metrics": {
+        "processElapsedMs": 771.7074219999995,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.3260490000000118,
+        "baselineHeapBytes": 40738696,
+        "heapUsedBytes": 40756008,
+        "heapGrowthBytes": 17312,
+        "externalGrowthBytes": 367,
+        "arrayBufferGrowthBytes": 327,
+        "observedGrowthBytes": 17679,
+        "peakRssBytes": 93872128
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "return-constant",
+      "mutation": "insert"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 9,
+      "inputBytes": 339,
+      "inputSHA256": "4ff5abcadb9e6b9536166758af06d3471f0851a8052c342fa566e5c356527997",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_JSON",
+      "detail": "Expected ':' after property name in JSON at position 95 (line 1 column 96)",
+      "metrics": {
+        "processElapsedMs": 808.9262539999982,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.3701449999999795,
+        "baselineHeapBytes": 41236416,
+        "heapUsedBytes": 41258720,
+        "heapGrowthBytes": 22304,
+        "externalGrowthBytes": 379,
+        "arrayBufferGrowthBytes": 339,
+        "observedGrowthBytes": 22683,
+        "peakRssBytes": 93192192
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "add-two-integers",
+      "mutation": "duplicate"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 10,
+      "inputBytes": 311,
+      "inputSHA256": "2ea27bdd7aca968ae0c5cba3bdf7ff997b9dc456f6362e3434c0aec0f3740c58",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "BYTECODE_VERIFIED_SCALAR_EXECUTED",
+      "metrics": {
+        "processElapsedMs": 801.8602470000005,
+        "sampledRssBytes": 0,
+        "elapsedMs": 3.5443050000000085,
+        "baselineHeapBytes": 40541040,
+        "heapUsedBytes": 40750576,
+        "heapGrowthBytes": 209536,
+        "externalGrowthBytes": 351,
+        "arrayBufferGrowthBytes": 311,
+        "observedGrowthBytes": 209887,
+        "peakRssBytes": 93990912
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "return-constant",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 11,
+      "inputBytes": 32,
+      "inputSHA256": "b2f4917872dfc434df0f7c86f1172a1edb0ed7d0f057a0dbd8c03b54ca7a725f",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_JSON",
+      "detail": "Unterminated string in JSON at position 32 (line 1 column 33)",
+      "metrics": {
+        "processElapsedMs": 727.2668310000008,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.4415490000000091,
+        "baselineHeapBytes": 43132264,
+        "heapUsedBytes": 43150672,
+        "heapGrowthBytes": 18408,
+        "externalGrowthBytes": 72,
+        "arrayBufferGrowthBytes": 32,
+        "observedGrowthBytes": 18480,
+        "peakRssBytes": 95379456
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "add-two-integers",
+      "mutation": "truncate"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 12,
+      "inputBytes": 304,
+      "inputSHA256": "7e30eab20c9b2cb7e08a4b441c3c70fb8682cf0215497d33f557c36efaf52fda",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_JSON",
+      "detail": "Unterminated string in JSON at position 304 (line 1 column 305)",
+      "metrics": {
+        "processElapsedMs": 756.6295009999958,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.5023189999999431,
+        "baselineHeapBytes": 41483584,
+        "heapUsedBytes": 41505480,
+        "heapGrowthBytes": 21896,
+        "externalGrowthBytes": 344,
+        "arrayBufferGrowthBytes": 304,
+        "observedGrowthBytes": 22240,
+        "peakRssBytes": 93487104
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "return-constant",
+      "mutation": "delete"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 13,
+      "inputBytes": 327,
+      "inputSHA256": "e504d767316c88c30c558c6186e1b72a0df5b36a59afe23fe664b5b784fc7f3f",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_UTF8",
+      "metrics": {
+        "processElapsedMs": 812.5146259999965,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.3559129999999868,
+        "baselineHeapBytes": 41474520,
+        "heapUsedBytes": 41494800,
+        "heapGrowthBytes": 20280,
+        "externalGrowthBytes": 367,
+        "arrayBufferGrowthBytes": 327,
+        "observedGrowthBytes": 20647,
+        "peakRssBytes": 95825920
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "add-two-integers",
+      "mutation": "insert"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 14,
+      "inputBytes": 325,
+      "inputSHA256": "4fb43f2a3b20fd71c5aa8e3f7527f6c0e23788ff6ba58e912fdedbd0004c8825",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_JSON",
+      "detail": "Unexpected token 'a', ...\",0,0,17,0,admoyna\"id\"... is not valid JSON",
+      "metrics": {
+        "processElapsedMs": 682.3564379999953,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.37689399999999296,
+        "baselineHeapBytes": 40584136,
+        "heapUsedBytes": 40609664,
+        "heapGrowthBytes": 25528,
+        "externalGrowthBytes": 365,
+        "arrayBufferGrowthBytes": 325,
+        "observedGrowthBytes": 25893,
+        "peakRssBytes": 94171136
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "return-constant",
+      "mutation": "duplicate"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 15,
+      "inputBytes": 324,
+      "inputSHA256": "7139bb51c744b2d859647407dba4e91d182d136b8db2243c676a88cabb028a7c",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_JSON",
+      "detail": "Expected ',' or '}' after property value in JSON at position 96 (line 1 column 97)",
+      "metrics": {
+        "processElapsedMs": 675.3615710000013,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.3784570000000258,
+        "baselineHeapBytes": 43204448,
+        "heapUsedBytes": 43230904,
+        "heapGrowthBytes": 26456,
+        "externalGrowthBytes": 364,
+        "arrayBufferGrowthBytes": 324,
+        "observedGrowthBytes": 26820,
+        "peakRssBytes": 94908416
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "add-two-integers",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 16,
+      "inputBytes": 143,
+      "inputSHA256": "16efa2dabbfbda6dc6eedcd5097ef55e602233df7bdc3866ba408d15148ecc45",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_JSON",
+      "detail": "Unterminated string in JSON at position 143 (line 1 column 144)",
+      "metrics": {
+        "processElapsedMs": 655.2905769999998,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.39437999999995554,
+        "baselineHeapBytes": 40547960,
+        "heapUsedBytes": 40580216,
+        "heapGrowthBytes": 32256,
+        "externalGrowthBytes": 183,
+        "arrayBufferGrowthBytes": 143,
+        "observedGrowthBytes": 32439,
+        "peakRssBytes": 93966336
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "return-constant",
+      "mutation": "truncate"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 17,
+      "inputBytes": 310,
+      "inputSHA256": "a6d761b5d52ba8f4487a0858cf360c5d57e7ee2e32d2e30d3e516d376b985f26",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_VALIDATION",
+      "detail": "Malformed or incompatible bytecode image",
+      "metrics": {
+        "processElapsedMs": 673.4982649999947,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.335644000000002,
+        "baselineHeapBytes": 40818808,
+        "heapUsedBytes": 40863840,
+        "heapGrowthBytes": 45032,
+        "externalGrowthBytes": 350,
+        "arrayBufferGrowthBytes": 310,
+        "observedGrowthBytes": 45382,
+        "peakRssBytes": 93663232
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "add-two-integers",
+      "mutation": "delete"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 18,
+      "inputBytes": 313,
+      "inputSHA256": "6cf807b32bd4d8861e2fc062e65e21d73b33aba849718b1834a8ca5b00e9f87b",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_UTF8",
+      "metrics": {
+        "processElapsedMs": 630.8399080000017,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.4115150000000085,
+        "baselineHeapBytes": 43378672,
+        "heapUsedBytes": 43399432,
+        "heapGrowthBytes": 20760,
+        "externalGrowthBytes": 353,
+        "arrayBufferGrowthBytes": 313,
+        "observedGrowthBytes": 21113,
+        "peakRssBytes": 95268864
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "return-constant",
+      "mutation": "insert"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 19,
+      "inputBytes": 325,
+      "inputSHA256": "3abf43d8418e1ea05bffceed66894ceb7f49780361ee01bbec432b3f1be1d630",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_JSON",
+      "detail": "Expected ':' after property name in JSON at position 236 (line 1 column 237)",
+      "metrics": {
+        "processElapsedMs": 626.7153800000015,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.36311399999999594,
+        "baselineHeapBytes": 43155736,
+        "heapUsedBytes": 43181072,
+        "heapGrowthBytes": 25336,
+        "externalGrowthBytes": 365,
+        "arrayBufferGrowthBytes": 325,
+        "observedGrowthBytes": 25701,
+        "peakRssBytes": 94531584
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "add-two-integers",
+      "mutation": "duplicate"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 20,
+      "inputBytes": 311,
+      "inputSHA256": "58d9f20f254c2fafe6f4e6743453e810dde4bce0002fdccf89be1790a0fc7e49",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_JSON",
+      "detail": "Unexpected token '\u001b', ...\"\"sources\":\u001b],\"method\"... is not valid JSON",
+      "metrics": {
+        "processElapsedMs": 655.4591230000005,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.37510199999996985,
+        "baselineHeapBytes": 43077808,
+        "heapUsedBytes": 43103128,
+        "heapGrowthBytes": 25320,
+        "externalGrowthBytes": 351,
+        "arrayBufferGrowthBytes": 311,
+        "observedGrowthBytes": 25671,
+        "peakRssBytes": 95477760
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "return-constant",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 21,
+      "inputBytes": 27,
+      "inputSHA256": "43b7cc783397e9d695d017f67017f0d12964f62e28e5bbd296e81b2a55da8c44",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_JSON",
+      "detail": "Unterminated string in JSON at position 27 (line 1 column 28)",
+      "metrics": {
+        "processElapsedMs": 763.1697180000047,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.3979949999999235,
+        "baselineHeapBytes": 41139824,
+        "heapUsedBytes": 41161640,
+        "heapGrowthBytes": 21816,
+        "externalGrowthBytes": 67,
+        "arrayBufferGrowthBytes": 27,
+        "observedGrowthBytes": 21883,
+        "peakRssBytes": 95617024
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "add-two-integers",
+      "mutation": "truncate"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 22,
+      "inputBytes": 310,
+      "inputSHA256": "5082dcf9e9631f34f622ad6c552888521f7285064a74562c1efcd677a20dcadc",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "unsupported",
+      "code": "BYTECODE_EXECUTION_PROFILE",
+      "detail": "Verified; scalar-only execution profile excluded this image",
+      "metrics": {
+        "processElapsedMs": 777.3092319999996,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.9691859999999224,
+        "baselineHeapBytes": 43249632,
+        "heapUsedBytes": 43296208,
+        "heapGrowthBytes": 46576,
+        "externalGrowthBytes": 350,
+        "arrayBufferGrowthBytes": 310,
+        "observedGrowthBytes": 46926,
+        "peakRssBytes": 95215616
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "return-constant",
+      "mutation": "delete"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 23,
+      "inputBytes": 329,
+      "inputSHA256": "baf18ce479770b13228acf5e8b2b4552ca9a7bc6df871a11603c76eacda20112",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_UTF8",
+      "metrics": {
+        "processElapsedMs": 781.8060759999935,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.32158300000003237,
+        "baselineHeapBytes": 43817992,
+        "heapUsedBytes": 43835408,
+        "heapGrowthBytes": 17416,
+        "externalGrowthBytes": 369,
+        "arrayBufferGrowthBytes": 329,
+        "observedGrowthBytes": 17785,
+        "peakRssBytes": 95416320
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "add-two-integers",
+      "mutation": "insert"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 24,
+      "inputBytes": 327,
+      "inputSHA256": "a0c17dfb7989ed39b6c596b674ce52b86da3a0ea3f7fb61354fdcf305b279797",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_JSON",
+      "detail": "Expected ':' after property name in JSON at position 272 (line 1 column 273)",
+      "metrics": {
+        "processElapsedMs": 750.6834999999992,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.3871199999999817,
+        "baselineHeapBytes": 43157344,
+        "heapUsedBytes": 43176312,
+        "heapGrowthBytes": 18968,
+        "externalGrowthBytes": 367,
+        "arrayBufferGrowthBytes": 327,
+        "observedGrowthBytes": 19335,
+        "peakRssBytes": 93483008
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "return-constant",
+      "mutation": "duplicate"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 25,
+      "inputBytes": 324,
+      "inputSHA256": "a8181b2ac8f5bd158c8a0f25bc90df8a321114ad37e4412396d492a9b0a6bf64",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_JSON",
+      "detail": "Expected property name or '}' in JSON at position 67 (line 1 column 68)",
+      "metrics": {
+        "processElapsedMs": 778.1464239999987,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.5071759999999585,
+        "baselineHeapBytes": 41395120,
+        "heapUsedBytes": 41420248,
+        "heapGrowthBytes": 25128,
+        "externalGrowthBytes": 364,
+        "arrayBufferGrowthBytes": 324,
+        "observedGrowthBytes": 25492,
+        "peakRssBytes": 92700672
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "add-two-integers",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 26,
+      "inputBytes": 281,
+      "inputSHA256": "5261e6ce6df1ad58dd63ba47ee797c34b97437b28dd4ed1a3f8aa43ac87d8568",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_JSON",
+      "detail": "Unterminated string in JSON at position 281 (line 1 column 282)",
+      "metrics": {
+        "processElapsedMs": 710.3274629999942,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.5344159999999647,
+        "baselineHeapBytes": 43159504,
+        "heapUsedBytes": 43184816,
+        "heapGrowthBytes": 25312,
+        "externalGrowthBytes": 321,
+        "arrayBufferGrowthBytes": 281,
+        "observedGrowthBytes": 25633,
+        "peakRssBytes": 95313920
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "return-constant",
+      "mutation": "truncate"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 27,
+      "inputBytes": 316,
+      "inputSHA256": "174870e7eedd158299a7df6440e362290a950da54917dc35cd37f1167d8fc135",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_JSON",
+      "detail": "Expected ':' after property name in JSON at position 66 (line 1 column 67)",
+      "metrics": {
+        "processElapsedMs": 675.5434769999993,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.36146099999996295,
+        "baselineHeapBytes": 40535880,
+        "heapUsedBytes": 40564904,
+        "heapGrowthBytes": 29024,
+        "externalGrowthBytes": 356,
+        "arrayBufferGrowthBytes": 316,
+        "observedGrowthBytes": 29380,
+        "peakRssBytes": 93974528
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "add-two-integers",
+      "mutation": "delete"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 28,
+      "inputBytes": 315,
+      "inputSHA256": "65f12e66bed252ef0db8493032e53a8fb22bc09733a7370b5ee74b6e0214c1e1",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_UTF8",
+      "metrics": {
+        "processElapsedMs": 661.1308639999988,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.4534969999999703,
+        "baselineHeapBytes": 40768336,
+        "heapUsedBytes": 40785632,
+        "heapGrowthBytes": 17296,
+        "externalGrowthBytes": 355,
+        "arrayBufferGrowthBytes": 315,
+        "observedGrowthBytes": 17651,
+        "peakRssBytes": 94482432
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "return-constant",
+      "mutation": "insert"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 29,
+      "inputBytes": 327,
+      "inputSHA256": "1a186b356b35cf7eeaf3a7cf28a1eb2e9ce5d91b8bdbffcaf2cfa0f02f871ae9",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_JSON",
+      "detail": "Expected ',' or '}' after property value in JSON at position 53 (line 1 column 54)",
+      "metrics": {
+        "processElapsedMs": 800.0928490000006,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.45738300000004983,
+        "baselineHeapBytes": 40813824,
+        "heapUsedBytes": 40833056,
+        "heapGrowthBytes": 19232,
+        "externalGrowthBytes": 367,
+        "arrayBufferGrowthBytes": 327,
+        "observedGrowthBytes": 19599,
+        "peakRssBytes": 94343168
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "add-two-integers",
+      "mutation": "duplicate"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 30,
+      "inputBytes": 311,
+      "inputSHA256": "a3d870cbc9dc5b29a006211a640d78ab45be21b4e3c09e667d074103b6615164",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "unsupported",
+      "code": "BYTECODE_FORMAT_VERSION",
+      "metrics": {
+        "processElapsedMs": 773.9153099999967,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.5820860000000039,
+        "baselineHeapBytes": 43201848,
+        "heapUsedBytes": 43241200,
+        "heapGrowthBytes": 39352,
+        "externalGrowthBytes": 351,
+        "arrayBufferGrowthBytes": 311,
+        "observedGrowthBytes": 39703,
+        "peakRssBytes": 94523392
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "return-constant",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "bytecode-image",
+      "seed": 1,
+      "caseIndex": 31,
+      "inputBytes": 26,
+      "inputSHA256": "aea95d683eecf0db6fc8369787add693f0c3e12e582acf588ded37f4021291ee",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "BYTECODE_JSON",
+      "detail": "Unexpected end of JSON input",
+      "metrics": {
+        "processElapsedMs": 932.4290589999946,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.4088610000000017,
+        "baselineHeapBytes": 43094672,
+        "heapUsedBytes": 43118928,
+        "heapGrowthBytes": 24256,
+        "externalGrowthBytes": 66,
+        "arrayBufferGrowthBytes": 26,
+        "observedGrowthBytes": 24322,
+        "peakRssBytes": 96006144
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "add-two-integers",
+      "mutation": "truncate"
+    }
+  ],
+  "artifacts": [],
+  "budgets": {
+    "maxCases": 32,
+    "caseTimeoutMs": 1000,
+    "startupTimeoutMs": 5000,
+    "campaignTimeoutMs": 30000,
+    "maxInputBytes": 65536,
+    "maxOutputBytes": 65536,
+    "heapGrowthBytes": 16777216,
+    "v8HeapMb": 128,
+    "rssBytes": 268435456,
+    "maxCorpusCases": 128,
+    "maxCorpusBytes": 8388608
+  },
+  "environment": {
+    "node": "v24.19.0",
+    "platform": "linux",
+    "arch": "x64"
+  },
+  "targetId": "bytecode-image",
+  "seed": 1,
+  "sourceIdentity": {
+    "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+    "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+    "clean": true
+  },
+  "seedAcquisition": {
+    "status": "accepted",
+    "metrics": {
+      "processElapsedMs": 842.2512109999989,
+      "sampledRssBytes": 0,
+      "elapsedMs": 0.46840899999995145,
+      "baselineHeapBytes": 43167400,
+      "heapUsedBytes": 43196616,
+      "heapGrowthBytes": 29216,
+      "externalGrowthBytes": 675,
+      "arrayBufferGrowthBytes": 635,
+      "observedGrowthBytes": 29891,
+      "peakRssBytes": 94277632
+    },
+    "isolation": {
+      "v8OldSpaceMb": 128,
+      "rssGuard": "not-observed",
+      "osMemorySandbox": false
+    }
+  }
+}

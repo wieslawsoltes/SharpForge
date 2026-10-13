@@ -1,0 +1,84 @@
+TAP version 13
+# Subtest: failure then pass is flaky with raw attempts and never silent green
+not ok 1 - failure then pass is flaky with raw attempts and never silent green
+  ---
+  duration_ms: 3.242488
+  type: 'test'
+  location: '/dev/shm/p4-tap/tests/conformance/flaky/detect.test.js:8:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    'failed' !== 'flaky'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'flaky'
+  actual: 'failed'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-tap/tests/conformance/flaky/detect.test.js:12:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.start (node:internal/test_runner/test:1242:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+  ...
+# Subtest: passing files are not retried, persistent failures retain bounded attempts
+not ok 2 - passing files are not retried, persistent failures retain bounded attempts
+  ---
+  duration_ms: 0.618149
+  type: 'test'
+  location: '/dev/shm/p4-tap/tests/conformance/flaky/detect.test.js:16:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    3 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 3
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///dev/shm/p4-tap/tests/conformance/flaky/detect.test.js:17:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: expired quarantine and invalid inputs fail before commands; active quarantine does not hide failures
+ok 3 - expired quarantine and invalid inputs fail before commands; active quarantine does not hide failures
+  ---
+  duration_ms: 1.296407
+  type: 'test'
+  ...
+# Subtest: cancellation and timeout cannot produce passing evidence
+ok 4 - cancellation and timeout cannot produce passing evidence
+  ---
+  duration_ms: 1.962196
+  type: 'test'
+  ...
+# Subtest: empty successful subprocess output is not passing test evidence
+ok 5 - empty successful subprocess output is not passing test evidence
+  ---
+  duration_ms: 0.311929
+  type: 'test'
+  ...
+# Subtest: real Node subprocess failure then pass retains both exact TAP attempts
+ok 6 - real Node subprocess failure then pass retains both exact TAP attempts
+  ---
+  duration_ms: 279.118402
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 4
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 369.385202

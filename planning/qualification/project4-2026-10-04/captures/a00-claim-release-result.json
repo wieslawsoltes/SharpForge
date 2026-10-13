@@ -1,0 +1,77 @@
+{
+  "timeline": [
+    {
+      "version": 1,
+      "task": "SF-A00-T07.1",
+      "issue": 1,
+      "agent": "codex-walkthrough",
+      "generation": "927909c5-67ed-4048-b151-a1353d4afd0a",
+      "sequence": 0,
+      "at": "2026-10-04T13:28:34.565Z",
+      "event": "claim",
+      "branch": "codex/SF-A00-T07.3",
+      "expires": "2026-10-05T13:28:34.560Z",
+      "commentId": 1
+    },
+    {
+      "version": 1,
+      "task": "SF-A00-T07.1",
+      "issue": 1,
+      "agent": "codex-walkthrough",
+      "generation": "927909c5-67ed-4048-b151-a1353d4afd0a",
+      "sequence": 1,
+      "at": "2026-10-04T13:28:34.566Z",
+      "event": "lock",
+      "key": "studio",
+      "commentId": 2
+    },
+    {
+      "version": 1,
+      "task": "SF-A00-T07.1",
+      "issue": 1,
+      "agent": "codex-walkthrough",
+      "generation": "927909c5-67ed-4048-b151-a1353d4afd0a",
+      "sequence": 2,
+      "at": "2026-10-04T13:28:34.568Z",
+      "event": "heartbeat",
+      "expires": "2026-10-05T13:28:34.567Z",
+      "commentId": 3
+    },
+    {
+      "version": 1,
+      "task": "SF-A00-T07.1",
+      "issue": 1,
+      "agent": "codex-walkthrough",
+      "generation": "927909c5-67ed-4048-b151-a1353d4afd0a",
+      "sequence": 4,
+      "at": "2026-10-04T13:28:34.568Z",
+      "event": "unlock",
+      "key": "studio",
+      "commentId": 4
+    },
+    {
+      "version": 1,
+      "task": "SF-A00-T07.1",
+      "issue": 1,
+      "agent": "codex-walkthrough",
+      "generation": "927909c5-67ed-4048-b151-a1353d4afd0a",
+      "sequence": 5,
+      "at": "2026-10-04T13:28:34.570Z",
+      "event": "release",
+      "actor": "codex-walkthrough",
+      "reconcile": false,
+      "reason": null,
+      "handoff": null,
+      "branch": "codex/SF-A00-T07.3",
+      "commentId": 5
+    }
+  ],
+  "owner": null,
+  "locks": [],
+  "gaps": [],
+  "complete": true,
+  "limitations": [
+    "GitHub Projects does not expose a general field-value history API; supplied fieldHistory is merged explicitly. Legacy unstructured comments are not proof of a complete timeline.",
+    "Throttled heartbeats may omit intermediate record sequences. Consistent observable events do not prove every Git ref write was captured."
+  ]
+}

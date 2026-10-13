@@ -1,0 +1,1356 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-10-04T14:41:53.193882Z",
+  "scope": "Project4 A00/A29/R015 continuation; historical244 mapped identities are separately timestamped.",
+  "qualificationPolicy": {
+    "localEnvironment": {
+      "node": "v24.19.0",
+      "platform": "linux",
+      "arch": "x64"
+    },
+    "ordinaryCore": "Static/manifests, policy and build checks; Node unit tests are skipped. Core declares Node22; dedicated build/fuzz toolchains have separate pins.",
+    "sourceIdentity": "Local commit metadata and API-created GitHub commit metadata differ. Every implementation publishing tree was compared byte-for-byte with its tested local tree.",
+    "counting": "Focused suites overlap; do not add their counts to claim unique coverage. Final integration has its own distinct total.",
+    "serial": "Each hosted submission and local heavy job was serialized; the main core run after every merge completed before the next batch."
+  },
+  "deliveries": [
+    {
+      "pr": 4521,
+      "scope": "A00 immutable claim generation",
+      "localCommit": "d2504f7d1ca2a74210a00f3d0dc422ab7834896f",
+      "tree": "23b492442a99984263b09f3b924a9b4343baa528",
+      "publishedCommit": "960266c71ab6f7322be6a36e4e3c4d1a582b129c",
+      "merge": "ae63ececd3d55856843c9c65119a4770483ba664",
+      "prCore": 37198468903,
+      "mainCore": 37198688358,
+      "tests": {
+        "passed": 28,
+        "failed": 0
+      },
+      "capture": "captures/a00-fixed.tap",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4521",
+      "state": "merged",
+      "prCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37198468903",
+      "mainCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37198688358",
+      "prCoreConclusion": "success",
+      "mainCoreConclusion": "success"
+    },
+    {
+      "pr": 4522,
+      "scope": "A00 authoritative audit ordering",
+      "localCommit": "f51c5203464d51b6c6a503f19d53beaaaeaabc71",
+      "tree": "60c0d4c7d84c702f40b1c486783be2c850df3afb",
+      "publishedCommit": "51cd00ffc5850cf511c0899355f0bc43d4472e02",
+      "merge": "69d398b2a0f5b6cff83a3a79655f574a41d527a0",
+      "prCore": 37198601260,
+      "mainCore": 37198779228,
+      "tests": {
+        "passed": 32,
+        "failed": 0
+      },
+      "capture": "captures/audit-fixed.tap",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4522",
+      "state": "merged",
+      "prCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37198601260",
+      "mainCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37198779228",
+      "prCoreConclusion": "success",
+      "mainCoreConclusion": "success"
+    },
+    {
+      "pr": 4524,
+      "scope": "Four binary fuzz adapters",
+      "localCommit": "a73dbc518cf46d7384b9f3910717dce1b7d380ec",
+      "tree": "a8c1d9ac0477182c778965426cd6ed58f3884e36",
+      "publishedCommit": "ff74074766cefab5c78135d586c01f08f3849f01",
+      "merge": "0185c712c24c1f793b341a2240a6053d9093d597",
+      "prCore": 37198727169,
+      "mainCore": 37199040727,
+      "tests": {
+        "passed": 26,
+        "failed": 0
+      },
+      "capture": "captures/fuzz-binary.tap",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4524",
+      "state": "merged",
+      "prCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37198727169",
+      "mainCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37199040727",
+      "prCoreConclusion": "success",
+      "mainCoreConclusion": "success"
+    },
+    {
+      "pr": 4525,
+      "scope": "Text and network policy fuzz adapters",
+      "localCommit": "1676816080c6c4d76aa9bad0259ff5e1ec14483c",
+      "tree": "2fdd5b4866a310c04707988b7cb9b8bdcc0864be",
+      "publishedCommit": "ae19984c056b62417cb1c050bbe18eb3d6e0874b",
+      "merge": "ac715d2858774465d751813f06185b17f3d0bb87",
+      "prCore": 37198890109,
+      "mainCore": 37199374939,
+      "tests": {
+        "passed": 25,
+        "failed": 0
+      },
+      "capture": "captures/fuzz-text.tap",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4525",
+      "state": "merged",
+      "prCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37198890109",
+      "mainCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37199374939",
+      "prCoreConclusion": "success",
+      "mainCoreConclusion": "success"
+    },
+    {
+      "pr": 4527,
+      "scope": "Isolated bounded fuzz harness and corpus",
+      "localCommit": "99ec786c7ca504be66801d83c4843b9c517150f1",
+      "tree": "f6619080b4904be549a7762b7ef88686a91e6c6d",
+      "publishedCommit": "b6a8e503721f1d08489924e9b24f2094f5e8a3f3",
+      "merge": "5a74e83d4a576f50c07d1983b3377e20a881924d",
+      "prCore": 37199850911,
+      "mainCore": 37199915703,
+      "tests": {
+        "passed": 68,
+        "failed": 0
+      },
+      "capture": "captures/runtime-focused.tap",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4527",
+      "state": "merged",
+      "prCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37199850911",
+      "mainCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37199915703",
+      "prCoreConclusion": "success",
+      "mainCoreConclusion": "success"
+    },
+    {
+      "pr": 4528,
+      "scope": "Fuzz CLI, reports, reproduction and manual workflow",
+      "localCommit": "7d7a7c000cd1f79dff7d959ac1ce368b86d44577",
+      "tree": "fa14e70cf758103df72e15d514a7efdde5d127a8",
+      "publishedCommit": "739881471ea5a5b88c263321982cbe7b5c11b44d",
+      "merge": "003654ce10a49889f8def8f269dff059223e5eee",
+      "prCore": 37200084469,
+      "mainCore": 37200162965,
+      "tests": {
+        "passed": 6,
+        "failed": 0,
+        "skipped": 1
+      },
+      "capture": "captures/cli-focused.tap",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4528",
+      "state": "merged",
+      "prCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37200084469",
+      "mainCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37200162965",
+      "prCoreConclusion": "success",
+      "mainCoreConclusion": "success"
+    },
+    {
+      "pr": 4529,
+      "scope": "R015 production session I/O fixture",
+      "localCommit": "c519eb7f961a6e4f912c33524168febb4c10fab2",
+      "tree": "d55ceac0b6676442b64cf69461292b2e9888870e",
+      "publishedCommit": "1b41f3b4a6b75eb0dbb9a530ccbfe9cc2867de7c",
+      "merge": "47d80eedb06b505013b162e73d5e2ad24082b54e",
+      "prCore": 37200463380,
+      "mainCore": 37200554123,
+      "tests": {
+        "passed": 8,
+        "failed": 0
+      },
+      "capture": "captures/session-io-final.tap",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4529",
+      "state": "merged",
+      "prCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37200463380",
+      "mainCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37200554123",
+      "prCoreConclusion": "success",
+      "mainCoreConclusion": "success"
+    },
+    {
+      "pr": 4531,
+      "scope": "Portable PDB fixtures and actual workspace ZIP import",
+      "localCommit": "fa5c0fef9093a898b243ee8a02992b993b5c66b3",
+      "tree": "896f9233762f4d93de762b1325a4de9ca81c64d3",
+      "publishedCommit": "ad0ea92f16bddcbcfecce884b93579fe94617c04",
+      "merge": "0bab6df9c7d9e764604c400aec78fd6ba6db91f8",
+      "prCore": 37200790970,
+      "mainCore": 37200914492,
+      "tests": {
+        "passed": 42,
+        "failed": 0
+      },
+      "capture": "captures/binary-expanded.tap",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4531",
+      "state": "merged",
+      "prCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37200790970",
+      "mainCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37200914492",
+      "prCoreConclusion": "success",
+      "mainCoreConclusion": "success"
+    },
+    {
+      "pr": 4534,
+      "scope": "Worker deadline precedence",
+      "localCommit": "5bfd3a953abef99a7fd2bede2778bb1d1fe25e3a",
+      "tree": "741d080e96bd62b0628d45dd3ea8090783c39cac",
+      "publishedCommit": "3e91fd6c481038583f8fbddea9795d377fd803db",
+      "merge": "7b7ed128017b4b966dfa389ab6eedef46e863985",
+      "prCore": 37201749884,
+      "mainCore": 37201832323,
+      "tests": {
+        "passed": 21,
+        "failed": 0
+      },
+      "capture": "captures/worker-focused.tap",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4534",
+      "state": "merged",
+      "prCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37201749884",
+      "mainCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37201832323",
+      "prCoreConclusion": "success",
+      "mainCoreConclusion": "success"
+    },
+    {
+      "pr": 4536,
+      "scope": "LSP envelope validation",
+      "localCommit": "624291c6156befe7a2f07488eca475b575824cff",
+      "tree": "3721429d4b9e49d246d46551f1a0d1fe498fecc4",
+      "publishedCommit": "6908f30ce7a26b64721357a60220f9f24e2e7e58",
+      "merge": "a15f7c3dddc34434968489d8ce8eb19f2af90022",
+      "prCore": 37202031016,
+      "mainCore": 37202097511,
+      "tests": {
+        "passed": 30,
+        "failed": 0
+      },
+      "capture": "captures/lsp-fixed.tap",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4536",
+      "state": "merged",
+      "prCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37202031016",
+      "mainCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37202097511",
+      "prCoreConclusion": "success",
+      "mainCoreConclusion": "success"
+    },
+    {
+      "pr": 4538,
+      "scope": "Symbol compression contract and original corpus replay",
+      "localCommit": "fab8efc873b386aef22d2b26af95c5121715ac4e",
+      "tree": "d22440892916ea69498210d8fc3ab7eee018d3ee",
+      "publishedCommit": "1bcc97cedfdb64a4e5a25f83612fb87872464a90",
+      "merge": "6c5b634cf5a1ad7b829a05bc7a9b1ebc224af1de",
+      "prCore": 37202374930,
+      "mainCore": 37202447000,
+      "tests": {
+        "passed": 12,
+        "failed": 0
+      },
+      "capture": "captures/symbols-final.tap",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4538",
+      "state": "merged",
+      "prCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37202374930",
+      "mainCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37202447000",
+      "prCoreConclusion": "success",
+      "mainCoreConclusion": "success"
+    },
+    {
+      "pr": 4539,
+      "scope": "Actual LSP/DAP request sequences",
+      "localCommit": "6ee824fa5af0645cda1125c32661898f681825fb",
+      "tree": "2742287d1fd0059469ce859ef521264997b6fa48",
+      "publishedCommit": "543c91d7abb359dfb61950a70fd825896400a0e6",
+      "merge": "e1f1571b34a2abc83f1e49eeda65d8115c6a35ef",
+      "prCore": 37202546956,
+      "mainCore": 37202658132,
+      "tests": {
+        "passed": 40,
+        "failed": 0
+      },
+      "capture": "captures/protocol-final.tap",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4539",
+      "state": "merged",
+      "prCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37202546956",
+      "mainCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37202658132",
+      "prCoreConclusion": "success",
+      "mainCoreConclusion": "success"
+    },
+    {
+      "pr": 4543,
+      "scope": "Actual native-host authorization and containment",
+      "localCommit": "5f6d0664ba2f2f05d1705ec74a02b0bcd746f641",
+      "tree": "8c5b282b34c11679c8b132f89b074d060e6e1736",
+      "publishedCommit": "4c01a5b46c3daf7c2c05c587f30632b267d3513e",
+      "merge": "17db935b862a6a26fe39e41f2287ba3e620dc628",
+      "prCore": 37202759135,
+      "mainCore": 37202858593,
+      "tests": {
+        "passed": 34,
+        "failed": 0
+      },
+      "capture": "captures/native-final.tap",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4543",
+      "state": "merged",
+      "prCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37202759135",
+      "mainCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37202858593",
+      "prCoreConclusion": "success",
+      "mainCoreConclusion": "success"
+    },
+    {
+      "pr": 4546,
+      "scope": "Actual HTTP streams, byte limits and cancellation",
+      "localCommit": "050caf59d685d007927fce86b79e278da9f72cfc",
+      "tree": "f23153c526230956a4f2623fa3e239508477da7a",
+      "publishedCommit": "4bf18f59be85b59001b64ef18296f1fe8a670301",
+      "merge": "bf85020e6024cdd679a0234d9f050ca7dedddf53",
+      "prCore": 37202959583,
+      "mainCore": 37203030692,
+      "tests": {
+        "passed": 47,
+        "failed": 0
+      },
+      "capture": "captures/http-final.tap",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4546",
+      "state": "merged",
+      "prCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37202959583",
+      "mainCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37203030692",
+      "prCoreConclusion": "success",
+      "mainCoreConclusion": "success"
+    },
+    {
+      "pr": 4549,
+      "scope": "LSP parameter and method validation",
+      "localCommit": "9b68871739384e0f56bda8f627ea485bd0fc89e1",
+      "tree": "e579cc636bacd0fdcf349766bb33d522425a5d0c",
+      "publishedCommit": "0179c25b37ea1701e1c99e32799975aecfea9f5b",
+      "merge": "8df7304f3895d721c8fe95923fb3d349646d0d6c",
+      "prCore": 37204492122,
+      "mainCore": 37204541306,
+      "tests": {
+        "passed": 60,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0
+      },
+      "capture": "captures/lsp-params-fixed.tap",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4549",
+      "state": "merged",
+      "prCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37204492122",
+      "mainCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37204541306",
+      "prCoreConclusion": "success",
+      "mainCoreConclusion": "success"
+    },
+    {
+      "pr": 4550,
+      "scope": "Controlled malformed metadata UTF-8 rejection and two retained PE inputs",
+      "localCommit": "f0362e5e187409daf5766c70157280fe580afeae",
+      "tree": "ad548d9c4946465692845da0da15cae373463a2f",
+      "publishedCommit": "c9357cc985ed1dbe2bd2b76f99ef5e3cb81d89a9",
+      "merge": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+      "prCore": 37204857889,
+      "mainCore": 37204915609,
+      "tests": {
+        "passed": 34,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0
+      },
+      "capture": "captures/pe-utf8-final.tap",
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4550",
+      "state": "merged",
+      "prCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37204857889",
+      "mainCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37204915609",
+      "prCoreConclusion": "success",
+      "mainCoreConclusion": "success"
+    },
+    {
+      "pr": 4554,
+      "scope": "Full image preservation for validated unchanged IL bodies, signed-zero/NaN handling, and exact image fuzz comparison.",
+      "localCommit": "9e6235635fdfb92939e8d7cbf1985db774d1fa31",
+      "tree": "3b4b42b335f088d800610ad4af19dafde9fa07a3",
+      "publishedCommit": "7ae8ae6727f627be4cd63c56099814f5004f9c29",
+      "merge": "b519b371d10b35299004aa142b73696bd482d4cc",
+      "prCore": 37206598569,
+      "mainCore": 37206929616,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4554",
+      "prCoreConclusion": "success",
+      "mainCoreConclusion": "success",
+      "state": "merged",
+      "tests": {
+        "passed": 124,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0
+      },
+      "capture": "captures/il-idempotence-fixed.tap",
+      "prCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37206598569",
+      "mainCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37206929616"
+    },
+    {
+      "pr": 4556,
+      "scope": "Constrained managed local calls, integer statics, fixed objects and integer arrays; general metadata, host calls and exception-handler admission remain excluded.",
+      "localCommit": "cde74a88fcb812acf3df1a98264f200ecf4397d4",
+      "tree": "af118c4c76c711617cbe2a5b84ccf1af5ae440cd",
+      "publishedCommit": "6dcf13fae492f7ba74197d88770e3c26251126d4",
+      "merge": "d64188af91f03d02041316bdde2ee64fd0634be0",
+      "prCore": 37207262331,
+      "mainCore": 37207356433,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4556",
+      "prCoreConclusion": "success",
+      "mainCoreConclusion": "success",
+      "state": "merged",
+      "tests": {
+        "passed": 39,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0
+      },
+      "capture": "captures/bytecode-profile-fixed.tap",
+      "prCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37207262331",
+      "mainCoreUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37207356433"
+    }
+  ],
+  "drafts": [
+    {
+      "pr": 4547,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4547",
+      "state": "draft",
+      "scope": "Structural TAP evidence and named-suite descendant proofs",
+      "localCommit": "584466f090c8b1f3b7c276b661b089390bbb96ab",
+      "tree": "9757d96f13baed8cfd44d79f07ba7e641b29e2f0",
+      "publishedCommit": "327efd71e4a8e07b129a085d2d8ccc89152232db",
+      "tests": {
+        "passed": 50,
+        "failed": 0,
+        "capture": "captures/tap-fixed.tap"
+      },
+      "consumerTests": {
+        "passed": 4,
+        "failed": 2,
+        "capture": "captures/tap-flaky-consumer.tap"
+      },
+      "prCore": 37203146801,
+      "prCoreConclusion": "success",
+      "blockedBy": "The reserved SF-A29-T17 child(status) fixture emits counters and a plan without any numbered result point; the PR body contains the exact minimal owner correction."
+    }
+  ],
+  "parentRegressions": [
+    {
+      "scope": "A00 immutable generations",
+      "sourceCommit": "ca3c083b61d637f98d53d0e55d9c2e564b11bf5d",
+      "passed": 1,
+      "failed": 9,
+      "capture": "captures/a00-parent.tap"
+    },
+    {
+      "scope": "A00 audit history",
+      "passed": 3,
+      "failed": 11,
+      "capture": "captures/audit-parent.tap",
+      "source": "Recorded before the audit fix; see PR4522 for the original batch source."
+    },
+    {
+      "scope": "TAP, symbol and LSP new regressions",
+      "sourceCommit": "055b6484a5b1adbb31546660192819d45fd74b6b",
+      "clean": false,
+      "testFiles": "Only new regression files copied into the parent checkout for reproduction; this is not a clean-parent qualification claim.",
+      "passed": 9,
+      "failed": 49,
+      "capture": "captures/review-parent.tap",
+      "details": {
+        "tap": {
+          "passed": 6,
+          "failed": 30
+        },
+        "symbols": {
+          "passed": 1,
+          "failed": 2
+        },
+        "lsp": {
+          "passed": 2,
+          "failed": 17
+        }
+      }
+    },
+    {
+      "scope": "LSP malformed parameter containers and method names",
+      "sourceCommit": "bf85020e6024cdd679a0234d9f050ca7dedddf53",
+      "clean": false,
+      "testFiles": [
+        "tests/a21-lsp-parameters.test.js",
+        "tests/protocol-lsp-envelope.test.js"
+      ],
+      "note": "Only the new public regressions were copied into the parent checkout.",
+      "passed": 21,
+      "failed": 11,
+      "capture": "captures/lsp-params-parent.tap"
+    },
+    {
+      "scope": "Malformed metadata UTF-8 public decoder, reader, inspector and loader",
+      "sourceCommit": "bf85020e6024cdd679a0234d9f050ca7dedddf53",
+      "clean": false,
+      "testFiles": [
+        "tests/a03-utf8-validation.test.js"
+      ],
+      "note": "Only the new public regression file was copied into the parent checkout.",
+      "passed": 3,
+      "failed": 4,
+      "capture": "captures/pe-utf8-parent.tap"
+    },
+    {
+      "scope": "Exact IL image preservation and floating operand roundtrips",
+      "sourceCommit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+      "clean": false,
+      "testFiles": [
+        "tests/a03-il-document-preservation.test.js",
+        "tests/a03-il-document-floats.test.js"
+      ],
+      "note": "Only the two new public regression files were copied into the parent checkout.",
+      "passed": 2,
+      "failed": 12,
+      "capture": "captures/il-idempotence-parent.tap"
+    }
+  ],
+  "integrations": [
+    {
+      "source": {
+        "commit": "bf85020e6024cdd679a0234d9f050ca7dedddf53",
+        "tree": "6ba4a9db61e97d5f201fa9211389de6b0695daa6",
+        "clean": true
+      },
+      "tests": {
+        "passed": 200,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "capture": "captures/integrated-final.tap"
+      },
+      "checks": {
+        "syntaxModules": 3843,
+        "syntaxErrors": 0,
+        "linkedModules": 3839,
+        "importErrors": 0,
+        "manifestUnassigned": 0,
+        "manifestDuplicate": 0,
+        "capture": "captures/final-check.log"
+      },
+      "build": {
+        "status": "passed",
+        "capture": "captures/final-build.log"
+      },
+      "scope": "All new merged fuzz regressions plus claim generation, audit history, LSP/protocol, symbol compression and R015 session I/O tests."
+    },
+    {
+      "source": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "tests": {
+        "passed": 222,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "capture": "captures/integrated-corrected.tap"
+      },
+      "scope": "All prior integrated tests plus the repaired LSP params/method and PE UTF-8 public regressions; ordinary corpus replay includes all three production records."
+    },
+    {
+      "source": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "tests": {
+        "passed": 317,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "capture": "captures/final-18/integrated.tap"
+      },
+      "checks": {
+        "syntaxModules": 3942,
+        "syntaxErrors": 0,
+        "linkedModules": 3938,
+        "importErrors": 0,
+        "manifestUnassigned": 0,
+        "manifestDuplicate": 0,
+        "capture": "captures/final-18/check.log"
+      },
+      "build": {
+        "status": "passed",
+        "capture": "captures/final-18/build.log"
+      },
+      "executionRecord": "captures/final-18/run.json",
+      "scope": "All earlier integrated regressions plus full-image IL preservation, floating representations and the bounded managed bytecode extension. Exact argv, timing and before/after source identities retained."
+    }
+  ],
+  "initialCampaign": {
+    "sourceLocalCommit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+    "sourceTree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+    "equivalentPublishedSource": "7200c40203843a84dc0438a6dcee4ccdc390130c",
+    "archivalBranch": "codex/p4-evidence-initial-campaign",
+    "note": "This branch preserves the exact earlier source tree for retrieval; do not merge it into main. The original report/local commit identity is unchanged.",
+    "started": "2026-10-04T11:40:46.690Z",
+    "finished": "2026-10-04T11:43:29.614Z",
+    "requestedCases": 256,
+    "completedCases": 256,
+    "status": "unsupported",
+    "qualified": false,
+    "counts": {
+      "accepted": 37,
+      "rejected": 213,
+      "unsupported": 6,
+      "findings": 0,
+      "cancelled": 0
+    },
+    "capture": "captures/initial-campaign-seed1/summary.json"
+  },
+  "portablePdbFinding": {
+    "originalSource": {
+      "commit": "ad0ea92f16bddcbcfecce884b93579fe94617c04",
+      "tree": "896f9233762f4d93de762b1325a4de9ca81c64d3",
+      "clean": true
+    },
+    "inputSHA256": "47aa8600a3eb7b339ac25d68ca91eecfabb45271d943899d875f84c05ffeb29f",
+    "recordSHA256": "3c86512192511f3ccac53a2a3524116a48c0db0347131bad5b81b86705213514",
+    "originalFinding": "unexpected-error: Error: Reserved DEFLATE block",
+    "capture": "captures/pdb-original-capture/observation.json",
+    "resolution": "PR4538 promotes the original unchanged record; the ordinary corpus test passes with controlled SymbolError rejection."
+  },
+  "sessionIo": {
+    "sourceLocalCommit": "c519eb7f961a6e4f912c33524168febb4c10fab2",
+    "sourceTree": "d55ceac0b6676442b64cf69461292b2e9888870e",
+    "equivalentPublishedSource": "1b41f3b4a6b75eb0dbb9a530ccbfe9cc2867de7c",
+    "build": "passed",
+    "status": "failed",
+    "componentStatus": "unexecuted",
+    "driverStatus": "unavailable",
+    "driverStage": "browser-setup",
+    "reason": "Pinned Playwright1.63.0 Chromium executable unavailable; both full-browser and headless-shell download attempts failed. Pins were not changed.",
+    "capture": "captures/session-io-capture/report.json",
+    "allCaptureBytesRetained": true,
+    "hostedWorkflowAudit": {
+      "status": "missing-integration-and-owned-task-reservation",
+      "capture": "captures/r015-workflow-reservation.json",
+      "proposal": "captures/r015-workflow-proposal.yml",
+      "proposalStatus": "not-applied-not-hosted-tested",
+      "conclusion": "No existing hosted entry invokes the actual production runner; a separate manual workflow is technically feasible, but ci-workflows requires an owned live directly-scoped leaf task claim and none was established. Existing ci.yml and R015 runner scopes remain reserved."
+    }
+  },
+  "ownerRefreshes": {
+    "tap": {
+      "version": 1,
+      "task": "SF-A29-T17",
+      "issue": 487,
+      "agent": "codex-p4-registries",
+      "branch": "codex/a29-ci-planning",
+      "expires": "2026-10-04T18:46:56.666Z",
+      "heartbeat": "2026-10-03T18:46:56.666Z",
+      "lastHeartbeatComment": null,
+      "locks": [
+        "a29-ci-487"
+      ],
+      "generation": "eadba384-dd3f-44cf-8815-3120d1285be3",
+      "sequence": 0,
+      "event": "claim",
+      "at": "2026-10-03T18:46:56.666Z",
+      "qualification": "deferred",
+      "authorization": "Root authorized complete E03 implementation batch before qualification. Known global DAG duplicate errors retained; Ready not asserted.",
+      "paths": [
+        "scripts/conformance/flaky/**",
+        "tests/conformance/flaky/**",
+        "planning/qualification/flaky.json",
+        "planning/qualification/quarantine.json"
+      ],
+      "observedAt": "2026-10-04T13:15:13.467Z",
+      "sourceUrl": "https://api.github.com/repos/wieslawsoltes/SharpForge/contents/claim.json?ref=agent%2FSF-A29-T17"
+    },
+    "dap": {
+      "version": 1,
+      "task": "SF-A14-T06.6",
+      "issue": 2860,
+      "agent": "codex-a14-dap-error-body",
+      "branch": "codex/a14-dap-error-body",
+      "expires": "2026-10-04T22:02:31.354Z",
+      "heartbeat": "2026-10-03T22:02:31.354Z",
+      "lastHeartbeatComment": null,
+      "locks": [],
+      "generation": "e674a61e-b98c-4ded-8f1d-93c6f5d530ba",
+      "sequence": 0,
+      "event": "claim",
+      "at": "2026-10-03T22:02:31.354Z",
+      "qualification": "deferred",
+      "authorization": "Root delegates the narrow ErrorResponse repair prerequisite for Project 4 SF-A29-T28; implementation ahead of staged validation is authorized. Dependency blockers remain. No claim that the full A14 leaf is complete.",
+      "writePaths": [
+        "packages/protocol/src/dap.js"
+      ],
+      "coordinatedPaths": [
+        "tests/conformance/protocol/protocol.test.js",
+        "planning/qualification/protocol/known-gaps.json"
+      ],
+      "relatedTask": "SF-A29-T28",
+      "comments": "Suppressed per explicit user instruction.",
+      "observedAt": "2026-10-04T13:15:13.470Z",
+      "sourceUrl": "https://api.github.com/repos/wieslawsoltes/SharpForge/contents/claim.json?ref=agent%2FSF-A14-T06.6"
+    }
+  },
+  "pendingQualification": {
+    "peDuration": {
+      "status": "failed",
+      "qualified": false,
+      "durationMs": 351421,
+      "completedCases": 512,
+      "counts": {
+        "accepted": 2,
+        "rejected": 508,
+        "unsupported": 0,
+        "findings": 2,
+        "cancelled": 0
+      },
+      "source": {
+        "commit": "bf85020e6024cdd679a0234d9f050ca7dedddf53",
+        "tree": "6ba4a9db61e97d5f201fa9211389de6b0695daa6",
+        "clean": true
+      },
+      "capture": "captures/pe-original-duration.json",
+      "next": "Historical failure preserved; PR4550 corrected the decoder and its inputs replay under unchanged limits. The separate postFixPeDuration run passed and credits none of this earlier duration.",
+      "findings": [
+        {
+          "caseIndex": 88,
+          "record": "785e0a86d8b92af35934d30f4702dbd46f594a62351748346c5b91da4030b8a9.json",
+          "kind": "unexpected-error"
+        },
+        {
+          "caseIndex": 463,
+          "record": "7bc4a304622007af30517506a2a37fad3dbe213ec27fc4e31504df833b00a39b.json",
+          "kind": "unexpected-error"
+        }
+      ]
+    },
+    "allExpandedTargets": {
+      "status": "unsupported",
+      "qualified": false,
+      "sourceBefore": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "sourceAfter": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "started": "2026-10-04T13:17:38.108Z",
+      "finished": "2026-10-04T13:20:54.554Z",
+      "seed": 1,
+      "casesPerTarget": 32,
+      "targets": [
+        {
+          "targetId": "pe-loader",
+          "status": "passed",
+          "requestedCases": 32,
+          "completedCases": 32,
+          "counts": {
+            "accepted": 2,
+            "rejected": 30,
+            "unsupported": 0,
+            "findings": 0,
+            "cancelled": 0
+          }
+        },
+        {
+          "targetId": "bytecode-image",
+          "status": "unsupported",
+          "requestedCases": 32,
+          "completedCases": 32,
+          "counts": {
+            "accepted": 4,
+            "rejected": 26,
+            "unsupported": 2,
+            "findings": 0,
+            "cancelled": 0
+          }
+        },
+        {
+          "targetId": "portable-pdb",
+          "status": "passed",
+          "requestedCases": 32,
+          "completedCases": 32,
+          "counts": {
+            "accepted": 6,
+            "rejected": 26,
+            "unsupported": 0,
+            "findings": 0,
+            "cancelled": 0
+          }
+        },
+        {
+          "targetId": "zip-archive",
+          "status": "passed",
+          "requestedCases": 32,
+          "completedCases": 32,
+          "counts": {
+            "accepted": 6,
+            "rejected": 26,
+            "unsupported": 0,
+            "findings": 0,
+            "cancelled": 0
+          }
+        },
+        {
+          "targetId": "protocol",
+          "status": "passed",
+          "requestedCases": 32,
+          "completedCases": 32,
+          "counts": {
+            "accepted": 10,
+            "rejected": 22,
+            "unsupported": 0,
+            "findings": 0,
+            "cancelled": 0
+          }
+        },
+        {
+          "targetId": "il-document",
+          "status": "passed",
+          "requestedCases": 32,
+          "completedCases": 32,
+          "counts": {
+            "accepted": 4,
+            "rejected": 28,
+            "unsupported": 0,
+            "findings": 0,
+            "cancelled": 0
+          }
+        },
+        {
+          "targetId": "msbuild-xml",
+          "status": "passed",
+          "requestedCases": 32,
+          "completedCases": 32,
+          "counts": {
+            "accepted": 7,
+            "rejected": 25,
+            "unsupported": 0,
+            "findings": 0,
+            "cancelled": 0
+          }
+        },
+        {
+          "targetId": "network",
+          "status": "passed",
+          "requestedCases": 32,
+          "completedCases": 32,
+          "counts": {
+            "accepted": 23,
+            "rejected": 9,
+            "unsupported": 0,
+            "findings": 0,
+            "cancelled": 0
+          }
+        }
+      ],
+      "counts": {
+        "accepted": 62,
+        "rejected": 192,
+        "unsupported": 2,
+        "findings": 0,
+        "cancelled": 0
+      },
+      "capture": "captures/corrected-campaign-seed1/summary.json",
+      "note": "At this historical source the IL property measured visible-text stability. PR4554 later strengthened it to full-image identity; finalExpandedTargets records the integrated stronger profile. Known DAP malformed operations remain outside this finite seed."
+    },
+    "centralFullCi": {
+      "status": "pending",
+      "mechanism": "full-ci PR label after the integrated scope is ready"
+    },
+    "postFixPeDuration": {
+      "status": "passed",
+      "requiredDurationMs": 600000,
+      "creditedEarlierDurationMs": 0,
+      "source": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "qualified": true,
+      "recordedCampaignDurationMs": 714755,
+      "sourceIdentity": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "counts": {
+        "accepted": 4,
+        "rejected": 1020,
+        "unsupported": 0,
+        "findings": 0,
+        "cancelled": 0
+      },
+      "scope": "bounded-node-linux-x64-pe-loader",
+      "limitations": [
+        "Duration sums completed CLI campaign windows and excludes gaps between campaigns.",
+        "Recorded accepted and controlled-rejected inputs do not prove universal parser safety.",
+        "No other engine/platform or operating-system sandbox qualification is implied."
+      ],
+      "completedCases": 1024,
+      "campaignCount": 2,
+      "capture": "captures/pe-postfix-duration.json",
+      "campaignCaptures": [
+        "captures/pe-postfix-seed1/summary.json",
+        "captures/pe-postfix-seed2/summary.json"
+      ],
+      "supervisor": "captures/pe-postfix-supervisor.py",
+      "processLog": "captures/pe-postfix-duration.log",
+      "exitCode": 0
+    },
+    "finalExpandedTargets": {
+      "status": "unsupported",
+      "qualified": false,
+      "sourceBefore": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "sourceAfter": {
+        "commit": "d64188af91f03d02041316bdde2ee64fd0634be0",
+        "tree": "d683a1cee6e29cddb2735734878f70c1ea382a05",
+        "clean": true
+      },
+      "started": "2026-10-04T14:01:29.233Z",
+      "finished": "2026-10-04T14:04:31.478Z",
+      "targets": [
+        {
+          "targetId": "pe-loader",
+          "status": "passed",
+          "requestedCases": 32,
+          "completedCases": 32,
+          "counts": {
+            "accepted": 2,
+            "rejected": 30,
+            "unsupported": 0,
+            "findings": 0,
+            "cancelled": 0
+          }
+        },
+        {
+          "targetId": "bytecode-image",
+          "status": "unsupported",
+          "requestedCases": 32,
+          "completedCases": 32,
+          "counts": {
+            "accepted": 10,
+            "rejected": 16,
+            "unsupported": 6,
+            "findings": 0,
+            "cancelled": 0
+          }
+        },
+        {
+          "targetId": "portable-pdb",
+          "status": "passed",
+          "requestedCases": 32,
+          "completedCases": 32,
+          "counts": {
+            "accepted": 6,
+            "rejected": 26,
+            "unsupported": 0,
+            "findings": 0,
+            "cancelled": 0
+          }
+        },
+        {
+          "targetId": "zip-archive",
+          "status": "passed",
+          "requestedCases": 32,
+          "completedCases": 32,
+          "counts": {
+            "accepted": 6,
+            "rejected": 26,
+            "unsupported": 0,
+            "findings": 0,
+            "cancelled": 0
+          }
+        },
+        {
+          "targetId": "protocol",
+          "status": "passed",
+          "requestedCases": 32,
+          "completedCases": 32,
+          "counts": {
+            "accepted": 10,
+            "rejected": 22,
+            "unsupported": 0,
+            "findings": 0,
+            "cancelled": 0
+          }
+        },
+        {
+          "targetId": "il-document",
+          "status": "passed",
+          "requestedCases": 32,
+          "completedCases": 32,
+          "counts": {
+            "accepted": 7,
+            "rejected": 25,
+            "unsupported": 0,
+            "findings": 0,
+            "cancelled": 0
+          }
+        },
+        {
+          "targetId": "msbuild-xml",
+          "status": "passed",
+          "requestedCases": 32,
+          "completedCases": 32,
+          "counts": {
+            "accepted": 7,
+            "rejected": 25,
+            "unsupported": 0,
+            "findings": 0,
+            "cancelled": 0
+          }
+        },
+        {
+          "targetId": "network",
+          "status": "passed",
+          "requestedCases": 32,
+          "completedCases": 32,
+          "counts": {
+            "accepted": 23,
+            "rejected": 9,
+            "unsupported": 0,
+            "findings": 0,
+            "cancelled": 0
+          }
+        }
+      ],
+      "counts": {
+        "accepted": 71,
+        "rejected": 179,
+        "unsupported": 6,
+        "findings": 0,
+        "cancelled": 0
+      },
+      "exitCode": 2,
+      "capture": "captures/final18-campaign-seed1/summary.json"
+    }
+  },
+  "peUtf8Correction": {
+    "pr": 4550,
+    "state": "merged",
+    "productSource": {
+      "localCommit": "33f754dcac94080842042020719ea6b8a4289e3f",
+      "publishedCommit": "0a79a303af7fefd66a795ee7aaca6a18e27f6068",
+      "tree": "7e98dec2629b370ff7aaa6a998e9facc2c629be8"
+    },
+    "finalSource": {
+      "localCommit": "f0362e5e187409daf5766c70157280fe580afeae",
+      "publishedCommit": "c9357cc985ed1dbe2bd2b76f99ef5e3cb81d89a9",
+      "tree": "ad548d9c4946465692845da0da15cae373463a2f"
+    },
+    "focused": {
+      "passed": 34,
+      "failed": 0,
+      "skipped": 0,
+      "capture": "captures/pe-utf8-final.tap"
+    },
+    "originalRecordReplay": {
+      "passed": 2,
+      "findings": 0,
+      "capture": "captures/pe-utf8-fixed-original-replay/summary.json"
+    },
+    "finalCorpusReplay": {
+      "passed": 3,
+      "findings": 0,
+      "capture": "captures/pe-utf8-final-corpus-replay/summary.json"
+    }
+  },
+  "a00EndToEnd": {
+    "source": {
+      "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+      "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+      "clean": true
+    },
+    "evidenceTests": {
+      "passed": 14,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "capture": "captures/a00-evidence-walkthrough.tap",
+      "argv": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "--test-reporter=tap",
+        "planning/contracts/tests/evidence.test.js"
+      ]
+    },
+    "claimReleaseWalkthrough": {
+      "exitCode": 0,
+      "capture": "captures/a00-claim-release-walkthrough.log",
+      "argv": [
+        "node",
+        "scripts/limited.js",
+        "node",
+        "scripts/planning/testing/walkthrough.js"
+      ],
+      "derivedResult": "captures/a00-claim-release-result.json",
+      "note": "Raw combined output includes a limiter preamble. The derived JSON contains the command-emitted audit object unchanged."
+    },
+    "scope": "Existing public capture/handoff/resume regressions use real temporary bare Git remotes and fake HTTP; standalone fake claim/lock/heartbeat/release audit walkthrough also completed. The draft structural TAP correction remains separate."
+  },
+  "rawDeliveryMetadata": {
+    "capture": "captures/deliveries/record-index.json",
+    "mergedPRs": 18,
+    "rawRecords": 54,
+    "scope": "Fresh raw GitHub PR snapshots and completed successful PR/main workflow-run JSON; all heads, merge commits and run identities matched the delivery records.",
+    "initialObservation": "captures/deliveries/observation.json"
+  },
+  "pendingImplementation": {
+    "ilImageIdempotence": {
+      "status": "merged",
+      "base": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+      "scope": "Full image preservation for validated unchanged IL bodies, signed-zero/NaN handling, and exact image fuzz comparison.",
+      "localCommit": "9e6235635fdfb92939e8d7cbf1985db774d1fa31",
+      "tree": "3b4b42b335f088d800610ad4af19dafde9fa07a3",
+      "tests": {
+        "passed": 124,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "capture": "captures/il-idempotence-fixed.tap"
+      },
+      "campaign": {
+        "status": "passed",
+        "qualified": true,
+        "sourceBefore": {
+          "commit": "9e6235635fdfb92939e8d7cbf1985db774d1fa31",
+          "tree": "3b4b42b335f088d800610ad4af19dafde9fa07a3",
+          "clean": true
+        },
+        "sourceAfter": {
+          "commit": "9e6235635fdfb92939e8d7cbf1985db774d1fa31",
+          "tree": "3b4b42b335f088d800610ad4af19dafde9fa07a3",
+          "clean": true
+        },
+        "started": "2026-10-04T13:39:50.173Z",
+        "finished": "2026-10-04T13:40:15.421Z",
+        "targets": [
+          {
+            "targetId": "il-document",
+            "status": "passed",
+            "requestedCases": 32,
+            "completedCases": 32,
+            "counts": {
+              "accepted": 7,
+              "rejected": 25,
+              "unsupported": 0,
+              "findings": 0,
+              "cancelled": 0
+            }
+          }
+        ],
+        "capture": "captures/il-exact-seed1/summary.json"
+      },
+      "pr": 4554,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4554",
+      "publishedCommit": "7ae8ae6727f627be4cd63c56099814f5004f9c29",
+      "merge": "b519b371d10b35299004aa142b73696bd482d4cc",
+      "prCore": 37206598569,
+      "mainCore": 37206929616,
+      "prCoreConclusion": "success",
+      "mainCoreConclusion": "success"
+    },
+    "boundedBytecodeExtension": {
+      "status": "merged",
+      "base": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+      "scope": "Constrained managed local calls, integer statics, fixed objects and integer arrays; general metadata, host calls and exception-handler admission remain excluded.",
+      "localCommit": "cde74a88fcb812acf3df1a98264f200ecf4397d4",
+      "tree": "af118c4c76c711617cbe2a5b84ccf1af5ae440cd",
+      "publishedCommit": "6dcf13fae492f7ba74197d88770e3c26251126d4",
+      "pr": 4556,
+      "url": "https://github.com/wieslawsoltes/SharpForge/pull/4556",
+      "tests": {
+        "passed": 39,
+        "failed": 0,
+        "skipped": 0,
+        "cancelled": 0,
+        "capture": "captures/bytecode-profile-fixed.tap"
+      },
+      "parentProbe": {
+        "source": {
+          "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+          "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+          "clean": true
+        },
+        "verified": 9,
+        "accepted": 2,
+        "unsupported": 7,
+        "capture": "captures/bytecode-profile-parent.log",
+        "sourceArchive": {
+          "path": "captures/bytecode-profile-parent-probe.mjs.txt",
+          "originalFilename": "bytecode-profile-parent-probe.mjs",
+          "format": "archived-javascript-source-text",
+          "bytes": 1341,
+          "sha256": "6fb5f58bb67dc28d0c50592cd154e882a42590a129dd6d18bff3da03d61f5168",
+          "purpose": "Original disposable parent-probe JavaScript source retained as archival text. The .txt suffix distinguishes captured input from a repository runtime module; source bytes are unchanged."
+        }
+      },
+      "setupFailure": {
+        "capture": "captures/bytecode-profile-setup-failure.tap",
+        "reason": "Workspace package links absent; no test bodies ran. Offline npm ci created 28 workspace links."
+      },
+      "merge": "d64188af91f03d02041316bdde2ee64fd0634be0",
+      "prCore": 37207262331,
+      "mainCore": 37207356433,
+      "prCoreConclusion": "success",
+      "mainCoreConclusion": "success"
+    }
+  },
+  "projectBoardObservation": {
+    "observedAt": "2026-10-04T14:05:35.504Z",
+    "capture": "captures/project4-board-dom.json",
+    "url": "https://github.com/users/wieslawsoltes/projects/4/views/2",
+    "status": "complete-public-active-board-identity-and-status-observation",
+    "mappedPairs": 244,
+    "boardPairs": 244,
+    "missingFromBoard": [],
+    "outsideMapping": [],
+    "statusCounts": {
+      "Backlog": 88,
+      "Ready": 61,
+      "Claimed": 11,
+      "In progress": 40,
+      "In review": 4,
+      "Blocked": 0,
+      "Done": 40
+    },
+    "fullGraphqlFieldProjection": false,
+    "ownershipProjectionVerified": false
+  },
+  "evidencePublicationPreparation": {
+    "history": [
+      {
+        "local": "cde89e52c2c12823c84e9251948d6360a2da6143",
+        "published": "4d5b668adf5572ef693821c9ec7a1f59f44be3be",
+        "tree": "08fbe26ccdd48600203c35f711023cc9902b5265",
+        "parents": [
+          "dc84bcbfea548a152e239d60b3950f06b9ebd2c7"
+        ]
+      },
+      {
+        "local": "47ba352fad62e43dd4b7519b1c04821b53dfb7e2",
+        "published": "7918d8f86c4c816fb84086c897d8316348c6d813",
+        "tree": "8c112d9455f3ea22042f0fb16dc9d1a595f592a8",
+        "parents": [
+          "4d5b668adf5572ef693821c9ec7a1f59f44be3be"
+        ]
+      },
+      {
+        "local": "b00d4405feb6b7dba12642f111c78c0abe0d8998",
+        "published": "d0456c43ef3f6666b4ee2f497ee29a2180ac2b49",
+        "tree": "bc7f7b1968036a1e6cf4490256fe315d52ca6449",
+        "parents": [
+          "7918d8f86c4c816fb84086c897d8316348c6d813",
+          "d64188af91f03d02041316bdde2ee64fd0634be0"
+        ]
+      }
+    ],
+    "note": "Local report history is preserved with a merge of the completed implementation baseline. Published commits preserve each corresponding Git tree; final PR head mapping is recorded in the PR body."
+  },
+  "evidencePublication": {
+    "pr": 4564,
+    "url": "https://github.com/wieslawsoltes/SharpForge/pull/4564",
+    "initialOrdinaryCore": {
+      "status": "completed",
+      "conclusion": "failure",
+      "run": 37209773138,
+      "runUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37209773138",
+      "job": 111458416587,
+      "jobUrl": "https://github.com/wieslawsoltes/SharpForge/actions/runs/37209773138/job/111458416587",
+      "event": "pull_request",
+      "runStartedAt": "2026-10-04T14:34:43Z",
+      "runFinishedAt": "2026-10-04T14:35:18Z",
+      "publishedHead": "24fe2d86e3871997ac2266a9b3b0d21b0d44030c",
+      "actualCheckout": {
+        "commit": "b8c6b9d6c24c953da49c37c64fa2216fb27a8ae3",
+        "tree": "6daacbc1c83710b54aab2dd84c31bba2f7365c20",
+        "kind": "GitHub pull-request merge checkout",
+        "parents": [
+          "7dd8df57a793a528ef36d5ff88b059ce9f87acca",
+          "24fe2d86e3871997ac2266a9b3b0d21b0d44030c"
+        ]
+      },
+      "failure": {
+        "check": "static-imports",
+        "operation": "dynamic-import",
+        "count": 3,
+        "lines": [
+          9,
+          10,
+          11
+        ],
+        "originalFilename": "bytecode-profile-parent-probe.mjs",
+        "originalSha256": "6fb5f58bb67dc28d0c50592cd154e882a42590a129dd6d18bff3da03d61f5168",
+        "reason": "The .mjs archival filename caused the original disposable probe to be inspected as a repository JavaScript module."
+      },
+      "captures": {
+        "run.json": "captures/evidence-pr4564-first-core/run.json",
+        "jobs.json": "captures/evidence-pr4564-first-core/jobs.json",
+        "checkout-commit.json": "captures/evidence-pr4564-first-core/checkout-commit.json",
+        "pr.json": "captures/evidence-pr4564-first-core/pr.json",
+        "events.json": "captures/evidence-pr4564-first-core/events.json",
+        "core-job.log": "captures/evidence-pr4564-first-core/core-job.log"
+      },
+      "otherJobs": [
+        {
+          "name": "core-platforms",
+          "id": 111458499714,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "build",
+          "id": 111458500246,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "packages",
+          "id": 111458500466,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "browser (${{ matrix.os }}, ${{ matrix.suite }})",
+          "id": 111458500680,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "native-il",
+          "id": 111458501043,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "native-msbuild",
+          "id": 111458501619,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "clr-wasm",
+          "id": 111458501754,
+          "conclusion": "skipped"
+        },
+        {
+          "name": "ci-ok",
+          "id": 111458501832,
+          "conclusion": "skipped"
+        }
+      ],
+      "chronology": "First non-cancelled ordinary-core run. Earlier run 37209752375 was cancelled after the size/XXL bot label triggered a replacement; the retained events capture preserves the label event."
+    },
+    "archiveCorrection": {
+      "path": "captures/bytecode-profile-parent-probe.mjs.txt",
+      "originalFilename": "bytecode-profile-parent-probe.mjs",
+      "format": "archived-javascript-source-text",
+      "bytes": 1341,
+      "sha256": "6fb5f58bb67dc28d0c50592cd154e882a42590a129dd6d18bff3da03d61f5168",
+      "purpose": "Original disposable parent-probe JavaScript source retained as archival text. The .txt suffix distinguishes captured input from a repository runtime module; source bytes are unchanged.",
+      "scope": "Rename the archive to .mjs.txt and update evidence references/index metadata; retain the original source, capture bytes and historical results. No policy exception or captured-probe edit.",
+      "status": "prepared locally; corrected npm check/build and hosted core outcomes remain pending"
+    }
+  }
+}

@@ -1,0 +1,1558 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "requestedCases": 32,
+  "completedCases": 32,
+  "counts": {
+    "accepted": 7,
+    "rejected": 25,
+    "unsupported": 0,
+    "findings": 0,
+    "cancelled": 0
+  },
+  "cases": [
+    {
+      "targetId": "msbuild-xml",
+      "seed": 1,
+      "caseIndex": 0,
+      "inputBytes": 34,
+      "inputSHA256": "da51678911cfa8ce7ad6b934558d2092f3fc11ba4f430ff0bd83620a5d86f21a",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "metrics": {
+        "processElapsedMs": 639.2218540000031,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.6876909999999725,
+        "baselineHeapBytes": 37357392,
+        "heapUsedBytes": 37506888,
+        "heapGrowthBytes": 149496,
+        "externalGrowthBytes": 40819,
+        "arrayBufferGrowthBytes": 127,
+        "observedGrowthBytes": 190315,
+        "peakRssBytes": 87396352
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "minimal-project",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "msbuild-xml",
+      "seed": 1,
+      "caseIndex": 1,
+      "inputBytes": 134,
+      "inputSHA256": "8ae919052e32ad51bc53a294942d904745e597807743c4b5bbea04a5bda5172b",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "metrics": {
+        "processElapsedMs": 611.7382099999959,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.4963699999999562,
+        "baselineHeapBytes": 36817304,
+        "heapUsedBytes": 37001848,
+        "heapGrowthBytes": 184544,
+        "externalGrowthBytes": 41099,
+        "arrayBufferGrowthBytes": 407,
+        "observedGrowthBytes": 225643,
+        "peakRssBytes": 87564288
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "conditional-project",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "msbuild-xml",
+      "seed": 1,
+      "caseIndex": 2,
+      "inputBytes": 75,
+      "inputSHA256": "3960f9983ac6c77b61a131e6e9e03182be6393f2e805b8ce8831e04ebb84ae23",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "metrics": {
+        "processElapsedMs": 598.4730830000044,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.8931929999999966,
+        "baselineHeapBytes": 38267328,
+        "heapUsedBytes": 38421072,
+        "heapGrowthBytes": 153744,
+        "externalGrowthBytes": 40908,
+        "arrayBufferGrowthBytes": 216,
+        "observedGrowthBytes": 194652,
+        "peakRssBytes": 84946944
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "entities-and-cdata",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "msbuild-xml",
+      "seed": 1,
+      "caseIndex": 3,
+      "inputBytes": 51,
+      "inputSHA256": "cdc5a61165b159d4378efa2e2ab05364e0bcea16e4893fffdfa8201f20ef8058",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "metrics": {
+        "processElapsedMs": 636.5633939999971,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.734829999999988,
+        "baselineHeapBytes": 38702872,
+        "heapUsedBytes": 38872088,
+        "heapGrowthBytes": 169216,
+        "externalGrowthBytes": 40747,
+        "arrayBufferGrowthBytes": 55,
+        "observedGrowthBytes": 209963,
+        "peakRssBytes": 85032960
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "condition-boolean",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "msbuild-xml",
+      "seed": 1,
+      "caseIndex": 4,
+      "inputBytes": 56,
+      "inputSHA256": "4f2306fb54b7c7437cfe5905ad5fc7d578a40ec08416c7dd0e83ea41b162f9be",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "metrics": {
+        "processElapsedMs": 591.6792129999958,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.0164640000000418,
+        "baselineHeapBytes": 36990352,
+        "heapUsedBytes": 37152344,
+        "heapGrowthBytes": 161992,
+        "externalGrowthBytes": 40752,
+        "arrayBufferGrowthBytes": 60,
+        "observedGrowthBytes": 202744,
+        "peakRssBytes": 88104960
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "condition-exists",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "msbuild-xml",
+      "seed": 1,
+      "caseIndex": 5,
+      "inputBytes": 30,
+      "inputSHA256": "679561489f9f4c1bac753b792ec0808d48e32ee367520e043b5f0525c32f3cde",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "MSBUILD_XML",
+      "metrics": {
+        "processElapsedMs": 590.9651830000075,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.759757000000036,
+        "baselineHeapBytes": 37019488,
+        "heapUsedBytes": 37170200,
+        "heapGrowthBytes": 150712,
+        "externalGrowthBytes": 40722,
+        "arrayBufferGrowthBytes": 30,
+        "observedGrowthBytes": 191434,
+        "peakRssBytes": 87982080
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "mismatched-tag",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "msbuild-xml",
+      "seed": 1,
+      "caseIndex": 6,
+      "inputBytes": 26,
+      "inputSHA256": "5dc6604ad90b618a24d9800805f733c6c783b914b30026bf39fe3939e69f3d5d",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "MSBUILD_XML",
+      "metrics": {
+        "processElapsedMs": 607.9330830000108,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.7772330000000238,
+        "baselineHeapBytes": 39045344,
+        "heapUsedBytes": 39197312,
+        "heapGrowthBytes": 151968,
+        "externalGrowthBytes": 40718,
+        "arrayBufferGrowthBytes": 26,
+        "observedGrowthBytes": 192686,
+        "peakRssBytes": 86335488
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "duplicate-attribute",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "msbuild-xml",
+      "seed": 1,
+      "caseIndex": 7,
+      "inputBytes": 28,
+      "inputSHA256": "95dd47b15bd13b3248abe754374407da0dd15fb302f659040eb947cbd03e2323",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "MSBUILD_XML",
+      "metrics": {
+        "processElapsedMs": 573.2905000000028,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.6779960000000074,
+        "baselineHeapBytes": 38287152,
+        "heapUsedBytes": 38431696,
+        "heapGrowthBytes": 144544,
+        "externalGrowthBytes": 40720,
+        "arrayBufferGrowthBytes": 28,
+        "observedGrowthBytes": 185264,
+        "peakRssBytes": 84914176
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "doctype-denied",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "msbuild-xml",
+      "seed": 1,
+      "caseIndex": 8,
+      "inputBytes": 30,
+      "inputSHA256": "7349b55a423907c9640a413b1b0b60e37858a23b483c793127f2e32561248986",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "MSBUILD_CONDITION",
+      "metrics": {
+        "processElapsedMs": 618.5913440000004,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.5142459999999573,
+        "baselineHeapBytes": 37048192,
+        "heapUsedBytes": 37217632,
+        "heapGrowthBytes": 169440,
+        "externalGrowthBytes": 40722,
+        "arrayBufferGrowthBytes": 30,
+        "observedGrowthBytes": 210162,
+        "peakRssBytes": 88788992
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "condition-incomplete",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "msbuild-xml",
+      "seed": 1,
+      "caseIndex": 9,
+      "inputBytes": 49,
+      "inputSHA256": "b342f402e87958a47e65d757290b5c787692b34849ac43d983d73524eed749ea",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "MSBUILD_XML",
+      "metrics": {
+        "processElapsedMs": 620.6194490000053,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.781317999999942,
+        "baselineHeapBytes": 38593728,
+        "heapUsedBytes": 38745568,
+        "heapGrowthBytes": 151840,
+        "externalGrowthBytes": 40741,
+        "arrayBufferGrowthBytes": 49,
+        "observedGrowthBytes": 192581,
+        "peakRssBytes": 85684224
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "minimal-project",
+      "mutation": "duplicate"
+    },
+    {
+      "targetId": "msbuild-xml",
+      "seed": 1,
+      "caseIndex": 10,
+      "inputBytes": 134,
+      "inputSHA256": "5c509b20783edc6e63f24d90909bc7724de167d0184dc03d9a17e5300a559bed",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "MSBUILD_XML",
+      "metrics": {
+        "processElapsedMs": 632.5978049999976,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.1781710000000203,
+        "baselineHeapBytes": 38232832,
+        "heapUsedBytes": 38386848,
+        "heapGrowthBytes": 154016,
+        "externalGrowthBytes": 40826,
+        "arrayBufferGrowthBytes": 134,
+        "observedGrowthBytes": 194842,
+        "peakRssBytes": 84213760
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "conditional-project",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "msbuild-xml",
+      "seed": 1,
+      "caseIndex": 11,
+      "inputBytes": 64,
+      "inputSHA256": "2e54cb2e9ef9700e3511c7d2581d2c2ffc349011d2454d78b18a5bb971a806e1",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "MSBUILD_XML",
+      "metrics": {
+        "processElapsedMs": 630.2256259999995,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.8795029999999997,
+        "baselineHeapBytes": 37190312,
+        "heapUsedBytes": 37346200,
+        "heapGrowthBytes": 155888,
+        "externalGrowthBytes": 40756,
+        "arrayBufferGrowthBytes": 64,
+        "observedGrowthBytes": 196644,
+        "peakRssBytes": 86282240
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "entities-and-cdata",
+      "mutation": "truncate"
+    },
+    {
+      "targetId": "msbuild-xml",
+      "seed": 1,
+      "caseIndex": 12,
+      "inputBytes": 44,
+      "inputSHA256": "1f91f3c2ce00726def23dbfba666318f37891032c649d4b0244211c8f92e6983",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "metrics": {
+        "processElapsedMs": 660.8992069999949,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.1426999999999907,
+        "baselineHeapBytes": 38560328,
+        "heapUsedBytes": 38729472,
+        "heapGrowthBytes": 169144,
+        "externalGrowthBytes": 40741,
+        "arrayBufferGrowthBytes": 49,
+        "observedGrowthBytes": 209885,
+        "peakRssBytes": 84455424
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "condition-boolean",
+      "mutation": "delete"
+    },
+    {
+      "targetId": "msbuild-xml",
+      "seed": 1,
+      "caseIndex": 13,
+      "inputBytes": 59,
+      "inputSHA256": "0a412938a1e3c694e7d7814db0de7c6300583bb713a81cd72736c397080324b2",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "FUZZ_UTF8",
+      "metrics": {
+        "processElapsedMs": 663.0842370000028,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.39965799999993123,
+        "baselineHeapBytes": 37306656,
+        "heapUsedBytes": 37444592,
+        "heapGrowthBytes": 137936,
+        "externalGrowthBytes": 40751,
+        "arrayBufferGrowthBytes": 59,
+        "observedGrowthBytes": 178687,
+        "peakRssBytes": 86663168
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "condition-exists",
+      "mutation": "insert"
+    },
+    {
+      "targetId": "msbuild-xml",
+      "seed": 1,
+      "caseIndex": 14,
+      "inputBytes": 44,
+      "inputSHA256": "3335c9d18a05429c2cf86d4cf22c55a3279e1a297f87ad6d1afb9d03cab07d0e",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "MSBUILD_XML",
+      "metrics": {
+        "processElapsedMs": 593.3838699999906,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.7344090000000278,
+        "baselineHeapBytes": 38601312,
+        "heapUsedBytes": 38752088,
+        "heapGrowthBytes": 150776,
+        "externalGrowthBytes": 40736,
+        "arrayBufferGrowthBytes": 44,
+        "observedGrowthBytes": 191512,
+        "peakRssBytes": 85798912
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "mismatched-tag",
+      "mutation": "duplicate"
+    },
+    {
+      "targetId": "msbuild-xml",
+      "seed": 1,
+      "caseIndex": 15,
+      "inputBytes": 26,
+      "inputSHA256": "02efa3c9cbfc80ea6665c597f83dc094cc298007542ebe356e0346497412efde",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "MSBUILD_XML",
+      "metrics": {
+        "processElapsedMs": 573.4074670000118,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.8966179999999895,
+        "baselineHeapBytes": 36925200,
+        "heapUsedBytes": 37077408,
+        "heapGrowthBytes": 152208,
+        "externalGrowthBytes": 40718,
+        "arrayBufferGrowthBytes": 26,
+        "observedGrowthBytes": 192926,
+        "peakRssBytes": 86052864
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "duplicate-attribute",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "msbuild-xml",
+      "seed": 1,
+      "caseIndex": 16,
+      "inputBytes": 0,
+      "inputSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "MSBUILD_XML",
+      "metrics": {
+        "processElapsedMs": 553.3888529999822,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.567764000000011,
+        "baselineHeapBytes": 36678712,
+        "heapUsedBytes": 36823352,
+        "heapGrowthBytes": 144640,
+        "externalGrowthBytes": 40692,
+        "arrayBufferGrowthBytes": 0,
+        "observedGrowthBytes": 185332,
+        "peakRssBytes": 86675456
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "doctype-denied",
+      "mutation": "truncate"
+    },
+    {
+      "targetId": "msbuild-xml",
+      "seed": 1,
+      "caseIndex": 17,
+      "inputBytes": 28,
+      "inputSHA256": "9b5258f1727365d8a952f448364ae1b933ea0925ce96017d4be1f027a6b3a891",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "MSBUILD_CONDITION",
+      "metrics": {
+        "processElapsedMs": 573.0981930000125,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.1730649999999514,
+        "baselineHeapBytes": 37329496,
+        "heapUsedBytes": 37496992,
+        "heapGrowthBytes": 167496,
+        "externalGrowthBytes": 40720,
+        "arrayBufferGrowthBytes": 28,
+        "observedGrowthBytes": 208216,
+        "peakRssBytes": 85516288
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "condition-incomplete",
+      "mutation": "delete"
+    },
+    {
+      "targetId": "msbuild-xml",
+      "seed": 1,
+      "caseIndex": 18,
+      "inputBytes": 36,
+      "inputSHA256": "34ed77b836eacb3759bdcc09dc3031502db0b6dfe6bf37a9d6cb5dfbec729d84",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "FUZZ_UTF8",
+      "metrics": {
+        "processElapsedMs": 575.5080949999974,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.35891700000001947,
+        "baselineHeapBytes": 36796712,
+        "heapUsedBytes": 36934672,
+        "heapGrowthBytes": 137960,
+        "externalGrowthBytes": 40728,
+        "arrayBufferGrowthBytes": 36,
+        "observedGrowthBytes": 178688,
+        "peakRssBytes": 86069248
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "minimal-project",
+      "mutation": "insert"
+    },
+    {
+      "targetId": "msbuild-xml",
+      "seed": 1,
+      "caseIndex": 19,
+      "inputBytes": 135,
+      "inputSHA256": "aec026210ef6b953f8cfcc39614645d31217c0540ba586370c0b48ed07c46588",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "MSBUILD_XML",
+      "metrics": {
+        "processElapsedMs": 604.005702000024,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.8139859999999999,
+        "baselineHeapBytes": 36911352,
+        "heapUsedBytes": 37065352,
+        "heapGrowthBytes": 154000,
+        "externalGrowthBytes": 40827,
+        "arrayBufferGrowthBytes": 135,
+        "observedGrowthBytes": 194827,
+        "peakRssBytes": 87105536
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "conditional-project",
+      "mutation": "duplicate"
+    },
+    {
+      "targetId": "msbuild-xml",
+      "seed": 1,
+      "caseIndex": 20,
+      "inputBytes": 75,
+      "inputSHA256": "fa884ee15e956ab700c692bfa81a38ff4b83fef899c90c7534760809c36c4ad6",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "MSBUILD_XML",
+      "metrics": {
+        "processElapsedMs": 625.2465030000021,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.7214999999999918,
+        "baselineHeapBytes": 38256632,
+        "heapUsedBytes": 38403912,
+        "heapGrowthBytes": 147280,
+        "externalGrowthBytes": 40767,
+        "arrayBufferGrowthBytes": 75,
+        "observedGrowthBytes": 188047,
+        "peakRssBytes": 84934656
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "entities-and-cdata",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "msbuild-xml",
+      "seed": 1,
+      "caseIndex": 21,
+      "inputBytes": 14,
+      "inputSHA256": "8bdfbdcfb043c57aabda3e641ced53683acb3e4a5eda450affe7d1d4ea50b1ef",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "MSBUILD_CONDITION",
+      "metrics": {
+        "processElapsedMs": 649.4686450000154,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.1545469999999796,
+        "baselineHeapBytes": 38725352,
+        "heapUsedBytes": 38877264,
+        "heapGrowthBytes": 151912,
+        "externalGrowthBytes": 40706,
+        "arrayBufferGrowthBytes": 14,
+        "observedGrowthBytes": 192618,
+        "peakRssBytes": 86687744
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "condition-boolean",
+      "mutation": "truncate"
+    },
+    {
+      "targetId": "msbuild-xml",
+      "seed": 1,
+      "caseIndex": 22,
+      "inputBytes": 55,
+      "inputSHA256": "29d7036909634493c35be0fecd563dae65b38003a467ad7076d2bcff2eb7a957",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "MSBUILD_XML",
+      "metrics": {
+        "processElapsedMs": 616.8346629999869,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.7483700000000226,
+        "baselineHeapBytes": 37153296,
+        "heapUsedBytes": 37300064,
+        "heapGrowthBytes": 146768,
+        "externalGrowthBytes": 40747,
+        "arrayBufferGrowthBytes": 55,
+        "observedGrowthBytes": 187515,
+        "peakRssBytes": 87310336
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "condition-exists",
+      "mutation": "delete"
+    },
+    {
+      "targetId": "msbuild-xml",
+      "seed": 1,
+      "caseIndex": 23,
+      "inputBytes": 35,
+      "inputSHA256": "b00c4af0ab21b5454fb889274971339d67988a3f91a8bc61054cc826bfc6f531",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "FUZZ_UTF8",
+      "metrics": {
+        "processElapsedMs": 630.2179370000085,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.36855100000002494,
+        "baselineHeapBytes": 36906840,
+        "heapUsedBytes": 37045176,
+        "heapGrowthBytes": 138336,
+        "externalGrowthBytes": 40727,
+        "arrayBufferGrowthBytes": 35,
+        "observedGrowthBytes": 179063,
+        "peakRssBytes": 87412736
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "mismatched-tag",
+      "mutation": "insert"
+    },
+    {
+      "targetId": "msbuild-xml",
+      "seed": 1,
+      "caseIndex": 24,
+      "inputBytes": 42,
+      "inputSHA256": "ac94eda697bf18829169bbc6ee08aa3a84443bf9a2baf679edba6352c2d2f49e",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "MSBUILD_XML",
+      "metrics": {
+        "processElapsedMs": 621.407790999976,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.7827800000000025,
+        "baselineHeapBytes": 38553240,
+        "heapUsedBytes": 38705304,
+        "heapGrowthBytes": 152064,
+        "externalGrowthBytes": 40734,
+        "arrayBufferGrowthBytes": 42,
+        "observedGrowthBytes": 192798,
+        "peakRssBytes": 86364160
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "duplicate-attribute",
+      "mutation": "duplicate"
+    },
+    {
+      "targetId": "msbuild-xml",
+      "seed": 1,
+      "caseIndex": 25,
+      "inputBytes": 28,
+      "inputSHA256": "2ce086951e958c014f13889bcd218354a4173975d9774ab6deec8ae5e6eecee2",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "MSBUILD_XML",
+      "metrics": {
+        "processElapsedMs": 588.8361070000101,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.5950040000000172,
+        "baselineHeapBytes": 36733192,
+        "heapUsedBytes": 36877904,
+        "heapGrowthBytes": 144712,
+        "externalGrowthBytes": 40720,
+        "arrayBufferGrowthBytes": 28,
+        "observedGrowthBytes": 185432,
+        "peakRssBytes": 88072192
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "doctype-denied",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "msbuild-xml",
+      "seed": 1,
+      "caseIndex": 26,
+      "inputBytes": 21,
+      "inputSHA256": "9122811f92ff07d1779c0d4b0bcb17d89d754ee1d3bdad3dc1f3887a7ff427f6",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "MSBUILD_CONDITION",
+      "metrics": {
+        "processElapsedMs": 636.4589550000092,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.9800599999999804,
+        "baselineHeapBytes": 36924672,
+        "heapUsedBytes": 37083128,
+        "heapGrowthBytes": 158456,
+        "externalGrowthBytes": 40713,
+        "arrayBufferGrowthBytes": 21,
+        "observedGrowthBytes": 199169,
+        "peakRssBytes": 86548480
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "condition-incomplete",
+      "mutation": "truncate"
+    },
+    {
+      "targetId": "msbuild-xml",
+      "seed": 1,
+      "caseIndex": 27,
+      "inputBytes": 32,
+      "inputSHA256": "31ce669b09439d01d4222ed8c4c0dfcee5bc2a40cf35c736e8524ff200958a8b",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "metrics": {
+        "processElapsedMs": 656.6590730000171,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.9030870000000277,
+        "baselineHeapBytes": 38688464,
+        "heapUsedBytes": 38837992,
+        "heapGrowthBytes": 149528,
+        "externalGrowthBytes": 40815,
+        "arrayBufferGrowthBytes": 123,
+        "observedGrowthBytes": 190343,
+        "peakRssBytes": 85598208
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "minimal-project",
+      "mutation": "delete"
+    },
+    {
+      "targetId": "msbuild-xml",
+      "seed": 1,
+      "caseIndex": 28,
+      "inputBytes": 138,
+      "inputSHA256": "121f280fdac05de2bbb2c4b0fba55f649d98e867da6ffbce4b724551d284f926",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "FUZZ_UTF8",
+      "metrics": {
+        "processElapsedMs": 666.7773790000065,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.3660980000000791,
+        "baselineHeapBytes": 38398768,
+        "heapUsedBytes": 38536808,
+        "heapGrowthBytes": 138040,
+        "externalGrowthBytes": 40830,
+        "arrayBufferGrowthBytes": 138,
+        "observedGrowthBytes": 178870,
+        "peakRssBytes": 84865024
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "conditional-project",
+      "mutation": "insert"
+    },
+    {
+      "targetId": "msbuild-xml",
+      "seed": 1,
+      "caseIndex": 29,
+      "inputBytes": 78,
+      "inputSHA256": "a1ebcc11d52d6fd1018be1052fce7a1b670bdf3cd4bbae51313bea14ad220465",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "MSBUILD_XML",
+      "metrics": {
+        "processElapsedMs": 589.2769939999853,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.8027600000000348,
+        "baselineHeapBytes": 38213848,
+        "heapUsedBytes": 38366808,
+        "heapGrowthBytes": 152960,
+        "externalGrowthBytes": 40770,
+        "arrayBufferGrowthBytes": 78,
+        "observedGrowthBytes": 193730,
+        "peakRssBytes": 84590592
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "entities-and-cdata",
+      "mutation": "duplicate"
+    },
+    {
+      "targetId": "msbuild-xml",
+      "seed": 1,
+      "caseIndex": 30,
+      "inputBytes": 51,
+      "inputSHA256": "bbe0f240b584b17a3509b78204d8eecea1456d983af6b662c7b5e127d14c9e4e",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "MSBUILD_CONDITION",
+      "metrics": {
+        "processElapsedMs": 632.068763999996,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.2755940000000692,
+        "baselineHeapBytes": 38190112,
+        "heapUsedBytes": 38361504,
+        "heapGrowthBytes": 171392,
+        "externalGrowthBytes": 40743,
+        "arrayBufferGrowthBytes": 51,
+        "observedGrowthBytes": 212135,
+        "peakRssBytes": 86614016
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "condition-boolean",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "msbuild-xml",
+      "seed": 1,
+      "caseIndex": 31,
+      "inputBytes": 2,
+      "inputSHA256": "c330ec504d82c24fcd10be978fa74b8a3185a8df719604a85443bb9ca279f5a2",
+      "sourceIdentity": {
+        "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+        "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "MSBUILD_XML",
+      "metrics": {
+        "processElapsedMs": 645.1675770000147,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.6748220000000629,
+        "baselineHeapBytes": 38588296,
+        "heapUsedBytes": 38734840,
+        "heapGrowthBytes": 146544,
+        "externalGrowthBytes": 40694,
+        "arrayBufferGrowthBytes": 2,
+        "observedGrowthBytes": 187238,
+        "peakRssBytes": 85377024
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "condition-exists",
+      "mutation": "truncate"
+    }
+  ],
+  "artifacts": [],
+  "budgets": {
+    "maxCases": 32,
+    "caseTimeoutMs": 1000,
+    "startupTimeoutMs": 5000,
+    "campaignTimeoutMs": 30000,
+    "maxInputBytes": 65536,
+    "maxOutputBytes": 65536,
+    "heapGrowthBytes": 16777216,
+    "v8HeapMb": 128,
+    "rssBytes": 268435456,
+    "maxCorpusCases": 128,
+    "maxCorpusBytes": 8388608
+  },
+  "environment": {
+    "node": "v24.19.0",
+    "platform": "linux",
+    "arch": "x64"
+  },
+  "targetId": "msbuild-xml",
+  "seed": 1,
+  "sourceIdentity": {
+    "commit": "07c833a82084b8fc07e4d9263bf83e315998e1ab",
+    "tree": "1567d3935d15f123bc316ba0a1a0a04fed3ef221",
+    "clean": true
+  },
+  "seedAcquisition": {
+    "status": "accepted",
+    "metrics": {
+      "processElapsedMs": 611.0631569999969,
+      "sampledRssBytes": 0,
+      "elapsedMs": 0.3310869999999113,
+      "baselineHeapBytes": 38406848,
+      "heapUsedBytes": 38555048,
+      "heapGrowthBytes": 148200,
+      "externalGrowthBytes": 41156,
+      "arrayBufferGrowthBytes": 464,
+      "observedGrowthBytes": 189356,
+      "peakRssBytes": 84606976
+    },
+    "isolation": {
+      "v8OldSpaceMb": 128,
+      "rssGuard": "not-observed",
+      "osMemorySandbox": false
+    }
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "kind": "sharpforge-offline-fuzz-campaign",
+  "status": "passed",
+  "qualified": true,
+  "qualification": "bounded-node-offline-adapters",
+  "sourceBefore": {
+    "commit": "9e6235635fdfb92939e8d7cbf1985db774d1fa31",
+    "tree": "3b4b42b335f088d800610ad4af19dafde9fa07a3",
+    "clean": true
+  },
+  "sourceAfter": {
+    "commit": "9e6235635fdfb92939e8d7cbf1985db774d1fa31",
+    "tree": "3b4b42b335f088d800610ad4af19dafde9fa07a3",
+    "clean": true
+  },
+  "environment": {
+    "node": "v24.19.0",
+    "platform": "linux",
+    "arch": "x64"
+  },
+  "started": "2026-10-04T13:39:50.173Z",
+  "finished": "2026-10-04T13:40:15.421Z",
+  "seed": 1,
+  "budgets": {
+    "maxCases": 32,
+    "caseTimeoutMs": 1000,
+    "startupTimeoutMs": 5000,
+    "campaignTimeoutMs": 30000,
+    "maxInputBytes": 65536,
+    "maxOutputBytes": 65536,
+    "heapGrowthBytes": 16777216,
+    "v8HeapMb": 128,
+    "rssBytes": 268435456,
+    "maxCorpusCases": 128,
+    "maxCorpusBytes": 8388608
+  },
+  "targets": [
+    {
+      "targetId": "il-document",
+      "status": "passed",
+      "requestedCases": 32,
+      "completedCases": 32,
+      "counts": {
+        "accepted": 7,
+        "rejected": 25,
+        "unsupported": 0,
+        "findings": 0,
+        "cancelled": 0
+      }
+    }
+  ],
+  "reports": [
+    {
+      "path": "il-document/campaign.json",
+      "bytes": 48048,
+      "sha256": "2215a9316ad0233e33825c765f9d99cbf5cc903f5478ef8abff64234050c5610"
+    }
+  ],
+  "reproduction": {
+    "workingDirectory": "repository-root",
+    "note": "Use the recorded source commit and environment. Each output directory must be new.",
+    "campaign": [
+      "node",
+      "scripts/limited.js",
+      "node",
+      "scripts/conformance/fuzz/run.js",
+      "--target",
+      "il-document",
+      "--seed",
+      "1",
+      "--cases",
+      "32",
+      "--case-ms",
+      "1000",
+      "--campaign-ms",
+      "30000",
+      "--output",
+      "artifacts/fuzz/il-exact-seed1/reproduction"
+    ],
+    "findings": []
+  },
+  "limitations": [
+    "Only the recorded cases and Node adapter profiles were exercised; mutation campaigns cannot prove parser safety.",
+    "V8 heap limits and sampled RSS guards are not an operating-system memory or network sandbox.",
+    "Provider authentication, archive extraction, physical devices, CLR and Rust/Wasm were not exercised."
+  ]
+}

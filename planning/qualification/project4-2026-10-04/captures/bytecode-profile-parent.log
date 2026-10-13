@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+    "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+    "clean": true
+  },
+  "fixtures": {
+    "commit": "cde74a88fcb812acf3df1a98264f200ecf4397d4"
+  },
+  "cases": [
+    {
+      "name": "return-constant",
+      "inputSha256": "ee505e3b7a3b7d136a826a96fe29d566177a60c277c7673df27ffdbf53775be3",
+      "verification": [],
+      "outcome": {
+        "status": "accepted",
+        "code": "BYTECODE_VERIFIED_SCALAR_EXECUTED"
+      }
+    },
+    {
+      "name": "add-two-integers",
+      "inputSha256": "4b7d7f4a7c5cc2eaa4ca1df3c9d1c7d03fed7ebf176a4d16493d830095f23687",
+      "verification": [],
+      "outcome": {
+        "status": "accepted",
+        "code": "BYTECODE_VERIFIED_SCALAR_EXECUTED"
+      }
+    },
+    {
+      "name": "call-two-integers",
+      "inputSha256": "cee24508cc8d2ba94e3dbe40878ac8973ecbaa734b001f12694cd63471e41f19",
+      "verification": [],
+      "outcome": {
+        "status": "unsupported",
+        "code": "BYTECODE_EXECUTION_PROFILE",
+        "detail": "Verified; scalar-only execution profile excluded this image"
+      }
+    },
+    {
+      "name": "four-static-call-frames",
+      "inputSha256": "1014bd45d50c48650ee72f2abd5113b17eb758718dc6aae08d2a92066ef2c735",
+      "verification": [],
+      "outcome": {
+        "status": "unsupported",
+        "code": "BYTECODE_EXECUTION_PROFILE",
+        "detail": "Verified; scalar-only execution profile excluded this image"
+      }
+    },
+    {
+      "name": "static-read-write",
+      "inputSha256": "6558adc4f28b67829f76d7fabe670ac6765df023cab489bb37003f7745c7c834",
+      "verification": [],
+      "outcome": {
+        "status": "unsupported",
+        "code": "BYTECODE_EXECUTION_PROFILE",
+        "detail": "Verified; scalar-only execution profile excluded this image"
+      }
+    },
+    {
+      "name": "fixed-object-field",
+      "inputSha256": "f1c95f0fa78bfc50fabe685b0cfb6db09fb9be42f76dfcb83ff4f2cd1b4527bf",
+      "verification": [],
+      "outcome": {
+        "status": "unsupported",
+        "code": "BYTECODE_EXECUTION_PROFILE",
+        "detail": "Verified; scalar-only execution profile excluded this image"
+      }
+    },
+    {
+      "name": "int-array-store-load-length",
+      "inputSha256": "6bca67f8080029daf114862e6412eb8d198409911c71f5ff2b2b2895372e0c15",
+      "verification": [],
+      "outcome": {
+        "status": "unsupported",
+        "code": "BYTECODE_EXECUTION_PROFILE",
+        "detail": "Verified; scalar-only execution profile excluded this image"
+      }
+    },
+    {
+      "name": "empty-int-array",
+      "inputSha256": "8f3abf7e57633fa4285ad77947b4c4a64c701eacc90e0f354694c7882fb15d0a",
+      "verification": [],
+      "outcome": {
+        "status": "unsupported",
+        "code": "BYTECODE_EXECUTION_PROFILE",
+        "detail": "Verified; scalar-only execution profile excluded this image"
+      }
+    },
+    {
+      "name": "int-array-at-heap-budget",
+      "inputSha256": "4a04f07da73b917b64ca4fad6c8c46f3c899e327e377a1a748b0ac2ce9b349d9",
+      "verification": [],
+      "outcome": {
+        "status": "unsupported",
+        "code": "BYTECODE_EXECUTION_PROFILE",
+        "detail": "Verified; scalar-only execution profile excluded this image"
+      }
+    }
+  ]
+}

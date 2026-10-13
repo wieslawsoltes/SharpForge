@@ -1,0 +1,370 @@
+TAP version 13
+# Subtest: LSP initialize explicitly rejects malformed parameter containers
+ok 1 - LSP initialize explicitly rejects malformed parameter containers
+  ---
+  duration_ms: 2.134798
+  type: 'test'
+  ...
+# Subtest: LSP workspace/symbol explicitly rejects malformed parameter containers
+ok 2 - LSP workspace/symbol explicitly rejects malformed parameter containers
+  ---
+  duration_ms: 0.280202
+  type: 'test'
+  ...
+# Subtest: LSP textDocument/hover explicitly rejects malformed parameter containers
+ok 3 - LSP textDocument/hover explicitly rejects malformed parameter containers
+  ---
+  duration_ms: 0.182869
+  type: 'test'
+  ...
+# Subtest: LSP callHierarchy/incomingCalls explicitly rejects malformed parameter containers
+ok 4 - LSP callHierarchy/incomingCalls explicitly rejects malformed parameter containers
+  ---
+  duration_ms: 0.173675
+  type: 'test'
+  ...
+# Subtest: LSP textDocument/hover explicitly requires the textDocument container
+ok 5 - LSP textDocument/hover explicitly requires the textDocument container
+  ---
+  duration_ms: 0.322605
+  type: 'test'
+  ...
+# Subtest: LSP textDocument/formatting explicitly requires the textDocument container
+ok 6 - LSP textDocument/formatting explicitly requires the textDocument container
+  ---
+  duration_ms: 0.215687
+  type: 'test'
+  ...
+# Subtest: LSP textDocument/semanticTokens/full explicitly requires the textDocument container
+ok 7 - LSP textDocument/semanticTokens/full explicitly requires the textDocument container
+  ---
+  duration_ms: 0.182658
+  type: 'test'
+  ...
+# Subtest: LSP requires a non-empty string document URI before document lookup
+ok 8 - LSP requires a non-empty string document URI before document lookup
+  ---
+  duration_ms: 0.291738
+  type: 'test'
+  ...
+# Subtest: LSP malformed document notifications produce no response or document mutation
+ok 9 - LSP malformed document notifications produce no response or document mutation
+  ---
+  duration_ms: 53.306497
+  type: 'test'
+  ...
+# Subtest: LSP optional params and unknown methods preserve their existing public behavior
+ok 10 - LSP optional params and unknown methods preserve their existing public behavior
+  ---
+  duration_ms: 0.882478
+  type: 'test'
+  ...
+# Subtest: LSP shutdown and notification handling take precedence over parameter validation
+ok 11 - LSP shutdown and notification handling take precedence over parameter validation
+  ---
+  duration_ms: 0.408029
+  type: 'test'
+  ...
+# Subtest: protocol sequences: seeds are deterministic and the byte prefix preserves existing framing mode
+ok 12 - protocol sequences: seeds are deterministic and the byte prefix preserves existing framing mode
+  ---
+  duration_ms: 1.722704
+  type: 'test'
+  ...
+# Subtest: protocol sequences: shipped cases exercise actual handlers and controlled negative responses
+ok 13 - protocol sequences: shipped cases exercise actual handlers and controlled negative responses
+  ---
+  duration_ms: 103.840971
+  type: 'test'
+  ...
+# Subtest: LSP sequences: edits, queries, close and shutdown preserve protocol state and correlation
+ok 14 - LSP sequences: edits, queries, close and shutdown preserve protocol state and correlation
+  ---
+  duration_ms: 17.693986
+  type: 'test'
+  ...
+# Subtest: LSP sequences: owned source variants include diagnostic-producing text without growing document state
+ok 15 - LSP sequences: owned source variants include diagnostic-producing text without growing document state
+  ---
+  duration_ms: 6.538935
+  type: 'test'
+  ...
+# Subtest: DAP sequences: fixed IL launch, stepping, bounded inspection, restart and disposal work in memory
+ok 16 - DAP sequences: fixed IL launch, stepping, bounded inspection, restart and disposal work in memory
+  ---
+  duration_ms: 9.707533
+  type: 'test'
+  ...
+# Subtest: DAP sequences: missing state and malformed owned argument shapes produce explicit error responses
+ok 17 - DAP sequences: missing state and malformed owned argument shapes produce explicit error responses
+  ---
+  duration_ms: 0.520615
+  type: 'test'
+  ...
+# Subtest: DAP sequences: the current null-envelope product defect is surfaced as a finding, never a rejected input
+ok 18 - DAP sequences: the current null-envelope product defect is surfaced as a finding, never a rejected input
+  ---
+  duration_ms: 1.122611
+  type: 'test'
+  ...
+# Subtest: LSP sequences: malformed parameters require explicit validation diagnostics
+ok 19 - LSP sequences: malformed parameters require explicit validation diagnostics
+  ---
+  duration_ms: 0.398105
+  type: 'test'
+  ...
+# Subtest: LSP sequences: missing methods require the precise correlated Invalid Request diagnostic
+ok 20 - LSP sequences: missing methods require the precise correlated Invalid Request diagnostic
+  ---
+  duration_ms: 0.602086
+  type: 'test'
+  ...
+# Subtest: DAP sequences: caught native exceptions from malformed parameters remain findings
+ok 21 - DAP sequences: caught native exceptions from malformed parameters remain findings
+  ---
+  duration_ms: 0.68025
+  type: 'test'
+  ...
+# Subtest: protocol sequences: only precise owned diagnostics qualify as expected negative responses
+ok 22 - protocol sequences: only precise owned diagnostics qualify as expected negative responses
+  ---
+  duration_ms: 0.581284
+  type: 'test'
+  ...
+# Subtest: protocol sequences: unknown profiles, empty programs and excessive operation counts remain bounded
+ok 23 - protocol sequences: unknown profiles, empty programs and excessive operation counts remain bounded
+  ---
+  duration_ms: 0.561725
+  type: 'test'
+  ...
+# Subtest: protocol sequences: byte and output caps are enforced before growing a transcript
+ok 24 - protocol sequences: byte and output caps are enforced before growing a transcript
+  ---
+  duration_ms: 0.355493
+  type: 'test'
+  ...
+# Subtest: protocol sequences: cancellation propagates before and between awaited handlers
+ok 25 - protocol sequences: cancellation propagates before and between awaited handlers
+  ---
+  duration_ms: 0.314042
+  type: 'test'
+  ...
+# Subtest: protocol sequences: malformed server responses and unexpected internal error responses become findings
+ok 26 - protocol sequences: malformed server responses and unexpected internal error responses become findings
+  ---
+  duration_ms: 0.232642
+  type: 'test'
+  ...
+# Subtest: protocol sequences: output callback failures are rethrown after the server error boundary
+ok 27 - protocol sequences: output callback failures are rethrown after the server error boundary
+  ---
+  duration_ms: 0.224009
+  type: 'test'
+  ...
+# Subtest: protocol sequences: event count is capped even when every individual event is small
+ok 28 - protocol sequences: event count is capped even when every individual event is small
+  ---
+  duration_ms: 0.578791
+  type: 'test'
+  ...
+# Subtest: LSP rejects the null envelope with a stable Invalid Request response
+ok 29 - LSP rejects the null envelope with a stable Invalid Request response
+  ---
+  duration_ms: 1.94508
+  type: 'test'
+  ...
+# Subtest: LSP rejects the undefined envelope with a stable Invalid Request response
+ok 30 - LSP rejects the undefined envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.150642
+  type: 'test'
+  ...
+# Subtest: LSP rejects the string envelope with a stable Invalid Request response
+ok 31 - LSP rejects the string envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.141418
+  type: 'test'
+  ...
+# Subtest: LSP rejects the empty string envelope with a stable Invalid Request response
+ok 32 - LSP rejects the empty string envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.120607
+  type: 'test'
+  ...
+# Subtest: LSP rejects the number envelope with a stable Invalid Request response
+ok 33 - LSP rejects the number envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.233794
+  type: 'test'
+  ...
+# Subtest: LSP rejects the zero envelope with a stable Invalid Request response
+ok 34 - LSP rejects the zero envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.172293
+  type: 'test'
+  ...
+# Subtest: LSP rejects the NaN envelope with a stable Invalid Request response
+ok 35 - LSP rejects the NaN envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.123161
+  type: 'test'
+  ...
+# Subtest: LSP rejects the true envelope with a stable Invalid Request response
+ok 36 - LSP rejects the true envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.086186
+  type: 'test'
+  ...
+# Subtest: LSP rejects the false envelope with a stable Invalid Request response
+ok 37 - LSP rejects the false envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.221376
+  type: 'test'
+  ...
+# Subtest: LSP rejects the bigint envelope with a stable Invalid Request response
+ok 38 - LSP rejects the bigint envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.397955
+  type: 'test'
+  ...
+# Subtest: LSP rejects the symbol envelope with a stable Invalid Request response
+ok 39 - LSP rejects the symbol envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.133376
+  type: 'test'
+  ...
+# Subtest: LSP rejects the function envelope with a stable Invalid Request response
+ok 40 - LSP rejects the function envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.104243
+  type: 'test'
+  ...
+# Subtest: LSP rejects the empty array envelope with a stable Invalid Request response
+ok 41 - LSP rejects the empty array envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.14228
+  type: 'test'
+  ...
+# Subtest: LSP rejects the batch array envelope with a stable Invalid Request response
+ok 42 - LSP rejects the batch array envelope with a stable Invalid Request response
+  ---
+  duration_ms: 0.10237
+  type: 'test'
+  ...
+# Subtest: LSP rejects arrays carrying request properties before any dispatch side effect
+ok 43 - LSP rejects arrays carrying request properties before any dispatch side effect
+  ---
+  duration_ms: 0.236919
+  type: 'test'
+  ...
+# Subtest: LSP preserves request IDs and the optional jsonrpc field at the public adapter boundary
+ok 44 - LSP preserves request IDs and the optional jsonrpc field at the public adapter boundary
+  ---
+  duration_ms: 0.331508
+  type: 'test'
+  ...
+# Subtest: LSP rejects missing, non-string and empty method names while preserving request correlation
+ok 45 - LSP rejects missing, non-string and empty method names while preserving request correlation
+  ---
+  duration_ms: 0.636235
+  type: 'test'
+  ...
+# Subtest: LSP malformed methods are invalid requests even without an ID or after shutdown
+ok 46 - LSP malformed methods are invalid requests even without an ID or after shutdown
+  ---
+  duration_ms: 0.164201
+  type: 'test'
+  ...
+# Subtest: LSP retains initialization capabilities and the semantic token wire legend
+ok 47 - LSP retains initialization capabilities and the semantic token wire legend
+  ---
+  duration_ms: 0.131813
+  type: 'test'
+  ...
+# Subtest: LSP still dispatches document notifications and publishes diagnostics after a rejected envelope
+ok 48 - LSP still dispatches document notifications and publishes diagnostics after a rejected envelope
+  ---
+  duration_ms: 51.986277
+  type: 'test'
+  ...
+# Subtest: LSP still omits responses to notifications and preserves lifecycle errors
+ok 49 - LSP still omits responses to notifications and preserves lifecycle errors
+  ---
+  duration_ms: 0.268194
+  type: 'test'
+  ...
+# Subtest: LSP: initialization advertises implemented UTF-16 capabilities
+ok 50 - LSP: initialization advertises implemented UTF-16 capabilities
+  ---
+  duration_ms: 1.316215
+  type: 'test'
+  ...
+# Subtest: LSP: versioned diagnostics publish on open and edit
+ok 51 - LSP: versioned diagnostics publish on open and edit
+  ---
+  duration_ms: 65.097064
+  type: 'test'
+  ...
+# Subtest: LSP: completion, rename and semantic tokens return protocol shapes
+ok 52 - LSP: completion, rename and semantic tokens return protocol shapes
+  ---
+  duration_ms: 18.991784
+  type: 'test'
+  ...
+# Subtest: LSP: unknown methods return method-not-found
+ok 53 - LSP: unknown methods return method-not-found
+  ---
+  duration_ms: 0.179714
+  type: 'test'
+  ...
+# Subtest: DAP: launch, stepping, inspection and repeated stopped events
+ok 54 - DAP: launch, stepping, inspection and repeated stopped events
+  ---
+  duration_ms: 13.357049
+  type: 'test'
+  ...
+# Subtest: DAP: unsupported requests fail explicitly
+ok 55 - DAP: unsupported requests fail explicitly
+  ---
+  duration_ms: 0.220254
+  type: 'test'
+  ...
+# Subtest: DAP: breakpoints can be configured before launch
+ok 56 - DAP: breakpoints can be configured before launch
+  ---
+  duration_ms: 3.664168
+  type: 'test'
+  ...
+# Subtest: DAP: IL launch from Uint8Array retains source stepping and IL frame coordinates
+ok 57 - DAP: IL launch from Uint8Array retains source stepping and IL frame coordinates
+  ---
+  duration_ms: 28.2053
+  type: 'test'
+  ...
+# Subtest: DAP: IL launch from ArrayBuffer retains source stepping and IL frame coordinates
+ok 58 - DAP: IL launch from ArrayBuffer retains source stepping and IL frame coordinates
+  ---
+  duration_ms: 8.323278
+  type: 'test'
+  ...
+# Subtest: DAP: IL launch from JSON byte array retains source stepping and IL frame coordinates
+ok 59 - DAP: IL launch from JSON byte array retains source stepping and IL frame coordinates
+  ---
+  duration_ms: 7.980474
+  type: 'test'
+  ...
+# Subtest: DAP: malformed assembly transport bytes are rejected rather than coerced
+ok 60 - DAP: malformed assembly transport bytes are rejected rather than coerced
+  ---
+  duration_ms: 0.550629
+  type: 'test'
+  ...
+1..60
+# tests 60
+# suites 0
+# pass 60
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3179.382198

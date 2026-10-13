@@ -1,0 +1,1578 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "requestedCases": 32,
+  "completedCases": 32,
+  "counts": {
+    "accepted": 23,
+    "rejected": 9,
+    "unsupported": 0,
+    "findings": 0,
+    "cancelled": 0
+  },
+  "cases": [
+    {
+      "targetId": "network",
+      "seed": 1,
+      "caseIndex": 0,
+      "inputBytes": 98,
+      "inputSHA256": "12c7a00928753881a95c5b018fced3c525c9827dd245e1ce4b9ce9850a8a984c",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "metrics": {
+        "processElapsedMs": 800.8653940000222,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.5470450000000255,
+        "baselineHeapBytes": 43164496,
+        "heapUsedBytes": 43194400,
+        "heapGrowthBytes": 29904,
+        "externalGrowthBytes": 163,
+        "arrayBufferGrowthBytes": 123,
+        "observedGrowthBytes": 30067,
+        "peakRssBytes": 95535104
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "allowed-origin",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "network",
+      "seed": 1,
+      "caseIndex": 1,
+      "inputBytes": 108,
+      "inputSHA256": "1624387f6d8354e10c94fe24aabc171d9c1bdece8b96cada4554d66644b80758",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "metrics": {
+        "processElapsedMs": 850.3693410000124,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.5811049999999796,
+        "baselineHeapBytes": 43015832,
+        "heapUsedBytes": 43045888,
+        "heapGrowthBytes": 30056,
+        "externalGrowthBytes": 173,
+        "arrayBufferGrowthBytes": 133,
+        "observedGrowthBytes": 30229,
+        "peakRssBytes": 94490624
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "relative-url",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "network",
+      "seed": 1,
+      "caseIndex": 2,
+      "inputBytes": 92,
+      "inputSHA256": "c236bfe938d9b3dfc05cd9467d4257839a876dee8b9180fdf75ab6e8f0a420f0",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "NETWORK_DENIED",
+      "metrics": {
+        "processElapsedMs": 839.0581749999837,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.7605879999999843,
+        "baselineHeapBytes": 43053328,
+        "heapUsedBytes": 43082400,
+        "heapGrowthBytes": 29072,
+        "externalGrowthBytes": 132,
+        "arrayBufferGrowthBytes": 92,
+        "observedGrowthBytes": 29204,
+        "peakRssBytes": 94986240
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "denied-origin",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "network",
+      "seed": 1,
+      "caseIndex": 3,
+      "inputBytes": 99,
+      "inputSHA256": "2d6d9d9a41e378e2be1a484463fb26a653b882d3443a3e78a70f159a7dc32332",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "NETWORK_GRANT",
+      "metrics": {
+        "processElapsedMs": 889.4538910000119,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.5725620000000617,
+        "baselineHeapBytes": 42220424,
+        "heapUsedBytes": 42244376,
+        "heapGrowthBytes": 23952,
+        "externalGrowthBytes": 139,
+        "arrayBufferGrowthBytes": 99,
+        "observedGrowthBytes": 24091,
+        "peakRssBytes": 94990336
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "non-origin-grant",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "network",
+      "seed": 1,
+      "caseIndex": 4,
+      "inputBytes": 63,
+      "inputSHA256": "88bd8cc425407195269901ee65535d0faebb8bea17cae6c4bc53ef1c8fe3ae47",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "metrics": {
+        "processElapsedMs": 786.8284430000058,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.2248309999999947,
+        "baselineHeapBytes": 43267792,
+        "heapUsedBytes": 43325624,
+        "heapGrowthBytes": 57832,
+        "externalGrowthBytes": 134,
+        "arrayBufferGrowthBytes": 94,
+        "observedGrowthBytes": 57966,
+        "peakRssBytes": 95457280
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "allowed-headers",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "network",
+      "seed": 1,
+      "caseIndex": 5,
+      "inputBytes": 67,
+      "inputSHA256": "cfa23baa3c8dae9db3c29f50ff71a73409b95a40823a05beee5902d564d0be51",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "NETWORK_HEADER",
+      "metrics": {
+        "processElapsedMs": 821.7449790000101,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.6754830000000993,
+        "baselineHeapBytes": 40930640,
+        "heapUsedBytes": 40984848,
+        "heapGrowthBytes": 54208,
+        "externalGrowthBytes": 107,
+        "arrayBufferGrowthBytes": 67,
+        "observedGrowthBytes": 54315,
+        "peakRssBytes": 94990336
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "denied-header",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "network",
+      "seed": 1,
+      "caseIndex": 6,
+      "inputBytes": 61,
+      "inputSHA256": "967ab0fc0d4592d28c7f51f9e8085cf471d4c2039f4fb3dd87d9ac62bc2c9e30",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "metrics": {
+        "processElapsedMs": 855.1664159999928,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.7888399999999365,
+        "baselineHeapBytes": 43166360,
+        "heapUsedBytes": 43197496,
+        "heapGrowthBytes": 31136,
+        "externalGrowthBytes": 365,
+        "arrayBufferGrowthBytes": 325,
+        "observedGrowthBytes": 31501,
+        "peakRssBytes": 94961664
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "browser-csp",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "network",
+      "seed": 1,
+      "caseIndex": 7,
+      "inputBytes": 55,
+      "inputSHA256": "db67fabc7c060acb94eef6da85ba7d3ae6ebe78af7516de1d83c86dc412792ed",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "NETWORK_NATIVE_HOST",
+      "detail": "{\"profile\":\"actual-loopback-native-host\",\"address\":\"127.0.0.1\",\"method\":\"GET\",\"route\":\"/api/msbuild/file\",\"requests\":2,\"responseBytes\":364,\"limits\":{\"requests\":2,\"requestBytes\":1024,\"responseBytes\":4096,\"responseHeaderBytes\":4096,\"requestTimeoutMs\":400},\"responses\":[{\"check\":\"valid\",\"variant\":0,\"statusCode\":200,\"responseBytes\":182},{\"check\":\"valid\",\"variant\":0,\"statusCode\":200,\"responseBytes\":182}],\"outsideRootBytes\":false,\"nativeSpawnAttempts\":0,\"nativeTrust\":false,\"serverClosed\":true,\"engineClosed\":true,\"pendingRequests\":0}",
+      "metrics": {
+        "processElapsedMs": 757.7841380000173,
+        "sampledRssBytes": 0,
+        "elapsedMs": 29.929978000000006,
+        "baselineHeapBytes": 40793648,
+        "heapUsedBytes": 39469264,
+        "heapGrowthBytes": 0,
+        "externalGrowthBytes": 41187,
+        "arrayBufferGrowthBytes": 0,
+        "observedGrowthBytes": 41187,
+        "peakRssBytes": 95977472
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "native-valid-0",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "network",
+      "seed": 1,
+      "caseIndex": 8,
+      "inputBytes": 55,
+      "inputSHA256": "a9769f45fa32c331fb4b94574898b378e0e9fb422d7edd4e6a0e767fd4edf2c9",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "NETWORK_NATIVE_HOST",
+      "detail": "{\"profile\":\"actual-loopback-native-host\",\"address\":\"127.0.0.1\",\"method\":\"GET\",\"route\":\"/api/msbuild/file\",\"requests\":2,\"responseBytes\":237,\"limits\":{\"requests\":2,\"requestBytes\":1024,\"responseBytes\":4096,\"responseHeaderBytes\":4096,\"requestTimeoutMs\":400},\"responses\":[{\"check\":\"valid\",\"variant\":0,\"statusCode\":200,\"responseBytes\":182},{\"check\":\"token\",\"variant\":0,\"statusCode\":401,\"responseBytes\":55}],\"outsideRootBytes\":false,\"nativeSpawnAttempts\":0,\"nativeTrust\":false,\"serverClosed\":true,\"engineClosed\":true,\"pendingRequests\":0}",
+      "metrics": {
+        "processElapsedMs": 781.9316829999734,
+        "sampledRssBytes": 0,
+        "elapsedMs": 36.73244599999998,
+        "baselineHeapBytes": 40779552,
+        "heapUsedBytes": 38905928,
+        "heapGrowthBytes": 0,
+        "externalGrowthBytes": 39869,
+        "arrayBufferGrowthBytes": 0,
+        "observedGrowthBytes": 39869,
+        "peakRssBytes": 95944704
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "native-token-0",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "network",
+      "seed": 1,
+      "caseIndex": 9,
+      "inputBytes": 56,
+      "inputSHA256": "51b83d66dd274f5e0b2635672de8443b877eb3f6181d3009bcb1a96c95724099",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "NETWORK_NATIVE_HOST",
+      "detail": "{\"profile\":\"actual-loopback-native-host\",\"address\":\"127.0.0.1\",\"method\":\"GET\",\"route\":\"/api/msbuild/file\",\"requests\":2,\"responseBytes\":232,\"limits\":{\"requests\":2,\"requestBytes\":1024,\"responseBytes\":4096,\"responseHeaderBytes\":4096,\"requestTimeoutMs\":400},\"responses\":[{\"check\":\"valid\",\"variant\":0,\"statusCode\":200,\"responseBytes\":182},{\"check\":\"origin\",\"variant\":0,\"statusCode\":403,\"responseBytes\":50}],\"outsideRootBytes\":false,\"nativeSpawnAttempts\":0,\"nativeTrust\":false,\"serverClosed\":true,\"engineClosed\":true,\"pendingRequests\":0}",
+      "metrics": {
+        "processElapsedMs": 730.8064920000033,
+        "sampledRssBytes": 0,
+        "elapsedMs": 24.104475999999977,
+        "baselineHeapBytes": 41082456,
+        "heapUsedBytes": 38950392,
+        "heapGrowthBytes": 0,
+        "externalGrowthBytes": 39857,
+        "arrayBufferGrowthBytes": 0,
+        "observedGrowthBytes": 39857,
+        "peakRssBytes": 96473088
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "native-origin-0",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "network",
+      "seed": 1,
+      "caseIndex": 10,
+      "inputBytes": 54,
+      "inputSHA256": "2db00d2b594119ebca762cecd2bcbfc3fec490429e7ad5e966de93a7afb32570",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "NETWORK_NATIVE_HOST",
+      "detail": "{\"profile\":\"actual-loopback-native-host\",\"address\":\"127.0.0.1\",\"method\":\"GET\",\"route\":\"/api/msbuild/file\",\"requests\":2,\"responseBytes\":213,\"limits\":{\"requests\":2,\"requestBytes\":1024,\"responseBytes\":4096,\"responseHeaderBytes\":4096,\"requestTimeoutMs\":400},\"responses\":[{\"check\":\"valid\",\"variant\":0,\"statusCode\":200,\"responseBytes\":182},{\"check\":\"host\",\"variant\":0,\"statusCode\":403,\"responseBytes\":31}],\"outsideRootBytes\":false,\"nativeSpawnAttempts\":0,\"nativeTrust\":false,\"serverClosed\":true,\"engineClosed\":true,\"pendingRequests\":0}",
+      "metrics": {
+        "processElapsedMs": 787.3507819999941,
+        "sampledRssBytes": 0,
+        "elapsedMs": 32.63322800000003,
+        "baselineHeapBytes": 43221088,
+        "heapUsedBytes": 39070920,
+        "heapGrowthBytes": 0,
+        "externalGrowthBytes": 39817,
+        "arrayBufferGrowthBytes": 0,
+        "observedGrowthBytes": 39817,
+        "peakRssBytes": 96628736
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "native-host-0",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "network",
+      "seed": 1,
+      "caseIndex": 11,
+      "inputBytes": 60,
+      "inputSHA256": "66e59d47b60ed146d36d9d080a758424f28a4e8086997cd00efeca1a9bb9276a",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "NETWORK_NATIVE_HOST",
+      "detail": "{\"profile\":\"actual-loopback-native-host\",\"address\":\"127.0.0.1\",\"method\":\"GET\",\"route\":\"/api/msbuild/file\",\"requests\":2,\"responseBytes\":230,\"limits\":{\"requests\":2,\"requestBytes\":1024,\"responseBytes\":4096,\"responseHeaderBytes\":4096,\"requestTimeoutMs\":400},\"responses\":[{\"check\":\"valid\",\"variant\":0,\"statusCode\":200,\"responseBytes\":182},{\"check\":\"fetch-site\",\"variant\":0,\"statusCode\":403,\"responseBytes\":48}],\"outsideRootBytes\":false,\"nativeSpawnAttempts\":0,\"nativeTrust\":false,\"serverClosed\":true,\"engineClosed\":true,\"pendingRequests\":0}",
+      "metrics": {
+        "processElapsedMs": 752.9554279999866,
+        "sampledRssBytes": 0,
+        "elapsedMs": 32.05808200000001,
+        "baselineHeapBytes": 40803432,
+        "heapUsedBytes": 38945784,
+        "heapGrowthBytes": 0,
+        "externalGrowthBytes": 39857,
+        "arrayBufferGrowthBytes": 0,
+        "observedGrowthBytes": 39857,
+        "peakRssBytes": 96288768
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "native-fetch-site-0",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "network",
+      "seed": 1,
+      "caseIndex": 12,
+      "inputBytes": 54,
+      "inputSHA256": "0adfc372e2470e3c001eb9851d7c0c30a45d45cc3382aa40a1d29501fd9d77bf",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "NETWORK_NATIVE_HOST",
+      "detail": "{\"profile\":\"actual-loopback-native-host\",\"address\":\"127.0.0.1\",\"method\":\"GET\",\"route\":\"/api/msbuild/file\",\"requests\":2,\"responseBytes\":246,\"limits\":{\"requests\":2,\"requestBytes\":1024,\"responseBytes\":4096,\"responseHeaderBytes\":4096,\"requestTimeoutMs\":400},\"responses\":[{\"check\":\"valid\",\"variant\":0,\"statusCode\":200,\"responseBytes\":182},{\"check\":\"path\",\"variant\":0,\"statusCode\":400,\"responseBytes\":64}],\"outsideRootBytes\":false,\"nativeSpawnAttempts\":0,\"nativeTrust\":false,\"serverClosed\":true,\"engineClosed\":true,\"pendingRequests\":0}",
+      "metrics": {
+        "processElapsedMs": 804.2000490000064,
+        "sampledRssBytes": 0,
+        "elapsedMs": 31.479661999999962,
+        "baselineHeapBytes": 43158760,
+        "heapUsedBytes": 38912696,
+        "heapGrowthBytes": 0,
+        "externalGrowthBytes": 39885,
+        "arrayBufferGrowthBytes": 0,
+        "observedGrowthBytes": 39885,
+        "peakRssBytes": 96227328
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "native-path-0",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "network",
+      "seed": 1,
+      "caseIndex": 13,
+      "inputBytes": 55,
+      "inputSHA256": "c922072d3cebeb6b945b565f968d57ed95d7b30ff4e58f9ddba99440e9bd5d71",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "NETWORK_NATIVE_HOST",
+      "detail": "{\"profile\":\"actual-loopback-native-host\",\"address\":\"127.0.0.1\",\"method\":\"GET\",\"route\":\"/api/msbuild/file\",\"requests\":2,\"responseBytes\":237,\"limits\":{\"requests\":2,\"requestBytes\":1024,\"responseBytes\":4096,\"responseHeaderBytes\":4096,\"requestTimeoutMs\":400},\"responses\":[{\"check\":\"valid\",\"variant\":0,\"statusCode\":200,\"responseBytes\":182},{\"check\":\"token\",\"variant\":1,\"statusCode\":401,\"responseBytes\":55}],\"outsideRootBytes\":false,\"nativeSpawnAttempts\":0,\"nativeTrust\":false,\"serverClosed\":true,\"engineClosed\":true,\"pendingRequests\":0}",
+      "metrics": {
+        "processElapsedMs": 669.347867000004,
+        "sampledRssBytes": 0,
+        "elapsedMs": 24.011228999999958,
+        "baselineHeapBytes": 40758008,
+        "heapUsedBytes": 38944320,
+        "heapGrowthBytes": 0,
+        "externalGrowthBytes": 39869,
+        "arrayBufferGrowthBytes": 0,
+        "observedGrowthBytes": 39869,
+        "peakRssBytes": 96030720
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "native-token-1",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "network",
+      "seed": 1,
+      "caseIndex": 14,
+      "inputBytes": 54,
+      "inputSHA256": "93b7928a12410a98551622e3968e1a356c003bd6241863378b9f47f4501c8005",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "NETWORK_NATIVE_HOST",
+      "detail": "{\"profile\":\"actual-loopback-native-host\",\"address\":\"127.0.0.1\",\"method\":\"GET\",\"route\":\"/api/msbuild/file\",\"requests\":2,\"responseBytes\":246,\"limits\":{\"requests\":2,\"requestBytes\":1024,\"responseBytes\":4096,\"responseHeaderBytes\":4096,\"requestTimeoutMs\":400},\"responses\":[{\"check\":\"valid\",\"variant\":0,\"statusCode\":200,\"responseBytes\":182},{\"check\":\"path\",\"variant\":1,\"statusCode\":400,\"responseBytes\":64}],\"outsideRootBytes\":false,\"nativeSpawnAttempts\":0,\"nativeTrust\":false,\"serverClosed\":true,\"engineClosed\":true,\"pendingRequests\":0}",
+      "metrics": {
+        "processElapsedMs": 731.436738999997,
+        "sampledRssBytes": 0,
+        "elapsedMs": 29.08709399999998,
+        "baselineHeapBytes": 41002744,
+        "heapUsedBytes": 38970384,
+        "heapGrowthBytes": 0,
+        "externalGrowthBytes": 39885,
+        "arrayBufferGrowthBytes": 0,
+        "observedGrowthBytes": 39885,
+        "peakRssBytes": 97009664
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "native-path-1",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "network",
+      "seed": 1,
+      "caseIndex": 15,
+      "inputBytes": 54,
+      "inputSHA256": "13cd9cd055aef6f533d42a42f9d8b2ecc46c51f125030cec0858d292e27a428b",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "NETWORK_NATIVE_HOST",
+      "detail": "{\"profile\":\"actual-loopback-native-host\",\"address\":\"127.0.0.1\",\"method\":\"GET\",\"route\":\"/api/msbuild/file\",\"requests\":2,\"responseBytes\":246,\"limits\":{\"requests\":2,\"requestBytes\":1024,\"responseBytes\":4096,\"responseHeaderBytes\":4096,\"requestTimeoutMs\":400},\"responses\":[{\"check\":\"valid\",\"variant\":0,\"statusCode\":200,\"responseBytes\":182},{\"check\":\"path\",\"variant\":4,\"statusCode\":400,\"responseBytes\":64}],\"outsideRootBytes\":false,\"nativeSpawnAttempts\":0,\"nativeTrust\":false,\"serverClosed\":true,\"engineClosed\":true,\"pendingRequests\":0}",
+      "metrics": {
+        "processElapsedMs": 787.6777880000009,
+        "sampledRssBytes": 0,
+        "elapsedMs": 30.36159699999996,
+        "baselineHeapBytes": 43180096,
+        "heapUsedBytes": 38919320,
+        "heapGrowthBytes": 0,
+        "externalGrowthBytes": 39885,
+        "arrayBufferGrowthBytes": 0,
+        "observedGrowthBytes": 39885,
+        "peakRssBytes": 96862208
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "native-path-4",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "network",
+      "seed": 1,
+      "caseIndex": 16,
+      "inputBytes": 67,
+      "inputSHA256": "a9aebebddbb7c9397df4da11164e5dde7ed96e8cd25bb206d540fabf46abff72",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "NETWORK_HTTP_TRANSPORT",
+      "detail": "{\"profile\":\"actual-loopback-http-transport\",\"address\":\"127.0.0.1\",\"exactOriginGrants\":1,\"check\":\"response-exact\",\"variant\":0,\"calls\":2,\"control\":{\"statusCode\":200,\"ok\":true,\"bytes\":2},\"challenge\":{\"statusCode\":200,\"ok\":true,\"bytes\":32},\"limits\":{\"requests\":2,\"requestBytes\":32,\"responseBytes\":32,\"requestHeaderBytes\":4096,\"connections\":4,\"requestTimeoutMs\":250,\"selectedTimeoutMs\":30,\"delayedResponseMs\":120,\"headerOnlyTimeoutMs\":150,\"streamDelayMs\":5},\"requests\":2,\"requestBytes\":0,\"bodyBytesWritten\":34,\"records\":[{\"method\":\"GET\",\"route\":\"/control\",\"requestBytes\":0,\"statusCode\":200,\"bodyBytesWritten\":2},{\"method\":\"GET\",\"route\":\"/response\",\"requestBytes\":0,\"statusCode\":200,\"bodyBytesWritten\":32}],\"forcedHeaderClose\":false,\"connections\":2,\"serverClosed\":true,\"openSockets\":0,\"pendingTimers\":0,\"stats\":{\"requests\":2,\"completed\":2,\"failed\":0,\"canceled\":0,\"receivedBytes\":34,\"maxActive\":1},\"delayedRequestObserved\":false,\"transportClosed\":true,\"activeJobs\":0,\"queuedJobs\":0}",
+      "metrics": {
+        "processElapsedMs": 742.2530899999838,
+        "sampledRssBytes": 0,
+        "elapsedMs": 35.710347999999954,
+        "baselineHeapBytes": 40518704,
+        "heapUsedBytes": 39789664,
+        "heapGrowthBytes": 0,
+        "externalGrowthBytes": 230074,
+        "arrayBufferGrowthBytes": 0,
+        "observedGrowthBytes": 230074,
+        "peakRssBytes": 99459072
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "http-response-exact",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "network",
+      "seed": 1,
+      "caseIndex": 17,
+      "inputBytes": 68,
+      "inputSHA256": "ca8b995886a6ad7b2b93d6368d292089ddfc299e147302eac7df8de46bef437c",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "NETWORK_HTTP_TRANSPORT",
+      "detail": "{\"profile\":\"actual-loopback-http-transport\",\"address\":\"127.0.0.1\",\"exactOriginGrants\":1,\"check\":\"response-stream\",\"variant\":0,\"calls\":2,\"control\":{\"statusCode\":200,\"ok\":true,\"bytes\":2},\"challenge\":{\"statusCode\":200,\"ok\":true,\"bytes\":13},\"limits\":{\"requests\":2,\"requestBytes\":32,\"responseBytes\":32,\"requestHeaderBytes\":4096,\"connections\":4,\"requestTimeoutMs\":250,\"selectedTimeoutMs\":30,\"delayedResponseMs\":120,\"headerOnlyTimeoutMs\":150,\"streamDelayMs\":5},\"requests\":2,\"requestBytes\":0,\"bodyBytesWritten\":15,\"records\":[{\"method\":\"GET\",\"route\":\"/control\",\"requestBytes\":0,\"statusCode\":200,\"bodyBytesWritten\":2},{\"method\":\"GET\",\"route\":\"/response\",\"requestBytes\":0,\"statusCode\":200,\"bodyBytesWritten\":13}],\"forcedHeaderClose\":false,\"connections\":2,\"serverClosed\":true,\"openSockets\":0,\"pendingTimers\":0,\"stats\":{\"requests\":2,\"completed\":2,\"failed\":0,\"canceled\":0,\"receivedBytes\":15,\"maxActive\":1},\"delayedRequestObserved\":false,\"transportClosed\":true,\"activeJobs\":0,\"queuedJobs\":0}",
+      "metrics": {
+        "processElapsedMs": 805.7959810000029,
+        "sampledRssBytes": 0,
+        "elapsedMs": 40.80048099999999,
+        "baselineHeapBytes": 41371480,
+        "heapUsedBytes": 39834528,
+        "heapGrowthBytes": 0,
+        "externalGrowthBytes": 230009,
+        "arrayBufferGrowthBytes": 0,
+        "observedGrowthBytes": 230009,
+        "peakRssBytes": 102342656
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "http-response-stream",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "network",
+      "seed": 1,
+      "caseIndex": 18,
+      "inputBytes": 68,
+      "inputSHA256": "61eaa98ee15a33f5d151bdbd63fb0fe653fa99c7a71e245aa8de71682db7b62c",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "NETWORK_HTTP_TRANSPORT",
+      "detail": "{\"profile\":\"actual-loopback-http-transport\",\"address\":\"127.0.0.1\",\"exactOriginGrants\":1,\"check\":\"response-status\",\"variant\":0,\"calls\":2,\"control\":{\"statusCode\":200,\"ok\":true,\"bytes\":2},\"challenge\":{\"statusCode\":201,\"ok\":true,\"bytes\":2},\"limits\":{\"requests\":2,\"requestBytes\":32,\"responseBytes\":32,\"requestHeaderBytes\":4096,\"connections\":4,\"requestTimeoutMs\":250,\"selectedTimeoutMs\":30,\"delayedResponseMs\":120,\"headerOnlyTimeoutMs\":150,\"streamDelayMs\":5},\"requests\":2,\"requestBytes\":0,\"bodyBytesWritten\":4,\"records\":[{\"method\":\"GET\",\"route\":\"/control\",\"requestBytes\":0,\"statusCode\":200,\"bodyBytesWritten\":2},{\"method\":\"GET\",\"route\":\"/response\",\"requestBytes\":0,\"statusCode\":201,\"bodyBytesWritten\":2}],\"forcedHeaderClose\":false,\"connections\":2,\"serverClosed\":true,\"openSockets\":0,\"pendingTimers\":0,\"stats\":{\"requests\":2,\"completed\":2,\"failed\":0,\"canceled\":0,\"receivedBytes\":4,\"maxActive\":1},\"delayedRequestObserved\":false,\"transportClosed\":true,\"activeJobs\":0,\"queuedJobs\":0}",
+      "metrics": {
+        "processElapsedMs": 766.2676930000016,
+        "sampledRssBytes": 0,
+        "elapsedMs": 32.47421899999995,
+        "baselineHeapBytes": 40703304,
+        "heapUsedBytes": 39791952,
+        "heapGrowthBytes": 0,
+        "externalGrowthBytes": 229957,
+        "arrayBufferGrowthBytes": 0,
+        "observedGrowthBytes": 229957,
+        "peakRssBytes": 99459072
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "http-response-status",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "network",
+      "seed": 1,
+      "caseIndex": 19,
+      "inputBytes": 68,
+      "inputSHA256": "b3d84b81701049e2e041dfe4bd025681c4df0c4fda218884421017fa0f198216",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "NETWORK_HTTP_TRANSPORT",
+      "detail": "{\"profile\":\"actual-loopback-http-transport\",\"address\":\"127.0.0.1\",\"exactOriginGrants\":1,\"check\":\"announced-limit\",\"variant\":0,\"calls\":2,\"control\":{\"statusCode\":200,\"ok\":true,\"bytes\":2},\"challenge\":{\"code\":\"LIMIT\",\"returnedBody\":false},\"limits\":{\"requests\":2,\"requestBytes\":32,\"responseBytes\":32,\"requestHeaderBytes\":4096,\"connections\":4,\"requestTimeoutMs\":250,\"selectedTimeoutMs\":30,\"delayedResponseMs\":120,\"headerOnlyTimeoutMs\":150,\"streamDelayMs\":5},\"requests\":2,\"requestBytes\":0,\"bodyBytesWritten\":2,\"records\":[{\"method\":\"GET\",\"route\":\"/control\",\"requestBytes\":0,\"statusCode\":200,\"bodyBytesWritten\":2},{\"method\":\"GET\",\"route\":\"/response\",\"requestBytes\":0,\"statusCode\":200,\"bodyBytesWritten\":0}],\"forcedHeaderClose\":false,\"connections\":2,\"serverClosed\":true,\"openSockets\":0,\"pendingTimers\":0,\"stats\":{\"requests\":2,\"completed\":1,\"failed\":1,\"canceled\":0,\"receivedBytes\":2,\"maxActive\":1},\"delayedRequestObserved\":false,\"transportClosed\":true,\"activeJobs\":0,\"queuedJobs\":0}",
+      "metrics": {
+        "processElapsedMs": 772.3999710000062,
+        "sampledRssBytes": 0,
+        "elapsedMs": 36.311311000000046,
+        "baselineHeapBytes": 40539600,
+        "heapUsedBytes": 39779208,
+        "heapGrowthBytes": 0,
+        "externalGrowthBytes": 229947,
+        "arrayBufferGrowthBytes": 0,
+        "observedGrowthBytes": 229947,
+        "peakRssBytes": 100532224
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "http-announced-limit",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "network",
+      "seed": 1,
+      "caseIndex": 20,
+      "inputBytes": 65,
+      "inputSHA256": "412802ce1645b456ef1193040c3a1c5a1dcf3a2c187620e7f00e51a0a54105c1",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "NETWORK_HTTP_TRANSPORT",
+      "detail": "{\"profile\":\"actual-loopback-http-transport\",\"address\":\"127.0.0.1\",\"exactOriginGrants\":1,\"check\":\"stream-limit\",\"variant\":0,\"calls\":2,\"control\":{\"statusCode\":200,\"ok\":true,\"bytes\":2},\"challenge\":{\"code\":\"LIMIT\",\"returnedBody\":false},\"limits\":{\"requests\":2,\"requestBytes\":32,\"responseBytes\":32,\"requestHeaderBytes\":4096,\"connections\":4,\"requestTimeoutMs\":250,\"selectedTimeoutMs\":30,\"delayedResponseMs\":120,\"headerOnlyTimeoutMs\":150,\"streamDelayMs\":5},\"requests\":2,\"requestBytes\":0,\"bodyBytesWritten\":35,\"records\":[{\"method\":\"GET\",\"route\":\"/control\",\"requestBytes\":0,\"statusCode\":200,\"bodyBytesWritten\":2},{\"method\":\"GET\",\"route\":\"/response\",\"requestBytes\":0,\"statusCode\":200,\"bodyBytesWritten\":33}],\"forcedHeaderClose\":false,\"connections\":2,\"serverClosed\":true,\"openSockets\":0,\"pendingTimers\":0,\"stats\":{\"requests\":2,\"completed\":1,\"failed\":1,\"canceled\":0,\"receivedBytes\":2,\"maxActive\":1},\"delayedRequestObserved\":false,\"transportClosed\":true,\"activeJobs\":0,\"queuedJobs\":0}",
+      "metrics": {
+        "processElapsedMs": 815.370253000001,
+        "sampledRssBytes": 0,
+        "elapsedMs": 46.7323540000001,
+        "baselineHeapBytes": 43166104,
+        "heapUsedBytes": 39780496,
+        "heapGrowthBytes": 0,
+        "externalGrowthBytes": 230068,
+        "arrayBufferGrowthBytes": 0,
+        "observedGrowthBytes": 230068,
+        "peakRssBytes": 102236160
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "http-stream-limit",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "network",
+      "seed": 1,
+      "caseIndex": 21,
+      "inputBytes": 66,
+      "inputSHA256": "873f5981d3437801fe01167da19fd23d1352f9cc878cae6d24f78a30fd198bec",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "NETWORK_HTTP_TRANSPORT",
+      "detail": "{\"profile\":\"actual-loopback-http-transport\",\"address\":\"127.0.0.1\",\"exactOriginGrants\":1,\"check\":\"request-exact\",\"variant\":0,\"calls\":2,\"control\":{\"statusCode\":200,\"ok\":true,\"bytes\":2},\"challenge\":{\"statusCode\":200,\"ok\":true,\"bytes\":2},\"limits\":{\"requests\":2,\"requestBytes\":32,\"responseBytes\":32,\"requestHeaderBytes\":4096,\"connections\":4,\"requestTimeoutMs\":250,\"selectedTimeoutMs\":30,\"delayedResponseMs\":120,\"headerOnlyTimeoutMs\":150,\"streamDelayMs\":5},\"requests\":2,\"requestBytes\":32,\"bodyBytesWritten\":4,\"records\":[{\"method\":\"GET\",\"route\":\"/control\",\"requestBytes\":0,\"statusCode\":200,\"bodyBytesWritten\":2},{\"method\":\"POST\",\"route\":\"/request\",\"requestBytes\":32,\"statusCode\":200,\"bodyBytesWritten\":2}],\"forcedHeaderClose\":false,\"connections\":2,\"serverClosed\":true,\"openSockets\":0,\"pendingTimers\":0,\"stats\":{\"requests\":2,\"completed\":2,\"failed\":0,\"canceled\":0,\"receivedBytes\":4,\"maxActive\":1},\"delayedRequestObserved\":false,\"transportClosed\":true,\"activeJobs\":0,\"queuedJobs\":0}",
+      "metrics": {
+        "processElapsedMs": 819.7940269999963,
+        "sampledRssBytes": 0,
+        "elapsedMs": 40.6432309999999,
+        "baselineHeapBytes": 43181704,
+        "heapUsedBytes": 39816824,
+        "heapGrowthBytes": 0,
+        "externalGrowthBytes": 230046,
+        "arrayBufferGrowthBytes": 0,
+        "observedGrowthBytes": 230046,
+        "peakRssBytes": 100077568
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "http-request-exact",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "network",
+      "seed": 1,
+      "caseIndex": 22,
+      "inputBytes": 66,
+      "inputSHA256": "9583aa4962d0ce6d7b31885d394f2003d9356ba7dca976753a679a115d5ee18b",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "NETWORK_HTTP_TRANSPORT",
+      "detail": "{\"profile\":\"actual-loopback-http-transport\",\"address\":\"127.0.0.1\",\"exactOriginGrants\":1,\"check\":\"request-limit\",\"variant\":0,\"calls\":2,\"control\":{\"statusCode\":200,\"ok\":true,\"bytes\":2},\"challenge\":{\"code\":\"LIMIT\",\"returnedBody\":false},\"limits\":{\"requests\":2,\"requestBytes\":32,\"responseBytes\":32,\"requestHeaderBytes\":4096,\"connections\":4,\"requestTimeoutMs\":250,\"selectedTimeoutMs\":30,\"delayedResponseMs\":120,\"headerOnlyTimeoutMs\":150,\"streamDelayMs\":5},\"requests\":1,\"requestBytes\":0,\"bodyBytesWritten\":2,\"records\":[{\"method\":\"GET\",\"route\":\"/control\",\"requestBytes\":0,\"statusCode\":200,\"bodyBytesWritten\":2}],\"forcedHeaderClose\":false,\"connections\":1,\"serverClosed\":true,\"openSockets\":0,\"pendingTimers\":0,\"stats\":{\"requests\":1,\"completed\":1,\"failed\":0,\"canceled\":0,\"receivedBytes\":2,\"maxActive\":1},\"delayedRequestObserved\":false,\"transportClosed\":true,\"activeJobs\":0,\"queuedJobs\":0}",
+      "metrics": {
+        "processElapsedMs": 720.1652189999877,
+        "sampledRssBytes": 0,
+        "elapsedMs": 39.91517500000009,
+        "baselineHeapBytes": 40513552,
+        "heapUsedBytes": 39370232,
+        "heapGrowthBytes": 0,
+        "externalGrowthBytes": 229206,
+        "arrayBufferGrowthBytes": 0,
+        "observedGrowthBytes": 229206,
+        "peakRssBytes": 97796096
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "http-request-limit",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "network",
+      "seed": 1,
+      "caseIndex": 23,
+      "inputBytes": 59,
+      "inputSHA256": "7a2ccbe8107b6e9d1c399e90e80fb01d5db92a1369f700d89a196d04978c770d",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "NETWORK_HTTP_TRANSPORT",
+      "detail": "{\"profile\":\"actual-loopback-http-transport\",\"address\":\"127.0.0.1\",\"exactOriginGrants\":1,\"check\":\"cancel\",\"variant\":0,\"calls\":2,\"control\":{\"statusCode\":200,\"ok\":true,\"bytes\":2},\"challenge\":{\"code\":\"ABORT\",\"identityPreserved\":true,\"returnedBody\":false},\"limits\":{\"requests\":2,\"requestBytes\":32,\"responseBytes\":32,\"requestHeaderBytes\":4096,\"connections\":4,\"requestTimeoutMs\":250,\"selectedTimeoutMs\":30,\"delayedResponseMs\":120,\"headerOnlyTimeoutMs\":150,\"streamDelayMs\":5},\"requests\":2,\"requestBytes\":0,\"bodyBytesWritten\":2,\"records\":[{\"method\":\"GET\",\"route\":\"/control\",\"requestBytes\":0,\"statusCode\":200,\"bodyBytesWritten\":2},{\"method\":\"GET\",\"route\":\"/delay\",\"requestBytes\":0,\"statusCode\":null,\"bodyBytesWritten\":0}],\"forcedHeaderClose\":false,\"connections\":2,\"serverClosed\":true,\"openSockets\":0,\"pendingTimers\":0,\"stats\":{\"requests\":2,\"completed\":1,\"failed\":0,\"canceled\":1,\"receivedBytes\":2,\"maxActive\":1},\"delayedRequestObserved\":true,\"transportClosed\":true,\"activeJobs\":0,\"queuedJobs\":0}",
+      "metrics": {
+        "processElapsedMs": 652.8330299999798,
+        "sampledRssBytes": 0,
+        "elapsedMs": 34.417141000000015,
+        "baselineHeapBytes": 43338000,
+        "heapUsedBytes": 39695120,
+        "heapGrowthBytes": 0,
+        "externalGrowthBytes": 229719,
+        "arrayBufferGrowthBytes": 0,
+        "observedGrowthBytes": 229719,
+        "peakRssBytes": 98594816
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "http-cancel",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "network",
+      "seed": 1,
+      "caseIndex": 24,
+      "inputBytes": 60,
+      "inputSHA256": "916c36a340dc4342c7b1c4a1565ab38e1acaa45a1c8d2e93103ee6ada207863f",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "code": "NETWORK_HTTP_TRANSPORT",
+      "detail": "{\"profile\":\"actual-loopback-http-transport\",\"address\":\"127.0.0.1\",\"exactOriginGrants\":1,\"check\":\"timeout\",\"variant\":0,\"calls\":2,\"control\":{\"statusCode\":200,\"ok\":true,\"bytes\":2},\"challenge\":{\"code\":\"TIMEOUT\",\"returnedBody\":false},\"limits\":{\"requests\":2,\"requestBytes\":32,\"responseBytes\":32,\"requestHeaderBytes\":4096,\"connections\":4,\"requestTimeoutMs\":250,\"selectedTimeoutMs\":30,\"delayedResponseMs\":120,\"headerOnlyTimeoutMs\":150,\"streamDelayMs\":5},\"requests\":2,\"requestBytes\":0,\"bodyBytesWritten\":2,\"records\":[{\"method\":\"GET\",\"route\":\"/control\",\"requestBytes\":0,\"statusCode\":200,\"bodyBytesWritten\":2},{\"method\":\"GET\",\"route\":\"/delay\",\"requestBytes\":0,\"statusCode\":null,\"bodyBytesWritten\":0}],\"forcedHeaderClose\":false,\"connections\":2,\"serverClosed\":true,\"openSockets\":0,\"pendingTimers\":0,\"stats\":{\"requests\":2,\"completed\":1,\"failed\":1,\"canceled\":0,\"receivedBytes\":2,\"maxActive\":1},\"delayedRequestObserved\":true,\"transportClosed\":true,\"activeJobs\":0,\"queuedJobs\":0}",
+      "metrics": {
+        "processElapsedMs": 737.5268079999951,
+        "sampledRssBytes": 0,
+        "elapsedMs": 66.66466100000002,
+        "baselineHeapBytes": 43146064,
+        "heapUsedBytes": 39717632,
+        "heapGrowthBytes": 0,
+        "externalGrowthBytes": 229720,
+        "arrayBufferGrowthBytes": 0,
+        "observedGrowthBytes": 229720,
+        "peakRssBytes": 98775040
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "http-timeout",
+      "mutation": "seed"
+    },
+    {
+      "targetId": "network",
+      "seed": 1,
+      "caseIndex": 25,
+      "inputBytes": 98,
+      "inputSHA256": "ad32502fe8234286addd3a036a52d304d70ba83238391db17275aa58e581578b",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "FUZZ_JSON",
+      "metrics": {
+        "processElapsedMs": 636.218703999999,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.44953099999997903,
+        "baselineHeapBytes": 40542136,
+        "heapUsedBytes": 40561432,
+        "heapGrowthBytes": 19296,
+        "externalGrowthBytes": 138,
+        "arrayBufferGrowthBytes": 98,
+        "observedGrowthBytes": 19434,
+        "peakRssBytes": 93958144
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "allowed-origin",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "network",
+      "seed": 1,
+      "caseIndex": 26,
+      "inputBytes": 55,
+      "inputSHA256": "e6d70f6ba2ad43f74160e84bbf817613171e184557cdebf68def2f71cff96e66",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "FUZZ_JSON",
+      "metrics": {
+        "processElapsedMs": 690.9031969999778,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.5284769999999526,
+        "baselineHeapBytes": 40531456,
+        "heapUsedBytes": 40550944,
+        "heapGrowthBytes": 19488,
+        "externalGrowthBytes": 95,
+        "arrayBufferGrowthBytes": 55,
+        "observedGrowthBytes": 19583,
+        "peakRssBytes": 93196288
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "relative-url",
+      "mutation": "truncate"
+    },
+    {
+      "targetId": "network",
+      "seed": 1,
+      "caseIndex": 27,
+      "inputBytes": 84,
+      "inputSHA256": "8cb794a74da3ee60f409c33a62456ffe0fa8972b435dd8686b5ab74a2de8334e",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "FUZZ_JSON",
+      "metrics": {
+        "processElapsedMs": 667.9976150000002,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.37516199999993205,
+        "baselineHeapBytes": 40779240,
+        "heapUsedBytes": 40798784,
+        "heapGrowthBytes": 19544,
+        "externalGrowthBytes": 124,
+        "arrayBufferGrowthBytes": 84,
+        "observedGrowthBytes": 19668,
+        "peakRssBytes": 94416896
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "denied-origin",
+      "mutation": "delete"
+    },
+    {
+      "targetId": "network",
+      "seed": 1,
+      "caseIndex": 28,
+      "inputBytes": 103,
+      "inputSHA256": "94ab9cdc6c02cef6a232733a633161202589646b4d781082d2e9d80c3f6c8650",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "FUZZ_UTF8",
+      "metrics": {
+        "processElapsedMs": 698.1276990000042,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.34032999999999447,
+        "baselineHeapBytes": 40495264,
+        "heapUsedBytes": 40513160,
+        "heapGrowthBytes": 17896,
+        "externalGrowthBytes": 143,
+        "arrayBufferGrowthBytes": 103,
+        "observedGrowthBytes": 18039,
+        "peakRssBytes": 94818304
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "non-origin-grant",
+      "mutation": "insert"
+    },
+    {
+      "targetId": "network",
+      "seed": 1,
+      "caseIndex": 29,
+      "inputBytes": 66,
+      "inputSHA256": "c64cb7161fa17dba0a17e1882b520b75297db7dadd6c80eb2a9a3b778ff95a05",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "accepted",
+      "metrics": {
+        "processElapsedMs": 795.7634240000043,
+        "sampledRssBytes": 0,
+        "elapsedMs": 1.2521809999999505,
+        "baselineHeapBytes": 40424672,
+        "heapUsedBytes": 40480304,
+        "heapGrowthBytes": 55632,
+        "externalGrowthBytes": 140,
+        "arrayBufferGrowthBytes": 100,
+        "observedGrowthBytes": 55772,
+        "peakRssBytes": 93306880
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "allowed-headers",
+      "mutation": "duplicate"
+    },
+    {
+      "targetId": "network",
+      "seed": 1,
+      "caseIndex": 30,
+      "inputBytes": 67,
+      "inputSHA256": "819457f88f4a7ca52e64e6df97744550386188cf03984bd73164e0fa10cf7db1",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "FUZZ_JSON",
+      "metrics": {
+        "processElapsedMs": 649.7492229999916,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.35384000000010474,
+        "baselineHeapBytes": 41211584,
+        "heapUsedBytes": 41230896,
+        "heapGrowthBytes": 19312,
+        "externalGrowthBytes": 107,
+        "arrayBufferGrowthBytes": 67,
+        "observedGrowthBytes": 19419,
+        "peakRssBytes": 93241344
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "denied-header",
+      "mutation": "replace"
+    },
+    {
+      "targetId": "network",
+      "seed": 1,
+      "caseIndex": 31,
+      "inputBytes": 16,
+      "inputSHA256": "8ec85f9551747f895c32a0811ed91cc20c62197e82a0731df259de686fc19624",
+      "sourceIdentity": {
+        "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+        "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+        "clean": true
+      },
+      "budgets": {
+        "maxCases": 32,
+        "caseTimeoutMs": 1000,
+        "startupTimeoutMs": 5000,
+        "campaignTimeoutMs": 30000,
+        "maxInputBytes": 65536,
+        "maxOutputBytes": 65536,
+        "heapGrowthBytes": 16777216,
+        "v8HeapMb": 128,
+        "rssBytes": 268435456,
+        "maxCorpusCases": 128,
+        "maxCorpusBytes": 8388608
+      },
+      "qualification": "node-offline-parser",
+      "status": "rejected",
+      "code": "FUZZ_JSON",
+      "metrics": {
+        "processElapsedMs": 700.0277369999967,
+        "sampledRssBytes": 0,
+        "elapsedMs": 0.4294910000000982,
+        "baselineHeapBytes": 43149784,
+        "heapUsedBytes": 43168928,
+        "heapGrowthBytes": 19144,
+        "externalGrowthBytes": 56,
+        "arrayBufferGrowthBytes": 16,
+        "observedGrowthBytes": 19200,
+        "peakRssBytes": 95158272
+      },
+      "isolation": {
+        "v8OldSpaceMb": 128,
+        "rssGuard": "not-observed",
+        "osMemorySandbox": false
+      },
+      "seedName": "browser-csp",
+      "mutation": "truncate"
+    }
+  ],
+  "artifacts": [],
+  "budgets": {
+    "maxCases": 32,
+    "caseTimeoutMs": 1000,
+    "startupTimeoutMs": 5000,
+    "campaignTimeoutMs": 30000,
+    "maxInputBytes": 65536,
+    "maxOutputBytes": 65536,
+    "heapGrowthBytes": 16777216,
+    "v8HeapMb": 128,
+    "rssBytes": 268435456,
+    "maxCorpusCases": 128,
+    "maxCorpusBytes": 8388608
+  },
+  "environment": {
+    "node": "v24.19.0",
+    "platform": "linux",
+    "arch": "x64"
+  },
+  "targetId": "network",
+  "seed": 1,
+  "sourceIdentity": {
+    "commit": "8019f2f9b22e26d7c221454f3b751b0b0e0c67df",
+    "tree": "c6bb80d3c37cf5053398af8056670badcfa71e76",
+    "clean": true
+  },
+  "seedAcquisition": {
+    "status": "accepted",
+    "metrics": {
+      "processElapsedMs": 780.8726100000204,
+      "sampledRssBytes": 0,
+      "elapsedMs": 0.5957259999998996,
+      "baselineHeapBytes": 40819664,
+      "heapUsedBytes": 40873328,
+      "heapGrowthBytes": 53664,
+      "externalGrowthBytes": 1712,
+      "arrayBufferGrowthBytes": 1672,
+      "observedGrowthBytes": 55376,
+      "peakRssBytes": 93569024
+    },
+    "isolation": {
+      "v8OldSpaceMb": 128,
+      "rssGuard": "not-observed",
+      "osMemorySandbox": false
+    }
+  }
+}
