@@ -7,12 +7,41 @@ export function integerType(value, suffix = '') {
   const key = /u/i.test(suffix) ? (/l/i.test(suffix) ? 'ul' : 'u') : /l/i.test(suffix) ? 'l' : '';
   return candidates[key].find(type => value <= integerLimits[type]) ?? null;
 }
+
+/** Recognizes at most ten plain decimal digits; every extended spelling keeps the exact general scanner below. */
+function plainInt32(text, start) {
+  if (!Number.isInteger(start)) return null;
+  let end = start;
+  let value = 0;
+  let code = text.charCodeAt(end);
+  while (code >= 48 && code <= 57) {
+    if (end - start === 10) return null;
+    value = value * 10 + code - 48;
+    if (value > 2147483647) return null;
+    code = text.charCodeAt(++end);
+  }
+  // Dots, separators, letters and escapes may extend the token or require lexical recovery. Do not classify them here.
+  if (end === start || code === 46 || code === 95 || code === 92 || code >= 128 ||
+    code >= 65 && code <= 90 || code >= 97 && code <= 122) return null;
+  return {
+    end,
+    kind: 'integer',
+    value,
+    literal: {type: 'int', value},
+    suffix: '',
+    errors: [],
+    features: [],
+    profile: []
+  };
+}
 /**
  * Scans a numeric literal starting at a digit. Returns
  * { end, kind: 'integer' | 'double', value (legacy Number), literal: { type, value }, suffix, errors, features, profile }.
  * `profile` lists diagnostics for literal forms the current SharpForge back end cannot consume; the scanner itself accepts them.
  */
 export function scanNumber(text, start) {
+  const plain = plainInt32(text, start);
+  if (plain) return plain;
   const errors = [],
     features = [],
     profile = [];
