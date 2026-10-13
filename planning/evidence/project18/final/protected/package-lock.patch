@@ -1,0 +1,55 @@
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -238,7 +238,8 @@
+       "dependencies": {
+         "@sharpforge/framework": "0.14.0",
+         "@sharpforge/syntax": "0.14.0",
+-        "@sharpforge/text": "0.14.0"
++        "@sharpforge/text": "0.14.0",
++        "@sharpforge/project-system": "0.14.0"
+       }
+     },
+     "packages/docking": {
+@@ -289,7 +290,8 @@
+       "dependencies": {
+         "@sharpforge/bytecode": "0.14.0",
+         "@sharpforge/framework": "0.14.0",
+-        "@sharpforge/syntax": "0.14.0"
++        "@sharpforge/syntax": "0.14.0",
++        "@sharpforge/compiler": "0.14.0"
+       },
+       "engines": {
+         "node": ">=22"
+@@ -301,7 +303,11 @@
+       "license": "MIT",
+       "dependencies": {
+         "@sharpforge/network": "0.14.0",
+-        "@sharpforge/project-system": "0.14.0"
++        "@sharpforge/project-system": "0.14.0",
++        "@sharpforge/compiler": "0.14.0",
++        "@sharpforge/runtime": "0.14.0",
++        "@sharpforge/syntax": "0.14.0",
++        "@sharpforge/archive": "0.14.0"
+       },
+       "bin": {
+         "sharpforge-msbuild": "bin/sharpforge-msbuild.js"
+@@ -323,7 +329,8 @@
+       "version": "0.14.0",
+       "license": "MIT",
+       "dependencies": {
+-        "@sharpforge/archive": "0.14.0"
++        "@sharpforge/archive": "0.14.0",
++        "@sharpforge/workspace": "0.14.0"
+       }
+     },
+     "packages/protocol": {
+@@ -426,7 +433,8 @@
+       "dependencies": {
+         "@sharpforge/compiler": "0.14.0",
+         "@sharpforge/syntax": "0.14.0",
+-        "@sharpforge/text": "0.14.0"
++        "@sharpforge/text": "0.14.0",
++        "@sharpforge/archive": "0.14.0"
+       },
+       "engines": {
+         "node": ">=22"

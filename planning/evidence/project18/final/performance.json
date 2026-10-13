@@ -1,0 +1,200 @@
+{
+  "schemaVersion": 1,
+  "status": "measured-budget-review-remains",
+  "baselineCommit": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+  "sourceCommit": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+  "node": "v22.23.3",
+  "machine": {
+    "system": "Linux",
+    "release": "6.18.44",
+    "architecture": "x86_64"
+  },
+  "pairs": 3,
+  "warmSamplesPerWorkloadAndTree": 12,
+  "p95Method": "nearest rank",
+  "method": "Identical existing benchmark-release14.js; one cold and four warm samples per workload/engine/process; alternating baseline/final order; all processes serial through limited.js.",
+  "correctnessPassed": true,
+  "managedAllocationUnchangedInEveryWorkload": true,
+  "comparisons": [
+    {
+      "workload": "dictionary",
+      "engine": "source",
+      "baselineMedianMs": 31.312982500000032,
+      "candidateMedianMs": 32.012212000000034,
+      "medianChangePercent": 2.2330338542488004,
+      "baselineP95Ms": 55.347391000000016,
+      "candidateP95Ms": 61.17647199999999,
+      "p95ChangePercent": 10.531808084684545,
+      "medianOverFivePercent": false,
+      "p95OverFivePercent": true
+    },
+    {
+      "workload": "dictionary",
+      "engine": "cil",
+      "baselineMedianMs": 195.45844999999997,
+      "candidateMedianMs": 191.5687825,
+      "medianChangePercent": -1.9900226876862992,
+      "baselineP95Ms": 267.523502,
+      "candidateP95Ms": 297.665074,
+      "p95ChangePercent": 11.266887497607602,
+      "medianOverFivePercent": false,
+      "p95OverFivePercent": true
+    },
+    {
+      "workload": "list",
+      "engine": "source",
+      "baselineMedianMs": 56.49668550000001,
+      "candidateMedianMs": 54.777841999999964,
+      "medianChangePercent": -3.0423793622371798,
+      "baselineP95Ms": 84.17277000000013,
+      "candidateP95Ms": 78.11187500000005,
+      "p95ChangePercent": -7.200541220159518,
+      "medianOverFivePercent": false,
+      "p95OverFivePercent": false
+    },
+    {
+      "workload": "list",
+      "engine": "cil",
+      "baselineMedianMs": 592.1481309999999,
+      "candidateMedianMs": 617.3510995000001,
+      "medianChangePercent": 4.256193202440461,
+      "baselineP95Ms": 711.6277170000003,
+      "candidateP95Ms": 710.7724720000001,
+      "p95ChangePercent": -0.120181519011886,
+      "medianOverFivePercent": false,
+      "p95OverFivePercent": false
+    },
+    {
+      "workload": "queue",
+      "engine": "source",
+      "baselineMedianMs": 25.321601499999815,
+      "candidateMedianMs": 28.240760000000137,
+      "medianChangePercent": 11.528332834715616,
+      "baselineP95Ms": 42.20093199999974,
+      "candidateP95Ms": 38.42706999999973,
+      "p95ChangePercent": -8.942603447715403,
+      "medianOverFivePercent": true,
+      "p95OverFivePercent": false
+    },
+    {
+      "workload": "queue",
+      "engine": "cil",
+      "baselineMedianMs": 241.28961750000008,
+      "candidateMedianMs": 215.31142899999986,
+      "medianChangePercent": -10.76639300487109,
+      "baselineP95Ms": 312.6894319999992,
+      "candidateP95Ms": 263.8255249999993,
+      "p95ChangePercent": -15.626977441309897,
+      "medianOverFivePercent": false,
+      "p95OverFivePercent": false
+    },
+    {
+      "workload": "builder",
+      "engine": "source",
+      "baselineMedianMs": 29.31442849999985,
+      "candidateMedianMs": 25.93915650000008,
+      "medianChangePercent": -11.514029686779615,
+      "baselineP95Ms": 39.540413000000626,
+      "candidateP95Ms": 39.51548300000013,
+      "p95ChangePercent": -0.0630494173151308,
+      "medianOverFivePercent": false,
+      "p95OverFivePercent": false
+    },
+    {
+      "workload": "builder",
+      "engine": "cil",
+      "baselineMedianMs": 94.43203549999998,
+      "candidateMedianMs": 83.91340599999967,
+      "medianChangePercent": -11.138835930313418,
+      "baselineP95Ms": 123.47460500000034,
+      "candidateP95Ms": 145.13296600000012,
+      "p95ChangePercent": 17.540741272263816,
+      "medianOverFivePercent": false,
+      "p95OverFivePercent": true
+    }
+  ],
+  "limits": [
+    "Shared machine; root-owned heavy jobs are serial but external work is not stopped.",
+    "Complete-tree comparison does not isolate a single change.",
+    "Managed allocation counter only; JavaScript allocation is not measured.",
+    "Historical failed budget measurements remain retained separately."
+  ],
+  "rawRecord": "qualification/final/raw/performance-e9f8a8cd/benchmark.json",
+  "rawSha256": "a1d39556b4568aec135f51a7bae8c8a2c0614958d6fda241038a15b7f135c9db",
+  "historicalRecords": [
+    "qualification/historical/project-runtime/benchmark.json",
+    "qualification/historical/integration/upstream-performance/benchmark.json"
+  ],
+  "interpretation": "Whole-tree measurements do not identify a cause. Historical regressions and profiling limits remain preserved; improved medians do not erase slower tail samples or required sign-off.",
+  "currentCandidateRuntimeComposition": {
+    "source": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+    "measuredSource": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+    "objects": [
+      {
+        "path": "packages/bytecode",
+        "measuredSourceObject": "41abf39c19c7fa4d0600e53eab282c2db92dfeb4",
+        "currentSourceObject": "41abf39c19c7fa4d0600e53eab282c2db92dfeb4",
+        "identical": true
+      },
+      {
+        "path": "packages/cil",
+        "measuredSourceObject": "b7e6cdfef4a7fdf0c0e258b19158a8c2dc3ee36c",
+        "currentSourceObject": "b7e6cdfef4a7fdf0c0e258b19158a8c2dc3ee36c",
+        "identical": true
+      },
+      {
+        "path": "packages/compiler",
+        "measuredSourceObject": "a432a0f06af4ef3dfcf0deaf618f0fa025f67312",
+        "currentSourceObject": "a432a0f06af4ef3dfcf0deaf618f0fa025f67312",
+        "identical": true
+      },
+      {
+        "path": "packages/runtime",
+        "measuredSourceObject": "4a08ab27b73e370233a10a594e0d9f19d02de2fe",
+        "currentSourceObject": "4a08ab27b73e370233a10a594e0d9f19d02de2fe",
+        "identical": true
+      },
+      {
+        "path": "packages/framework",
+        "measuredSourceObject": "0f362d1495aa2b385944dc63fcf6fd01e4ea1cf0",
+        "currentSourceObject": "0f362d1495aa2b385944dc63fcf6fd01e4ea1cf0",
+        "identical": true
+      },
+      {
+        "path": "packages/bcl-core",
+        "measuredSourceObject": "a15dc90a1e9a9ec0e33774dfccf5b71ed25ef5ed",
+        "currentSourceObject": "a15dc90a1e9a9ec0e33774dfccf5b71ed25ef5ed",
+        "identical": true
+      },
+      {
+        "path": "packages/bcl-collections",
+        "measuredSourceObject": "71e38278536a6e9cbf19f12ac991cef100f7c82d",
+        "currentSourceObject": "71e38278536a6e9cbf19f12ac991cef100f7c82d",
+        "identical": true
+      },
+      {
+        "path": "scripts/benchmark-release14.js",
+        "measuredSourceObject": "5a3758ee9f2ca29cdc09ceb9d8da94d1b9d6150c",
+        "currentSourceObject": "5a3758ee9f2ca29cdc09ceb9d8da94d1b9d6150c",
+        "identical": true
+      }
+    ],
+    "interpretation": "The listed runtime/compiler/framework/BCL trees and benchmark script are byte-identical. Measurements still belong to the recorded e9 runs; no additional benchmark was run or performance regression explained away."
+  },
+  "pathInterpretation": "rawRecord and historicalRecords name members of qualification-raw.tar.gz, not loose files beside this JSON.",
+  "historicalSourceMapping": [
+    {
+      "archivePath": "qualification/historical/project-runtime/benchmark.json",
+      "sourceCommit": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+      "sourcePath": "planning/evidence/project18/project-runtime/benchmark.json",
+      "gitBlob": "e06d365641a17c15da462c7cf63dbc23539948d9"
+    },
+    {
+      "archivePath": "qualification/historical/integration/upstream-performance/benchmark.json",
+      "sourceCommit": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+      "sourcePath": "planning/evidence/project18/integration/upstream-performance/benchmark.json",
+      "gitBlob": "10a17f170cd1f2b1c56fa968273dda0b2b6ccd13"
+    }
+  ],
+  "exactDependencyClosureProof": "benchmark-input-equivalence.json"
+}

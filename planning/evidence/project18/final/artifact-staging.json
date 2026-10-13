@@ -1,0 +1,357 @@
+{
+  "schemaVersion": 1,
+  "state": "aggregate-and-artifacts-published-fetched-bytes-verified",
+  "candidateSnapshot": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+  "pinnedMain": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+  "destination": "planning/evidence/project18/final",
+  "sourceArtifacts": {
+    "aggregateBranch": {
+      "proposedRef": "refs/heads/codex/p18-final-integration",
+      "kind": "reviewed resolved integration with actual published maximal parents",
+      "tree": "55e5f5c443d15030bc47592e6ba511862812f363",
+      "status": "published-and-exact-readback-verified",
+      "maximalParentCount": 34,
+      "recordedFeaturePrCount": 159,
+      "commit": "69122b13e8ac9a02459ab1f9bc0108a25296518e",
+      "receipt": "aggregate.json"
+    },
+    "bundle": {
+      "path": "artifacts/integration.bundle",
+      "owner": "root after explicit packing release",
+      "contains": "original canonical integration source objects outside pinned-main ancestry; additional named task source refs only when the final referenced-commit reachability proof requires them",
+      "excludedAncestry": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+      "advertisedRefs": {
+        "refs/heads/codex/p18-integration": "c68c77252cd5469c5aaf0c8318ee28fe2ec3b65d"
+      },
+      "packing": {
+        "threads": 1,
+        "windowMemory": "64 MiB",
+        "deltaCache": "32 MiB"
+      },
+      "state": "created-and-locally-verified"
+    }
+  },
+  "rawArchive": {
+    "path": "artifacts/qualification-raw.tar.gz",
+    "state": "created-and-every-member-verified",
+    "format": "sorted tar entries, stable uid/gid/mode/mtime, gzip mtime0",
+    "payloadPolicy": "preserve exact original bytes; hash every member; no symlinks or absolute/traversal names",
+    "ownerStaging": {
+      "owner": "workspace_inventory",
+      "path": "/workspace/scratch/3e16369943fd/p18-final-qualification-evidence/planning/evidence/project18/integration/final-qualification",
+      "branch": "codex/p18-final-qualification-evidence",
+      "base": "f86da320",
+      "manifest": "manifest.json",
+      "manifestState": "sealed",
+      "schema": "SHA-256 index plus artifacts-NNN.json shards of at most35 records, each path relative to the staged subtree",
+      "archivePrefix": "qualification/final/",
+      "commit": "cba546ab959247462ce319f89683c06b7861c4ff",
+      "tree": "e1759c7c16a0dc2c1d628d0394260bc187552b6b",
+      "subtreeTree": "7f78c14a1d61474caa78228f60027fcf5492317d",
+      "payloadCount": 319,
+      "payloadBytes": 64887154,
+      "totalTrackedFiles": 330,
+      "totalTrackedBytes": 64956196,
+      "manifestSha256": "264247c117bcdf40770c7defa856c1c52e8884485782d210ca70221373d3f1df"
+    },
+    "historicalSourceEvidence": {
+      "source": "final canonical Git tree",
+      "paths": [
+        "planning/evidence/project18/**"
+      ],
+      "archivePrefix": "qualification/historical/",
+      "deduplication": "The sealed raw evidence branch remains outside canonical source; archive it once under qualification/final and tracked canonical evidence under qualification/historical."
+    },
+    "publicationMetadata": {
+      "historicalSnapshotArchiveMember": "assessment/publication-plan/raw-publication-inputs-snapshot.json",
+      "finalSelectionArchiveMember": "_manifest/selected-local-evidence.json",
+      "finalFrozenManifestArchiveMember": "_manifest/frozen-inputs.json",
+      "finalArtifactCount": 1320,
+      "finalInputBytes": 84836806,
+      "status": "sealed-and-archived; five changed original inputs retain previous/current identities in the refresh ledger"
+    },
+    "repositoryStorage": {
+      "kind": "ordered-binary-parts",
+      "manifest": "artifact-storage.json",
+      "instructions": "artifacts/README.md",
+      "partCount": 16,
+      "partBytes": 4194304,
+      "finalPartBytes": 3734108,
+      "reason": "Observed encoded code-mode IPC frame 88865242 bytes exceeded 67108864 bytes before GitHub transmission.",
+      "wholeRawBlobUploaded": false
+    }
+  },
+  "readableRecords": [
+    "README.md",
+    "aggregate-branch-plan.md",
+    "aggregate-transport.json",
+    "aggregate.json",
+    "artifact-staging.json",
+    "artifact-storage.json",
+    "artifacts.json",
+    "artifacts/README.md",
+    "benchmark-input-equivalence.json",
+    "browser.json",
+    "build-equivalence.json",
+    "coverage.json",
+    "performance.json",
+    "protected/delivery-lease-readback.json",
+    "protected/final-copy.json",
+    "protected/package-lock.patch",
+    "protected/review.json",
+    "protected/studio-entry.patch",
+    "pull-requests.json",
+    "qualification.json",
+    "source-dimensions.json",
+    "source-freeze.json",
+    "source.json",
+    "artifact-publication.json",
+    "artifact-byte-readback.json"
+  ],
+  "mandatoryInputs": [
+    {
+      "kind": "issue-and-coverage",
+      "owner": "filesystem_providers/root",
+      "inputs": [
+        "final deduplicated157-leaf coverage map with166 records and9 overlaps",
+        "eight epic and24 parent trackers",
+        "151-path omission classification and retained unique test scope",
+        "18 unique publication-only cases retained in8 files and passed within886 Node26 complete11-file43-test scope"
+      ],
+      "acceptance": "presence records remain separate from passed acceptance; final source exact"
+    },
+    {
+      "kind": "publication",
+      "owner": "all owners via filesystem_providers",
+      "inputs": [
+        "final distinct PR index",
+        "actual base/head/tree/local projection and ordered-parent receipts",
+        "required-core outcomes and superseded failed runs",
+        "dependency-only branch receipts",
+        "resolved omitted-path lineage"
+      ],
+      "acceptance": "all final maximal parents are actual published commits with complete ancestry; no guessed refs or normalized mergeability assumptions"
+    },
+    {
+      "kind": "raw-qualification",
+      "owner": "workspace_inventory/root",
+      "inputs": [
+        "initial bb2 Node26 failure1875/1809/66",
+        "7b affected260/259/1",
+        "5269 affected52/52 and fullNode221877/1877",
+        "e9 cleanup382/382 and core/strict logs",
+        "final editor/browser and new publication-only test-scope results",
+        "historical native/oracle/framework/package-timeout evidence",
+        "all historical/final performance samples, profiles and resource observations"
+      ],
+      "acceptance": "archive the sealed owner manifest without replacing failures or summing overlapping scopes"
+    },
+    {
+      "kind": "protected-patches",
+      "owner": "root/template reviewer",
+      "inputs": [
+        {
+          "input": "/dev/shm/p18-final-prepared/review-evidence/studio-entry.patch",
+          "destination": "protected/studio-entry.patch",
+          "kind": "reviewed-text-patch",
+          "size": 69556,
+          "sha256": "8a0a5cb607783640d401275b4b847fac14ca513250c38f4989290e9fd0c794d3",
+          "state": "root-final-copy-verified",
+          "destinationRoot": "planning/evidence/project18/final",
+          "evidencePath": "protected/studio-entry.patch",
+          "archivePath": "protected/studio-entry.patch"
+        },
+        {
+          "input": "/dev/shm/p18-final-prepared/review-evidence/package-lock.patch",
+          "destination": "protected/package-lock.patch",
+          "kind": "reviewed-text-patch",
+          "size": 1688,
+          "sha256": "6d4f519722d45f06baff5c27b74d3f8ca6fa1443b4ecf4deda0afba70f5e1985",
+          "state": "root-final-copy-verified",
+          "destinationRoot": "planning/evidence/project18/final",
+          "evidencePath": "protected/package-lock.patch",
+          "archivePath": "protected/package-lock.patch"
+        },
+        {
+          "input": "/workspace/scratch/3e16369943fd/p18-publication/final-sync-allowlist-review.json",
+          "kind": "existing-static-policy-review",
+          "size": 995,
+          "sha256": "9fbc6db07f9e01a056f05437511f813160a22890909d162d1d2f7b4a0ca283f7",
+          "state": "planning-snapshot-refresh-at-final-freeze",
+          "historicalPlannedDestination": "reviews/final-sync-allowlist-review.json",
+          "archivePath": "publication/p18-publication/final-sync-allowlist-review.json",
+          "pathMeaning": "Archive member in reconstructed qualification-raw.tar.gz; not a relative file beside this JSON."
+        },
+        {
+          "input": "/dev/shm/p18-final-prepared/review-evidence/protected-lease-readback.json",
+          "kind": "final-lease-observation",
+          "size": 4468,
+          "sha256": "b73827ff9b477e0cf68b0a2dde9bddca6ebc9efa59a8cbc57de3914b1c0ae28c",
+          "state": "root-final-copy-verified",
+          "historicalPlannedDestination": "reviews/protected-lease-readback.json",
+          "archivePath": "protected/protected-lease-readback.json",
+          "pathMeaning": "Archive member in reconstructed qualification-raw.tar.gz; not a relative file beside this JSON."
+        }
+      ],
+      "acceptance": "exact text patch and reviewed base identities; no executable candidate",
+      "preparedReviewBundle": {
+        "state": "root-final-copy-verified",
+        "root": "/dev/shm/p18-final-prepared/review-evidence",
+        "archivePrefix": "protected",
+        "artifacts": [
+          {
+            "input": "/dev/shm/p18-final-prepared/review-evidence/README.md",
+            "archivePath": "protected/README.md",
+            "bytes": 14755,
+            "sha256": "cbf607e5200c4cfece9aff545f0c4942c50ca571508662e47807503d7a796bad"
+          },
+          {
+            "input": "/dev/shm/p18-final-prepared/review-evidence/prepared-integration.json",
+            "archivePath": "protected/prepared-integration.json",
+            "bytes": 94901,
+            "sha256": "06a8971767121d27a5ba90ffeabc06f568c6afa07d1efed1bce8756238789027"
+          },
+          {
+            "input": "/dev/shm/p18-final-prepared/review-evidence/entry-metadata.json",
+            "archivePath": "protected/entry-metadata.json",
+            "bytes": 2684,
+            "sha256": "cd7b4b2d3db122312cc87bf43b0e556252d841241979960438c97bff8be4c328"
+          },
+          {
+            "input": "/dev/shm/p18-final-prepared/review-evidence/entry-check.json",
+            "archivePath": "protected/entry-check.json",
+            "bytes": 4895,
+            "sha256": "b3ff3e81cc7b5e688593ff1ed5b40689bfc2e734b20a0da9d14ccd6907c1eb33"
+          },
+          {
+            "input": "/dev/shm/p18-final-prepared/review-evidence/entry-contract-review.json",
+            "archivePath": "protected/entry-contract-review.json",
+            "bytes": 16292,
+            "sha256": "b5b95fc7cb8883eded7ce49c841704d22de389703ba5295f58861baea891caf4"
+          },
+          {
+            "input": "/dev/shm/p18-final-prepared/review-evidence/entry-transformations.json",
+            "archivePath": "protected/entry-transformations.json",
+            "bytes": 54780,
+            "sha256": "86073d8eb55c085da694ccabb359af98a79e9b43ef675afea291572aae1c18be"
+          },
+          {
+            "input": "/dev/shm/p18-final-prepared/review-evidence/prepare-studio-entry.py",
+            "archivePath": "protected/prepare-studio-entry.py",
+            "bytes": 29767,
+            "sha256": "16b9bba5e1d3092844642f1e2921dfe1d0c5ab54a31d9277807a54ec6cb869f5"
+          },
+          {
+            "input": "/dev/shm/p18-final-prepared/review-evidence/package-lock.patch",
+            "archivePath": "protected/package-lock.patch",
+            "bytes": 1688,
+            "sha256": "6d4f519722d45f06baff5c27b74d3f8ca6fa1443b4ecf4deda0afba70f5e1985"
+          },
+          {
+            "input": "/dev/shm/p18-final-prepared/review-evidence/studio-entry.patch",
+            "archivePath": "protected/studio-entry.patch",
+            "bytes": 69556,
+            "sha256": "8a0a5cb607783640d401275b4b847fac14ca513250c38f4989290e9fd0c794d3"
+          },
+          {
+            "input": "/dev/shm/p18-final-prepared/review-evidence/historical-3ed2eb82/package-lock.patch",
+            "archivePath": "protected/historical-3ed2eb82/package-lock.patch",
+            "bytes": 1058,
+            "sha256": "db9e338af2cccee5b614b2cdc5461d1a3f31dfc478833bd8699365c63153da0a"
+          },
+          {
+            "input": "/dev/shm/p18-final-prepared/review-evidence/historical-3ed2eb82/studio-entry.patch",
+            "archivePath": "protected/historical-3ed2eb82/studio-entry.patch",
+            "bytes": 124088,
+            "sha256": "d0a290e7d0a256588cea5b4f101a8302843267cb0e1c2bcdf87f8d7095111814"
+          },
+          {
+            "input": "/dev/shm/p18-final-prepared/review-evidence/historical-3ed2eb82/prepared-integration.json",
+            "archivePath": "protected/historical-3ed2eb82/prepared-integration.json",
+            "bytes": 5712,
+            "sha256": "b238dfa67a8124a389245983001cd77ee78b3bcc3b107ee025ab31e974cdb069"
+          },
+          {
+            "input": "/dev/shm/p18-final-prepared/review-evidence/protected-lease-readback.json",
+            "archivePath": "protected/protected-lease-readback.json",
+            "bytes": 4468,
+            "sha256": "b73827ff9b477e0cf68b0a2dde9bddca6ebc9efa59a8cbc57de3914b1c0ae28c"
+          }
+        ],
+        "selectionAuthority": {
+          "input": "/workspace/scratch/3e16369943fd/p18-publication/final-protected-review-copy.json",
+          "archivePath": "protected/final-protected-review-copy.json",
+          "bytes": 7723,
+          "sha256": "6875c06b24f3885d39cb6b3862dab12888ed6484738ab5b5dd086ce81ed0af0a"
+        },
+        "metadataCommit": "cd3cf28e36f62d8684e25166bef579435286bc74",
+        "metadataTree": "5a93d0260a56f8c72f52d95c4afb865c143ff644",
+        "archiveNames": "Exact final frozen-input manifest names; supersedes the earlier proposed protected/review-current prefix."
+      }
+    },
+    {
+      "kind": "source-retrieval",
+      "owner": "root/tests_workflows",
+      "inputs": [
+        "frozen canonical commit/tree and pinned prerequisite",
+        "original-source reachability inventory",
+        "actual maximal-published-parent proof",
+        "tree-entry/blob identity proof",
+        "aggregate workflow trigger review"
+      ],
+      "acceptance": "verify canonical tree equality and actual ordered parents; bundle preserves original source identity independently"
+    }
+  ],
+  "excluded": [
+    "credentials and token material",
+    "dependency/vendor/NuGet/browser caches",
+    "unrelated worktree contents or foreign Git refs",
+    "generated executable Studio proposal",
+    "untracked build/dist outputs",
+    "__pycache__",
+    "duplicate GitData source payloads where exact source is already in the bundle/tree"
+  ],
+  "upload": {
+    "toolPath": [
+      "github_create_blob",
+      "github_create_tree",
+      "github_create_commit",
+      "github_create_branch or non-forced github_update_ref",
+      "github_create_pull_request for evidence only"
+    ],
+    "advertisedPayloadLimit": null,
+    "advertisedParentLimit": null,
+    "binaryEncoding": "base64",
+    "default": "whole binary artifact when transport supports it",
+    "fallback": "deterministic bounded parts only after an actual payload constraint; record exact order and whole/part hashes",
+    "readChunks": "bounded JSON or base64 reads assembled without printing content into chat; reject truncation",
+    "binaryBlobOwner": "workspace_inventory after root verifies artifacts",
+    "binaryReadback": "After evidence branch publication, fetch only the exact published ref into an owned ref; verify fetched commit and cat-file binary byte counts, SHA-256 and Git blob identities."
+  },
+  "releaseConditions": [
+    "Released verified binary blobs and exact artifact identities",
+    "Evidence tree/commit/ref and actual binary-byte readback",
+    "Ordinary evidence-draft core check; no full-ci label or dispatch"
+  ],
+  "performed": {
+    "tests": false,
+    "builds": false,
+    "packing": true,
+    "compression": true,
+    "artifactUpload": true,
+    "aggregatePublication": true,
+    "docsEvidencePublication": true,
+    "binaryByteReadback": true
+  },
+  "frozenManifest": {
+    "sha256": "4d94babc794559e4dbf5b9b2b09ace7962d9f52a16bd07f695c0c1bab2dedce2",
+    "source": "c68c77252cd5469c5aaf0c8318ee28fe2ec3b65d",
+    "artifactCount": 1320,
+    "bytes": 84836806
+  },
+  "releaseVerification": {
+    "aggregate": "published exact canonical tree and 34 ordered actual parents",
+    "artifacts": "all 17 blobs and reconstructed archive byte-verified at 09f2c383ea5038684dc5d0c515ea6c027bb1d8f5",
+    "core": "ordinary required check on final evidence PR; no qualification matrix repeated"
+  }
+}

@@ -1,0 +1,325 @@
+{
+  "schemaVersion": 1,
+  "state": "reviewed-text-unapplied-live-lease-retained",
+  "candidateSnapshot": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+  "pinnedMain": "1db2e1d540a78403b7aaddcf472311fcde1a81ef",
+  "protectedFiles": [
+    {
+      "path": "apps/studio/studio.js",
+      "pinnedGitBlob": "15aa6a74f3cd875f5bec8e4941c150cc8b0dac9f",
+      "candidateGitBlob": "15aa6a74f3cd875f5bec8e4941c150cc8b0dac9f",
+      "sha256": "4925930a42b705578a55c92d89ef8034a780baacec550325d834a992189424ab",
+      "bytes": 104693,
+      "candidateEqualsPinned": true
+    },
+    {
+      "path": "package.json",
+      "pinnedGitBlob": "118c0a9af4dc292d5df8f7c5e02121f8309957fe",
+      "candidateGitBlob": "118c0a9af4dc292d5df8f7c5e02121f8309957fe",
+      "sha256": "9ed396895997e7afbdb0951b22f56210ed9a66efc19753609107d0a4240ecfe8",
+      "bytes": 3136,
+      "candidateEqualsPinned": true
+    },
+    {
+      "path": "package-lock.json",
+      "pinnedGitBlob": "61aa0aad42fe8ccb71ab679100a14237544c5f7f",
+      "candidateGitBlob": "61aa0aad42fe8ccb71ab679100a14237544c5f7f",
+      "sha256": "0795c3e9cb2007594de2fa207c2a97d80bb927f146f68d8566934485cbddf0cd",
+      "bytes": 10877,
+      "candidateEqualsPinned": true
+    }
+  ],
+  "patches": [
+    {
+      "input": "/dev/shm/p18-final-prepared/review-evidence/studio-entry.patch",
+      "destination": "protected/studio-entry.patch",
+      "kind": "reviewed-text-patch",
+      "size": 69556,
+      "sha256": "8a0a5cb607783640d401275b4b847fac14ca513250c38f4989290e9fd0c794d3",
+      "state": "root-final-copy-verified",
+      "destinationRoot": "planning/evidence/project18/final",
+      "evidencePath": "protected/studio-entry.patch",
+      "archivePath": "protected/studio-entry.patch"
+    },
+    {
+      "input": "/dev/shm/p18-final-prepared/review-evidence/package-lock.patch",
+      "destination": "protected/package-lock.patch",
+      "kind": "reviewed-text-patch",
+      "size": 1688,
+      "sha256": "6d4f519722d45f06baff5c27b74d3f8ca6fa1443b4ecf4deda0afba70f5e1985",
+      "state": "root-final-copy-verified",
+      "destinationRoot": "planning/evidence/project18/final",
+      "evidencePath": "protected/package-lock.patch",
+      "archivePath": "protected/package-lock.patch"
+    }
+  ],
+  "reviews": [
+    {
+      "input": "/workspace/scratch/3e16369943fd/p18-publication/final-sync-allowlist-review.json",
+      "kind": "existing-static-policy-review",
+      "size": 995,
+      "sha256": "9fbc6db07f9e01a056f05437511f813160a22890909d162d1d2f7b4a0ca283f7",
+      "state": "planning-snapshot-refresh-at-final-freeze",
+      "historicalPlannedDestination": "reviews/final-sync-allowlist-review.json",
+      "archivePath": "publication/p18-publication/final-sync-allowlist-review.json",
+      "pathMeaning": "Archive member in reconstructed qualification-raw.tar.gz; not a relative file beside this JSON."
+    },
+    {
+      "input": "/dev/shm/p18-final-prepared/review-evidence/protected-lease-readback.json",
+      "kind": "final-lease-observation",
+      "size": 4468,
+      "sha256": "b73827ff9b477e0cf68b0a2dde9bddca6ebc9efa59a8cbc57de3914b1c0ae28c",
+      "state": "root-final-copy-verified",
+      "historicalPlannedDestination": "reviews/protected-lease-readback.json",
+      "archivePath": "protected/protected-lease-readback.json",
+      "pathMeaning": "Archive member in reconstructed qualification-raw.tar.gz; not a relative file beside this JSON."
+    }
+  ],
+  "interpretation": [
+    "These are text review artifacts; they do not authorize bypassing active ownership leases.",
+    "The protected candidate entry was not executed to claim application qualification.",
+    "No generated candidate JavaScript is copied into the evidence tree.",
+    "The old 1058-byte db9e338a lock patch is retained only under historical-3ed2eb82; the current full dependency union is the 1688-byte 6d4f5197 patch.",
+    "All 13 current staging files match the root final copy receipt; current and historical patch identities remain distinct."
+  ],
+  "finalApplication": "Pending the root-coordinated ownership/lease release and the applicable application checks.",
+  "preparedReviewBundle": {
+    "state": "root-final-copy-verified",
+    "root": "/dev/shm/p18-final-prepared/review-evidence",
+    "archivePrefix": "protected",
+    "artifacts": [
+      {
+        "input": "/dev/shm/p18-final-prepared/review-evidence/README.md",
+        "archivePath": "protected/README.md",
+        "bytes": 14755,
+        "sha256": "cbf607e5200c4cfece9aff545f0c4942c50ca571508662e47807503d7a796bad"
+      },
+      {
+        "input": "/dev/shm/p18-final-prepared/review-evidence/prepared-integration.json",
+        "archivePath": "protected/prepared-integration.json",
+        "bytes": 94901,
+        "sha256": "06a8971767121d27a5ba90ffeabc06f568c6afa07d1efed1bce8756238789027"
+      },
+      {
+        "input": "/dev/shm/p18-final-prepared/review-evidence/entry-metadata.json",
+        "archivePath": "protected/entry-metadata.json",
+        "bytes": 2684,
+        "sha256": "cd7b4b2d3db122312cc87bf43b0e556252d841241979960438c97bff8be4c328"
+      },
+      {
+        "input": "/dev/shm/p18-final-prepared/review-evidence/entry-check.json",
+        "archivePath": "protected/entry-check.json",
+        "bytes": 4895,
+        "sha256": "b3ff3e81cc7b5e688593ff1ed5b40689bfc2e734b20a0da9d14ccd6907c1eb33"
+      },
+      {
+        "input": "/dev/shm/p18-final-prepared/review-evidence/entry-contract-review.json",
+        "archivePath": "protected/entry-contract-review.json",
+        "bytes": 16292,
+        "sha256": "b5b95fc7cb8883eded7ce49c841704d22de389703ba5295f58861baea891caf4"
+      },
+      {
+        "input": "/dev/shm/p18-final-prepared/review-evidence/entry-transformations.json",
+        "archivePath": "protected/entry-transformations.json",
+        "bytes": 54780,
+        "sha256": "86073d8eb55c085da694ccabb359af98a79e9b43ef675afea291572aae1c18be"
+      },
+      {
+        "input": "/dev/shm/p18-final-prepared/review-evidence/prepare-studio-entry.py",
+        "archivePath": "protected/prepare-studio-entry.py",
+        "bytes": 29767,
+        "sha256": "16b9bba5e1d3092844642f1e2921dfe1d0c5ab54a31d9277807a54ec6cb869f5"
+      },
+      {
+        "input": "/dev/shm/p18-final-prepared/review-evidence/package-lock.patch",
+        "archivePath": "protected/package-lock.patch",
+        "bytes": 1688,
+        "sha256": "6d4f519722d45f06baff5c27b74d3f8ca6fa1443b4ecf4deda0afba70f5e1985"
+      },
+      {
+        "input": "/dev/shm/p18-final-prepared/review-evidence/studio-entry.patch",
+        "archivePath": "protected/studio-entry.patch",
+        "bytes": 69556,
+        "sha256": "8a0a5cb607783640d401275b4b847fac14ca513250c38f4989290e9fd0c794d3"
+      },
+      {
+        "input": "/dev/shm/p18-final-prepared/review-evidence/historical-3ed2eb82/package-lock.patch",
+        "archivePath": "protected/historical-3ed2eb82/package-lock.patch",
+        "bytes": 1058,
+        "sha256": "db9e338af2cccee5b614b2cdc5461d1a3f31dfc478833bd8699365c63153da0a"
+      },
+      {
+        "input": "/dev/shm/p18-final-prepared/review-evidence/historical-3ed2eb82/studio-entry.patch",
+        "archivePath": "protected/historical-3ed2eb82/studio-entry.patch",
+        "bytes": 124088,
+        "sha256": "d0a290e7d0a256588cea5b4f101a8302843267cb0e1c2bcdf87f8d7095111814"
+      },
+      {
+        "input": "/dev/shm/p18-final-prepared/review-evidence/historical-3ed2eb82/prepared-integration.json",
+        "archivePath": "protected/historical-3ed2eb82/prepared-integration.json",
+        "bytes": 5712,
+        "sha256": "b238dfa67a8124a389245983001cd77ee78b3bcc3b107ee025ab31e974cdb069"
+      },
+      {
+        "input": "/dev/shm/p18-final-prepared/review-evidence/protected-lease-readback.json",
+        "archivePath": "protected/protected-lease-readback.json",
+        "bytes": 4468,
+        "sha256": "b73827ff9b477e0cf68b0a2dde9bddca6ebc9efa59a8cbc57de3914b1c0ae28c"
+      }
+    ],
+    "selectionAuthority": {
+      "input": "/workspace/scratch/3e16369943fd/p18-publication/final-protected-review-copy.json",
+      "archivePath": "protected/final-protected-review-copy.json",
+      "bytes": 7723,
+      "sha256": "6875c06b24f3885d39cb6b3862dab12888ed6484738ab5b5dd086ce81ed0af0a"
+    },
+    "metadataCommit": "cd3cf28e36f62d8684e25166bef579435286bc74",
+    "metadataTree": "5a93d0260a56f8c72f52d95c4afb865c143ff644",
+    "archiveNames": "Exact final frozen-input manifest names; supersedes the earlier proposed protected/review-current prefix."
+  },
+  "productBuildSource": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+  "leaseObservation": {
+    "observedFrom": "2026-10-04T07:27:02.568749+00:00",
+    "observedThrough": "2026-10-04T07:27:15.109531+00:00",
+    "command": [
+      "git",
+      "ls-remote",
+      "origin",
+      "refs/heads/agent-locks/studio",
+      "refs/heads/agent-locks/package-json"
+    ],
+    "exitCode": 0,
+    "refs": {
+      "refs/heads/agent-locks/package-json": "d538f55223dd3fcfcd234e170af8a166da81ad86",
+      "refs/heads/agent-locks/studio": "6d72d5eb22520825dcac9aba2a3c866a8fbb1220"
+    },
+    "interpretation": "Read-only remote lease observation; no lease changed or acquired.",
+    "sourceCommit": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+    "metadataBeforeCopy": "dedaa632841d85c4d130476ded01f76b51cf74af",
+    "claims": [
+      {
+        "ref": "refs/heads/agent-locks/package-json",
+        "commit": "d538f55223dd3fcfcd234e170af8a166da81ad86",
+        "claimBlob": "304b561b82ac424d8d01e2fbe79446ce8284cc3e",
+        "claimSha256": "d04a34f87aec83ace11980f3906f5f70eb4b14e22c05c39788a690dd56ca3ade",
+        "claim": {
+          "version": 1,
+          "task": "SF-A25-T01.1",
+          "issue": 2072,
+          "agent": "codex-p19-core",
+          "branch": "codex/project19-core",
+          "expires": "2026-10-04T20:04:09.592Z",
+          "heartbeat": "2026-10-03T20:04:09.592Z",
+          "lastHeartbeatComment": null,
+          "locks": [],
+          "generation": "8f3f406a-3f3e-4ea7-ac65-258a5b41afe9",
+          "sequence": 0,
+          "event": "claim",
+          "at": "2026-10-03T20:04:09.592Z",
+          "paths": [
+            "packages/git/package.json",
+            "packages/git/src/errors.js",
+            "packages/git/src/index.js",
+            "packages/git/build.contrib.json"
+          ],
+          "projectProjection": "unavailable: GitHub connector exposes repository refs but no Project field API"
+        }
+      },
+      {
+        "ref": "refs/heads/agent-locks/studio",
+        "commit": "6d72d5eb22520825dcac9aba2a3c866a8fbb1220",
+        "claimBlob": "4546f318b754cf8f202c5d2c0acf504b4de68ba6",
+        "claimSha256": "42cc900dd009376f642deef48289a7a15a885235ccf21f7107b1dfad6e69571f",
+        "claim": {
+          "version": 1,
+          "task": "SF-A25-T01.10",
+          "issue": 2081,
+          "agent": "codex-p19-core",
+          "branch": "codex/project19-core",
+          "expires": "2026-10-04T20:04:09.592Z",
+          "heartbeat": "2026-10-03T20:04:09.592Z",
+          "lastHeartbeatComment": null,
+          "locks": [],
+          "generation": "e1c09939-b609-421f-9eab-a361232d7203",
+          "sequence": 0,
+          "event": "claim",
+          "at": "2026-10-03T20:04:09.592Z",
+          "paths": [
+            "packages/git/src/service.js",
+            "packages/git/src/worker/**",
+            "apps/studio/git-worker.js"
+          ],
+          "projectProjection": "unavailable: GitHub connector exposes repository refs but no Project field API"
+        }
+      }
+    ],
+    "textApplicability": [
+      {
+        "patch": "studio-entry.patch",
+        "sha256": "8a0a5cb607783640d401275b4b847fac14ca513250c38f4989290e9fd0c794d3",
+        "bytes": 69556,
+        "command": [
+          "git",
+          "apply",
+          "--check",
+          "--whitespace=nowarn",
+          "studio-entry.patch"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "patch": "package-lock.patch",
+        "sha256": "6d4f519722d45f06baff5c27b74d3f8ca6fa1443b4ecf4deda0afba70f5e1985",
+        "bytes": 1688,
+        "command": [
+          "git",
+          "apply",
+          "--check",
+          "--whitespace=nowarn",
+          "package-lock.patch"
+        ],
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ],
+    "protectedFiles": [
+      {
+        "path": "apps/studio/studio.js",
+        "sha256": "4925930a42b705578a55c92d89ef8034a780baacec550325d834a992189424ab",
+        "bytes": 104693,
+        "matchesPinnedMain": true
+      },
+      {
+        "path": "package.json",
+        "sha256": "9ed396895997e7afbdb0951b22f56210ed9a66efc19753609107d0a4240ecfe8",
+        "bytes": 3136,
+        "matchesPinnedMain": true
+      },
+      {
+        "path": "package-lock.json",
+        "sha256": "0795c3e9cb2007594de2fa207c2a97d80bb927f146f68d8566934485cbddf0cd",
+        "bytes": 10877,
+        "matchesPinnedMain": true
+      }
+    ],
+    "completedAt": "2026-10-04T07:28:19.915666+00:00",
+    "boundary": "Text applicability only. No proposed entry or lock patch was applied, parsed, executed, built or browser-qualified. No lease was acquired, changed or released.",
+    "coordinationRequiredBy": "planning/AGENTS.md: the specific hot-file lock is required; no implicit takeover of a live or expired lease."
+  },
+  "latestDeliveryLeaseObservation": {
+    "record": "delivery-lease-readback.json",
+    "sha256": "648b1834c29c363b74641a376eb775be3eeacc221f26290954de1dc4a641c087",
+    "bytes": 2898,
+    "observedAt": "2026-10-04T08:01:56Z",
+    "refsUnchangedFromFrozenReview": true,
+    "outsidePackedArchive": true
+  },
+  "aggregateReviewUrls": {
+    "readme": "https://github.com/wieslawsoltes/SharpForge/blob/69122b13e8ac9a02459ab1f9bc0108a25296518e/planning/evidence/project18/integration/README.md",
+    "studioPatch": "https://github.com/wieslawsoltes/SharpForge/blob/69122b13e8ac9a02459ab1f9bc0108a25296518e/planning/evidence/project18/integration/studio-entry.patch",
+    "lockPatch": "https://github.com/wieslawsoltes/SharpForge/blob/69122b13e8ac9a02459ab1f9bc0108a25296518e/planning/evidence/project18/integration/package-lock.patch"
+  }
+}

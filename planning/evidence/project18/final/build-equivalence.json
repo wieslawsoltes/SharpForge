@@ -1,0 +1,10 @@
+{
+  "buildSourceCommit": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+  "browserSourceCommit": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+  "browserSourceTree": "7399d972ea939b8a5f05f894bc793f9b713cfd49",
+  "changedPaths": [
+    "tests/browser_release13_test.py"
+  ],
+  "interpretation": "Only the browser qualification fixture changes; the previously successful build at7d4 is reused without rerunning product build or Node tests. The actual committed entry remains unchanged.",
+  "entrySha256": "4925930a42b705578a55c92d89ef8034a780baacec550325d834a992189424ab"
+}

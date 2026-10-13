@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "observedFrom": "2026-10-04T08:01:44.273406+00:00",
+  "observedThrough": "2026-10-04T08:01:56.497606+00:00",
+  "command": [
+    "git",
+    "ls-remote",
+    "origin",
+    "refs/heads/agent-locks/studio",
+    "refs/heads/agent-locks/package-json"
+  ],
+  "exitCode": 0,
+  "refs": {
+    "refs/heads/agent-locks/package-json": "d538f55223dd3fcfcd234e170af8a166da81ad86",
+    "refs/heads/agent-locks/studio": "6d72d5eb22520825dcac9aba2a3c866a8fbb1220"
+  },
+  "unchangedFromFrozenReview": true,
+  "sourceCommit": "c68c77252cd5469c5aaf0c8318ee28fe2ec3b65d",
+  "sourceAndLeasesUnchanged": true,
+  "claims": [
+    {
+      "ref": "refs/heads/agent-locks/package-json",
+      "commit": "d538f55223dd3fcfcd234e170af8a166da81ad86",
+      "claimBlob": "304b561b82ac424d8d01e2fbe79446ce8284cc3e",
+      "claimSha256": "d04a34f87aec83ace11980f3906f5f70eb4b14e22c05c39788a690dd56ca3ade",
+      "claim": {
+        "version": 1,
+        "task": "SF-A25-T01.1",
+        "issue": 2072,
+        "agent": "codex-p19-core",
+        "branch": "codex/project19-core",
+        "expires": "2026-10-04T20:04:09.592Z",
+        "heartbeat": "2026-10-03T20:04:09.592Z",
+        "lastHeartbeatComment": null,
+        "locks": [],
+        "generation": "8f3f406a-3f3e-4ea7-ac65-258a5b41afe9",
+        "sequence": 0,
+        "event": "claim",
+        "at": "2026-10-03T20:04:09.592Z",
+        "paths": [
+          "packages/git/package.json",
+          "packages/git/src/errors.js",
+          "packages/git/src/index.js",
+          "packages/git/build.contrib.json"
+        ],
+        "projectProjection": "unavailable: GitHub connector exposes repository refs but no Project field API"
+      }
+    },
+    {
+      "ref": "refs/heads/agent-locks/studio",
+      "commit": "6d72d5eb22520825dcac9aba2a3c866a8fbb1220",
+      "claimBlob": "4546f318b754cf8f202c5d2c0acf504b4de68ba6",
+      "claimSha256": "42cc900dd009376f642deef48289a7a15a885235ccf21f7107b1dfad6e69571f",
+      "claim": {
+        "version": 1,
+        "task": "SF-A25-T01.10",
+        "issue": 2081,
+        "agent": "codex-p19-core",
+        "branch": "codex/project19-core",
+        "expires": "2026-10-04T20:04:09.592Z",
+        "heartbeat": "2026-10-03T20:04:09.592Z",
+        "lastHeartbeatComment": null,
+        "locks": [],
+        "generation": "e1c09939-b609-421f-9eab-a361232d7203",
+        "sequence": 0,
+        "event": "claim",
+        "at": "2026-10-03T20:04:09.592Z",
+        "paths": [
+          "packages/git/src/service.js",
+          "packages/git/src/worker/**",
+          "apps/studio/git-worker.js"
+        ],
+        "projectProjection": "unavailable: GitHub connector exposes repository refs but no Project field API"
+      }
+    }
+  ],
+  "interpretation": "Read-only final delivery observation. No lock was acquired, changed or released. The prepared Studio and root lockfile patches remain unapplied and unexecuted."
+}

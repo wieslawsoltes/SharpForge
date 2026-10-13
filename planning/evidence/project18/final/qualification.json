@@ -1,0 +1,451 @@
+{
+  "schemaVersion": 1,
+  "status": "source-qualified-aggregate-published-artifacts-packed",
+  "candidateSource": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+  "interpretation": "Exact scoped results, with overlapping cohorts reported separately and never summed. Required core does not establish browser/native-platform acceptance.",
+  "cohorts": [
+    {
+      "id": "synchronized-bb2b8d84",
+      "sourceCommit": "bb2b8d84c8dfc0b14fc76b2c605b84d48a1e993e",
+      "toolchain": {
+        "node": "v26.10.0",
+        "npm": "11.19.1"
+      },
+      "testFiles": 227,
+      "summary": {
+        "tests": 1875,
+        "suites": 0,
+        "pass": 1809,
+        "fail": 66,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 1,
+      "startedAt": "2026-10-04T05:02:43.661944+00:00",
+      "completedAt": "2026-10-04T05:06:22.052473+00:00",
+      "rawReceipt": "qualification/final/raw/synchronized-bb2b8d84/final-qualification.json",
+      "rawReceiptSha256": "953cd3dac0a8e90a4f6a2ec1c1f71a47bb2a4156982d03ce551fd534da1a69e0",
+      "rawLog": "qualification/final/raw/synchronized-bb2b8d84/node26-synchronized-scope.tap"
+    },
+    {
+      "id": "correction-7b087e0f",
+      "sourceCommit": "7b087e0f0e3105c71ec86e39554358766b45d3bf",
+      "toolchain": {
+        "node": "v26.10.0",
+        "npm": "11.19.1"
+      },
+      "testFiles": 38,
+      "summary": {
+        "tests": 260,
+        "suites": 0,
+        "pass": 259,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 1,
+      "startedAt": "2026-10-04T05:11:52.872614+00:00",
+      "completedAt": "2026-10-04T05:12:37.772971+00:00",
+      "rawReceipt": "qualification/final/raw/correction-7b087e0f/final-qualification.json",
+      "rawReceiptSha256": "6522b975df4483fb0b1f77518ba6338816a062d7280d05d0dd963de7e7ab0b5d",
+      "rawLog": "qualification/final/raw/correction-7b087e0f/node26-correction-1.tap"
+    },
+    {
+      "id": "correction-5269d397",
+      "sourceCommit": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+      "toolchain": {
+        "node": "v26.10.0",
+        "npm": "11.19.1"
+      },
+      "testFiles": 8,
+      "summary": {
+        "tests": 52,
+        "suites": 0,
+        "pass": 52,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "startedAt": "2026-10-04T05:21:20.794897+00:00",
+      "completedAt": "2026-10-04T05:21:38.579848+00:00",
+      "rawReceipt": "qualification/final/raw/correction-5269d397/final-qualification.json",
+      "rawReceiptSha256": "58d447d8a80ca39a2498a96338a2a3bd715ba14ecaf56a2c7605a1eb21b1acc8",
+      "rawLog": "qualification/final/raw/correction-5269d397/node26-correction-2.tap"
+    },
+    {
+      "id": "node22-5269d397",
+      "sourceCommit": "5269d3970f10fee404ef23e5fe3d07cb61d8750c",
+      "toolchain": {
+        "node": "v22.23.3",
+        "npm": "10.9.9"
+      },
+      "testFiles": 228,
+      "summary": {
+        "tests": 1877,
+        "suites": 0,
+        "pass": 1877,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "startedAt": "2026-10-04T05:29:09.968146+00:00",
+      "completedAt": "2026-10-04T05:33:11.447542+00:00",
+      "rawReceipt": "qualification/final/raw/node22-5269d397/final-qualification.json",
+      "rawReceiptSha256": "6eb427fd263afdb741f4697a05994c171d0ebf20a8a5a50eef78ad55601bcee1",
+      "rawLog": "qualification/final/raw/node22-5269d397/node22-final-scope.tap"
+    },
+    {
+      "id": "legacy-e9f8a8cd",
+      "sourceCommit": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+      "toolchain": {
+        "node": "v26.10.0",
+        "npm": "11.19.1"
+      },
+      "testFiles": 18,
+      "summary": {
+        "tests": 382,
+        "suites": 0,
+        "pass": 382,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "startedAt": "2026-10-04T05:47:00.489276+00:00",
+      "completedAt": "2026-10-04T05:47:12.798524+00:00",
+      "rawReceipt": "qualification/final/raw/legacy-e9f8a8cd/final-qualification.json",
+      "rawReceiptSha256": "09c66cfb0602aeffabf8096fcabfe76b190b5f83ea7e36bc5fd3adee6d15bf96",
+      "rawLog": "qualification/final/raw/legacy-e9f8a8cd/node26-legacy-final.tap"
+    },
+    {
+      "id": "editor-ownership-362f1337",
+      "sourceCommit": "362f1337870ca5dca302ab7dc0dfc9f58629523f",
+      "toolchain": {
+        "node": "v26.10.0",
+        "npm": "11.19.1"
+      },
+      "testFiles": 5,
+      "summary": {
+        "tests": 40,
+        "suites": 0,
+        "pass": 40,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "startedAt": "2026-10-04T06:11:27.452852+00:00",
+      "completedAt": "2026-10-04T06:11:30.809759+00:00",
+      "rawReceipt": "qualification/final/raw/editor-ownership-362f1337/final-qualification.json",
+      "rawReceiptSha256": "9bcffa3c41765449ebb0bafe05c667f7a4e75f2bcdd61a1c3cc88604db11ddd4",
+      "rawLog": "qualification/final/raw/editor-ownership-362f1337/node26-editor-ownership.tap"
+    },
+    {
+      "id": "final-status-and-retained-886fb139",
+      "sourceCommit": "886fb139fc647f0532085b5a0866a498fa7fca52",
+      "toolchain": {
+        "node": "v26.10.0",
+        "npm": "11.19.1"
+      },
+      "testFiles": 11,
+      "summary": {
+        "tests": 43,
+        "suites": 0,
+        "pass": 43,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "startedAt": "2026-10-04T06:36:13.502944+00:00",
+      "completedAt": "2026-10-04T06:36:19.958226+00:00",
+      "rawReceipt": "qualification/final/raw/final-status-and-retained-886fb139/final-qualification.json",
+      "rawReceiptSha256": "7ca75ab56829519af9f9ff70109384a539b4726dcdd9d9ae72e2dc20cecb3d93",
+      "rawLog": "qualification/final/raw/final-status-and-retained-886fb139/node26-final-status-and-retained.tap"
+    },
+    {
+      "id": "capture-timer-final-de9a5e8f",
+      "sourceCommit": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+      "toolchain": {
+        "node": "v26.10.0",
+        "npm": "11.19.1"
+      },
+      "testFiles": 2,
+      "summary": {
+        "tests": 11,
+        "suites": 0,
+        "pass": 11,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "startedAt": "2026-10-04T06:52:45.355771+00:00",
+      "completedAt": "2026-10-04T06:52:45.752879+00:00",
+      "rawReceipt": "qualification/final/raw/capture-timer-final-de9a5e8f/final-qualification.json",
+      "rawReceiptSha256": "3bceed107339e4ac9a9e6a4e312925fe9d13fdc32af133ce87c551be37459518",
+      "rawLog": "qualification/final/raw/capture-timer-final-de9a5e8f/node26-capture-timer-final.tap"
+    },
+    {
+      "id": "runtime-timer-final-7d4c97d2",
+      "sourceCommit": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+      "toolchain": {
+        "node": "v26.10.0",
+        "npm": "11.19.1"
+      },
+      "testFiles": 6,
+      "summary": {
+        "tests": 34,
+        "suites": 0,
+        "pass": 34,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "exitCode": 0,
+      "startedAt": "2026-10-04T07:06:23.257306+00:00",
+      "completedAt": "2026-10-04T07:06:37.049399+00:00",
+      "rawReceipt": "qualification/final/raw/runtime-timer-final-7d4c97d2/final-qualification.json",
+      "rawReceiptSha256": "bde11938560ec2854ec07b9607ce3272c6ef9be9d04e20fddf1e95b41c22b530",
+      "rawLog": "qualification/final/raw/runtime-timer-final-7d4c97d2/node26-runtime-timer-final.tap"
+    }
+  ],
+  "candidateChecks": [
+    {
+      "name": "check",
+      "sourceCommit": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+      "exitCode": 0,
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "npm",
+        "run",
+        "check"
+      ],
+      "rawLog": "qualification/final/raw/runtime-timer-final-7d4c97d2/check.log"
+    },
+    {
+      "name": "build",
+      "sourceCommit": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+      "exitCode": 0,
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "npm",
+        "run",
+        "build"
+      ],
+      "rawLog": "qualification/final/raw/runtime-timer-final-7d4c97d2/build.log"
+    },
+    {
+      "name": "clean-checkout",
+      "sourceCommit": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+      "exitCode": 0,
+      "argv": [
+        "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+        "scripts/limited.js",
+        "node",
+        "scripts/conformance/clean-checkout.js"
+      ],
+      "rawLog": "qualification/final/raw/runtime-timer-final-7d4c97d2/clean-checkout.log"
+    }
+  ],
+  "strictStructure": {
+    "baselineProblems": 268,
+    "candidateProblems": 265,
+    "introducedProblemRows": 0,
+    "worsenedExistingDimensions": 0,
+    "frozenFilesGrowingAgainstActualPinnedMain": 0,
+    "recordedBaselineUnchanged": true,
+    "proof": "source-dimensions.json",
+    "comparisonSource": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+    "comparisonMethod": "Complete read-only exact source dimensions at7d4 against pinned1db; final0bb differs only in a Python test fixture outside checker inputs. No strict gate rerun."
+  },
+  "pending": [
+    "Performance budget justification/sign-off and named unqualified platform/framework cells.",
+    "Protected Studio/lockfile application remains under the existing ownership/lease workflow."
+  ],
+  "historicalCandidateChecks": [
+    {
+      "source": "e9f8a8cd2ff1aa6506e9457a7591e3915e6e9f40",
+      "checks": [
+        {
+          "name": "check",
+          "exitCode": 0,
+          "rawReceipt": "qualification/final/raw/legacy-e9f8a8cd/check.json",
+          "rawLog": "qualification/final/raw/legacy-e9f8a8cd/check.log"
+        },
+        {
+          "name": "build",
+          "exitCode": 0,
+          "rawReceipt": "qualification/final/raw/legacy-e9f8a8cd/build.json",
+          "rawLog": "qualification/final/raw/legacy-e9f8a8cd/build.log"
+        },
+        {
+          "name": "clean-checkout",
+          "exitCode": 0,
+          "rawReceipt": "qualification/final/raw/legacy-e9f8a8cd/clean-checkout.json",
+          "rawLog": "qualification/final/raw/legacy-e9f8a8cd/clean-checkout.log"
+        },
+        {
+          "name": "structure",
+          "exitCode": 1,
+          "rawReceipt": "qualification/final/raw/legacy-e9f8a8cd/structure.json",
+          "rawLog": "qualification/final/raw/legacy-e9f8a8cd/structure.log"
+        }
+      ]
+    },
+    {
+      "source": "886fb139fc647f0532085b5a0866a498fa7fca52",
+      "checks": [
+        {
+          "name": "check",
+          "sourceCommit": "886fb139fc647f0532085b5a0866a498fa7fca52",
+          "exitCode": 0,
+          "argv": [
+            "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+            "scripts/limited.js",
+            "npm",
+            "run",
+            "check"
+          ],
+          "rawLog": "qualification/final/raw/final-status-and-retained-886fb139/check.log"
+        },
+        {
+          "name": "build",
+          "sourceCommit": "886fb139fc647f0532085b5a0866a498fa7fca52",
+          "exitCode": 0,
+          "argv": [
+            "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+            "scripts/limited.js",
+            "npm",
+            "run",
+            "build"
+          ],
+          "rawLog": "qualification/final/raw/final-status-and-retained-886fb139/build.log"
+        },
+        {
+          "name": "clean-checkout",
+          "sourceCommit": "886fb139fc647f0532085b5a0866a498fa7fca52",
+          "exitCode": 0,
+          "argv": [
+            "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+            "scripts/limited.js",
+            "node",
+            "scripts/conformance/clean-checkout.js"
+          ],
+          "rawLog": "qualification/final/raw/final-status-and-retained-886fb139/clean-checkout.log"
+        }
+      ]
+    },
+    {
+      "source": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+      "checks": [
+        {
+          "name": "check",
+          "sourceCommit": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+          "exitCode": 0,
+          "argv": [
+            "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+            "scripts/limited.js",
+            "npm",
+            "run",
+            "check"
+          ],
+          "rawLog": "qualification/final/raw/capture-timer-final-de9a5e8f/check.log"
+        },
+        {
+          "name": "build",
+          "sourceCommit": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+          "exitCode": 0,
+          "argv": [
+            "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+            "scripts/limited.js",
+            "npm",
+            "run",
+            "build"
+          ],
+          "rawLog": "qualification/final/raw/capture-timer-final-de9a5e8f/build.log"
+        },
+        {
+          "name": "clean-checkout",
+          "sourceCommit": "de9a5e8fe2320a5e2e5cdc56d4752def50bd9d04",
+          "exitCode": 0,
+          "argv": [
+            "/workspace/scratch/3e16369943fd/node-vendor/node-v26.10.0-linux-x64/bin/node",
+            "scripts/limited.js",
+            "node",
+            "scripts/conformance/clean-checkout.js"
+          ],
+          "rawLog": "qualification/final/raw/capture-timer-final-de9a5e8f/clean-checkout.log"
+        }
+      ]
+    }
+  ],
+  "archivePathConvention": "All rawReceipt/rawLog entries are exact intended members of qualification-raw.tar.gz; the final freezer requires their sealed inputs.",
+  "productBuildSource": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+  "finalBrowser": {
+    "state": "passed",
+    "sourceCommit": "0bb2ed360a13f3cda3d990bd3f2ff4cebb8dd760",
+    "productBuildSource": "7d4c97d29ae847c5810376747f5a3ac682e2dfd1",
+    "completedChecks": 16,
+    "passedChecks": [
+      "connect an existing hand-written construction method without replacing source or workers",
+      "designer modes, grouped property grid, breadcrumb selection and compact chrome initialize",
+      "designer property changes compile-check a minimal C# edit and preserve every other byte",
+      "real source editor input updates the design preview automatically",
+      "source undo and redo resynchronize the preview without replacing the editor",
+      "incomplete C# keeps the last valid preview and recovers when corrected",
+      "structural insertion rewrites only the proven construction method and preserves the hand-written handler",
+      "concurrent source and designer edits are rejected without overwriting either side",
+      "dynamic C# expressions stay code-owned while independent scalar properties remain editable",
+      "device presets and Design/Split/C#/Preview views use the original editor and artboard",
+      "synchronized source builds and runs its retained C# event handler and formatted interpolation",
+      "independent JavaScript storyboard interpolates actual controls, transforms and local-value restoration",
+      "VariableSizedWrapGrid lays out measured two-cell spans and wraps following items",
+      "source VM real worker clock animates after Main and runs managed Completed handler",
+      "direct CIL real worker clock animates after Main and runs managed Completed handler",
+      "all integration workflows finish without page errors or unowned and churned workers"
+    ],
+    "pageErrors": [],
+    "cspViolations": [],
+    "exitCode": 0,
+    "browser": "153.0.8010.12",
+    "mode": "http",
+    "elapsedSeconds": 20.607364868999866,
+    "interpretation": "This exact actual committed Studio Release13 suite passed. It does not qualify the separately failing IndexedDB handle retrieval probe, unrun browsers/OS pickers, native test frameworks or the unapplied protected proposal.",
+    "rawReceipt": "qualification/final/raw/designer-release13-0bb2ed36/final-qualification.json",
+    "rawReceiptSha256": "ba2f65dce4b799e4b6a7f88fa5526b4dabcbb8db5454fc677f82afe8dba79d40",
+    "rawLog": "qualification/final/raw/designer-release13-0bb2ed36/browser-release13.log",
+    "rawLogSha256": "97255d7614ff8ffaca33acfe84263580d3c3c1bb84a58e709f0af8f12ef1dce0",
+    "rawSession": "qualification/final/raw/designer-release13-0bb2ed36/results/browser_release13_test/session.json",
+    "buildEquivalence": "build-equivalence.json"
+  },
+  "buildEquivalence": "build-equivalence.json",
+  "evidenceDelivery": {
+    "binaryReadback": {
+      "state": "verified",
+      "commit": "09f2c383ea5038684dc5d0c515ea6c027bb1d8f5",
+      "tree": "20565d7f4724c5ec040af531f6c9ea01dc610eff",
+      "receipt": "artifact-byte-readback.json",
+      "receiptBytes": 12323,
+      "receiptSha256": "3e0b87cddbb303979931fda5a817e802d59873d22c148d84a3a15f8cf0d50ff0",
+      "binaryBlobCount": 17,
+      "binaryPayloadBytes": 70001708,
+      "reconstructedArchiveVerified": true,
+      "scope": "This exact initial evidence commit was fetched once. Later metadata-only publication preserves the same 17 blob identities; it is not a claim of another fetch or qualification run."
+    },
+    "ordinaryCore": "Consult the required check on this evidence PR current head. It is a publication gate, not an additional product qualification run."
+  }
+}
