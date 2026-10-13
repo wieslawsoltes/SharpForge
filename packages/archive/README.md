@@ -18,7 +18,15 @@ Default limits: 20,000 entries, 64 MiB per file, 128 MiB total expanded bytes, 1
 
 Rejects absolute/traversing/reserved paths, links/special files, ambiguous case or Unicode identities (including implicit parents), CRC mismatch, overlapping entries, inconsistent headers, encryption, ZIP64, unsupported methods and multi-disk files. It is not a general TAR/7z/RAR reader or a security sandbox for subsequent execution of extracted programs.
 
-`decodeWorkspaceFile(path, bytes)` preserves original bytes, detects supported text extensions and UTF-8/UTF-16 BOMs, and otherwise leaves binary data untouched. `encodeWorkspaceFile(record)` retains unedited bytes and re-encodes edited text in the original supported encoding. No newline normalization occurs. Invalid text, including a binary `.cs` file, remains binary rather than being silently discarded.
+## File encoding and path identity
+
+`decodeWorkspaceFile(path, bytes)` retains a copy of the original bytes, recognizes UTF-8 and UTF-16 in either byte order, and records the BOM, each line delimiter and final-newline status. BOM-less UTF-16 is inferred only from a bounded zero-byte pattern. Unsupported text remains binary; failed UTF-8 can use an explicitly flagged Windows-1252 fallback (`lossy: true`), disabled with `{legacyFallback: false}`.
+
+`encodeWorkspaceFile(record)` returns identical bytes for untouched text or binary files. Edited text keeps its encoding and per-line delimiters; set `preserveLineEndings: false` to choose the supplied delimiters deliberately. Unsupported characters in Windows-1252 fail with `SFWENC002`, and malformed UTF-16 strings fail with `SFWENC003`. `isWorkspaceTextPath` and `detectLineEndings` expose the same policies to hosts.
+
+`portablePath` rejects absolute paths, traversal, reserved Windows names, controls and ambiguous separators. `PathPolicy` keeps the stored spelling separate from identity: configure `caseSensitive` and `unicodeNormalization` (`NFC`, `NFD`, or `none`) explicitly. It exposes `normalize`, `identity`, `equals`, `contains` and `compare`; `pathIdentity`, `samePath`, `isWithinPath` and `comparePaths` provide functional equivalents. The project-system package re-exports those policies while keeping its existing relative-reference `normalizePath` behavior.
+
+Focused validation: `node scripts/limited.js node --test tests/a24-path-encoding.test.js tests/workspace-io.test.js`. These are Node byte/path tests; operating-system picker behavior is qualified separately.
 
 `inflateRaw` / `deflateStored` are also exported for Portable PDB embedding. Portable PDBs and workspace ZIPs share the same bounded internal codec.
 
