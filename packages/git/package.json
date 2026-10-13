@@ -1,0 +1,21 @@
+{
+  "name": "@sharpforge/git",
+  "version": "0.14.0",
+  "type": "module",
+  "description": "Provider-neutral Git repositories, transports and collaboration for SharpForge",
+  "license": "MIT",
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": [
+    "src",
+    "LICENSE",
+    "README.md"
+  ],
+  "dependencies": {
+    "@sharpforge/archive": "0.14.0",
+    "@sharpforge/network": "0.14.0",
+    "@sharpforge/text": "0.14.0"
+  }
+}
