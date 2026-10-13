@@ -49,6 +49,7 @@ internal sealed class OracleApplication : Application
     private void Run()
     {
         long allocatedBefore = GC.GetAllocatedBytesForCurrentThread();
+        var accentPalette = AccentPalette.Capture(this);
         var button = new Button { Content = "Oracle → café", Width = 120 };
         Check((string)button.Content == "Oracle → café" && button.Width == 120, "control/property round trip");
         Check((double)button.ReadLocalValue(FrameworkElement.WidthProperty) == 120, "dependency property local value");
@@ -111,6 +112,7 @@ internal sealed class OracleApplication : Application
                     dispatcherOrder = order,
                     cancelledWorkRan,
                     windowClosed = closed,
+                    accentPalette,
                 };
                 File.WriteAllText(Program.Output, JsonSerializer.Serialize(new { result, measurements = new { coldStartupMs, warmControlMs = samples, managedAllocatedBytesOnUIThread = allocated } }));
                 Exit();

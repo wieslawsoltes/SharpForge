@@ -276,6 +276,59 @@
             },
             "windowClosed": {
               "type": "boolean"
+            },
+            "accentPalette": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "schemaVersion": {"const": 1},
+                "source": {"const": "Windows.UI.ViewManagement.UISettings.GetColorValue"},
+                "colors": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "SystemAccentColor": {"type": "string", "pattern": "^#[0-9A-F]{8}$"},
+                    "SystemAccentColorLight1": {"type": "string", "pattern": "^#[0-9A-F]{8}$"},
+                    "SystemAccentColorLight2": {"type": "string", "pattern": "^#[0-9A-F]{8}$"},
+                    "SystemAccentColorLight3": {"type": "string", "pattern": "^#[0-9A-F]{8}$"},
+                    "SystemAccentColorDark1": {"type": "string", "pattern": "^#[0-9A-F]{8}$"},
+                    "SystemAccentColorDark2": {"type": "string", "pattern": "^#[0-9A-F]{8}$"},
+                    "SystemAccentColorDark3": {"type": "string", "pattern": "^#[0-9A-F]{8}$"}
+                  },
+                  "required": [
+                    "SystemAccentColor",
+                    "SystemAccentColorLight1",
+                    "SystemAccentColorLight2",
+                    "SystemAccentColorLight3",
+                    "SystemAccentColorDark1",
+                    "SystemAccentColorDark2",
+                    "SystemAccentColorDark3"
+                  ]
+                },
+                "environment": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "osVersion": {"type": "string", "pattern": "^[0-9]{1,10}(\\.[0-9]{1,10}){1,3}$"},
+                    "osArchitecture": {"enum": ["X64", "Arm64"]},
+                    "processArchitecture": {"const": "X64"},
+                    "runtimeVersion": {"type": "string", "pattern": "^[0-9]{1,10}(\\.[0-9]{1,10}){1,3}$"},
+                    "winuiAssembly": {"type": "string", "pattern": "^[^\\r\\n]{1,512}$"},
+                    "applicationTheme": {"enum": ["Light", "Dark"]},
+                    "highContrast": {"type": "boolean"}
+                  },
+                  "required": [
+                    "osVersion",
+                    "osArchitecture",
+                    "processArchitecture",
+                    "runtimeVersion",
+                    "winuiAssembly",
+                    "applicationTheme",
+                    "highContrast"
+                  ]
+                }
+              },
+              "required": ["schemaVersion", "source", "colors", "environment"]
             }
           },
           "required": [
@@ -288,7 +341,8 @@
             "dispatcherThreadAccess",
             "dispatcherOrder",
             "cancelledWorkRan",
-            "windowClosed"
+            "windowClosed",
+            "accentPalette"
           ]
         },
         {
