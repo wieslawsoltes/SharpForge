@@ -1,0 +1,11 @@
+{
+  "accepted": false,
+  "code": "SFSYNC",
+  "fixture": "50-no-design-controls",
+  "sources": [
+    {
+      "sha256": "5762fa71e425bd910777bf945d4d5f1002bde48113fbc38e317b705021958d24",
+      "uri": "View.cs"
+    }
+  ]
+}

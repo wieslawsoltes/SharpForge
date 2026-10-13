@@ -1,0 +1,1441 @@
+{
+  "schemaVersion": 1,
+  "specification": "SharpForge designer public source contract v1; C# source and WinUI host profile at repository revision",
+  "baselineSourceCommit": "eb41313a12346c882b359a7d41b6571981ed57db",
+  "fixtures": [
+    {
+      "id": "01-code-first",
+      "category": "code-first",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "01-code-first/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "02-inferred-locals",
+      "category": "code-first",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "02-inferred-locals/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "03-qualified-types",
+      "category": "code-first",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "03-qualified-types/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "04-crlf",
+      "category": "source-fidelity",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "04-crlf/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "05-tabs",
+      "category": "source-fidelity",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "05-tabs/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "06-unicode-comments",
+      "category": "source-fidelity",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "06-unicode-comments/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "07-escaped-string",
+      "category": "literals",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "07-escaped-string/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "08-verbatim-string",
+      "category": "literals",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "08-verbatim-string/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "09-raw-string",
+      "category": "literals",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "09-raw-string/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "10-repeated-assignment",
+      "category": "source-fidelity",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "10-repeated-assignment/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "11-no-final-newline",
+      "category": "source-fidelity",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "11-no-final-newline/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "12-literal-trivia",
+      "category": "source-fidelity",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "12-literal-trivia/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "13-hexadecimal",
+      "category": "literals",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "13-hexadecimal/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "14-binary-literal",
+      "category": "literals",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "14-binary-literal/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "15-digit-separators",
+      "category": "literals",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "15-digit-separators/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "16-real-suffix",
+      "category": "literals",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "16-real-suffix/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "17-negative-attached",
+      "category": "layout",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "17-negative-attached/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "18-zero-width",
+      "category": "boundary",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "18-zero-width/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "19-enum-property",
+      "category": "layout",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "19-enum-property/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "20-thickness-uniform",
+      "category": "literals",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "20-thickness-uniform/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "21-thickness-components",
+      "category": "literals",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "21-thickness-components/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "22-grid-tracks",
+      "category": "layout",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "22-grid-tracks/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "23-stackpanel",
+      "category": "layout",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "23-stackpanel/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "24-wrap-grid",
+      "category": "layout",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "24-wrap-grid/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "25-variable-wrap",
+      "category": "layout",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "25-variable-wrap/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "26-border-content",
+      "category": "layout",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "26-border-content/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "27-content-control",
+      "category": "layout",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "27-content-control/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "28-scrollviewer",
+      "category": "layout",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "28-scrollviewer/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "29-explicit-style",
+      "category": "styles",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "29-explicit-style/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "30-style-inheritance",
+      "category": "styles",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "30-style-inheritance/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "31-unused-style",
+      "category": "styles",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "31-unused-style/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "32-style-local-precedence",
+      "category": "styles",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "32-style-local-precedence/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "33-template-factory",
+      "category": "templates",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "33-template-factory/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "34-template-comment",
+      "category": "templates",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "34-template-comment/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "35-template-partial",
+      "category": "partial",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "35-template-partial/View.cs",
+          "uri": "View.cs"
+        },
+        {
+          "path": "35-template-partial/Template.cs",
+          "uri": "Template.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "36-method-event",
+      "category": "events",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "36-method-event/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "37-event-two-handlers",
+      "category": "events",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "37-event-two-handlers/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": false,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "38-event-lambda",
+      "category": "events",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "38-event-lambda/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": false,
+        "compilationSucceeded": false
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": false,
+      "runtimeExclusion": "Compiler SF2200: this construction cannot execute on the current runtime profile; the lambda remains protected."
+    },
+    {
+      "id": "39-computed-width",
+      "category": "protected",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "39-computed-width/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": false,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Height",
+        "value": 57,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "40-computed-height",
+      "category": "protected",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "40-computed-height/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": false,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "41-unsupported-factory",
+      "category": "protected",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "41-unsupported-factory/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root"
+        ],
+        "structuralEditable": false,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "root",
+        "property": "Width",
+        "value": 611,
+        "tokenBudget": 2
+      },
+      "execute": false,
+      "runtimeExclusion": "The source reader preserves the user factory call without executing it; the returned runtime control is deliberately absent from the design graph."
+    },
+    {
+      "id": "42-handwritten-statement",
+      "category": "protected",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "42-handwritten-statement/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": false,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "43-unsupported-constructor",
+      "category": "protected",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "43-unsupported-constructor/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": false,
+        "compilationSucceeded": false
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": false,
+      "runtimeExclusion": "The registered WinUI profile does not expose a Button(int) constructor; source ownership is protected and compilation fails explicitly."
+    },
+    {
+      "id": "44-partial-fields",
+      "category": "partial",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "44-partial-fields/View.cs",
+          "uri": "View.cs"
+        },
+        {
+          "path": "44-partial-fields/Fields.cs",
+          "uri": "Fields.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "45-generated-header",
+      "category": "generated",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "45-generated-header/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "46-readonly-generated",
+      "category": "generated",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "46-readonly-generated/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2,
+        "rejected": "SFSYNC_OWNERSHIP"
+      },
+      "execute": true,
+      "readOnly": true
+    },
+    {
+      "id": "47-field-handler-reference",
+      "category": "partial",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "47-field-handler-reference/View.cs",
+          "uri": "View.cs"
+        },
+        {
+          "path": "47-field-handler-reference/Fields.cs",
+          "uri": "Fields.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": true
+    },
+    {
+      "id": "48-inline-collection",
+      "category": "initializers",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "48-inline-collection/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "root_Children_0",
+          "root_Children_1"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": false
+      },
+      "edit": null,
+      "execute": false,
+      "runtimeExclusion": "The source reader understands inline Children initializers, but the current compiler/runtime profile emits diagnostics instead of an executable image."
+    },
+    {
+      "id": "49-malformed-constructor",
+      "category": "malformed",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "49-malformed-constructor/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": false,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true,
+        "code": "SFSYNC_PARSE"
+      },
+      "edit": null,
+      "execute": false
+    },
+    {
+      "id": "50-no-design-controls",
+      "category": "malformed",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "50-no-design-controls/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": false,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": true,
+        "code": "SFSYNC"
+      },
+      "edit": null,
+      "execute": false
+    },
+    {
+      "id": "51-typeof-style-target",
+      "category": "styles",
+      "entry": "View.cs",
+      "files": [
+        {
+          "path": "51-typeof-style-target/View.cs",
+          "uri": "View.cs"
+        }
+      ],
+      "expected": {
+        "accepted": true,
+        "nodeIds": [
+          "window",
+          "root",
+          "action"
+        ],
+        "structuralEditable": true,
+        "compilationSucceeded": false
+      },
+      "edit": {
+        "node": "action",
+        "property": "Width",
+        "value": 211,
+        "tokenBudget": 2
+      },
+      "execute": false,
+      "runtimeExclusion": "WinUI-style typeof target is preserved by source editing, but the registered JavaScript framework profile rejects Style(Type) with CS1729."
+    }
+  ]
+}

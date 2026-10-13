@@ -1,0 +1,1 @@
+class View { public static int Create() { return 42; } }

@@ -1,0 +1,121 @@
+{
+  "accepted": true,
+  "category": "protected",
+  "compilationSucceeded": true,
+  "diagnostics": [
+    {
+      "code": "SFD0003",
+      "legacyCode": "SFSYNC_DYNAMIC",
+      "severity": "warning"
+    }
+  ],
+  "document": {
+    "height": 480,
+    "name": "View",
+    "nodes": [
+      {
+        "children": [],
+        "events": {},
+        "id": "action",
+        "properties": {
+          "Content": "Run",
+          "Height": 40,
+          "Left": 20,
+          "Name": "Action",
+          "Top": 30
+        },
+        "type": "Microsoft.UI.Xaml.Controls.Button"
+      },
+      {
+        "children": [
+          "action"
+        ],
+        "events": {},
+        "id": "root",
+        "properties": {
+          "Height": 480,
+          "Name": "Root",
+          "Width": 640
+        },
+        "type": "Microsoft.UI.Xaml.Controls.Canvas"
+      },
+      {
+        "children": [
+          "root"
+        ],
+        "events": {},
+        "id": "window",
+        "properties": {},
+        "type": "Microsoft.UI.Xaml.Window"
+      }
+    ],
+    "root": "window",
+    "styles": {},
+    "templates": {},
+    "version": 1,
+    "width": 640
+  },
+  "entry": {
+    "className": "View",
+    "methodName": "Create",
+    "uri": "View.cs"
+  },
+  "fixture": "39-computed-width",
+  "identity": [
+    {
+      "declaration": {
+        "end": 322,
+        "start": 316,
+        "uri": "View.cs"
+      },
+      "designId": "action",
+      "field": false,
+      "uri": "View.cs",
+      "variable": "action"
+    },
+    {
+      "declaration": {
+        "end": 241,
+        "start": 237,
+        "uri": "View.cs"
+      },
+      "designId": "root",
+      "field": false,
+      "uri": "View.cs",
+      "variable": "root"
+    },
+    {
+      "declaration": {
+        "end": 205,
+        "start": 199,
+        "uri": "View.cs"
+      },
+      "designId": "window",
+      "field": false,
+      "uri": "View.cs",
+      "variable": "window"
+    }
+  ],
+  "ownership": {
+    "designer": 7,
+    "handwritten": 0,
+    "protected": 1
+  },
+  "protectedStatements": 0,
+  "sources": [
+    {
+      "sha256": "d0ca9fcc50f1afb7d518805c06cae79b3b46df12cdfe2c29fa21b96704d5a940",
+      "uri": "View.cs"
+    }
+  ],
+  "structuralEditable": false,
+  "unsupportedConstructs": [
+    {
+      "code": "SFSYNC_DYNAMIC",
+      "kind": "protected",
+      "message": "Dynamic expression is preserved in C# and is not evaluated by the designer",
+      "node": "action",
+      "property": "Width"
+    }
+  ]
+}
