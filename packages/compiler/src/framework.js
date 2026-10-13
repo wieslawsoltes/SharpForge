@@ -6,7 +6,7 @@ import {emitValueArgument} from './codegen/value-arguments.js';
 import {memberPath as pathOf} from './binder/member-path.js';
 import {registeredIndexerContract,prepareRegisteredIndexer} from './framework-indexers.js';
 import {frameworkReceiver,frameworkProperty} from './framework-receivers.js';
-import {legacyRegisteredField,prepareReadonlyField} from './codegen/registered-fields.js';
+import {legacyRegisteredField,emitLegacyRegisteredField,prepareReadonlyField} from './codegen/registered-fields.js';
 /** Closed framework binder layer (class mixin, composed in method-compiler.js); ordinary user members retain precedence. */
 export const FrameworkCompiler=Base=>class FrameworkCompiler extends Base {
     frameworkReceiver(node) { return frameworkReceiver(this,node); }
@@ -64,11 +64,8 @@ export const FrameworkCompiler=Base=>class FrameworkCompiler extends Base {
     frameworkExpression(node) {
       if(node.kind==='Index'){const get=registeredIndexerContract(this.infer(node.target),'get');if(get){this.expr(node.target);this.checkAssign(get.parameters[0],this.expr(node.index),node.index);return this.emitContract(get);}}
       if(node.kind==='Member') {
-        const field = legacyRegisteredField(this,node);
-        if (field) {
-          this.emitConstant(field.value);
-          return field.type;
-        }
+        const fieldType = emitLegacyRegisteredField(this,node);
+        if (fieldType) return fieldType;
         const constant=enumValue(pathOf(node));if(constant){this.emit(Op.ENUM,enumTypes.indexOf(constant.type),constant.value);return constant.type;}
         const p=this.frameworkProperty(node);if(p){if(!p.get){this.c.report(node,DiagnosticId.CS0154,[node.name]);this.emitConstant(null);return p.type;}if(!p.receiver.isStatic)this.expr(p.receiver.node);return this.emitContract(p.get);}
       }

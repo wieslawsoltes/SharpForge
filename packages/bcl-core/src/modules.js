@@ -7,6 +7,7 @@ import {randomModule} from './system/random.js';
 import {environmentModule} from './system/environment.js';
 import {stringComparerModule} from './system/string-comparer.js';
 import {stopwatchModule} from './diagnostics/stopwatch.js';
+import {booleanModule} from './system/boolean.js';
 
 /** Released registration groups are ordered ABI slots, not discovery order. */
 export const bclModules = Object.freeze([
@@ -18,5 +19,6 @@ export const bclModules = Object.freeze([
   {...environmentModule, group: 'extensions'},
   {...stringComparerModule, group: 'extensions'},
   objectComparerModule,
-  stopwatchModule
+  stopwatchModule,
+  booleanModule
 ].map(module => Object.freeze(module)));

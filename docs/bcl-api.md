@@ -1360,4 +1360,14 @@ Registered families: <code>stopwatch</code>.
 
 No pinned reference inventory is included for these families; registered rows alone do not establish API coverage.
 
+### Module <code>boolean</code>
+
+Registered families: <code>boolean</code>.
+
+| ABI ID | Registered signature | Registry status |
+| --- | --- | --- |
+| — | No registered members | — |
+
+No pinned reference inventory is included for these families; registered rows alone do not establish API coverage.
+
 <!-- bcl-module-inventory:end -->

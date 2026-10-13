@@ -1,0 +1,123 @@
+{
+  "sdk": "10.0.201",
+  "runtime": "10.0.5",
+  "frameworkDescription": ".NET 10.0.5",
+  "osDescription": "Ubuntu 24.04.3 LTS",
+  "processArchitecture": "X64",
+  "sourceSha256": "8cc63fdef39f630d63cb50718c68de43b759004c059ceb2dc08503d0dfb14dc0",
+  "projectSha256": "772eff4e2c0f9b0327bb80d130bf73799ec1f47fb8ff8a7572162535705973d4",
+  "assemblyIdentity": {
+    "name": "System.Private.CoreLib",
+    "version": "10.0.0.0",
+    "culture": "",
+    "publicKeyToken": "7cec85d7bea7798e"
+  },
+  "assemblySha256": "a4d8ec9be165f75323c3aad803809170a25421a4ee91b866f2850234b6d3a0fe",
+  "metadataSource": "All public declared Boolean fields obtained through System.Reflection; fields remain distinct from properties.",
+  "referenceSource": "https://github.com/dotnet/runtime/blob/v10.0.5/src/libraries/System.Private.CoreLib/src/System/Boolean.cs",
+  "metadata": [
+    {
+      "kind": "field",
+      "name": "FalseString",
+      "owner": "System.Boolean",
+      "result": "System.String",
+      "isPublic": true,
+      "isStatic": true,
+      "readOnly": true,
+      "literal": false,
+      "propertyExists": false,
+      "getterExists": false
+    },
+    {
+      "kind": "field",
+      "name": "TrueString",
+      "owner": "System.Boolean",
+      "result": "System.String",
+      "isPublic": true,
+      "isStatic": true,
+      "readOnly": true,
+      "literal": false,
+      "propertyExists": false,
+      "getterExists": false
+    }
+  ],
+  "rows": [
+    {
+      "name": "FalseString",
+      "value": "False",
+      "length": 5,
+      "codeUnits": [
+        70,
+        97,
+        108,
+        115,
+        101
+      ],
+      "literalSameReference": true,
+      "reflectedSameReference": true,
+      "repeatedSameReference": true,
+      "sameReferenceAfterCollection": true,
+      "isInternedSameReference": true,
+      "copyEqual": true,
+      "copySameReference": false,
+      "copyIsInternedSameReference": true,
+      "internCopySameReference": true
+    },
+    {
+      "name": "TrueString",
+      "value": "True",
+      "length": 4,
+      "codeUnits": [
+        84,
+        114,
+        117,
+        101
+      ],
+      "literalSameReference": true,
+      "reflectedSameReference": true,
+      "repeatedSameReference": true,
+      "sameReferenceAfterCollection": true,
+      "isInternedSameReference": true,
+      "copyEqual": true,
+      "copySameReference": false,
+      "copyIsInternedSameReference": true,
+      "internCopySameReference": true
+    }
+  ],
+  "cultures": [
+    {
+      "culture": "",
+      "trueValue": "True",
+      "falseValue": "False",
+      "sameTrueReference": true,
+      "sameFalseReference": true
+    },
+    {
+      "culture": "en-US",
+      "trueValue": "True",
+      "falseValue": "False",
+      "sameTrueReference": true,
+      "sameFalseReference": true
+    },
+    {
+      "culture": "tr-TR",
+      "trueValue": "True",
+      "falseValue": "False",
+      "sameTrueReference": true,
+      "sameFalseReference": true
+    },
+    {
+      "culture": "az-Latn-AZ",
+      "trueValue": "True",
+      "falseValue": "False",
+      "sameTrueReference": true,
+      "sameFalseReference": true
+    }
+  ],
+  "observations": {
+    "keywordTrueSameReference": true,
+    "keywordFalseSameReference": true,
+    "distinctFieldReferences": true,
+    "distinctFieldValues": true
+  }
+}

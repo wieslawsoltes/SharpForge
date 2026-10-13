@@ -4,7 +4,8 @@ import {ManagedFault} from '../../heap.js';
 /** Source stores retain their assigned value on the shared evaluation stack. */
 export const sourceLoadStoreHandlers = Object.freeze({
   [Op.CONST](vm,frame,a) {
-    vm.stack.push(vm.constant(a));
+    const value = vm.constant(a);
+    if (vm.state !== 'terminated') vm.stack.push(value);
   },
   [Op.LDLOC](vm,frame,a) {
     if(frame.locals[a]===undefined)throw new ManagedFault('InvalidProgramException','Read of uninitialized local');

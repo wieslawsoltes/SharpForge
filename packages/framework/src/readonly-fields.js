@@ -21,6 +21,12 @@ function failure(owner, name, message) {
 
 function scalarValue(owner, name, type, value) {
   if (type === 'bool' && typeof value === 'boolean') return value;
+  if (type === 'string') {
+    if (typeof value !== 'string' || value.length > 1_000_000) {
+      return failure(owner, name, 'a string of at most 1000000 UTF-16 code units is required');
+    }
+    return value;
+  }
   value = dataRecord(value);
   if (!value || Object.keys(value).length !== 2 || value.scalar !== type || typeof value.value !== 'string') {
     return failure(owner, name, 'an exact JSON scalar value is required');

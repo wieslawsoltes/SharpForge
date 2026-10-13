@@ -12,6 +12,13 @@ without writing into a stopped VM. The query reads per-platform lifecycle state,
 adds no managed state, and does not change normal post-completion inspection.
 The fault service must throw the host's managed exception.
 
+The field-only `boolean` module registers genuine `System.Boolean.TrueString` and
+`FalseString` readonly string fields with values `"True"` and `"False"`. It adds no
+getter contracts or method IDs. [The field prerequisite](../../docs/readonly-string-fields.md)
+documents the .NET 10.0.5 capture, allocating runtime policy, pending external
+source-contract qualification, and the broader Boolean/Object/ValueType work that
+keeps #783 open.
+
 The optional `bclHost.invokeSynchronousHostCallback(platform, callback, receiver,
 inspectResult)` service invokes a zero-argument callback with the supplied
 receiver. An optional synchronous result observer runs before the boundary ends;

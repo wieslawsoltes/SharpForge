@@ -2,6 +2,7 @@ import {emittedMethodFlags} from './emit/method-flags.js';
 import { sourceExceptionLayout } from './emit/exception-regions.js';
 import {emitScalarInstruction, emitScalarConversion, scalarMetadataType} from './scalar-emission.js';
 import { prepareEmission } from './emit/emission-context.js';
+import {emitSourceConstant} from './emit/constants.js';
 import { emissionTypeDescriptors } from './emit/type-descriptors.js';
 import { debugPEOptions, finishEmittedPE } from './emit/pe-options.js';
 import { EmitterSignatures } from './emitter-signatures.js';
@@ -13,7 +14,7 @@ import { Writer, CilError, align, utf8 } from './binary.js';
 import { token, codedIndex, cliSystemName } from './metadata.js';
 import { CilWriter } from './opcodes.js';
 import { TEXT_RVA, writeMethodBody } from './pe.js';
-import { analyzeMethod, constantType } from './analysis.js';
+import { analyzeMethod } from './analysis.js';
 const markerName='SharpForge.<>AllocationToken';
 const isValue=t=>(numericTypeId(t)!==undefined||t==='bool')||['enum','value'].includes(frameworkType(t)?.kind);
 const binaryCodes={'+':'add','-':'sub','*':'mul','/':'div','%':'rem','&':'and','|':'or','^':'xor','<<':'shl','>>':'shr'};
@@ -72,7 +73,7 @@ function emitMethod(c,d) {
     const top=input.at(-1),left=input.at(-2);let terminal=false;
     if(!emitScalarInstruction(w,c,{op,a,b}))switch(op){
       case Op.ENUM:w.integer(b).op('box',c.resolveType(enumTypes[a])).op('unbox.any',c.resolveType(enumTypes[a]));break;case Op.DELEGATE:{const type=c.image.constants[b];w.op('ldftn',c.methodTokens.get(a)).op('newobj',c.external(type,'.ctor','void',['object','nint'],false));break;}case Op.SEQ:w.op('nop');break;case Op.NOP:w.op('nop').op('nop');break;case Op.ENDFINALLY:w.op('endfinally');terminal=true;break;
-      case Op.CONST:{const value=c.image.constants[a],type=constantType(value,b);if(type==='null')w.op('ldnull');else if(type==='string')w.op('ldstr',0x70000000|c.metadata.userString(value));else if(type==='double')w.op('ldc.r8',value);else {w.integer(value===true?1:value===false?0:value);if(type==='bool')w.op('conv.u1');}break;}
+      case Op.CONST:emitSourceConstant(c,w,a,b);break;
       case Op.LDLOC:w.local('ldloc',a);break;
       case Op.STLOC:convert(top,m.locals[a].type);w.op('dup').local('stloc',a);break;
       case Op.LDSTATIC:w.op('ldsfld',c.staticTokens[a]);break;
