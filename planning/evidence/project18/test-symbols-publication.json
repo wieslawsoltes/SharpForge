@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "scope": "A23 T35 portable declaration frontend",
+  "sourceCommit": "d1c791a7ad83773738b2d725a0891065c52ae2cd",
+  "baseCommit": "b34fa27b7812a62f8c10cf81c83d2cbfdd0b347a",
+  "sourceFiles": {
+    "packages/msbuild/src/testing/portable/attribute-values.js": "d0e36e97004fb406d5fb1afb1d80bd84f346c625",
+    "packages/msbuild/src/testing/portable/source-symbols.js": "14c3196ccb391679b70f5fbe9a1df19606519eb3"
+  },
+  "qualification": [
+    {
+      "path": "planning/evidence/project18/testing/node22.tap",
+      "sha256": "1da313e5473a0ce2adda04e1be83212e9c01229fd6b64f4fe9f3cf5f3e8d7c5b",
+      "selectedRecords": [
+        "ok 65 - A23 T36 source discovery expands xUnit rows with parameter names, traits, source lines and skip reasons",
+        "ok 66 - A23 T37 NUnit parameterized fixtures preserve names, lifecycle stages and explicit status",
+        "ok 67 - A23 T38 MSTest expands display names, Timeout and initialize/cleanup metadata",
+        "ok 68 - A23 T36\u201338 unresolved data is explicitly not-runnable and malformed/cancelled sources are rejected"
+      ],
+      "result": "4/4 framework discovery cases using this frontend passed; whole completed scope135/135, zero skips"
+    },
+    {
+      "path": "planning/evidence/project18/testing/node26.tap",
+      "sha256": "9807dc8ec4bd9eb839f9868aa6418cb6aeea43b248c13bb777b3e3b5c4e8c314",
+      "selectedRecords": [
+        "ok 65 - A23 T36 source discovery expands xUnit rows with parameter names, traits, source lines and skip reasons",
+        "ok 66 - A23 T37 NUnit parameterized fixtures preserve names, lifecycle stages and explicit status",
+        "ok 67 - A23 T38 MSTest expands display names, Timeout and initialize/cleanup metadata",
+        "ok 68 - A23 T36\u201338 unresolved data is explicitly not-runnable and malformed/cancelled sources are rejected"
+      ],
+      "result": "4/4 framework discovery cases using this frontend passed; whole completed scope135/135, zero skips"
+    }
+  ],
+  "newContractTests": {
+    "file": "tests/a23-test-symbol-contract.test.js",
+    "cases": 5,
+    "status": "authored; queued for the next parent-owned bounded qualification, not yet run"
+  },
+  "dependencies": {
+    "added": "existing internal @sharpforge/syntax0.14.0",
+    "authorization": "Root and native package owner approved minimal feature-owned manifest changes.",
+    "rootLock": "Matching protected root lock metadata remains a prepared final integration patch; not published here."
+  },
+  "remaining": [
+    "Framework adapters, case identities and managed execution are separate dependent layers.",
+    "No actual native framework/package or Rust/Wasm qualification is claimed.",
+    "Required core and fresh direct public-contract assertions remain pending on this draft."
+  ]
+}
