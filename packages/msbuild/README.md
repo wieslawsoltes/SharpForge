@@ -2,6 +2,8 @@
 
 Browser-safe MSBuild contracts/client and a separately imported Node native backend. MIT, ES modules, Node 22+ for native APIs. The native engine invokes an installed SDK or MSBuild executable; .NET is not bundled.
 
+The public native process and host trust APIs are documented in [native-process.md](docs/native-process.md).
+
 ```js
 // Browser-safe imports: no fs/process/child_process dependency.
 import { MSBuildClient, normalizeBuildRequest, inspectSlnx } from '@sharpforge/msbuild';
