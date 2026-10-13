@@ -42,3 +42,11 @@ instances. Read cancellation does not start or cancel a native build job.
 `tests/a19-native-disk-observer.test.js` covers signal forwarding and actual
 temporary-file native reload/hash/save round trips. Its filesystem cases do
 not invoke or qualify an installed MSBuild SDK.
+
+## Shared test records and run sessions
+
+The public package entry exports `createTestCase`, `testCaseId`, `createTestResult`,
+`TestOutcome`, `TEST_MODEL_VERSION`, `createTestTree`, `defineTestAdapter` and
+`TestRunSession`. Providers share stable discovery identity, explicit results and
+cancellable progress while retaining separate execution capabilities. See
+[the test protocol](docs/test-model.md) for fields, bounds, ownership and lifecycle.
