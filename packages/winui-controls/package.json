@@ -1,0 +1,19 @@
+{
+  "name": "@sharpforge/winui-controls",
+  "version": "0.14.0",
+  "description": "Layout, input and WinUI control models with pluggable host renderers.",
+  "type": "module",
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  }
+}
