@@ -4,7 +4,8 @@ export const EnumConvertBase = 65536;
 const opcodeNames = [
   'SEQ', 'CONST', 'LDLOC', 'STLOC', 'LDSTATIC', 'STSTATIC', 'LDFLD', 'STFLD', 'DUP', 'POP',
   'BINARY', 'UNARY', 'JUMP', 'JFALSE', 'JTRUE', 'CALL', 'BUILTIN', 'RET', 'NEWOBJ', 'NEWARR',
-  'LDELEM', 'STELEM', 'LENGTH', 'THROW', 'RETHROW', 'CONVERT', 'NOP', 'ENDFINALLY', 'DELEGATE', 'ENUM'
+  'LDELEM', 'STELEM', 'LENGTH', 'THROW', 'RETHROW', 'CONVERT', 'NOP', 'ENDFINALLY', 'DELEGATE', 'ENUM',
+  'EXTCALL', 'EXTNEWOBJ', 'EXTLDFLD', 'EXTSTFLD', 'EXTLDSTATIC', 'EXTSTSTATIC'
 ];
 export const Op = Object.freeze(Object.fromEntries(opcodeNames.map((name, index) => [name, index])));
 export const OpName = Object.freeze(Object.keys(Op));
