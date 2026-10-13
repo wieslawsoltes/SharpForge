@@ -4,7 +4,8 @@
   "nodeGlobs": [
     "tests/designer.test.js",
     "tests/designer-examples.test.js",
-    "tests/designer-sync13.test.js"
+    "tests/designer-sync13.test.js",
+    "tests/a18-*.test.js"
   ],
   "browserScripts": [
     "tests/browser_release12_test.py",
@@ -16,6 +17,8 @@
   ],
   "timeout": 1200000,
   "tags": [
-    "legacy"
+    "designer",
+    "source-sync",
+    "studio"
   ]
 }
