@@ -4,6 +4,8 @@
  * (lowering/tuples/tuple-classes.js); a store into an element replaces the tuple in its variable (locations.js).
  */
 import { tupleElementIndex, tupleElements, maxTupleElements } from '../../binder/tuples.js';
+import {isScalarType} from '../../codegen/scalar-values.js';
+import {scalarStep, scalarCompound} from '../../codegen/semantic/scalar-step.js';
 import { n } from '../../codegen/semantic/node-factory.js';
 import { isTupleElement, isTupleRest } from './locations.js';
 
@@ -106,18 +108,26 @@ export const TupleTranslation = Base =>
     }
     exprCompoundAssignment(node) {
       if (!isTupleElement(node.left)) return super.exprCompoundAssignment(node);
-      if (node.method) return this.unsupported('compound assignment through a user-defined operator', node.syntax);
+      if (node.method && !isScalarType(this.imageType(node.left.type, node.syntax))) {
+        return this.unsupported('compound assignment through a user-defined operator', node.syntax);
+      }
       const location = this.location(node.left),
-        type = this.imageType(node.left.type, node.syntax);
-      return this.storeInto(location, n.binary(node.operator, location.read(), this.expression(node.right), type, !!node.isChecked));
+        type = this.imageType(node.left.type, node.syntax),
+        right = this.expression(node.right),
+        result = scalarCompound(node, location.read(), right, type) ??
+          n.binary(node.operator, location.read(), right, type, !!node.isChecked);
+      return this.storeInto(location, result);
     }
     exprIncrement(node) {
       if (!isTupleElement(node.operand)) return super.exprIncrement(node);
-      if (node.method) return this.unsupported('increment through a user-defined operator', node.syntax);
+      if (node.method && !isScalarType(this.imageType(node.operand.type, node.syntax))) {
+        return this.unsupported('increment through a user-defined operator', node.syntax);
+      }
       const location = this.location(node.operand),
         type = this.imageType(node.operand.type, node.syntax),
         before = this.temp(type, 'before'),
-        after = n.binary(node.operator[0], n.local(before), n.literal(1, type), type, !!node.isChecked),
+        after = scalarStep(node, n.local(before), type) ??
+          n.binary(node.operator[0], n.local(before), n.literal(1, type), type, !!node.isChecked),
         stored = this.storeInto({ ...location, locals: [], effects: [] }, after);
       return n.sequence(
         [...location.locals, before],
