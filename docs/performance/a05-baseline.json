@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 2,
+  "suite": "SF-A05-T12",
+  "status": "unqualified",
+  "reason": "No qualified T12 measurement is checked in. The final integrated revision requires two complete serial same-runner measurements before this baseline can qualify.",
+  "rows": [],
+  "refreshCommands": [
+    "node --max-old-space-size=512 --expose-gc bench/vm/harness.js --runner REPLACE_WITH_STABLE_RUNNER_ID --samples 100 --warmup 10 --out artifacts/a05-vm-first.json",
+    "node --max-old-space-size=512 --expose-gc bench/vm/harness.js --runner REPLACE_WITH_STABLE_RUNNER_ID --samples 100 --warmup 10 --out artifacts/a05-vm-repeat.json",
+    "node scripts/perf-gate.js --qualify artifacts/a05-vm-first.json --repeat artifacts/a05-vm-repeat.json --out docs/performance/a05-baseline.json"
+  ]
+}
